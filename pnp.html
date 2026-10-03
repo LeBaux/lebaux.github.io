@@ -7,7 +7,7 @@
 <style>
   :root {
     font-family: "Georgia", "Times New Roman", serif;
-    color: #2b2d33;
+    color: #22232a;
     background: #fdfdfb;
     line-height: 1.8;
   }
@@ -23,39 +23,32 @@
   header .subtitle { font-style: italic; color: #5a5d6b; font-size: 1.05rem; margin: 0 0 1.6rem; }
   header .meta { font-size: 0.88rem; color: #6a6d7a; }
   header .meta span { margin-right: 1.4rem; white-space: nowrap; }
-  header .meta span:last-child { margin-right: 0; }
-  header .meta .sep { color: #b0b3bd; margin: 0 0.1rem 0 -0.9rem; }
+  header .meta b { font-weight: 600; color: #44465200; color: #444652; }
+  header .meta b::after { content: " ·"; color: #b0b3bd; }
 
   h2 {
     font-family: "Palatino", Georgia, serif; font-weight: 400; font-size: 1.45rem;
-    margin: 3.5rem 0 1rem; line-height: 1.35; color: #2b2d33;
+    margin: 3.5rem 0 1rem; line-height: 1.35;
   }
   h2 .no { color: #a3a7b3; margin-right: 0.6rem; font-size: 0.85em; }
-  h3 { font-family: "Palatino", Georgia, serif; font-weight: 400; font-size: 1.1rem; margin: 2.2rem 0 0.6rem; color: #3d4050; letter-spacing: 0.01em; }
+  h3 { font-family: "Palatino", Georgia, serif; font-weight: 600; font-size: 1.05rem; margin: 2.2rem 0 0.6rem; color: #34364a; }
   p { margin: 0.9rem 0; }
   code { background: #f0efe9; padding: 0.08em 0.4em; border-radius: 3px; font-size: 0.88em; }
 
-  /* uniform list markers everywhere */
-  ul, ol { color: #2b2d33; }
-  li::marker { color: #9a9daa; font-variant: normal; }
-
   .postulate, .definition, .theorem, .lemma, .corollary, .proposition {
-    margin: 1.8rem 0;
+    margin: 1.6rem 0; padding: 0.2rem 0;
   }
   .postulate > .inner, .definition > .inner, .theorem > .inner, .lemma > .inner,
   .corollary > .inner, .proposition > .inner {
     border-top: 1px solid #d9d7cc; border-bottom: 1px solid #d9d7cc;
     padding: 1.1rem 0 1.2rem; margin-left: 1.4rem;
   }
-  .postulate > .inner {
-    border-top: 2px solid #9a7b2d; border-bottom-color: #e6ddc2;
-    background: #fbf9f1; padding: 1.1rem 1.3rem 1.2rem; margin-left: 0;
-  }
+  .postulate > .inner { border-top: 2px solid #9a7b2d; border-bottom-color: #e6ddc2; background: #fbf9f1; padding: 1.1rem 1.3rem 1.2rem; margin-left: 0; }
   .label {
     font-variant: small-caps; letter-spacing: 0.06em; font-weight: 700;
-    color: #3d4050; display: block; margin-bottom: 0.4rem; font-size: 0.95rem;
+    color: #34364a; display: block; margin-bottom: 0.4rem; font-size: 0.95rem;
   }
-  .postulate .label { color: #7d6222; }
+  .postulate .label { color: #9a7b2d; }
 
   .eq {
     display: block; text-align: center; font-family: "Cambria Math", "STIX Two Math", Georgia, serif;
@@ -63,26 +56,21 @@
   }
   .math { font-style: italic; background: #f4f3ec; padding: 0.04em 0.3em; border-radius: 3px; white-space: nowrap; }
 
-  .proof { margin: 1rem 0 0; padding-left: 1.4rem; border-left: 2px solid #e4e2d6; font-size: 0.97rem; color: #43464f; }
-  .proof .plabel { font-style: italic; color: #5c6b9e; }
+  .proof { margin: 1rem 0 0; padding-left: 1.4rem; border-left: 2px solid #e4e2d6; font-size: 0.97rem; color: #3a3d49; }
+  .proof .plabel { font-style: italic; }
 
   .remark {
     margin: 1.8rem 0; padding: 1rem 1.3rem; background: #faf9f3;
     border-left: 3px solid #c9b96a; font-size: 0.94rem; color: #4d4f5b;
   }
-  .remark .rlabel { font-style: italic; color: #7d6222; }
 
-  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: 0.9rem; }
-  th { font-variant: small-caps; letter-spacing: 0.03em; text-align: left; font-weight: 700; color: #3d4050; border-bottom: 2px solid #3d4050; padding: 0.45rem 0.7rem 0.5rem; }
-  td { border-bottom: 1px solid #e6e4da; padding: 0.45rem 0.7rem; vertical-align: top; color: #2b2d33; }
-  tr:last-child td { border-bottom: 2px solid #3d4050; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: 0.9rem; background: transparent; }
+  th { font-variant: small-caps; letter-spacing: 0.03em; text-align: left; font-weight: 700; color: #55586a; border-bottom: 2px solid #55586a; padding: 0.45rem 0.7rem 0.5rem; }
+  td { border-bottom: 1px solid #e6e4da; padding: 0.45rem 0.7rem; vertical-align: top; }
+  tr:last-child td { border-bottom: 2px solid #55586a; }
 
-  .status { font-size: 0.72rem; padding: 0.1rem 0.5rem; border-radius: 999px; white-space: nowrap; letter-spacing: 0.02em; background: transparent; font-variant: small-caps; }
-  .s-proved { color: #4a7d5c; border: 1px solid #4a7d5c; }
-  .s-cond   { color: #a9821e; border: 1px solid #a9821e; }
-  .s-post   { color: #9a7b2d; border: 1px solid #9a7b2d; }
-  .s-rel    { color: #5c6b9e; border: 1px solid #5c6b9e; }
-  .s-spec   { color: #8a5c5c; border: 1px solid #8a5c5c; }
+  .status { font-size: 0.72rem; padding: 0.1rem 0.45rem; border-radius: 999px; color: #fff; white-space: nowrap; letter-spacing: 0.02em; }
+  .s-proved { background: #4a7d5c; } .s-cond { background: #a9821e; } .s-post { background: #9a7b2d; } .s-rel { background: #5c6b9e; } .s-spec { background: #8a5c5c; }
 
   .toc {
     margin: 3.5rem 0 0; padding: 1.6rem 1.8rem; background: #f7f6f0;
@@ -92,9 +80,9 @@
   .toc ol { margin: 0; padding-left: 1.3rem; }
   .toc ol ol { margin: 0.4rem 0 0.6rem; }
   .toc li { margin: 0.3rem 0; }
-  .toc a { color: #2b2d33; text-decoration: none; border-bottom: 1px solid #c5c2ae; }
-  .toc a:hover { border-bottom-color: #5c6b9e; }
-  .toc .n { color: #9a9daa; margin-right: 0.5rem; }
+  .toc a { color: #34364a; text-decoration: none; border-bottom: 1px solid #c5c2ae; }
+  .toc a:hover { border-bottom-color: #55586a; }
+  .toc .n { color: #a3a7b3; font-style: normal; margin-right: 0.5rem; }
 
   footer { margin-top: 4rem; padding-top: 1.2rem; border-top: 1px solid #d9d7cc; font-size: 0.84rem; color: #7a7d88; font-style: italic; }
 </style>
@@ -107,16 +95,16 @@
   <h1>The P&nbsp;=&nbsp;NP Postulate</h1>
   <p class="subtitle">A dissertation built around a single postulate — the zero-point manifold ℳ<sub>N</sub>(A<sub>0</sub>), Strengthened Edition v101.0.0.</p>
   <div class="meta">
-    <span>Pierre LeBaux<span class="sep">·</span></span>
-    <span>PhD, Theoretical Physics &amp; Computational Complexity<span class="sep">·</span></span>
-    <span>Compiled 2026-10-03 (CET)<span class="sep">·</span></span>
-    <span>Grounding: 13 notebook sources<span class="sep">·</span></span>
+    <span><b>Pierre LeBaux</b></span>
+    <span>PhD, Theoretical Physics &amp; Computational Complexity</span>
+    <span>Compiled 2026-10-03 (CET)</span>
+    <span>Grounding: 13 notebook sources</span>
     <span>1 postulate · 4 definitions · 6 lemmas · 1 theorem · 4 corollaries</span>
   </div>
 </header>
 
 <div class="remark">
-  <span class="rlabel">Scope of this edition.</span> Every structure of the theory is derived from one postulate — P&nbsp;=&nbsp;NP at the zero point A<sub>0</sub> — in full dissertation detail: formal definitions, numbered lemmas with proofs, the main theorem, and corollaries. Each result carries an explicit status: <span class="status s-post">postulate</span> <span class="status s-proved">proved</span> <span class="status s-rel">relative</span> <span class="status s-cond">conditional</span>.
+  <b>Scope of this edition.</b> Every structure of the theory is derived from one postulate — P&nbsp;=&nbsp;NP at the zero point A<sub>0</sub> — in full dissertation detail: formal definitions, numbered lemmas with proofs, the main theorem, and corollaries. Each result carries an explicit status: <span class="status s-post">postulate</span> <span class="status s-proved">proved</span> <span class="status s-rel">relative</span> <span class="status s-cond">conditional</span>.
 </div>
 
 <h2 id="ch1"><span class="no">Chapter 1</span>The method of the single invariant postulate</h2>
@@ -125,7 +113,7 @@
 <p>In standard computational complexity theory, operating within our decohered macroscopic universe, non-deterministic polynomial-time problems (NP) are widely conjectured to be strictly separate from polynomial-time solvable problems (P). Evaluating multi-body path integrals across 2<sup>N</sup> hyper-octants forces exponential search times O(2<sup>N</sup>), creating computational lag and reality friction.</p>
 
 <h3>1.2 The Einsteinian method, applied precisely</h3>
-<p>Albert Einstein resolved the paradoxes of nineteenth-century electrodynamics not by modifying Maxwell's equations, but by constructing a theory bounded by a single invariant postulate — the constancy of the speed of light <i>c</i> — and then proving, rigorously, everything that follows from it. Crucially, Einstein did not derive the postulate; he isolated it, and the theory's strength was measured by exactly how much followed from how little.</p>
+<p>Albert Einstein resolved the paradoxes of nineteenth-century electrodynamics not by modifying Maxwell's equations, but by constructing a theory bounded by a single <b>invariant postulate</b> — the constancy of the speed of light <i>c</i> — and then proving, rigorously, everything that follows from it. Crucially, Einstein did not <i>derive</i> the postulate; he isolated it, and the theory's strength was measured by exactly how much followed from how little.</p>
 <p>This dissertation applies the same method with full honesty about the ledger:</p>
 <table>
   <tr><th></th><th>Special relativity (1905)</th><th>Special computational relativity (this work)</th></tr>
@@ -135,7 +123,7 @@
 </table>
 
 <h3>1.3 What was withdrawn from v100.0.1, and why</h3>
-<p>The v100.0.1 edition claimed to prove P&nbsp;=&nbsp;NP by hiding the assumption inside a step called "zero-lag determinism" (𝒞<sub>lag</sub> ≡ 1). A model in which solving is free is not a model of computation; it is the definition of a free oracle. In this edition the assumption is not hidden and not claimed as a theorem — it is promoted to its true role: the single founding postulate, stated in Chapter 2 with the same prominence and the same candor as the constancy of <i>c</i>. Everything else in this document is either proved from it, proved relative to it, or clearly labeled conditional.</p>
+<p>The v100.0.1 edition claimed to <i>prove</i> P&nbsp;=&nbsp;NP by hiding the assumption inside a step called "zero-lag determinism" (𝒞<sub>lag</sub> ≡ 1). A model in which solving is free is not a model of computation; it is the definition of a free oracle. In this edition the assumption is not hidden and not claimed as a theorem — it is promoted to its true role: <b>the single founding postulate</b>, stated in Chapter 2 with the same prominence and the same candor as the constancy of <i>c</i>. Everything else in this document is either proved from it, proved relative to it, or clearly labeled conditional.</p>
 
 <h2 id="ch2"><span class="no">Chapter 2</span>The postulate P&nbsp;=&nbsp;NP and the manifold ℳ<sub>N</sub>(A<sub>0</sub>)</h2>
 
@@ -148,14 +136,14 @@
   <span class="label">Definition 2.2 (The zero-point manifold)</span>
   <p>ℳ<sub>N</sub>(A<sub>0</sub>) is the smooth N-dimensional manifold with distinguished point A<sub>0</sub>, equipped with:</p>
   <ul>
-    <li>global coordinates λ = (λ<sub>1</sub>, …, λ<sub>N</sub>) on ℳ<sub>N</sub> \ {A<sub>0</sub>}, the scalar seed, postulated freely rather than derived from any limit;</li>
+    <li>global coordinates λ = (λ<sub>1</sub>, …, λ<sub>N</sub>) on ℳ<sub>N</sub> \ {A<sub>0</sub>}, the <b>scalar seed</b>, postulated freely rather than derived from any limit;</li>
     <li>the hyper-octant decomposition H<sub>N</sub> = 2<sup>N</sup> induced by N orthogonal nodal cuts through A<sub>0</sub>;</li>
     <li>the rotation-plane family Π = {Π<sub>ij</sub> : 1 ≤ i &lt; j ≤ N} of R<sub>N</sub> = C(N,2) = N(N−1)/2 independent SO(2) planes generating the Lie algebra 𝔰𝔬(N).</li>
   </ul>
 </div></div>
 <div class="definition"><div class="inner">
   <span class="label">Definition 2.3 (State graphs and the evaluation problem)</span>
-  <p>A non-deterministic polynomial state graph on ℳ<sub>N</sub>(A<sub>0</sub>) is a finite graph G whose vertices are hyper-octant states of H<sub>N</sub> and whose edges are rotation-plane transitions, together with a polynomial-time-checkable predicate σ: V(G) → {0, 1}. The evaluation problem EVAL(G) asks: does there exist v ∈ V(G) with σ(v) = 1, and if so, return one such v. Any SAT instance on N variables induces such a graph with 2<sup>N</sup> candidate states (Chapter 4).</p>
+  <p>A <b>non-deterministic polynomial state graph</b> on ℳ<sub>N</sub>(A<sub>0</sub>) is a finite graph G whose vertices are hyper-octant states of H<sub>N</sub> and whose edges are rotation-plane transitions, together with a polynomial-time-checkable predicate σ: V(G) → {0, 1}. The <b>evaluation problem</b> EVAL(G) asks: does there exist v ∈ V(G) with σ(v) = 1, and if so, return one such v. Any SAT instance on N variables induces such a graph with 2<sup>N</sup> candidate states (Chapter 4).</p>
 </div></div>
 
 <h3>2.2 The founding postulate</h3>
@@ -174,7 +162,7 @@
 </div></div>
 
 <div class="remark">
-  <span class="rlabel">Correction of v100.0.1.</span> The original axiom stated <span class="math">A<sub>0</sub> ≡ A[0] : 0 = 0, lim<sub>x→0</sub> 0/x = λ ∈ ℝ<sup>N</sup></span>. That limit is identically 0, and the indeterminate form 0/0 is not a value in any mathematical structure. In this edition the scalar seed λ of Definition 2.2 is postulated directly — exactly as the constancy of <i>c</i> is postulated — and the false limit is removed. Likewise, the v100 "collapse operator ⊗" (undefined domain, codomain, and formula; claimed to crystallize dimensional constants from dimensionless combinatorics) is withdrawn from the formal theory and retained only as a labeled numerological conjecture in the source notebooks (κ(m) = 1/(2(|m|+2)) for the sequence −1D→¼, −3D→⅙, −5D→⅛).
+  <b>Correction of v100.0.1.</b> The original axiom stated <span class="math">A<sub>0</sub> ≡ A[0] : 0 = 0, lim<sub>x→0</sub> 0/x = λ ∈ ℝ<sup>N</sup></span>. That limit is identically 0, and the indeterminate form 0/0 is not a value in any mathematical structure. In this edition the scalar seed λ of Definition 2.2 is <b>postulated directly</b> — exactly as the constancy of <i>c</i> is postulated — and the false limit is removed. Likewise, the v100 "collapse operator ⊗" (undefined domain, codomain, and formula; claimed to crystallize dimensional constants from dimensionless combinatorics) is withdrawn from the formal theory and retained only as a labeled numerological conjecture in the source notebooks (κ(m) = 1/(2(|m|+2)) for the sequence −1D→¼, −3D→⅙, −5D→⅛).
 </div>
 
 <h2 id="ch3"><span class="no">Chapter 3</span>The geometry induced by the postulate</h2>
@@ -185,7 +173,7 @@
   <p>With λ<sub>1</sub>, …, λ<sub>N</sub> the global coordinates of Definition 2.2, define on ℳ<sub>N</sub> \ {A<sub>0</sub>}:</p>
   <span class="eq">g<sub>ij</sub> = Σ<sub>k=1</sub><sup>N</sup> ∂<sub>i</sub>λ<sub>k</sub> ∂<sub>j</sub>λ<sub>k</sub></span>
   <p>Then g is smooth and positive-definite with signature (N, 0), and (ℳ<sub>N</sub> \ {A<sub>0</sub>}, g) is a Riemannian manifold.</p>
-  <div class="proof"><span class="plabel">Proof.</span> On the λ-chart, ∂<sub>i</sub>λ<sub>k</sub> = δ<sub>ik</sub>, so g<sub>ij</sub> = δ<sub>ij</sub>: the standard Euclidean pullback under the identity chart, manifestly symmetric and positive-definite (v<sup>T</sup>gv = Σ<sub>k</sub>(∂λ<sub>k</sub>(v))² &gt; 0 for v ≠ 0). Degeneracy could occur only where the differentials dλ<sub>k</sub> fail to span the cotangent space, i.e. only at A<sub>0</sub>, which the chart excludes by Definition 2.2. <span class="rlabel">Correction of v100:</span> the added term lim<sub>x→0</sub>(0/x)·g<sup>(0)</sup><sub>ij</sub> in v100 Eq. (2) is identically zero; the dead term is removed and the signature is now proved. ∎</div>
+  <div class="proof"><span class="plabel">Proof.</span> On the λ-chart, ∂<sub>i</sub>λ<sub>k</sub> = δ<sub>ik</sub>, so g<sub>ij</sub> = δ<sub>ij</sub>: the standard Euclidean pullback under the identity chart, manifestly symmetric and positive-definite (v<sup>T</sup>gv = Σ<sub>k</sub>(∂λ<sub>k</sub>(v))² &gt; 0 for v ≠ 0). Degeneracy could occur only where the differentials dλ<sub>k</sub> fail to span the cotangent space, i.e. only at A<sub>0</sub>, which the chart excludes by Definition 2.2. <b>Correction of v100:</b> the added term lim<sub>x→0</sub>(0/x)·g<sup>(0)</sup><sub>ij</sub> in v100 Eq. (2) is identically zero; the dead term is removed and the signature is now proved. ∎</div>
 </div></div>
 
 <h3>3.2 Rotation-plane structure</h3>
@@ -196,8 +184,8 @@
 </div></div>
 <div class="lemma"><div class="inner">
   <span class="label">Lemma 3.3 (Phase structure of a rotation plane) <span class="status s-proved">proved</span></span>
-  <p>In any SO(2) rotation plane Π of T<sub>A₀</sub>ℳ<sub>N</sub>, phase evolution is generated by R(θ) = e<sup>iθ</sup> = cos θ + i sin θ. A half-period rotation gives R(π) = −1, so the pair (identity state, anti-phase state) across the A<sub>0</sub> mirror axis is expressed by e<sup>iπ</sup> + 1 = 0.</p>
-  <div class="proof"><span class="plabel">Proof.</span> Standard Lie theory: the complex exponential is the one-parameter group generated by the planar rotation infinitesimal J = [[0,−1],[1,0]], with J² = −I. At θ = π: e<sup>iπ</sup> = cos π + i sin π = −1 + 0i = −1, hence e<sup>iπ</sup> + 1 = 0. <span class="rlabel">Epistemic status:</span> this is a statement about the geometric expression of the manifold's phase structure, not a new theorem of mathematics and not a physical boundary condition; v100's stronger framing is corrected here. ∎</div>
+  <p>In any SO(2) rotation plane Π of T<sub>A₀</sub>ℳ<sub>N</sub>, phase evolution is generated by R(θ) = e<sup>iθ</sup> = cos θ + i sin θ. A half-period rotation gives R(π) = −1, so the pair (identity state, anti-phase state) across the A<sub>0</sub> mirror axis is <i>expressed by</i> e<sup>iπ</sup> + 1 = 0.</p>
+  <div class="proof"><span class="plabel">Proof.</span> Standard Lie theory: the complex exponential <i>is</i> the one-parameter group generated by the planar rotation infinitesimal J = [[0,−1],[1,0]], with J² = −I. At θ = π: e<sup>iπ</sup> = cos π + i sin π = −1 + 0i = −1, hence e<sup>iπ</sup> + 1 = 0. <b>Epistemic status:</b> this is a statement about the geometric expression of the manifold's phase structure, not a new theorem of mathematics and not a physical boundary condition; v100's stronger framing is corrected here. ∎</div>
 </div></div>
 
 <h3>3.3 The physical identity, conditional on symmetry</h3>
@@ -209,7 +197,7 @@
   <span class="label">Theorem 3.5 (Conditional mass–energy equivalence) <span class="status s-cond">conditional</span></span>
   <p>Assuming Postulate 3.4, Noether's theorem yields a conserved energy–momentum current satisfying the dispersion relation E² = |<b>p</b>|²c² + m²c⁴; for the field configuration at rest over a region Ω centered at A<sub>0</sub>:</p>
   <span class="eq">E<sub>total</sub> = ∭<sub>Ω</sub> u(<b>r</b>, t) d³<b>r</b> = mc², &nbsp;&nbsp; m := ∭<sub>Ω</sub> ρ<sub>m</sub> d³<b>r</sub></span>
-  <div class="proof"><span class="plabel">Status.</span> The conclusion follows from the symmetry postulate by Noether's theorem, following Einstein's inertia-of-energy logic in its modern formulation. <span class="rlabel">Correction of v100:</span> the v100 "derivation" defined ρ<sub>m</sub> ≡ u/c² (Eq. 6) and then integrated to obtain E = mc² (Eq. 8) — a tautology in which the conclusion was contained in the premise. That circular route is replaced by the symmetry route. <span class="rlabel">Open work:</span> exhibiting the explicit ℒ; until then the result remains conditional, and the theory claims to derive relativity from nothing. ∎</div>
+  <div class="proof"><span class="plabel">Status.</span> The conclusion follows from the symmetry postulate by Noether's theorem, following Einstein's inertia-of-energy logic in its modern formulation. <b>Correction of v100:</b> the v100 "derivation" defined ρ<sub>m</sub> ≡ u/c² (Eq. 6) and then integrated to obtain E = mc² (Eq. 8) — a tautology in which the conclusion was contained in the premise. That circular route is replaced by the symmetry route. <b>Open work:</b> exhibiting the explicit ℒ; until then the result remains conditional, and the theory claims to derive relativity from nothing. ∎</div>
 </div></div>
 
 <h2 id="ch4"><span class="no">Chapter 4</span>The state-space representation lemmas</h2>
@@ -217,7 +205,7 @@
 <div class="lemma"><div class="inner">
   <span class="label">Lemma 4.1 (Injective encoding exists; encoding is not the barrier) <span class="status s-proved">proved</span></span>
   <p>For SAT on N ≥ 3 variables, the rotation-plane configuration space (R<sub>N</sub> = C(N,2) planes, angles quantized to two values) has cardinality 2<sup>R<sub>N</sub></sup> ≥ 2<sup>N</sup>. Consequently there exists an injective encoding of truth assignments into plane configurations, taking one dedicated plane per variable.</p>
-  <div class="proof"><span class="plabel">Proof.</span> For N ≥ 3, C(N,2) = N(N−1)/2 ≥ N, so 2<sup>C(N,2)</sup> ≥ 2<sup>N</sup>. Verified numerically: for N = 4, 8, 16, 32, 64 the configuration address spaces are 6, 28, 120, 496, 2016 bits respectively, always exceeding the N-bit assignment space. The encoding x<sub>i</sub> ↦ angle of plane Π<sub>i</sub> ∈ {0, π} (truth polarity) is injective by construction. The information-theoretic obstruction therefore vanishes: what remains is the search problem — locating the satisfying configuration — which is precisely the P vs NP core and is not eliminated by geometry but by Postulate 2.5. ∎</div>
+  <div class="proof"><span class="plabel">Proof.</span> For N ≥ 3, C(N,2) = N(N−1)/2 ≥ N, so 2<sup>C(N,2)</sup> ≥ 2<sup>N</sup>. Verified numerically: for N = 4, 8, 16, 32, 64 the configuration address spaces are 6, 28, 120, 496, 2016 bits respectively, always exceeding the N-bit assignment space. The encoding x<sub>i</sub> ↦ angle of plane Π<sub>i</sub> ∈ {0, π} (truth polarity) is injective by construction. The information-theoretic obstruction therefore vanishes: <b>what remains is the search problem</b> — locating the satisfying configuration — which is precisely the P vs NP core and is not eliminated by geometry but by Postulate 2.5. ∎</div>
 </div></div>
 
 <div class="lemma"><div class="inner">
@@ -237,7 +225,7 @@
   <p>Let 𝒯<sub>rev</sub> be the temporal reversal operator on a computational state space of n bits. The minimum heat dissipated is</p>
   <span class="eq">ΔE ≥ n<sub>erased</sub> · k<sub>B</sub>T ln 2</span>
   <p>where n<sub>erased</sub> is the number of bits not recoverable after reversal. If 𝒯<sub>rev</sub> is logically reversible (bijective), then n<sub>erased</sub> = 0 and no Landauer heat is required (Landauer 1961; Bennett 1973).</p>
-  <div class="proof"><span class="plabel">Status.</span> A correct application of Landauer's principle, independent of the manifold. <span class="rlabel">Correction of v100:</span> the v100 wavefunction Ψ<sub>mesh</sub> (Eq. 9) multiplied a torque sum, a firewall step-function, and a Boltzmann factor into a single expression with no defined probability space, and asserted that "nodal firewalls absorb Landauer heat." Formally, the reversal operator must carry an explicit erasure log; otherwise reversal is thermodynamically free only if logically reversible — in tension with the trajectory-collapsing behavior v100 also assumed. The orbital gear-mesh tiers (δ: 4 lobes, 2 nodes; φ: 6 lobes, 3 nodes; 𝒪₈: 8 lobes, 4 nodes) are retained as labeled analogy only: orbital lobes do not transmit mechanical torque. The tension between free reversal and trajectory collapse is flagged, not resolved (Open Problem 3). ∎</div>
+  <div class="proof"><span class="plabel">Status.</span> A correct application of Landauer's principle, independent of the manifold. <b>Correction of v100:</b> the v100 wavefunction Ψ<sub>mesh</sub> (Eq. 9) multiplied a torque sum, a firewall step-function, and a Boltzmann factor into a single expression with no defined probability space, and asserted that "nodal firewalls absorb Landauer heat." Formally, the reversal operator must carry an explicit erasure log; otherwise reversal is thermodynamically free <i>only if</i> logically reversible — in tension with the trajectory-collapsing behavior v100 also assumed. The orbital gear-mesh tiers (δ: 4 lobes, 2 nodes; φ: 6 lobes, 3 nodes; 𝒪₈: 8 lobes, 4 nodes) are retained as labeled analogy only: orbital lobes do not transmit mechanical torque. The tension between free reversal and trajectory collapse is flagged, not resolved (Open Problem 3). ∎</div>
 </div></div>
 
 <h2 id="ch5"><span class="no">Chapter 5</span>The Complexity Collapse Theorem</h2>
@@ -245,11 +233,11 @@
 <div class="theorem"><div class="inner">
   <span class="label">Theorem 5.1 (Complexity Collapse, oracle-relative) <span class="status s-rel">relative to Postulate 2.5</span></span>
   <p>Under Postulate 2.5 (the A<sub>0</sub>-evaluation oracle), SAT on N variables is solvable in ℳ<sub>N</sub>(A<sub>0</sub>) with total non-oracle cost O(N²), via three stages:</p>
-  <p><span class="plabel">(i)</span> Encoding, O(N²). By Lemma 4.1, each variable x<sub>i</sub> maps injectively to a dedicated rotation plane Π<sub>i</sub> with binary angle quantization (truth polarity). By Lemma 4.2, the CNF constraint system compiles onto the planes in O(N²).</p>
-  <p><span class="plabel">(ii)</span> Oracle call, one step. By Postulate 2.5, the zero point returns a satisfying plane configuration, if one exists, in a single evaluation: 𝒯<sub>solve</sub> = 0.</p>
-  <p><span class="plabel">(iii)</span> Decoding and verification, O(N²). By Lemma 4.3, the configuration decodes to a truth assignment in O(N) and is verified against all clauses in O(N²).</p>
+  <p><b>(i) Encoding — O(N²).</b> By Lemma 4.1, each variable x<sub>i</sub> maps injectively to a dedicated rotation plane Π<sub>i</sub> with binary angle quantization (truth polarity). By Lemma 4.2, the CNF constraint system compiles onto the planes in O(N²).</p>
+  <p><b>(ii) Oracle call — one step.</b> By Postulate 2.5, the zero point returns a satisfying plane configuration, if one exists, in a single evaluation: 𝒯<sub>solve</sub> = 0.</p>
+  <p><b>(iii) Decoding and verification — O(N²).</b> By Lemma 4.3, the configuration decodes to a truth assignment in O(N) and is verified against all clauses in O(N²).</p>
   <span class="eq">𝒞<sub>total</sub> = O(N²) + 1 + O(N²) = O(N²)</span>
-  <div class="proof"><span class="plabel">Proof.</span> Stage (i) is Lemmas 4.1 + 4.2; stage (ii) is Postulate 2.5 verbatim; stage (iii) is Lemma 4.3. The encoding is injective (Lemma 4.1), so decoding is well-defined; the oracle is invoked exactly once; and the verification step certifies the oracle's answer, so the algorithm is never wrong even if the oracle were replaced by any sound heuristic — correctness does not depend on the postulate, only the O(N²) bound does. ∎</div>
+  <div class="proof"><span class="plabel">Proof.</span> Stage (i) is Lemmas 4.1 + 4.2; stage (ii) is Postulate 2.5 verbatim; stage (iii) is Lemma 4.3. The encoding is injective (Lemma 4.1), so decoding is well-defined; the oracle is invoked exactly once; and the verification step certifies the oracle's answer, so the algorithm is never wrong even if the oracle were replaced by any sound heuristic — correctness does not depend on the postulate, only the O(N²) <i>bound</i> does. ∎</div>
 </div></div>
 
 <div class="corollary"><div class="inner">
@@ -259,7 +247,7 @@
 
 <div class="corollary"><div class="inner">
   <span class="label">Corollary 5.3 (Where the barrier lives) <span class="status s-rel">structural</span></span>
-  <p>Theorem 5.1 proves that SAT reduces to one oracle call with polynomial overhead. This is the well-known situation of P = NP relative to a SAT oracle — trivially true, and carrying no information about the unrelativized Cook–Levin question. The entire computational content of special computational relativity is carried by Postulate 2.5; the geometry contributes the representation (Lemmas 4.1–4.3), not the search.</p>
+  <p>Theorem 5.1 proves that SAT reduces to <b>one oracle call</b> with polynomial overhead. This is the well-known situation of P = NP relative to a SAT oracle — trivially true, and carrying no information about the unrelativized Cook–Levin question. The entire computational content of special computational relativity is carried by Postulate 2.5; the geometry contributes the representation (Lemmas 4.1–4.3), not the search.</p>
   <div class="proof"><span class="plabel">De-relativization routes (analyzed).</span> (a) Interior-point or ellipsoid methods over the R<sub>N</sub>-dimensional angle space: clause satisfaction is non-convex and no known relaxation is exact, mirroring the known hardness of algebraic relaxations of SAT. (b) Symmetry reduction: quotienting by S<sub>N</sub> (Proposition 2.4) saves at most a factorial factor — insufficient against 2<sup>N</sup>. Conclusion: within this framework the barrier is exactly the standard P vs NP barrier; the framework neither circumvents nor deepens it. ∎</div>
 </div></div>
 
@@ -271,11 +259,11 @@
 </div></div>
 <div class="corollary"><div class="inner">
   <span class="label">Corollary 6.2 (Mass–energy consistency, not derivation) <span class="status s-cond">conditional</span></span>
-  <p>By Theorem 3.5, the field identity E = mc² holds in ℳ<sub>N</sub>(A<sub>0</sub>) conditional on Postulate 3.4, independently of Postulate 2.5. The v100 claim that E = mc² "emerges as a necessary geometric manifestation of P = NP" is withdrawn: the two postulates are separate, and neither derives the other. The Einsteinian analogy survives only in form (single postulate → derived structure), not in the v100 claim of a single common origin.</p>
+  <p>By Theorem 3.5, the field identity E = mc² holds in ℳ<sub>N</sub>(A<sub>0</sub>) conditional on Postulate 3.4, independently of Postulate 2.5. The v100 claim that E = mc² "emerges as a necessary geometric manifestation of P = NP" is withdrawn: the two postulates are separate, and neither derives the other. The Einsteinian analogy survives only in <i>form</i> (single postulate → derived structure), not in the v100 claim of a single common origin.</p>
 </div></div>
 <div class="corollary"><div class="inner">
   <span class="label">Corollary 6.3 (Thermodynamic cost of the oracle) <span class="status s-rel">relative</span></span>
-  <p>If the A<sub>0</sub>-evaluation oracle is implemented by any physical process that erases n bits in preparing its answer, Lemma 4.4 bounds its heat dissipation below by n·k<sub>B</sub>T ln 2. The postulate 𝒯<sub>solve</sub> = 0 constrains time, not thermodynamic cost; a zero-time oracle may still be physically costly, and the theory explicitly does not claim otherwise.</p>
+  <p>If the A<sub>0</sub>-evaluation oracle is implemented by any physical process that erases n bits in preparing its answer, Lemma 4.4 bounds its heat dissipation below by n·k<sub>B</sub>T ln 2. The postulate 𝒯<sub>solve</sub> = 0 constrains <i>time</i>, not <i>thermodynamic cost</i>; a zero-time oracle may still be physically costly, and the theory explicitly does not claim otherwise.</p>
 </div></div>
 <div class="corollary"><div class="inner">
   <span class="label">Corollary 6.4 (Status of consciousness and HSAM) <span class="status s-spec">speculative</span></span>
@@ -308,7 +296,7 @@
   <tr><td>Corollary 6.4 — consciousness / HSAM</td><td><span class="status s-spec">speculative</span></td><td>—</td></tr>
 </table>
 
-<h3>7.2 Open problems</h3>
+<h3>7.2 Open problems (honest list)</h3>
 <ol>
   <li>Exhibit an explicit Lagrangian ℒ making Postulate 3.4 more than a program.</li>
   <li>Replace the A₀-evaluation oracle of Postulate 2.5 with an algorithm — equivalent to the unrelativized P vs NP question; this framework offers no new leverage, and says so.</li>
@@ -332,9 +320,9 @@
   <ol>
     <li><a href="#ch1"><span class="n">1</span>The method of the single invariant postulate</a>
       <ol>
-        <li>1.1 The paradox of physical complexity limits</li>
-        <li>1.2 The Einsteinian method, applied precisely</li>
-        <li>1.3 What was withdrawn from v100.0.1, and why</li>
+        <li><a href="#ch1">1.1 The paradox of physical complexity limits</a></li>
+        <li><a href="#ch1">1.2 The Einsteinian method, applied precisely</a></li>
+        <li><a href="#ch1">1.3 What was withdrawn from v100.0.1, and why</a></li>
       </ol>
     </li>
     <li><a href="#ch2"><span class="n">2</span>The postulate P = NP and the manifold ℳ<sub>N</sub>(A<sub>0</sub>)
