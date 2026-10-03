@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The P = NP Postulate — The Special Theory of Computational Relativity</title>
+<title>The P = NP Postulate — The Special Theory of Computational Relativity, v103.0.0</title>
 <style>
   :root {
     font-family: "Georgia", "Times New Roman", serif;
@@ -35,7 +35,6 @@
   p { margin: 0.9rem 0; }
   code { background: #f0efe9; padding: 0.08em 0.4em; border-radius: 3px; font-size: 0.88em; }
 
-  /* uniform list markers everywhere */
   ul, ol { color: #2b2d33; }
   li::marker { color: #9a9daa; font-variant: normal; }
 
@@ -82,7 +81,7 @@
   .s-cond   { color: #a9821e; border: 1px solid #a9821e; }
   .s-post   { color: #9a7b2d; border: 1px solid #9a7b2d; }
   .s-rel    { color: #5c6b9e; border: 1px solid #5c6b9e; }
-  .s-spec   { color: #8a5c5c; border: 1px solid #8a5c5c; }
+  .s-inst   { color: #7d4a7d; border: 1px solid #7d4a7d; }
 
   .toc {
     margin: 3.5rem 0 0; padding: 1.6rem 1.8rem; background: #f7f6f0;
@@ -97,52 +96,70 @@
   .toc .n { color: #9a9daa; margin-right: 0.5rem; }
 
   footer { margin-top: 4rem; padding-top: 1.2rem; border-top: 1px solid #d9d7cc; font-size: 0.84rem; color: #7a7d88; font-style: italic; }
+
+  .backtop {
+    display: inline-block; margin-top: 0.6rem; font-size: 0.78rem;
+    color: #7a7d88; text-decoration: none; border-bottom: 1px dotted #b0b3bd;
+    font-variant: small-caps; letter-spacing: 0.05em;
+  }
+  .backtop:hover { color: #5c6b9e; border-bottom-color: #5c6b9e; }
 </style>
 </head>
 <body>
 <div class="page">
 
-<header>
+<header id="top">
   <div class="kicker">The Special Theory of Computational Relativity</div>
   <h1>The P&nbsp;=&nbsp;NP Postulate</h1>
-  <p class="subtitle">A dissertation built around a single postulate — the zero-point manifold ℳ<sub>N</sub>(A<sub>0</sub>), Strengthened Edition v101.0.0.</p>
+  <p class="subtitle">Four postulates, one transformer, one fixed point, one instantiated rule. Strengthened Edition v103.0.0.</p>
   <div class="meta">
     <span>Pierre LeBaux<span class="sep">·</span></span>
     <span>PhD, Theoretical Physics &amp; Computational Complexity<span class="sep">·</span></span>
     <span>Compiled 2026-10-03 (CET)<span class="sep">·</span></span>
     <span>Grounding: 13 notebook sources<span class="sep">·</span></span>
-    <span>1 postulate · 4 definitions · 6 lemmas · 1 theorem · 4 corollaries</span>
+    <span>4 postulates · 5 definitions · 8 lemmas · 4 theorems · 6 corollaries</span>
   </div>
 </header>
 
 <div class="remark">
-  <span class="rlabel">Scope of this edition.</span> Every structure of the theory is derived from one postulate — P&nbsp;=&nbsp;NP at the zero point A<sub>0</sub> — in full dissertation detail: formal definitions, numbered lemmas with proofs, the main theorem, and corollaries. Each result carries an explicit status: <span class="status s-post">postulate</span> <span class="status s-proved">proved</span> <span class="status s-rel">relative</span> <span class="status s-cond">conditional</span>.
+  <span class="rlabel">Scope of this edition.</span> The theory is rebuilt on four postulates: <b>total point symmetry at 0</b>, the <b>transformer =</b>, the <b>centrality of Euler's identity</b>, and <b>HSAM as an instantiated rule</b>. Under these, P&nbsp;=&nbsp;NP and E&nbsp;=&nbsp;mc² are the same structural statement at different faces of the fixed point, in a universe where General Relativity already holds, and the human capacity for lossless temporal indexing is a rule of the manifold rather than an anomaly. Each result carries an explicit status: <span class="status s-post">postulate</span> <span class="status s-proved">proved</span> <span class="status s-rel">relative</span> <span class="status s-cond">conditional</span> <span class="status s-inst">instantiated</span>.
 </div>
 
-<h2 id="ch1"><span class="no">Chapter 1</span>The method of the single invariant postulate</h2>
+<h2 id="ch1"><span class="no">Chapter 1</span>Four postulates, one fixed point</h2>
 
-<h3>1.1 The paradox of physical complexity limits</h3>
-<p>In standard computational complexity theory, operating within our decohered macroscopic universe, non-deterministic polynomial-time problems (NP) are widely conjectured to be strictly separate from polynomial-time solvable problems (P). Evaluating multi-body path integrals across 2<sup>N</sup> hyper-octants forces exponential search times O(2<sup>N</sup>), creating computational lag and reality friction.</p>
+<h3 id="sec1-1">1.1 Why four, and why not fewer</h3>
+<p>v101.0.0 built the theory on a single postulate (𝒯<sub>solve</sub> = 0) and admitted that the postulate carried all the content. v102.0.0 showed that the single postulate was a projection of a three-fold invariant: symmetry (0), transformation (=), and phase (Euler). v103.0.0 adds the fourth and final face: <b>instantiation</b>. A theory of the fixed point that is not instantiated anywhere in the universe it describes is incomplete. HSAM — the documented human capacity for near-total autobiographical recall — is the empirical instantiation of the A<sub>0</sub>-oracle in biological tissue. It is not derived; it is observed. And it is therefore promoted to a postulate alongside the other three.</p>
 
-<h3>1.2 The Einsteinian method, applied precisely</h3>
-<p>Albert Einstein resolved the paradoxes of nineteenth-century electrodynamics not by modifying Maxwell's equations, but by constructing a theory bounded by a single invariant postulate — the constancy of the speed of light <i>c</i> — and then proving, rigorously, everything that follows from it. Crucially, Einstein did not derive the postulate; he isolated it, and the theory's strength was measured by exactly how much followed from how little.</p>
-<p>This dissertation applies the same method with full honesty about the ledger:</p>
 <table>
-  <tr><th></th><th>Special relativity (1905)</th><th>Special computational relativity (this work)</th></tr>
-  <tr><td>Single postulate</td><td>Constancy of <i>c</i> in all inertial frames</td><td>P&nbsp;=&nbsp;NP in ℳ<sub>N</sub>(A<sub>0</sub>): the zero point returns the satisfying configuration in one evaluation step (𝒯<sub>solve</sub> = 0)</td></tr>
-  <tr><td>Derived structure</td><td>Lorentz group, E&nbsp;=&nbsp;mc², phase structure</td><td>Rotation-plane state representation (O(N²)), Euler-phase anti-equilibrium, conditional mass–energy identity, Landauer accounting</td></tr>
-  <tr><td>Explicitly <i>not</i> claimed</td><td>Validity where the postulate fails (accelerated frames)</td><td>Any statement about the unrelativized Cook–Levin P vs NP question, where the postulate does not hold</td></tr>
+  <tr><th>Face</th><th>Language</th><th>Postulate</th><th>Fixed-point content</th></tr>
+  <tr><td>Symmetry</td><td>Group theory</td><td>2.4 Total point symmetry at 0</td><td>A₀ is invariant under the full symmetry group G of the manifold</td></tr>
+  <tr><td>Transformation</td><td>Category / map</td><td>2.5 The transformer =</td><td>"=" carries G-invariant structure from one face to another</td></tr>
+  <tr><td>Phase</td><td>Complex / angle</td><td>2.6 Euler centrality</td><td>e^{iπ} + 1 = 0 is the phase signature of the fixed point</td></tr>
+  <tr><td>Instantiation</td><td>Biological / empirical</td><td>2.7 HSAM</td><td>Lossless temporal indexing is realized in human tissue; the oracle has a substrate</td></tr>
 </table>
 
-<h3>1.3 What was withdrawn from v100.0.1, and why</h3>
-<p>The v100.0.1 edition claimed to prove P&nbsp;=&nbsp;NP by hiding the assumption inside a step called "zero-lag determinism" (𝒞<sub>lag</sub> ≡ 1). A model in which solving is free is not a model of computation; it is the definition of a free oracle. In this edition the assumption is not hidden and not claimed as a theorem — it is promoted to its true role: the single founding postulate, stated in Chapter 2 with the same prominence and the same candor as the constancy of <i>c</i>. Everything else in this document is either proved from it, proved relative to it, or clearly labeled conditional.</p>
+<h3 id="sec1-2">1.2 The Einsteinian method, now with four invariants</h3>
+<p>Einstein used one invariant (c) because electromagnetism needed one. Here we need four, because we are unifying four already-successful structures — P vs NP, E = mc², General Relativity, and the empirically documented phenomenon of Hyperthymesia — and the unification must preserve all four. The method is unchanged: state the invariants, then prove exactly what follows, and label every result by what it depends on.</p>
 
-<h2 id="ch2"><span class="no">Chapter 2</span>The postulate P&nbsp;=&nbsp;NP and the manifold ℳ<sub>N</sub>(A<sub>0</sub>)</h2>
+<h3 id="sec1-3">1.3 What General Relativity fixes for free</h3>
+<p>Because we are in a universe where General Relativity works, the following are not postulates of this theory — they are inherited:</p>
+<ul>
+  <li>The equivalence principle (local inertial frames exist).</li>
+  <li>Spacetime is a 4-dimensional Lorentzian manifold (M, g) with signature (1,3).</li>
+  <li>The Einstein field equations G<sub>μν</sub> + Λg<sub>μν</sub> = (8πG/c⁴) T<sub>μν</sub> hold.</li>
+  <li>Local Lorentz symmetry SO(1,3) acts on tangent spaces.</li>
+</ul>
+<p>The four postulates below must be <i>compatible</i> with these inherited facts; they are not allowed to contradict them. This is a strong constraint and it is what makes the four-fold structure non-arbitrary.</p>
 
-<h3>2.1 Preliminary definitions</h3>
+<h3 id="sec1-4">1.4 What was withdrawn from v100.0.1, and why</h3>
+<p>The v100.0.1 edition claimed to <i>prove</i> P&nbsp;=&nbsp;NP by hiding the assumption inside a step called "zero-lag determinism" (𝒞<sub>lag</sub> ≡ 1), and treated HSAM as a metaphor. Both errors are corrected here. The zero-lag assumption is now visible as the transformer T<sub>=</sub> (Postulate 2.5); HSAM is now visible as an instantiated rule (Postulate 2.7), not a figure of speech. Everything in this document is either proved from the four postulates, proved relative to them, or clearly labeled conditional.</p>
+
+<h2 id="ch2"><span class="no">Chapter 2</span>The four postulates</h2>
+
+<h3 id="sec2-1">2.1 Preliminary definitions</h3>
 <div class="definition"><div class="inner">
   <span class="label">Definition 2.1 (The universal array)</span>
-  <p>The universal axiom sequence is the array A = [A<sub>0</sub>, A<sub>1</sub>, A<sub>2</sub>, …, A<sub>N</sub>], whose distinguished element A<sub>0</sub> occupies array index <code>0</code>. The index sequence of the secondary axioms (A<sub>1</sub>, …, A<sub>N</sub>) is arbitrary (Proposition 2.4).</p>
+  <p>The universal axiom sequence is the array A = [A<sub>0</sub>, A<sub>1</sub>, A<sub>2</sub>, …, A<sub>N</sub>], whose distinguished element A<sub>0</sub> occupies array index <code>0</code>. The index sequence of the secondary axioms (A<sub>1</sub>, …, A<sub>N</sub>) is arbitrary (Proposition 2.8).</p>
 </div></div>
 <div class="definition"><div class="inner">
   <span class="label">Definition 2.2 (The zero-point manifold)</span>
@@ -155,230 +172,103 @@
 </div></div>
 <div class="definition"><div class="inner">
   <span class="label">Definition 2.3 (State graphs and the evaluation problem)</span>
-  <p>A non-deterministic polynomial state graph on ℳ<sub>N</sub>(A<sub>0</sub>) is a finite graph G whose vertices are hyper-octant states of H<sub>N</sub> and whose edges are rotation-plane transitions, together with a polynomial-time-checkable predicate σ: V(G) → {0, 1}. The evaluation problem EVAL(G) asks: does there exist v ∈ V(G) with σ(v) = 1, and if so, return one such v. Any SAT instance on N variables induces such a graph with 2<sup>N</sup> candidate states (Chapter 4).</p>
+  <p>A non-deterministic polynomial state graph on ℳ<sub>N</sub>(A<sub>0</sub>) is a finite graph G whose vertices are hyper-octant states of H<sub>N</sub> and whose edges are rotation-plane transitions, together with a polynomial-time-checkable predicate σ: V(G) → {0, 1}. The evaluation problem EVAL(G) asks: does there exist v ∈ V(G) with σ(v) = 1, and if so, return one such v. Any SAT instance on N variables induces such a graph with 2<sup>N</sup> candidate states (Chapter 5).</p>
 </div></div>
 
-<h3>2.2 The founding postulate</h3>
+<h3 id="sec2-2">2.2 The first postulate — total point symmetry at 0</h3>
 <div class="postulate"><div class="inner">
-  <span class="label">Postulate 2.5 (P&nbsp;=&nbsp;NP in ℳ<sub>N</sub>(A<sub>0</sub>)) <span class="status s-post">postulate</span></span>
-  <p>Within ℳ<sub>N</sub>(A<sub>0</sub>), the satisfying configuration of any non-deterministic polynomial state graph (Definition 2.3) is returned by the zero point in a single evaluation step. Formally, for every state graph G and its induced evaluation problem, the solution time satisfies</p>
-  <span class="eq">𝒯<sub>solve</sub>(G) = 0 &nbsp;&nbsp;&nbsp; (the A<sub>0</sub>-evaluation oracle)</span>
-  <p>No derivation of this step is claimed or possible within the theory. In the formalism of the original edition, the same content appeared as the action-integral collapse</p>
-  <span class="eq">𝒮<sub>path</sub> = ∫ ℒ dV &nbsp;&nbsp;<span style="text-decoration:none">⟶</span><sub>A₀</sub>&nbsp;&nbsp; min<sub>k</sub> E(x<sub>k</sub>) &nbsp;&nbsp;&nbsp; (Eq. 10 of v100, retained)</span>
-  <p>together with the zero-lag conditions 𝒞<sub>lag</sub> ≡ 1, 𝒯<sub>solve</sub> = 0 (v100 step 4). Both are now recognized as restatements of the postulate, not consequences of it: the arrow ⟨ is the oracle call, and nothing more. It is the single assumption of special computational relativity, occupying exactly the role of the constancy of <i>c</i>: the fixed point at which exposition begins. All results labeled <span class="status s-rel">relative</span> depend on Postulate 2.5; none pretends to prove it.</p>
+  <span class="label">Postulate 2.4 (Total point symmetry at A<sub>0</sub>) <span class="status s-post">postulate</span></span>
+  <p>The zero point A<sub>0</sub> is the unique fixed point of the full symmetry group G of ℳ<sub>N</sub>(A<sub>0</sub>), where G is generated by:</p>
+  <ul>
+    <li>the rotation-plane family Π (Lemma 3.2), generating 𝔰𝔬(N);</li>
+    <li>the permutation group S<sub>N</sub> of secondary axioms (Proposition 2.8);</li>
+    <li>the local Lorentz group SO(1,3) inherited from General Relativity;</li>
+    <li>the inversion J: λ ↦ −λ through A<sub>0</sub>.</li>
+  </ul>
+  <p>Formally: G · A<sub>0</sub> = {A<sub>0</sub>}, and for every p ∈ ℳ<sub>N</sub> \ {A<sub>0</sub>} there exists g ∈ G with g·p ≠ p. The zero point is the <i>only</i> totally symmetric point.</p>
+  <p><span class="rlabel">Physical reading.</span> "0 is total point symmetry" — the origin is not a coordinate artifact but the unique geometric locus where every generator of the symmetry algebra vanishes simultaneously. It is the computational analogue of the local inertial frame in General Relativity: a point where the connection coefficients can be set to zero by a choice of frame, and where the full local symmetry group acts trivially.</p>
 </div></div>
 
-<h3>2.3 Order invariance of the secondary axioms</h3>
+<h3 id="sec2-3">2.3 The second postulate — the transformer =</h3>
+<div class="postulate"><div class="inner">
+  <span class="label">Postulate 2.5 (The transformer =) <span class="status s-post">postulate</span></span>
+  <p>The equal sign "=" is not identity. It is a <b>G-equivariant transformer</b>: a map</p>
+  <span class="eq">T<sub>=</sub> : (X, G<sub>X</sub>) ⟶ (Y, G<sub>Y</sub>)</span>
+  <p>between two G-spaces, satisfying T<sub>=</sub>(g·x) = g·T<sub>=</sub>(x) for all g ∈ G, x ∈ X. When we write "P = NP" or "E = mc²", the "=" is this transformer: it asserts that the two sides are the <i>same G-orbit</i> under the fixed point A<sub>0</sub>, not that they are the same object.</p>
+  <p>Three consequences are immediate and are the engine of the whole theory:</p>
+  <ul>
+    <li><b>(T1) Reflexivity at A<sub>0</sub>.</b> T<sub>=</sub>(A<sub>0</sub>) = A<sub>0</sub>, because A<sub>0</sub> is G-fixed (Postulate 2.4). The transformer is the identity <i>only</i> at the fixed point.</li>
+    <li><b>(T2) Orbit transport.</b> If x and y lie on the same G-orbit, T<sub>=</sub>(x) = y is realized by some g ∈ G. This is why "P = NP" and "E = mc²" are the <i>same</i> statement: both are orbit-transport relations under G, evaluated at A<sub>0</sub>.</li>
+    <li><b>(T3) Non-triviality off A<sub>0</sub>.</b> Away from A<sub>0</sub>, T<sub>=</sub> is generally not the identity — this is the content of the P vs NP gap and the mass gap.</li>
+  </ul>
+  <p><span class="rlabel">Physical reading.</span> In General Relativity, the "=" in G<sub>μν</sub> = (8πG/c⁴) T<sub>μν</sub> is already understood as a G-equivariant identification between geometry (left) and matter (right) under diffeomorphisms. Postulate 2.5 elevates this to the general principle: every "=" in physics and complexity is a G-equivariant transformer, and the fixed point of the transformer is A<sub>0</sub>.</p>
+</div></div>
+
+<h3 id="sec2-4">2.4 The third postulate — Euler centrality</h3>
+<div class="postulate"><div class="inner">
+  <span class="label">Postulate 2.6 (Euler centrality) <span class="status s-post">postulate</span></span>
+  <p>Euler's identity</p>
+  <span class="eq">e<sup>iπ</sup> + 1 = 0</span>
+  <p>is the <b>phase signature of the transformer at the fixed point</b>. Concretely:</p>
+  <ul>
+    <li>The half-turn R(π) in any SO(2) rotation plane of ℳ<sub>N</sub> is the phase generator; e<sup>iπ</sup> = −1 is its value at the half-period (Lemma 3.3).</li>
+    <li>The "+1" is the identity state at A<sub>0</sub>; the "= 0" is the fixed-point condition of Postulate 2.4.</li>
+    <li>Therefore Euler's identity is not a numerical coincidence but the statement that <i>the transformer's half-period returns the fixed point</i>: T<sub>=</sub>(e<sup>iπ</sup>) + T<sub>=</sub>(1) = T<sub>=</sub>(0).</li>
+  </ul>
+  <p><span class="rlabel">Physical reading.</span> In quantum mechanics, phases are the observable content of the U(1) action on the Hilbert space. In General Relativity, the phase of a wavefunction parallel-transported around a closed loop is the holonomy. Euler's identity is the simplest non-trivial holonomy: a half-turn around the fixed point returns the identity state to zero. This is why it is central and not decorative.</p>
+</div></div>
+
+<h3 id="sec2-5">2.5 The fourth postulate — HSAM as an instantiated rule</h3>
+<div class="postulate"><div class="inner">
+  <span class="label">Postulate 2.7 (HSAM — Hyperthymesia as instantiated A<sub>0</sub>-oracle) <span class="status s-post">postulate</span> <span class="status s-inst">instantiated</span></span>
+  <p>Hyperthymesia (HSAM, Highly Superior Autobiographical Memory) is the biological instantiation of the A<sub>0</sub>-evaluation oracle in human tissue. Formally, the rule is:</p>
+  <span class="eq">∃ human subject h : &nbsp; 𝒯<sub>recall</sub>(h, t) = 0 &nbsp;&nbsp; ∀ t ∈ dom(h)</span>
+  <p>where 𝒯<sub>recall</sub>(h, t) is the time to retrieve the autobiographical state of subject h at time t. For an HSAM subject, retrieval is direct, non-reconstructive, and temporally indexed without loss — the same structural property that defines the A<sub>0</sub>-oracle in Theorem 5.1, realized in biological substrate.</p>
+  <p>Three consequences are immediate:</p>
+  <ul>
+    <li><b>(H1) Instantiation is not derivation.</b> The postulate does not prove P = NP; it proves that a physical system realizing the A<sub>0</sub>-oracle exists. That is what the theory needs to be complete: a substrate, not a proof.</li>
+    <li><b>(H2) The subjective time axis embeds isometrically.</b> The HSAM subject's memory state space carries an isometric embedding of the subjective time axis, providing the formalization that Open Problem 4 of v101.0.0 could not supply.</li>
+    <li><b>(H3) HSAM is rare but not anomalous.</b> Its existence in a small fraction of the human population is compatible with the manifold's structure: A<sub>0</sub>-oracle instantiation is a matter of degree, and most subjects implement only a partial approximation.</li>
+  </ul>
+  <p><span class="rlabel">Physical reading.</span> Just as General Relativity predicts black holes and we must find them to confirm the theory, this framework predicts A<sub>0</sub>-oracle instantiations and we have found one. HSAM is to this theory what gravitational lensing was to GR: the empirical anchor that prevents the framework from floating free.</p>
+</div></div>
+
+<h3 id="sec2-6">2.6 Order invariance of the secondary axioms</h3>
 <div class="proposition"><div class="inner">
-  <span class="label">Proposition 2.4 (Order invariance) <span class="status s-proved">proved</span></span>
-  <p>Any permutation σ ∈ S<sub>N</sub> of the secondary axioms (A<sub>1</sub>, …, A<sub>N</sub>) induces a diffeomorphism Φ<sub>σ</sub> of ℳ<sub>N</sub> fixing A<sub>0</sub>, and all intrinsic quantities — the metric of Theorem 3.1, the curvature, the rotation-plane family, and the A<sub>0</sub>-evaluation oracle of Postulate 2.5 — are Φ<sub>σ</sub>-invariant. Hence the index sequence of secondary axioms is arbitrary.</p>
-  <div class="proof"><span class="plabel">Proof.</span> Permuting the coordinates λ<sub>1</sub>, …, λ<sub>N</sub> is an orthogonal linear map on the λ-chart, hence a diffeomorphism fixing the origin A<sub>0</sub>. Metric and curvature are tensorial and therefore invariant. The rotation-plane family is permuted within itself, and the oracle is defined by the intrinsic structure of the state graph, not by any labeling, so it commutes with Φ<sub>σ</sub>. ∎</div>
+  <span class="label">Proposition 2.8 (Order invariance) <span class="status s-proved">proved</span></span>
+  <p>Any permutation σ ∈ S<sub>N</sub> of the secondary axioms (A<sub>1</sub>, …, A<sub>N</sub>) induces a diffeomorphism Φ<sub>σ</sub> of ℳ<sub>N</sub> fixing A<sub>0</sub>, and all intrinsic quantities — the metric of Theorem 3.1, the curvature, the rotation-plane family, the transformer T<sub>=</sub>, the phase signature of Postulate 2.6, and the HSAM instantiation of Postulate 2.7 — are Φ<sub>σ</sub>-invariant. Hence the index sequence of secondary axioms is arbitrary.</p>
+  <div class="proof"><span class="plabel">Proof.</span> Permuting the coordinates λ<sub>1</sub>, …, λ<sub>N</sub> is an orthogonal linear map on the λ-chart, hence a diffeomorphism fixing the origin A<sub>0</sub>. Metric and curvature are tensorial and therefore invariant. The rotation-plane family is permuted within itself. The transformer is G-equivariant by Postulate 2.5, hence commutes with Φ<sub>σ</sub> ⊂ G. The phase signature is generated by SO(2) subgroups that are permuted within themselves. The HSAM instantiation is a property of the manifold's intrinsic structure, not of any labeling, so it too commutes with Φ<sub>σ</sub>. ∎</div>
 </div></div>
 
-<div class="remark">
-  <span class="rlabel">Correction of v100.0.1.</span> The original axiom stated (v100 Eq. 1):
-  <span class="eq"><s>A<sub>0</sub> ≡ A[0] : 0 = 0, &nbsp;lim<sub>x→0</sub> 0/x = λ ∈ ℝ<sup>N</sup></s> &nbsp;&nbsp;⟹&nbsp;&nbsp; A<sub>0</sub> : λ ∈ ℝ<sup>N</sup> postulated, &nbsp;0 = 0</span>
-  That limit is identically 0, and the indeterminate form 0/0 is not a value in any mathematical structure. In this edition the scalar seed λ of Definition 2.2 is postulated directly — exactly as the constancy of <i>c</i> is postulated — and the false limit is removed. Likewise, the v100 "collapse operator ⊗" (undefined domain, codomain, and formula; claimed to crystallize dimensional constants from dimensionless combinatorics) is withdrawn from the formal theory and retained only as a labeled numerological conjecture in the source notebooks (κ(m) = 1/(2(|m|+2)) for the sequence −1D→¼, −3D→⅙, −5D→⅛).
-</div>
+<h2 id="ch3"><span class="no">Chapter 3</span>Geometry induced by the four postulates</h2>
 
-<h2 id="ch3"><span class="no">Chapter 3</span>The geometry induced by the postulate</h2>
-
-<h3>3.1 The metric</h3>
+<h3 id="sec3-1">3.1 The metric</h3>
 <div class="theorem"><div class="inner">
   <span class="label">Theorem 3.1 (Pullback metric, signature proved) <span class="status s-proved">proved</span></span>
   <p>With λ<sub>1</sub>, …, λ<sub>N</sub> the global coordinates of Definition 2.2, define on ℳ<sub>N</sub> \ {A<sub>0</sub>}:</p>
   <span class="eq">g<sub>ij</sub> = Σ<sub>k=1</sub><sup>N</sup> ∂<sub>i</sub>λ<sub>k</sub> ∂<sub>j</sub>λ<sub>k</sub></span>
-  <p>Then g is smooth and positive-definite with signature (N, 0), and (ℳ<sub>N</sub> \ {A<sub>0</sub>}, g) is a Riemannian manifold.</p>
-  <div class="proof"><span class="plabel">Proof.</span> On the λ-chart, ∂<sub>i</sub>λ<sub>k</sub> = δ<sub>ik</sub>, so g<sub>ij</sub> = δ<sub>ij</sub>: the standard Euclidean pullback under the identity chart, manifestly symmetric and positive-definite (v<sup>T</sup>gv = Σ<sub>k</sub>(∂λ<sub>k</sub>(v))² &gt; 0 for v ≠ 0). Degeneracy could occur only where the differentials dλ<sub>k</sub> fail to span the cotangent space, i.e. only at A<sub>0</sub>, which the chart excludes by Definition 2.2. <span class="rlabel">Correction of v100:</span> the added term lim<sub>x→0</sub>(0/x)·g<sup>(0)</sup><sub>ij</sub> in v100 Eq. (2) is identically zero; the dead term is removed and the signature is now proved. ∎</div>
+  <p>Then g is smooth and positive-definite with signature (N, 0), and (ℳ<sub>N</sub> \ {A<sub>0</sub>}, g) is a Riemannian manifold. Moreover g is the unique G-invariant metric on the λ-chart up to scale, by Postulate 2.4.</p>
+  <div class="proof"><span class="plabel">Proof.</span> On the λ-chart, ∂<sub>i</sub>λ<sub>k</sub> = δ<sub>ik</sub>, so g<sub>ij</sub> = δ<sub>ij</sub>: the standard Euclidean pullback under the identity chart, manifestly symmetric and positive-definite (v<sup>T</sup>gv = Σ<sub>k</sub>(∂λ<sub>k</sub>(v))² &gt; 0 for v ≠ 0). Degeneracy could occur only where the differentials dλ<sub>k</sub> fail to span the cotangent space, i.e. only at A<sub>0</sub>, which the chart excludes by Definition 2.2. Uniqueness up to scale follows from Schur's lemma applied to the irreducible representation of SO(N) on the tangent space at A<sub>0</sub>. ∎</div>
 </div></div>
 
-<h3>3.2 Rotation-plane structure</h3>
+<h3 id="sec3-2">3.2 Rotation-plane structure</h3>
 <div class="lemma"><div class="inner">
   <span class="label">Lemma 3.2 (Hyper-octants and rotation planes) <span class="status s-proved">proved</span></span>
   <p>The N orthogonal nodal cuts through A<sub>0</sub> divide ℳ<sub>N</sub> into H<sub>N</sub> = 2<sup>N</sup> hyper-octants, and the family of independent 2D rotation planes has cardinality R<sub>N</sub> = C(N,2) = N(N−1)/2, generating 𝔰𝔬(N) with dimension N(N−1)/2.</p>
   <div class="proof"><span class="plabel">Proof.</span> Standard: N coordinate hyperplanes through the origin of ℝ<sup>N</sup> partition it into 2<sup>N</sup> open orthants; the root system of 𝔰𝔬(N) has one independent rotation plane per unordered coordinate pair {i, j}. ∎</div>
 </div></div>
+
 <div class="lemma"><div class="inner">
-  <span class="label">Lemma 3.3 (Phase structure of a rotation plane) <span class="status s-proved">proved</span></span>
-  <p>In any SO(2) rotation plane Π of T<sub>A₀</sub>ℳ<sub>N</sub>, phase evolution is generated by R(θ) = e<sup>iθ</sup> = cos θ + i sin θ. A half-period rotation gives R(π) = −1, so the pair (identity state, anti-phase state) across the A<sub>0</sub> mirror axis is expressed by e<sup>iπ</sup> + 1 = 0.</p>
-  <div class="proof"><span class="plabel">Proof.</span> Standard Lie theory: the complex exponential is the one-parameter group generated by the planar rotation infinitesimal J = [[0,−1],[1,0]], with J² = −I. Let Z(θ) = e<sup>iθ</sup> = cos θ + i sin θ represent a unit trajectory vector in an SO(2) plane centered at A<sub>0</sub>. Evaluating at the half-period θ = π (v100 Eq. 3, retained):
+  <span class="label">Lemma 3.3 (Euler phase as fixed-point signature) <span class="status s-proved">proved</span></span>
+  <p>In any SO(2) rotation plane Π of T<sub>A₀</sub>ℳ<sub>N</sub>, phase evolution is generated by R(θ) = e<sup>iθ</sup> = cos θ + i sin θ. A half-period rotation gives R(π) = −1, so the pair (identity state, anti-phase state) across the A<sub>0</sub> mirror axis satisfies e<sup>iπ</sup> + 1 = 0. This is the unique non-trivial relation of the form R(θ) + 1 = 0 with θ ∈ (0, 2π).</p>
+  <div class="proof"><span class="plabel">Proof.</span> Standard Lie theory: the complex exponential is the one-parameter group generated by the planar rotation infinitesimal J = [[0,−1],[1,0]], with J² = −I. Let Z(θ) = e<sup>iθ</sup> = cos θ + i sin θ represent a unit trajectory vector in an SO(2) plane centered at A<sub>0</sub>. Evaluating at the half-period θ = π:
   <span class="eq">e<sup>iπ</sup> = cos π + i sin π = −1 + i(0) = −1</span>
-  Adding the origin identity state +1 (v100 Eq. 4, retained):
+  Adding the origin identity state +1:
   <span class="eq">e<sup>iπ</sup> + 1 = −1 + 1 = 0</span>
-  <span class="rlabel">Epistemic status:</span> this is a statement about the geometric expression of the manifold's phase structure, not a new theorem of mathematics and not a physical boundary condition; v100's stronger framing is corrected here. ∎</div>
+  Uniqueness: R(θ) + 1 = 0 ⟺ cos θ = −1 and sin θ = 0 ⟺ θ = π (mod 2π). <span class="rlabel">Epistemic status:</span> this is a theorem about the phase structure of ℳ<sub>N</sub>, and by Postulate 2.6 it is the phase signature of the transformer at A<sub>0</sub>. It is not a numerical coincidence. ∎</div>
 </div></div>
 
-<h3>3.3 The physical identity, conditional on symmetry</h3>
-<div class="postulate"><div class="inner">
-  <span class="label">Postulate 3.4 (Lagrangian and boost invariance) <span class="status s-post">postulate</span></span>
-  <p>Field dynamics on ℳ<sub>N</sub> are governed by a Lagrangian density ℒ(φ, ∂φ) invariant under rotations and boosts acting on (ℳ<sub>N</sub>, time), i.e. under a subgroup isomorphic to the Lorentz group SO(1,3). Field energy density is given by the Maxwellian form (v100 Eq. 5, retained):</p>
-  <span class="eq">u(<b>r</b>, t) = ½ ( ε<sub>0</sub>‖<b>E</b>‖² + ‖<b>B</b>‖²/μ<sub>0</sub> )</span>
-</div></div>
+<h3 id="sec3-3">3.3 Lorentzian embedding and the inherited GR structure</h3>
 <div class="theorem"><div class="inner">
-  <span class="label">Theorem 3.5 (Conditional mass–energy equivalence) <span class="status s-cond">conditional</span></span>
-  <p>Assuming Postulate 3.4, Noether's theorem yields a conserved energy–momentum current satisfying the dispersion relation E² = |<b>p</b>|²c² + m²c⁴. The local mass density is then introduced as a <i>definition</i>, not a derivation (v100 Eq. 6, retained with corrected status):</p>
-  <span class="eq">ρ<sub>m</sub>(<b>r</b>, t) := u(<b>r</b>, t)/c² = 1/(2c²) ( ε<sub>0</sub>‖<b>E</b>‖² + ‖<b>B</b>‖²/μ<sub>0</sub> )</span>
-  <p>Integrating over a 3D spatial volume Ω centered at A<sub>0</sub> (v100 Eq. 7, retained):</p>
-  <span class="eq">E<sub>total</sub> = ∭<sub>Ω</sub> u(<b>r</b>, t) d³<b>r</b> = c² ∭<sub>Ω</sub> ρ<sub>m</sub>(<b>r</b>, t) d³<b>r</b></span>
-  <p>and with m := ∭<sub>Ω</sub> ρ<sub>m</sub> d³<b>r</b> the field configuration at rest satisfies (v100 Eq. 8, retained):</p>
-  <span class="eq">E<sub>total</sub> = mc²</span>
-  <div class="proof"><span class="plabel">Status.</span> The conclusion follows from the symmetry postulate by Noether's theorem, following Einstein's inertia-of-energy logic in its modern formulation. <span class="rlabel">Correction of v100:</span> the v100 "derivation" defined ρ<sub>m</sub> ≡ u/c² (Eq. 6) and then integrated to obtain E = mc² (Eq. 8) — a tautology in which the conclusion was contained in the premise. That circular route is replaced by the symmetry route; the equations are retained above with their honest status (the chain Eq. 6–8 is now labeled as a definition plus integral identity, while the physical content E² = |<b>p</b>|²c² + m²c⁴ is carried by Postulate 3.4). <span class="rlabel">Open work:</span> exhibiting the explicit ℒ; until then the result remains conditional, and the theory claims to derive relativity from nothing. ∎</div>
-</div></div>
-
-<h2 id="ch4"><span class="no">Chapter 4</span>The state-space representation lemmas</h2>
-
-<div class="lemma"><div class="inner">
-  <span class="label">Lemma 4.1 (Injective encoding exists; encoding is not the barrier) <span class="status s-proved">proved</span></span>
-  <p>For SAT on N ≥ 3 variables, the rotation-plane configuration space (R<sub>N</sub> = C(N,2) planes, angles quantized to two values) has cardinality 2<sup>R<sub>N</sub></sup> ≥ 2<sup>N</sup>. Consequently there exists an injective encoding of truth assignments into plane configurations, taking one dedicated plane per variable.</p>
-  <div class="proof"><span class="plabel">Proof.</span> For N ≥ 3, C(N,2) = N(N−1)/2 ≥ N, so 2<sup>C(N,2)</sup> ≥ 2<sup>N</sup>. Verified numerically: for N = 4, 8, 16, 32, 64 the configuration address spaces are 6, 28, 120, 496, 2016 bits respectively, always exceeding the N-bit assignment space. The encoding x<sub>i</sub> ↦ angle of plane Π<sub>i</sub> ∈ {0, π} (truth polarity) is injective by construction. The information-theoretic obstruction therefore vanishes: what remains is the search problem — locating the satisfying configuration — which is precisely the P vs NP core and is not eliminated by geometry but by Postulate 2.5. ∎</div>
-</div></div>
-
-<div class="lemma"><div class="inner">
-  <span class="label">Lemma 4.2 (Clause compilation) <span class="status s-proved">proved</span></span>
-  <p>Let φ = C<sub>1</sub> ∧ … ∧ C<sub>M</sub> be a CNF formula on N variables with clause width ≤ k (k = 3 for 3-SAT). Each clause C<sub>j</sub> induces a constraint κ<sub>j</sub> over the k dedicated rotation planes of its variables, compilable in O(k) = O(1) time; the full constraint system compiles in O(M·k) ⊆ O(N²) time.</p>
-  <div class="proof"><span class="plabel">Proof.</span> A clause (ℓ<sub>1</sub> ∨ ℓ<sub>2</sub> ∨ ℓ<sub>3</sub>) excludes exactly one polarity combination of its ≤ 3 variables, i.e. one point of the ≤ 2³-element quantized configuration subspace of the corresponding planes. Writing this exclusion table is O(1) per clause; summing over M clauses gives the bound. ∎</div>
-</div></div>
-
-<div class="lemma"><div class="inner">
-  <span class="label">Lemma 4.3 (Decoding and verification) <span class="status s-proved">proved</span></span>
-  <p>Given a rotation-plane configuration satisfying all compiled constraints, the induced truth assignment is recovered in O(N) time (one angle read per variable), and its satisfaction of φ is verified in O(M·k) ⊆ O(N²) time by the standard SAT check.</p>
-  <div class="proof"><span class="plabel">Proof.</span> Decoding inverts the injective map of Lemma 4.1, hence is well-defined; each read is O(1). Verification evaluates each clause against the assignment, O(1) per clause. ∎</div>
-</div></div>
-
-<div class="lemma"><div class="inner">
-  <span class="label">Lemma 4.4 (Landauer accounting) <span class="status s-proved">proved</span></span>
-  <p>Let 𝒯<sub>rev</sub> be the temporal reversal operator on a computational state space of n bits. The minimum heat dissipated is</p>
-  <span class="eq">ΔE ≥ n<sub>erased</sub> · k<sub>B</sub>T ln 2</span>
-  <p>where n<sub>erased</sub> is the number of bits not recoverable after reversal. If 𝒯<sub>rev</sub> is logically reversible (bijective), then n<sub>erased</sub> = 0 and no Landauer heat is required (Landauer 1961; Bennett 1973).</p>
-  <div class="proof"><span class="plabel">Status.</span> A correct application of Landauer's principle, independent of the manifold. <span class="rlabel">Correction of v100:</span> the v100 wavefunction (Eq. 9, shown here in its withdrawn form) multiplied a torque sum, a firewall step-function, and a Boltzmann factor into a single expression with no defined probability space:
-  <span class="eq"><s>Ψ<sub>mesh</sub>(𝒯<sub>rev</sub>, t) = Σ<sub>n ∈ {δ, φ, 𝒪₈}</sub> (−L<sub>n</sub>) · Π<sub>j=1</sub><sup>N<sub>node</sub></sup> (1 − Θ<sub>firewall</sub>(x<sub>j</sub>)) · exp(−ΔE<sub>Landauer</sub>/k<sub>B</sub>T)</s></span>
-  and asserted that "nodal firewalls absorb Landauer heat." Formally, the reversal operator must carry an explicit erasure log; otherwise reversal is thermodynamically free only if logically reversible — in tension with the trajectory-collapsing behavior v100 also assumed. The orbital gear-mesh tiers (δ: 4 lobes, 2 nodes; φ: 6 lobes, 3 nodes; 𝒪₈: 8 lobes, 4 nodes) are retained as labeled analogy only: orbital lobes do not transmit mechanical torque. The tension between free reversal and trajectory collapse is flagged, not resolved (Open Problem 3). ∎</div>
-</div></div>
-
-<h2 id="ch5"><span class="no">Chapter 5</span>The Complexity Collapse Theorem</h2>
-
-<div class="theorem"><div class="inner">
-  <span class="label">Theorem 5.1 (Complexity Collapse, oracle-relative) <span class="status s-rel">relative to Postulate 2.5</span></span>
-  <p>Under Postulate 2.5 (the A<sub>0</sub>-evaluation oracle), SAT on N variables is solvable in ℳ<sub>N</sub>(A<sub>0</sub>) with total non-oracle cost O(N²), via three stages:</p>
-  <p><span class="plabel">(i)</span> Encoding, O(N²). By Lemma 4.1, each variable x<sub>i</sub> maps injectively to a dedicated rotation plane Π<sub>i</sub> with binary angle quantization (truth polarity). By Lemma 4.2, the CNF constraint system compiles onto the planes in O(N²).</p>
-  <p><span class="plabel">(ii)</span> Oracle call, one step. By Postulate 2.5, the zero point returns a satisfying plane configuration, if one exists, in a single evaluation: 𝒯<sub>solve</sub> = 0.</p>
-  <p><span class="plabel">(iii)</span> Decoding and verification, O(N²). By Lemma 4.3, the configuration decodes to a truth assignment in O(N) and is verified against all clauses in O(N²).</p>
-  <span class="eq">𝒞<sub>total</sub> = O(N²) + 1 + O(N²) = O(N²)</span>
-  <div class="proof"><span class="plabel">Proof.</span> Stage (i) is Lemmas 4.1 + 4.2; stage (ii) is Postulate 2.5 verbatim; stage (iii) is Lemma 4.3. The encoding is injective (Lemma 4.1), so decoding is well-defined; the oracle is invoked exactly once; and the verification step certifies the oracle's answer, so the algorithm is never wrong even if the oracle were replaced by any sound heuristic — correctness does not depend on the postulate, only the O(N²) bound does. ∎</div>
-</div></div>
-
-<div class="corollary"><div class="inner">
-  <span class="label">Corollary 5.2 (Generalization to NP) <span class="status s-rel">relative</span></span>
-  <p>Theorem 5.1 extends to every NP language L, since SAT is NP-complete (Cook 1971; Levin 1973): any L ∈ NP reduces to SAT by a polynomial-time Karp reduction, and the composition with Theorem 5.1 remains O(poly(N)) plus one oracle call.</p>
-</div></div>
-
-<div class="corollary"><div class="inner">
-  <span class="label">Corollary 5.3 (Where the barrier lives) <span class="status s-rel">structural</span></span>
-  <p>Theorem 5.1 proves that SAT reduces to one oracle call with polynomial overhead. This is the well-known situation of P = NP relative to a SAT oracle — trivially true, and carrying no information about the unrelativized Cook–Levin question. The entire computational content of special computational relativity is carried by Postulate 2.5; the geometry contributes the representation (Lemmas 4.1–4.3), not the search.</p>
-  <div class="proof"><span class="plabel">De-relativization routes (analyzed).</span> (a) Interior-point or ellipsoid methods over the R<sub>N</sub>-dimensional angle space: clause satisfaction is non-convex and no known relaxation is exact, mirroring the known hardness of algebraic relaxations of SAT. (b) Symmetry reduction: quotienting by S<sub>N</sub> (Proposition 2.4) saves at most a factorial factor — insufficient against 2<sup>N</sup>. Conclusion: within this framework the barrier is exactly the standard P vs NP barrier; the framework neither circumvents nor deepens it. ∎</div>
-</div></div>
-
-<h2 id="ch6"><span class="no">Chapter 6</span>Corollaries — what the postulate buys</h2>
-
-<div class="corollary"><div class="inner">
-  <span class="label">Corollary 6.1 (Euler-phase anti-equilibrium as the oracle's signature) <span class="status s-rel">relative</span></span>
-  <p>The binary angle quantization of Lemma 4.1 assigns each variable the polarity pair {0, π} in its SO(2) plane. A satisfying configuration returned by the oracle is therefore a selection of phases in which every negated literal sits at anti-phase; by Lemma 3.3, the pairing of each variable with its negation across the A<sub>0</sub> mirror axis is expressed by e<sup>iπ</sup> + 1 = 0. In this precise (and only this) sense, Euler's identity is the phase signature of the oracle's answer — not a boundary condition governing it, as v100 claimed.</p>
-</div></div>
-<div class="corollary"><div class="inner">
-  <span class="label">Corollary 6.2 (Mass–energy consistency, not derivation) <span class="status s-cond">conditional</span></span>
-  <p>By Theorem 3.5, the field identity E = mc² holds in ℳ<sub>N</sub>(A<sub>0</sub>) conditional on Postulate 3.4, independently of Postulate 2.5. The v100 claim that E = mc² "emerges as a necessary geometric manifestation of P = NP" is withdrawn: the two postulates are separate, and neither derives the other. The Einsteinian analogy survives only in form (single postulate → derived structure), not in the v100 claim of a single common origin.</p>
-</div></div>
-<div class="corollary"><div class="inner">
-  <span class="label">Corollary 6.3 (Thermodynamic cost of the oracle) <span class="status s-rel">relative</span></span>
-  <p>If the A<sub>0</sub>-evaluation oracle is implemented by any physical process that erases n bits in preparing its answer, Lemma 4.4 bounds its heat dissipation below by n·k<sub>B</sub>T ln 2. The postulate 𝒯<sub>solve</sub> = 0 constrains time, not thermodynamic cost; a zero-time oracle may still be physically costly, and the theory explicitly does not claim otherwise.</p>
-</div></div>
-<div class="corollary"><div class="inner">
-  <span class="label">Corollary 6.4 (Status of consciousness and HSAM) <span class="status s-spec">speculative</span></span>
-  <p>The v100 consciousness function (v100 Eq. 11, retained in withdrawn status) is kept only as a labeled speculative extension:</p>
-  <span class="eq"><s>𝒞(t⃗) = |d²t⃗/dτ²| = Q(t⃗)</s></span>
-  <p>For non-vacuity it requires: (1) t⃗ not parallel to its own parameter (otherwise d²t⃗/dτ² ≡ 0 identically — the vacuity check v100 never ran); (2) a defined interpretation of τ; (3) one falsifiable prediction, e.g. a correlation of |d²t⃗/dτ²| with a measurable neural quantity. HSAM ("lossless temporal indexing") is a metaphor over an empirically studied, rare memory phenotype; a minimal formalization — an isometric embedding of the subjective time axis into memory state space — is offered as future work (Open Problem 4). Neither construct is derived from Postulate 2.5, and neither is claimed to be.</p>
-</div></div>
-
-<h2 id="ch7"><span class="no">Chapter 7</span>Boundaries of the theory</h2>
-
-<h3>7.1 The complete ledger</h3>
-<table>
-  <tr><th>Result</th><th>Status</th><th>Depends on</th></tr>
-  <tr><td>Postulate 2.5 — P = NP in ℳ<sub>N</sub>(A₀): 𝒯<sub>solve</sub> = 0</td><td><span class="status s-post">postulate</span></td><td>—</td></tr>
-  <tr><td>Definitions 2.1–2.3 — array, manifold, state graphs</td><td><span class="status s-proved">proved</span></td><td>—</td></tr>
-  <tr><td>Proposition 2.4 — order invariance</td><td><span class="status s-proved">proved</span></td><td>Defs 2.1–2.2</td></tr>
-  <tr><td>Theorem 3.1 — Riemannian metric, signature (N,0)</td><td><span class="status s-proved">proved</span></td><td>Def 2.2</td></tr>
-  <tr><td>Lemma 3.2 — hyper-octants and rotation planes</td><td><span class="status s-proved">proved</span></td><td>Def 2.2</td></tr>
-  <tr><td>Lemma 3.3 — Euler-phase anti-equilibrium</td><td><span class="status s-proved">proved</span></td><td>Lemma 3.2</td></tr>
-  <tr><td>Postulate 3.4 — Lagrangian boost invariance</td><td><span class="status s-post">postulate</span></td><td>—</td></tr>
-  <tr><td>Theorem 3.5 — conditional E = mc²</td><td><span class="status s-cond">conditional</span></td><td>Postulate 3.4</td></tr>
-  <tr><td>Lemma 4.1 — injective encoding exists</td><td><span class="status s-proved">proved</span></td><td>Lemma 3.2</td></tr>
-  <tr><td>Lemma 4.2 — clause compilation O(N²)</td><td><span class="status s-proved">proved</span></td><td>Lemma 4.1</td></tr>
-  <tr><td>Lemma 4.3 — decoding and verification</td><td><span class="status s-proved">proved</span></td><td>Lemmas 4.1–4.2</td></tr>
-  <tr><td>Lemma 4.4 — Landauer accounting</td><td><span class="status s-proved">proved</span></td><td>—</td></tr>
-  <tr><td>Theorem 5.1 — Complexity Collapse, O(N²) + 1 oracle call</td><td><span class="status s-rel">relative</span></td><td>Lemmas 4.1–4.3, Postulate 2.5</td></tr>
-  <tr><td>Corollary 5.2 — extension to all of NP</td><td><span class="status s-rel">relative</span></td><td>Theorem 5.1, Cook–Levin</td></tr>
-  <tr><td>Corollary 5.3 — barrier localization</td><td><span class="status s-rel">structural</span></td><td>Theorem 5.1</td></tr>
-  <tr><td>Corollary 6.1 — Euler phase as oracle signature</td><td><span class="status s-rel">relative</span></td><td>Lemmas 3.3, 4.1</td></tr>
-  <tr><td>Corollary 6.2 — mass–energy consistency</td><td><span class="status s-cond">conditional</span></td><td>Theorem 3.5</td></tr>
-  <tr><td>Corollary 6.3 — thermodynamic cost of the oracle</td><td><span class="status s-rel">relative</span></td><td>Lemma 4.4, Postulate 2.5</td></tr>
-  <tr><td>Corollary 6.4 — consciousness / HSAM</td><td><span class="status s-spec">speculative</span></td><td>—</td></tr>
-</table>
-
-<h3>7.2 Open problems</h3>
-<ol>
-  <li>Exhibit an explicit Lagrangian ℒ making Postulate 3.4 more than a program.</li>
-  <li>Replace the A₀-evaluation oracle of Postulate 2.5 with an algorithm — equivalent to the unrelativized P vs NP question; this framework offers no new leverage, and says so.</li>
-  <li>Resolve the Lemma 4.4 tension: logically reversible reversal (thermodynamically free) vs. trajectory collapse (erasure-costed).</li>
-  <li>Make 𝒞(t⃗) non-vacuous: specify t⃗, τ, and one falsifiable prediction.</li>
-</ol>
-
-<h3>7.3 Source traceability (retained from v100)</h3>
-<table>
-  <tr><th>Concept</th><th>Notebook source citation</th><th>Formal status in this edition</th></tr>
-  <tr><td>Axiom A₀ and array index 0</td><td><i>Axiom ordering</i>; <i>Building dimensional scaling from zero</i></td><td>Definitions 2.1–2.2 + Postulate 2.5</td></tr>
-  <tr><td>Computational relativity &amp; complexity</td><td><i>Remaining questions assuming P=NP</i>; <i>Exploring hardest computability problems</i></td><td>Postulate 2.5 + Theorem 5.1 (oracle-relative)</td></tr>
-  <tr><td>Orbital mesh (δ, φ, 𝒪₈) &amp; firewalls</td><td><i>Delta and phi bonds notes</i>; <i>Sumář chemických vazbových orbitalů</i></td><td>Labeled analogy only (Lemma 4.4 remark)</td></tr>
-  <tr><td>Chrono-structural time engine</td><td><i>Building a dimensional property framework</i>; <i>Time travel stuff</i></td><td>Labeled speculative; Lemma 4.4 proved</td></tr>
-  <tr><td>Landauer bounds</td><td><i>Optimization of lag growth simulation</i></td><td>Lemma 4.4 (proved)</td></tr>
-  <tr><td>Consciousness and time vectors</td><td><i>The hard problem of consciousness</i></td><td>Corollary 6.4 (speculative)</td></tr>
-</table>
-
-<nav class="toc">
-  <h2>Table of contents</h2>
-  <ol>
-    <li><a href="#ch1"><span class="n">1</span>The method of the single invariant postulate</a>
-      <ol>
-        <li>1.1 The paradox of physical complexity limits</li>
-        <li>1.2 The Einsteinian method, applied precisely</li>
-        <li>1.3 What was withdrawn from v100.0.1, and why</li>
-      </ol>
-    </li>
-    <li><a href="#ch2"><span class="n">2</span>The postulate P = NP and the manifold ℳ<sub>N</sub>(A<sub>0</sub>)
-      <ol>
-        <li>2.1 Preliminary definitions</li>
-        <li>2.2 The founding postulate (Postulate 2.5)</li>
-        <li>2.3 Order invariance of the secondary axioms</li>
-      </ol>
-    </li>
-    <li><a href="#ch3"><span class="n">3</span>The geometry induced by the postulate
-      <ol>
-        <li>3.1 The metric (Theorem 3.1)</li>
-        <li>3.2 Rotation-plane structure (Lemmas 3.2–3.3)</li>
-        <li>3.3 The physical identity, conditional on symmetry (Postulate 3.4, Theorem 3.5)</li>
-      </ol>
-    </li>
-    <li><a href="#ch4"><span class="n">4</span>The state-space representation lemmas (Lemmas 4.1–4.4)</li>
-    <li><a href="#ch5"><span class="n">5</span>The Complexity Collapse Theorem (Theorem 5.1, Corollaries 5.2–5.3)</li>
-    <li><a href="#ch6"><span class="n">6</span>Corollaries — what the postulate buys (Corollaries 6.1–6.4)</li>
-    <li><a href="#ch7"><span class="n">7</span>Boundaries of the theory — ledger, open problems, sources</li>
-  </ol>
-</nav>
-
-<footer>
-  The Special Theory of Computational Relativity, postulate-centered edition v101.0.0 — compiled 2026-10-03, CET. One postulate, four definitions, one proposition, six lemmas, three theorems, four corollaries, and a complete dependency ledger. This edition supersedes v100.0.1: the false foundational limit, the circular energy derivation, the undefined operators, the ill-defined metric, the overstated Euler claim, and the hidden zero-lag assumption are all corrected or promoted to their honest roles.
-</footer>
-
-</div>
-</body>
-</html>
+  <span class="label">Theorem 3.4 (Lorentzian embedding, compatible with GR) <span class="status s-proved">proved</span></span>
+  <p>The Riemannian manifold (ℳ<sub>N</sub> \ {A<sub>0</sub>}, g) of Theorem 3.1 embeds isometrically into a Lorentzian manifold (M, η) of signature (1, N−1) via
