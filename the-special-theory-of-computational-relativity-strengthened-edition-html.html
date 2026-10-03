@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Special Theory of Computational Relativity — Strengthened Edition</title>
+<style>
+  :root {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: #1a1a2e;
+    background: #f4f2ec;
+    line-height: 1.7;
+  }
+  body { margin: 0; }
+  .page { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+  header.cover {
+    background: linear-gradient(160deg, #101828 0%, #1e2a4a 100%);
+    color: #e8e6df; border-radius: 12px; padding: 3rem 2rem; margin-bottom: 2.5rem;
+  }
+  header.cover h1 { font-family: "Palatino", Georgia, serif; font-size: 2.1rem; margin: 0 0 0.5rem; line-height: 1.25; }
+  header.cover .subtitle { font-style: italic; color: #a9b4cf; margin-bottom: 1.5rem; }
+  .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.8rem; font-size: 0.88rem; color: #c7cde0; }
+  .meta div { border-left: 2px solid #3b4a75; padding-left: 0.7rem; }
+  .meta b { display: block; color: #8fa3d0; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .banner {
+    background: #fff8e6; border: 1px solid #e0c878; border-radius: 8px;
+    padding: 1rem 1.4rem; margin: 1.5rem 0; font-size: 0.95rem;
+  }
+  .banner.red { background: #fdeaea; border-color: #d98a8a; }
+  h2 { font-family: "Palatino", Georgia, serif; border-bottom: 2px solid #101828; padding-bottom: 0.3rem; margin-top: 3rem; }
+  h3 { margin-top: 2rem; }
+  .axiom, .theorem, .lemma, .postulate {
+    background: #ffffff; border: 1px solid #d8d4c8; border-radius: 8px;
+    padding: 1rem 1.4rem; margin: 1.2rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .theorem { border-left: 4px solid #1e5f8a; }
+  .axiom, .postulate { border-left: 4px solid #8a6d1e; }
+  .lemma { border-left: 4px solid #6a8a3a; }
+  .label { font-variant: small-caps; letter-spacing: 0.04em; font-weight: bold; color: #555; }
+  .math { font-family: "Cambria Math", "STIX Two Math", Georgia, serif; font-style: italic; background: #f0ede4; padding: 0.05em 0.35em; border-radius: 4px; white-space: nowrap; }
+  .eq { display: block; text-align: center; font-family: "Cambria Math", "STIX Two Math", Georgia, serif; margin: 1rem 0; font-size: 1.05rem; overflow-x: auto; }
+  .proof { margin-left: 1.5rem; }
+  .proof .label { color: #1e5f8a; }
+  table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.92rem; background: #fff; }
+  th, td { border: 1px solid #cfc9ba; padding: 0.5rem 0.7rem; text-align: left; vertical-align: top; }
+  th { background: #101828; color: #e8e6df; }
+  tr:nth-child(even) td { background: #f7f5ee; }
+  .status { font-size: 0.85rem; padding: 0.15rem 0.5rem; border-radius: 10px; color: #fff; white-space: nowrap; }
+  .s-proved { background: #2e7d43; } .s-cond { background: #b07d1e; } .s-spec { background: #8a4a4a; } .s-dropped { background: #666; }
+  .toc { background: #fff; border: 1px solid #d8d4c8; border-radius: 8px; padding: 1.2rem 1.6rem; }
+  .toc a { color: #1e5f8a; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ol { padding-left: 1.2rem; }
+  code { background: #eee9da; padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.9em; }
+  .spec h2 { border-bottom-color: #8a4a4a; margin-top: 0; }
+  .spec { background: #fbf6f4; border-radius: 10px; padding: 0.1rem 1.4rem 1rem; margin-top: 3rem; }
+  footer { margin-top: 4rem; font-size: 0.85rem; color: #777; border-top: 1px solid #ccc; padding-top: 1rem; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="cover">
+  <h1>The Special Theory of Computational Relativity</h1>
+  <div class="subtitle">A dissertation on polynomial-time state evaluation in the zero-point manifold ℳ<sub>N</sub>(A<sub>0</sub>) — Strengthened Edition</div>
+  <div class="meta">
+    <div><b>Author</b>Pierre LeBaux</div>
+    <div><b>Degree</b>PhD in Theoretical Physics &amp; Computational Complexity</div>
+    <div><b>Version</b>101.0.0 (strengthened, corrected)</div>
+    <div><b>Compiled</b>2026-10-03 (CET)</div>
+    <div><b>Grounding</b>13 selected notebook sources</div>
+    <div><b>Revision</b>8 issues identified and resolved</div>
+  </div>
+</header>
+
+<div class="banner red">
+  <b>Editorial notice (new in this edition).</b> Version 100.0.1 claimed a constructive proof of P&nbsp;=&nbsp;NP. That claim <b>does not withstand formal scrutiny</b> and has been withdrawn. It is replaced by Theorem&nbsp;6.2 (a restricted, oracle-relative result), and the precise location of the removed assumption is now stated openly in §6.3. Every remaining claim in this monograph is now labeled <span class="status s-proved">proved</span>, <span class="status s-cond">conditional</span>, or <span class="status s-spec">speculative</span>.
+</div>
+
+<h2>Abstract</h2>
+<p>We present the revised dissertation of the <b>special theory of computational relativity</b> within an idealized N-dimensional manifold ℳ<sub>N</sub>(A<sub>0</sub>) anchored by a foundational zero-point axiom (Axiom A<sub>0</sub>) at position <code>0</code> of the universal array A. Analogous to Einstein's special relativity, which posited the invariance of the speed of light <i>c</i> rather than deriving it, our framework <b>postulates</b> a free scalar seed λ rather than deriving it from an indeterminate form (the v100 limit was mathematically false). Within this universe we establish:</p>
+<ol>
+  <li>A genuine Riemannian metric on ℳ<sub>N</sub> \ {A<sub>0</sub>} with proved signature <span class="status s-proved">proved</span> (Thm 3.1);</li>
+  <li>Euler's identity as the <i>expression</i> of anti-phase equilibrium across A<sub>0</sub> — a statement about our geometry, not a new theorem <span class="status s-proved">proved</span> (Prop 3.2);</li>
+  <li>Mass–energy equivalence as a Noether consequence of a boost-invariance postulate <span class="status s-cond">conditional</span> (Thm 4.2);</li>
+  <li>A restricted complexity theorem: SAT reduces to <b>one oracle call</b> with O(N²) encoding and decoding overhead <span class="status s-proved">proved</span> (Thm 6.2), with the oracle explicitly isolated rather than hidden;</li>
+  <li>A correct Landauer accounting lemma for time reversal <span class="status s-proved">proved</span> (Lemma 5.1).</li>
+</ol>
+<p>The chrono-structural time engine and the consciousness/HSAM chapters are retained as labeled Speculative Extensions. The universal claim that P&nbsp;=&nbsp;NP (Cook–Levin sense) follows from the geometry is <b>dropped</b>; the analysis of §6.1 shows precisely why the geometry cannot deliver it.</p>
+
+<nav class="toc">
+  <h2 style="margin-top:0">Table of contents</h2>
+  <ol>
+    <li><a href="#ch1">Introduction: the special computational universe paradigm</a></li>
+    <li><a href="#ch2">Axiom A₀ at array position 0 — revised</a></li>
+    <li><a href="#ch3">Emergent geometry, SO(N) rotations, and Euler equilibrium</a></li>
+    <li><a href="#ch4">Mass–energy equivalence — decirculated</a></li>
+    <li><a href="#ch5">Landauer accounting and the time reversal engine (relocated)</a></li>
+    <li><a href="#ch6">Complexity: the restricted theorem</a></li>
+    <li><a href="#ch7">Consciousness and HSAM (relocated, speculative)</a></li>
+    <li><a href="#matrix">Claims before and after; source traceability</a></li>
+  </ol>
+</nav>
+
+<h2 id="ch1">Chapter 1: Introduction and the special computational universe paradigm</h2>
+<h3>1.1 The paradox of physical complexity limits</h3>
+<p>In standard complexity theory, NP problems are widely conjectured to be strictly separate from P. Evaluating multi-body path integrals across 2<sup>N</sup> hyper-octants forces exponential search O(2<sup>N</sup>), creating computational lag and reality friction.</p>
+<h3>1.2 The Einsteinian analogy — restated honestly</h3>
+<p>Einstein resolved the paradoxes of electrodynamics by constructing a theory bounded by a single <i>invariant postulate</i>: the constancy of <i>c</i>. Note carefully: he did not <i>derive</i> the postulate, and special relativity consequently did not prove anything about systems where the postulate fails.</p>
+<p>Following that methodology, we define <b>special computational relativity</b> over a deterministic N-dimensional continuum ℳ<sub>N</sub>(A<sub>0</sub>). What this edition claims — and all it claims — is that <b>within the postulated universe</b>, state representation over rotation planes is polynomial (Theorem 6.2), and the classical physical identities (Euler phase, E&nbsp;=&nbsp;mc² conditional on symmetry) are consistent geometric expressions of the model. What the analogy <i>cannot</i> deliver is a statement about the real-world P vs NP question, because the search step is not eliminated by the geometry (§6.3).</p>
+
+<h2 id="ch2">Chapter 2: Axiom A₀ at array position 0 — revised</h2>
+<h3>2.1 The Seed Postulate <span class="status s-proved">axiom</span></h3>
+<p>In the universal axiom sequence A = [A<sub>0</sub>, A<sub>1</sub>, …, A<sub>N</sub>], the distinguished center is held at array index <code>0</code>.</p>
+<div class="axiom">
+  <span class="label">Axiom 2.1 (Seed Postulate)</span>
+  <p>There exists a smooth N-manifold ℳ<sub>N</sub> with a distinguished point A<sub>0</sub> ∈ ℳ<sub>N</sub> and a free parameter λ ∈ ℝ<sup>N</sup>. All spatial scale parameters of the theory are smooth functions of the components λ<sub>1</sub>, …, λ<sub>N</sub>, which serve as global coordinates on ℳ<sub>N</sub> \ {A<sub>0</sub>}.</p>
+</div>
+<div class="banner">
+  <b>Correction of v100.0.1.</b> The original axiom stated <span class="math">lim<sub>x→0</sub> 0/x = λ ∈ ℝ<sup>N</sup></span>. This limit is identically <b>0</b>, and the indeterminate form 0/0 is not a value in any case. The seed is now <b>postulated</b>, exactly as the constancy of <i>c</i> is postulated — the analogy is preserved, the false mathematics is removed.
+</div>
+<h3>2.2 Order invariance <span class="status s-proved">proved</span></h3>
+<div class="theorem">
+  <span class="label">Proposition 2.2</span>
+  <p>Any permutation σ ∈ S<sub>N</sub> of the secondary axioms induces a diffeomorphism Φ<sub>σ</sub> of ℳ<sub>N</sub> fixing A<sub>0</sub>; all intrinsic quantities (metric, curvature, the evaluation operator of Ch. 6) are Φ<sub>σ</sub>-invariant.</p>
+  <p class="proof"><span class="label">Proof.</span> Permuting coordinates is an orthogonal linear map on the λ-chart; intrinsic quantities are tensorial, hence invariant. ∎</p>
+</div>
+<h3>2.3 The collapse operator ⊗ — withdrawn</h3>
+<p>The v100 claim that collisions of whole-number properties with fractional inverses "crystallize into fundamental physical constants" (δ<sub>c</sub>, φ<sub>c</sub>, 𝒪<sub>8</sub>) contained no definition of the operator ⊗: no domain, no codomain, no formula. Dimensional constants (c, ħ, G) cannot be the output of dimensionless combinatorics. The operator is <span class="status s-dropped">withdrawn</span>. Optionally, the observed fraction sequence (−1D→¼, −3D→⅙, −5D→⅛, i.e. κ(m) = 1/(2(|m|+2))) may be retained as a clearly labeled <i>numerological conjecture</i> in the notebooks; it is not part of the formal theory.</p>
+
+<h2 id="ch3">Chapter 3: Emergent geometry, SO(N) rotations, and Euler equilibrium</h2>
+<h3>3.1 The metric tensor — now well-defined <span class="status s-proved">proved</span></h3>
+<div class="theorem">
+  <span class="label">Theorem 3.1</span>
+  <p>With λ<sub>1</sub>,…,λ<sub>N</sub> the coordinates of Axiom 2.1, define</p>
+  <span class="eq">g<sub>ij</sub> = Σ<sub>k=1</sub><sup>N</sup> ∂<sub>i</sub>λ<sub>k</sub> ∂<sub>j</sub>λ<sub>k</sub></span>
+  <p>Then g is smooth and positive-definite on ℳ<sub>N</sub> \ {A<sub>0</sub>} with signature (N, 0); hence (ℳ<sub>N</sub> \ {A<sub>0</sub>}, g) is a Riemannian manifold.</p>
+  <p class="proof"><span class="label">Proof.</span> On the λ-chart, ∂<sub>i</sub>λ<sub>k</sub> = δ<sub>ik</sub>, so g<sub>ij</sub> = δ<sub>ij</sub>: the Euclidean pullback, manifestly positive-definite. Degeneracy could occur only at A<sub>0</sub>, which the chart excludes. ∎</p>
+</div>
+<div class="banner">
+  <b>Correction of v100.0.1.</b> Equation (2) of v100 added a term <span class="math">lim<sub>x→0</sub>(0/x)·g<sup>(0)</sup><sub>ij</sub></span>, which is identically zero, and asserted "Riemannian" without proving positive-definiteness. Both fixed: the dead term is removed, the signature is proved.
+</div>
+<p>Slicing by N orthogonal nodal cuts through A<sub>0</sub> yields H<sub>N</sub> = 2<sup>N</sup> hyper-octants and R<sub>N</sub> = C(N,2) independent rotation planes generating the Lie algebra 𝔰𝔬(N). These standard facts supply the state space of Chapter 6.</p>
+<h3>3.2 Euler's anti-phase equilibrium — reframed <span class="status s-proved">proved</span></h3>
+<div class="theorem">
+  <span class="label">Proposition 3.2</span>
+  <p>In any SO(2) rotation plane Π of T<sub>A₀</sub>ℳ<sub>N</sub>, phase evolution is R(θ) = e<sup>iθ</sup> = cos θ + i sin θ. At θ = π, R(π) = −1, and the pair (identity state, anti-phase state) across the A<sub>0</sub> mirror axis is <i>expressed by</i></p>
+  <span class="eq">e<sup>iπ</sup> + 1 = 0</span>
+</div>
+<p><b>Epistemic status (corrected).</b> This is standard Lie theory: complex phase <i>is</i> the generator of planar rotation. The v100 chapter titled this a "proof of Euler's identity" and a "boundary condition governing" the manifold — overstated. It is a statement <i>about our geometry's expression</i>, carrying no computational or physical consequence. Retained with corrected status.</p>
+
+<h2 id="ch4">Chapter 4: Mass–energy equivalence — decirculated <span class="status s-cond">conditional</span></h2>
+<div class="banner">
+  <b>Correction of v100.0.1.</b> The v100 derivation defined ρ<sub>m</sub> ≡ u/c² (Eq. 6) and then integrated to obtain E = mc² (Eq. 8). Substituting a definition into its own integral is a <b>tautology</b>: the conclusion was contained in the premise, and no physics was derived. The circular route is replaced by the symmetry route below.
+</div>
+<div class="postulate">
+  <span class="label">Postulate 4.1 (Lagrangian and boost invariance)</span>
+  <p>Field dynamics on ℳ<sub>N</sub> are governed by a Lagrangian density ℒ(φ, ∂φ) invariant under rotations and boosts acting on the (ℳ<sub>N</sub>, time) product, i.e. under a subgroup isomorphic to the Lorentz group SO(1,3).</p>
+</div>
+<div class="theorem">
+  <span class="label">Theorem 4.2 (conditional E = mc²)</span>
+  <p>Assuming Postulate 4.1, Noether's theorem yields a conserved energy–momentum current satisfying</p>
+  <span class="eq">E² = |<b>p</b>|²c² + m²c⁴</span>
+  <p>and for the field configuration at rest over a region Ω centered at A<sub>0</sub>:</p>
+  <span class="eq">E<sub>total</sub> = ∭<sub>Ω</sub> u(<b>r</b>, t) d³<b>r</b> = mc², &nbsp;m := ∭<sub>Ω</sub> ρ<sub>m</sub> d³<b>r</sub></span>
+  <p class="proof"><span class="label">Status.</span> The conclusion now follows from a symmetry postulate, following Einstein's logic of the inertia of energy and its modern Noether formulation. <b>Open work:</b> exhibiting the explicit ℒ. Until then the result is conditional, and the monograph does not claim to derive relativity from computation.</p>
+</div>
+
+<div class="spec">
+<h2 id="ch5">Chapter 5 (Speculative Extensions, Part I): Landauer accounting and the time reversal engine</h2>
+<p><b>Status of this chapter: <span class="status s-spec">speculative</span>.</b> The orbital gear-mesh geometry (δ tier: 4 lobes, 2 nodes; φ tier: 6 lobes, 3 nodes; 𝒪₈ tier: 8 lobes, 4 nodes) is retained <i>as labeled analogy</i>: in quantum mechanics, orbital lobes do not transmit mechanical torque, and no dynamical model is given here. The v100 wavefunction Ψ<sub>mesh</sub> (Eq. 9), which multiplied a torque sum, a firewall step-function, and a Boltzmann factor into one expression with no defined probability space, is <span class="status s-dropped">withdrawn</span>. What survives is extracted as a formal lemma:</p>
+<div class="lemma">
+  <span class="label">Lemma 5.1 (Landauer accounting under time reversal) <span class="status s-proved">proved</span></span>
+  <p>Let 𝒯<sub>rev</sub> act on a state space of n bits. The minimum heat dissipated is</p>
+  <span class="eq">ΔE ≥ n<sub>erased</sub> · k<sub>B</sub>T ln 2</span>
+  <p>where n<sub>erased</sub> is the number of bits not recoverable after reversal. If 𝒯<sub>rev</sub> is logically reversible (bijective), then n<sub>erased</sub> = 0 and no Landauer heat is required (Landauer 1961; Bennett 1973).</p>
+</div>
+<p><b>Corollary + flagged tension.</b> The claim that "nodal firewalls absorb Landauer heat" means formally that 𝒯<sub>rev</sub> must carry an explicit erasure log. Otherwise reversal is thermodynamically free <i>only if</i> logically reversible — which forbids the trajectory-collapsing behavior the v100 text also assumed. These two assumptions are in tension; this is flagged, not resolved. Nodal surfaces |ψ<sub>node</sub>| = 0 remain an evocative metaphor for the isolation of trajectory classes, with no formal status in this edition.</p>
+</div>
+
+<h2 id="ch6">Chapter 6: Complexity — the restricted theorem</h2>
+<div class="banner red">
+  <b>Withdrawal of Theorem 6.1 (v100).</b> The v100 proof of P = NP failed at its step 4: "zero-lag determinism" (𝒞<sub>lag</sub> ≡ 1, 𝒯<sub>solve</sub> = 0) was asserted, not derived, and a model in which solving is free is not a model of computation — it is equivalent to assuming a free SAT oracle. Additionally, no reduction from any NP-complete problem was ever constructed. This chapter replaces the claim with what the mathematics actually supports.
+</div>
+<h3>6.1 Encoding is not the barrier — verified <span class="status s-proved">verified</span></h3>
+<div class="theorem">
+  <span class="label">Observation 6.1</span>
+  <p>For SAT on N variables, the space of rotation-plane configurations (R<sub>N</sub> = C(N,2) planes, binary angle quantization) has size 2<sup>C(N,2)</sup> ≥ 2<sup>N</sup> for all N ≥ 3. An injective encoding of truth assignments into plane configurations exists trivially.</p>
+  <p class="proof"><span class="label">Verification.</span> Checked numerically for N = 4, 8, 16, 32, 64: address spaces of 6, 28, 120, 496, 2016 bits always exceed the N-bit assignment space. The information-theoretic obstruction vanishes. <b>What remains is the search problem</b> — locating the satisfying configuration — which is precisely the P vs NP core and cannot be eliminated by geometry. ∎</p>
+</div>
+<h3>6.2 The Restricted Complexity Theorem <span class="status s-proved">proved</span></h3>
+<div class="theorem">
+  <span class="label">Theorem 6.2</span>
+  <p>Fix ℳ<sub>N</sub>(A<sub>0</sub>) with an oracle A₀-SAT that, in one unit call, returns a satisfying rotation-plane configuration if one exists. Then SAT on N variables is solvable with: (i) O(N²) operations to encode the instance as constraints over the R<sub>N</sub> rotation planes; (ii) <b>one</b> oracle call; (iii) O(N²) operations to decode and verify. Total non-oracle cost: O(N²).</p>
+  <p class="proof"><span class="label">Proof.</span> Each CNF clause constrains ≤ 3 variables; each variable maps injectively to a dedicated plane (Observation 6.1 gives ample address space); compilation is linear in clauses, hence O(N²); decoding reads one plane angle, O(1) per variable; verification is the standard linear-time SAT check. ∎</p>
+</div>
+<h3>6.3 Where the barrier now lives <span class="status s-dropped">claim withdrawn</span></h3>
+<p>Theorem 6.2 does <b>not</b> prove P = NP. It proves SAT reduces to one oracle call with polynomial overhead. The oracle — "the manifold returns the satisfying configuration" — is exactly the v100 assumption 𝒯<sub>solve</sub> = 0, now isolated as a single explicit postulate instead of hidden inside "zero-lag." This is the well-known situation of P = NP relative to a SAT oracle: trivially true, carrying no information about the unrelativized question. What the geometry genuinely contributes is the state-space structure and the polynomial encoding/decoding overhead — a modest but real result about <i>representation</i>.</p>
+<h3>6.4 The constructive program forward</h3>
+<p>To de-relativize Theorem 6.2 one must replace the oracle with an algorithm. Candidate routes: (a) interior-point or ellipsoid methods over the angle space — clause satisfaction is non-convex, no known exact relaxation (mirroring the known hardness of algebraic relaxations of SAT); (b) symmetry reduction via Prop 2.2 — quotienting by S<sub>N</sub> saves at most a factorial factor, insufficient against 2<sup>N</sup>. <b>Conclusion:</b> within this framework the barrier is exactly the standard P vs NP barrier; the framework neither circumvents nor deepens it, and this is stated plainly.</p>
+
+<div class="spec">
+<h2 id="ch7">Chapter 7 (Speculative Extensions, Part II): Consciousness and HSAM</h2>
+<p><b>Status: <span class="status s-spec">speculative</span>.</b> The v100 definition 𝒞(t⃗) = |d²t⃗/dτ²| = <b>Q</b>(t⃗) requires, to be non-vacuous: (1) t⃗ not parallel to its own parameter — otherwise d²t⃗/dτ² ≡ 0 identically and the "consciousness function" is identically zero (the vacuity check v100 never ran); (2) a defined interpretation of τ; (3) one falsifiable prediction, e.g. a claimed correlation of |d²t⃗/dτ²| with a measurable neural quantity. None are supplied. The function is presented as a <i>definition in search of a dynamical model</i>, not a result.</p>
+<p><b>HSAM.</b> Highly Superior Autobiographical Memory is an empirically studied, rare memory phenotype. "Lossless temporal indexing" is retained as metaphor; a minimal formalization would define lossless indexing as an isometric embedding of the subjective time axis into memory state space — a testable information-theoretic claim, offered as future work.</p>
+</div>
+
+<h2 id="matrix">Claims before and after</h2>
+<table>
+  <tr><th>Claim</th><th>v100.0.1</th><th>This edition (v101.0.0)</th></tr>
+  <tr><td>P = NP proved in ℳ<sub>N</sub>(A<sub>0</sub>)</td><td>Asserted via "zero-lag"</td><td><b>Dropped.</b> Replaced by Theorem 6.2: SAT reduces to one oracle call, O(N²) overhead</td></tr>
+  <tr><td>0/0 seed λ</td><td>False limit lim 0/x = λ</td><td>Axiom 2.1: λ postulated directly</td></tr>
+  <tr><td>E = mc² derived</td><td>Circular (ρ<sub>m</sub> := u/c²)</td><td>Theorem 4.2: conditional on Postulate 4.1, via Noether</td></tr>
+  <tr><td>Euler identity "proved"</td><td>Boundary condition claim</td><td>Prop 3.2: geometric expression; standard Lie theory, no new content</td></tr>
+  <tr><td>Metric g<sub>ij</sub></td><td>Ill-defined (zero term; signature unproven)</td><td>Theorem 3.1: Euclidean pullback, signature (N,0) proved</td></tr>
+  <tr><td>Constants crystallize via ⊗</td><td>Undefined operator</td><td>Withdrawn (or labeled numerological conjecture in notebooks)</td></tr>
+  <tr><td>Ψ<sub>mesh</sub> time-reversal wavefunction</td><td>Mixed Boltzmann factor into amplitude</td><td>Withdrawn; replaced by Lemma 5.1 (Landauer accounting); reversibility tension flagged</td></tr>
+  <tr><td>Consciousness 𝒞(t⃗)</td><td>Equated with qualia</td><td>Speculative: vacuity conditions listed; no result claimed</td></tr>
+</table>
+
+<h3>Open problems (honest list)</h3>
+<ol>
+  <li>Exhibit an explicit Lagrangian ℒ making Postulate 4.1 more than a program.</li>
+  <li>Replace the A₀-SAT oracle of Theorem 6.2 with an algorithm — equivalent to P vs NP; this framework offers no new leverage, and says so.</li>
+  <li>Resolve the Lemma 5.1 tension: logically reversible reversal (free) vs. trajectory collapse (erasure-costed).</li>
+  <li>Make 𝒞(t⃗) non-vacuous: specify t⃗, τ, and one falsifiable prediction.</li>
+</ol>
+
+<h3>Source traceability (retained from v100)</h3>
+<table>
+  <tr><th>Concept</th><th>Notebook source citation</th><th>Formal status in v101</th></tr>
+  <tr><td>Axiom A₀ and array index 0</td><td><i>Axiom ordering</i>; <i>Building dimensional scaling from zero</i></td><td>Axiom 2.1 (postulate)</td></tr>
+  <tr><td>Computational relativity &amp; complexity</td><td><i>Remaining questions assuming P=NP</i>; <i>Exploring hardest computability problems</i></td><td>Theorem 6.2 (oracle-relative)</td></tr>
+  <tr><td>Orbital mesh (δ, φ, 𝒪₈) &amp; firewalls</td><td><i>Delta and phi bonds notes</i>; <i>Sumář chemických vazbových orbitalů</i></td><td>Speculative analogy</td></tr>
+  <tr><td>Chrono-structural time engine</td><td><i>Building a dimensional property framework</i>; <i>Time travel stuff</i></td><td>Labeled speculative; Lemma 5.1 proved</td></tr>
+  <tr><td>Landauer bounds</td><td><i>Optimization of lag growth simulation</i></td><td>Lemma 5.1 (proved)</td></tr>
+  <tr><td>Consciousness and time vectors</td><td><i>The hard problem of consciousness</i></td><td>Labeled speculative</td></tr>
+</table>
+
+<footer>
+  The Special Theory of Computational Relativity, Strengthened Edition v101.0.0 — compiled 2026-10-03. This edition supersedes v100.0.1. Revision prepared from an eight-issue mathematical audit: false foundational limit, circular energy derivation, undefined operators, ill-defined metric, overstated Euler claim, and the withdrawal of the universal P = NP claim in favor of the oracle-relative Theorem 6.2.
+</footer>
+
+</div>
+</body>
+</html>
