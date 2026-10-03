@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computational relativity — animated concept</title>
+<style>
+html,body{margin:0;height:100%;background:#282a36;overflow:hidden}
+canvas{display:block;width:100vw;height:100vh;cursor:pointer}
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Animated concept: a rotating 5-cube at the zero-point A0, lobe gears, a nodal firewall between past and future, and a search tree collapsing to one path"></canvas>
+<script>
+const cv=document.getElementById('c'),g=cv.getContext('2d');
+let W,H,cx,cy,R;
+function size(){const D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;g.setTransform(D,0,0,D,0,0);cx=W/2;cy=H*.42;R=Math.min(W*.36,H*.34)}
+addEventListener('resize',size);size();
+const PK='#ff79c6',PU='#bd93f9',CY='#8be9fd',OR='#ffb86c',YE='#f1fa8c',SF='#9aa5ce',AX=[PK,PU,CY,OR,YE];
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),sm=x=>{x=clamp(x,0,1);return x*x*(3-2*x)};
+// 5-cube: 32 vertices, 80 edges, rotated in five of the ten SO(5) planes
+const V=[],E=[];for(let i=0;i<32;i++)V.push([0,1,2,3,4].map(k=>(i>>k&1)?1:-1));
+for(let i=0;i<32;i++)for(let k=0;k<5;k++)if(!(i>>k&1))E.push([i,i|1<<k,k]);
+const PL=[[0,1,.31],[2,3,.23],[1,4,.17],[0,3,.13],[2,4,.19]],ang=PL.map(()=>0);
+function pr(v){v=v.slice();PL.forEach(([a,b],i)=>{const c=Math.cos(ang[i]),s=Math.sin(ang[i]),x=v[a],y=v[b];v[a]=c*x-s*y;v[b]=s*x+c*y});
+ for(let k=4;k>=2;k--){const f=5/(5-v[k]);v=v.slice(0,k).map(x=>x*f)}return v}
+// star inflow, time streams
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const stars=Array.from({length:150},()=>({r:rnd(.2,1),a:rnd(0,6.28),c:Math.random()<.5?PU:PK}));
+const flow=Array.from({length:230},()=>({x:0,y:0,v:0,s:0,l:0}));
+function spawn(p,side){p.s=side;p.x=cx+side*rnd(3,10);p.y=rnd(H*.14,H*.72);p.v=side*rnd(50,170);p.l=rnd(1.5,4.5)}
+flow.forEach((p,i)=>{spawn(p,i%2?1:-1);p.x+=p.v*rnd(0,3)});
+const CAP=[[0,6,'A₀ · the zero-point seed, 0/0',PK],[6,13,'five dimensions · a 5-cube turning in SO(5): 32 vertices, 80 edges',CY],[13,20,'δ, φ, O₈ gears mesh: 4, 6 and 8 lobes',OR],[20,27,'time reversal: the path flips, E = mc² does not',YE],[27,32,'P = NP (assumed): 2ᴺ branches collapse to one path',PK]];
+const PATH=[1,0,1,1,0,1],DEP=6;
+let T=0,last=0,paused=matchMedia('(prefers-reduced-motion: reduce)').matches;
+addEventListener('click',()=>paused=!paused);addEventListener('keydown',e=>{if(e.code==='Space'){paused=!paused;e.preventDefault()}});
+function lobes(L,off,rx,ry,col,rot,al){g.save();g.translate(cx,cy);g.rotate(rot);g.fillStyle=col;g.strokeStyle=col;
+ for(let k=0;k<L;k++){g.save();g.rotate(k*6.2832/L);g.globalAlpha=al*.22;g.beginPath();g.ellipse(0,-off,rx,ry,0,0,6.2832);g.fill();g.globalAlpha=al*.8;g.lineWidth=1.5;g.stroke();g.restore()}g.restore()}
+function frame(now){
+ const dt=paused?0:Math.min(.05,(now-last)/1000||0);last=now;T+=dt;const ph=T%32;
+ const dir=-Math.cos(6.2832*(T-23.5)/32);               // +1 forward … −1 reversed
+ PL.forEach((p,i)=>ang[i]+=p[2]*dt*dir*1.6);
+ g.globalCompositeOperation='source-over';g.fillStyle='rgba(40,42,54,.2)';g.fillRect(0,0,W,H);
+ g.fillStyle='rgba(189,147,249,.045)';g.fillRect(0,0,cx,H);g.fillStyle='rgba(139,233,253,.045)';g.fillRect(cx,0,cx,H);
+ g.save();g.translate(cx,cy);const z=1+.025*Math.sin(T*1.3);g.scale(z,z);g.translate(-cx+Math.sin(T*.7)*5,-cy+Math.cos(T*.9)*4);
+ // stars falling into A0
+ stars.forEach(s=>{s.r-=dt*.09*(1+.4*Math.abs(dir));s.a+=dt*.25*dir;if(s.r<.02){s.r=1.1;s.a=rnd(0,6.28)}
+  const x=cx+Math.cos(s.a)*s.r*R*2.3,y=cy+Math.sin(s.a)*s.r*R*2.3;g.globalAlpha=clamp(s.r*1.5,.1,.8);g.fillStyle=s.c;g.fillRect(x,y,2,2)});
+ g.globalAlpha=1;
+ // shockwaves
+ for(let k=0;k<2;k++){const p=((T/3)+k*.5)%1;g.strokeStyle=PK;g.globalAlpha=(1-p)*.5;g.lineWidth=2;g.beginPath();g.arc(cx,cy,p*R*1.7,0,6.2832);g.stroke()}
+ g.globalAlpha=1;
+ // gears
+ const gw=.35+.65*sm((ph-10)/3)*(1-sm((ph-24)/4)),ga=T*.5*dir;
+ lobes(8,R*.82,R*.08,R*.26,PU,-ga*.6+.39,gw);lobes(6,R*.55,R*.1,R*.24,CY,ga*.8,gw);lobes(4,R*.29,R*.12,R*.2,OR,-ga,gw);
+ // 5-cube
+ g.globalCompositeOperation='lighter';
+ const P=V.map(v=>{const w=pr(v);return[cx+w[0]*R*.3,cy+w[1]*R*.3]});
+ g.lineWidth=1.4;E.forEach(([a,b,k])=>{g.strokeStyle=AX[k];g.globalAlpha=.5;g.beginPath();g.moveTo(...P[a]);g.lineTo(...P[b]);g.stroke()});
+ g.globalAlpha=.9;g.fillStyle='#f8f8f2';P.forEach(p=>{g.beginPath();g.arc(p[0],p[1],2.4,0,6.2832);g.fill()});
+ g.globalCompositeOperation='source-over';g.globalAlpha=1;
+ // time streams, split by the firewall
+ flow.forEach(p=>{p.x+=p.v*dt;p.l-=dt;if(p.l<=0||p.x<-20||p.x>W+20)spawn(p,Math.random()<.5?1:-1);
+  g.strokeStyle=p.s>0?CY:OR;g.globalAlpha=clamp(p.l,0,1)*.7;g.lineWidth=1.6;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x-p.v*.05,p.y);g.stroke()});
+ g.globalAlpha=1;
+ // firewall |psi_node| = 0
+ g.shadowColor=PK;g.shadowBlur=18;g.strokeStyle=PK;g.lineWidth=2.5;g.globalAlpha=.75+.25*Math.sin(T*9);g.beginPath();
+ for(let y=H*.08;y<=H*.78;y+=6){const x=cx+Math.sin(y*.04+T*4)*3;y<=H*.08?g.moveTo(x,y):g.lineTo(x,y)}g.stroke();g.shadowBlur=0;g.globalAlpha=1;
+ // A0
+ const rg=g.createRadialGradient(cx,cy,0,cx,cy,R*.26);rg.addColorStop(0,'rgba(248,248,242,.95)');rg.addColorStop(.3,'rgba(255,121,198,.45)');rg.addColorStop(1,'rgba(255,121,198,0)');
+ g.fillStyle=rg;g.beginPath();g.arc(cx,cy,R*.26*(1+.15*Math.sin(T*5)),0,6.2832);g.fill();
+ g.restore();
+ // flip flash when the arrow of time turns
+ const fl=Math.max(0,.12-Math.abs(dir))*2.2;if(fl>0){g.fillStyle=`rgba(248,248,242,${fl})`;g.fillRect(0,0,W,H)}
+ // search tree collapsing to one path
+ const y0=H*.82,y1=H*.94,Wd=Math.min(W*.55,560),fin=sm(ph/1.5),col=sm((ph-26.5)/3.5);
+ const nx=(l,i)=>cx+((i+.5)/2**l-.5)*Wd,ny=l=>y0+(y1-y0)*l/DEP;
+ let ci=0;for(let l=0;l<DEP;l++){const ni=ci*2+PATH[l];
+  for(let i=0;i<2**l;i++)for(let c=0;c<2;c++){const j=i*2+c,on=(i===ci&&j===ni);
+   g.strokeStyle=on?PK:SF;g.lineWidth=on?3:1;g.globalAlpha=on?.95*fin:.5*fin*(1-col);g.beginPath();g.moveTo(nx(l,i),ny(l));g.lineTo(nx(l+1,j),ny(l+1));g.stroke()}
+  ci=ni}g.globalAlpha=1;
+ // HUD
+ g.textBaseline='alphabetic';g.textAlign='left';g.font='bold 22px Georgia,serif';g.fillStyle=PK;g.fillText('The special theory of computational relativity',22,38);
+ g.font='14px Georgia,serif';g.fillStyle=CY;g.fillText('one zero-point seed · five dimensions · a firewall between past and future',22,60);
+ g.textAlign='right';g.font='bold 16px Georgia,serif';const fw=dir>.12,rv=dir<-.12;g.fillStyle=fw?CY:rv?OR:'#f8f8f2';g.fillText(fw?'time runs forward →':rv?'← time reversed (−L)':'· · · the arrow flips · · ·',W-22,38);
+ g.font='14px Georgia,serif';g.fillStyle=YE;g.fillText('E = mc² · unchanged throughout',W-22,60);
+ const c=CAP.find(a=>ph>=a[0]&&ph<a[1])||CAP[0],lt=ph-c[0],al=Math.min(1,lt/.6,(c[1]-c[0]-lt)/.6);
+ g.textAlign='center';g.globalAlpha=clamp(al,0,1);g.font='bold 19px Georgia,serif';g.fillStyle=c[3];g.fillText(c[2],cx,H*.775);g.globalAlpha=1;
+ g.font='11.5px Georgia,serif';g.fillStyle=SF;g.fillText('Conceptual illustration of the framework as described, not a physical or computational result · '+(paused?'paused · click to play':'click to pause'),cx,H-12);
+ requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
