@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Special Theory of Computational Relativity — Master Monograph & Interactive Engine (v4.3.0-SWITCHES-EDITION)</title>
+    <!-- MathJax 3 Loader -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #282a36;
+            --current-line: #44475a;
+            --fg-color: #f8f8f2;
+            --comment-color: #6272a4;
+            --cyan: #8be9fd;
+            --green: #50fa7b;
+            --orange: #ffb86c;
+            --pink: #ff79c6;
+            --purple: #bd93f9;
+            --red: #ff5555;
+            --yellow: #f1fa8c;
+            --card-bg: #1e1f29;
+            --brass: #d4af37;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--fg-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 40px 60px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+            border: 1px solid var(--current-line);
+        }
+
+        header {
+            border-bottom: 2px solid var(--purple);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--comment-color);
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--current-line);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-meta span {
+            background-color: var(--bg-color);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--current-line);
+        }
+
+        .observer-clock {
+            color: var(--yellow) !important;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: var(--purple);
+            font-size: 2.3rem;
+            margin: 12px 0 6px 0;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .subtitle {
+            color: var(--cyan);
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .author-block {
+            color: var(--fg-color);
+            font-size: 1.05rem;
+            margin-top: 15px;
+            background-color: var(--bg-color);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--purple);
+        }
+
+        h2 {
+            color: var(--green);
+            border-left: 5px solid var(--green);
+            padding-left: 14px;
+            margin-top: 45px;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: var(--orange);
+            font-size: 1.25rem;
+            margin-top: 28px;
+        }
+
+        p, li {
+            color: var(--fg-color);
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .animation-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(189, 147, 249, 0.15);
+        }
+
+        .sculpture-card {
+            background-color: #1a1b26;
+            border: 1px solid var(--brass);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
+        }
+
+        canvas {
+            background-color: #15161e;
+            border-radius: 8px;
+            border: 1px solid var(--current-line);
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .controls-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .button-group-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .switch-container-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            background-color: #1e1f29;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--current-line);
+        }
+
+        .switch-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch-label {
+            color: var(--comment-color);
+            font-size: 0.88rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .segmented-switch {
+            display: inline-flex;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 3px;
+            border: 1px solid var(--current-line);
+        }
+
+        .switch-btn {
+            background: transparent;
+            color: var(--fg-color);
+            border: none;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .switch-btn:hover {
+            color: var(--cyan);
+        }
+
+        .switch-active {
+            background-color: var(--purple) !important;
+            color: #21222c !important;
+            box-shadow: 0 2px 8px rgba(189, 147, 249, 0.4);
+        }
+
+        .switch-active-speed {
+            background-color: var(--cyan) !important;
+            color: #21222c !important;
+            box-shadow: 0 2px 8px rgba(139, 233, 253, 0.4);
+        }
+
+        .btn {
+            background-color: var(--current-line);
+            color: var(--fg-color);
+            border: 1px solid var(--purple);
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 0.88rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-brass {
+            background-color: var(--brass);
+            color: #15161e;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: var(--pink);
+            color: #21222c;
+            transform: translateY(-2px);
+        }
+
+        .btn-active {
+            background-color: var(--green) !important;
+            color: #21222c !important;
+            border-color: var(--green) !important;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--cyan);
+            margin: 30px 0;
+            box-shadow: 0 8px 24px rgba(139, 233, 253, 0.15);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .axiom-box {
+            background-color: var(--bg-color);
+            border-left: 5px solid var(--pink);
+            border-radius: 6px;
+            padding: 20px 24px;
+            margin: 25px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .postulate-box {
+            background-color: #222034;
+            border-left: 5px solid var(--yellow);
+            border-radius: 6px;
+            padding: 20px 24px;
+            margin: 25px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .theorem-box {
+            background-color: #21222c;
+            border: 1px solid var(--cyan);
+            border-left: 5px solid var(--cyan);
+            border-radius: 8px;
+            padding: 22px;
+            margin: 28px 0;
+        }
+
+        .equation {
+            background-color: var(--current-line);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 18px 0;
+            text-align: center;
+        }
+
+        .chips-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .chip {
+            border: 1px solid var(--current-line);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            background: #262634;
+        }
+
+        .chip .big {
+            font-size: 1.6rem;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 4px;
+        }
+
+        .chip .sm {
+            font-size: 0.82rem;
+            color: var(--comment-color);
+        }
+
+        .chip-1 .big { color: var(--green); }
+        .chip-2 .big { color: var(--cyan); }
+        .chip-3 .big { color: var(--pink); }
+        .chip-4 .big { color: var(--orange); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--current-line);
+        }
+
+        th {
+            background-color: var(--purple);
+            color: var(--bg-color);
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: var(--current-line);
+        }
+
+        .toc {
+            background-color: var(--bg-color);
+            border: 1px solid var(--current-line);
+            border-radius: 10px;
+            padding: 24px 30px;
+            margin: 30px 0;
+        }
+
+        .toc h3 { margin-top: 0; color: var(--purple); }
+        .toc ol { padding-left: 20px; margin-bottom: 0; }
+        .toc li { margin: 6px 0; }
+        .toc a { color: var(--cyan); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 25px;
+            border-top: 1px solid var(--current-line);
+            text-align: center;
+            color: var(--comment-color);
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .chips-grid { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 1.8rem; }
+            .header-meta { flex-direction: column; align-items: center; }
+            .switch-container-row { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-meta">
+            <span><strong>Academic Version:</strong> v4.3.0-SWITCHES-EDITION</span>
+            <span><strong>Compilation Date:</strong> October 3, 2026</span>
+            <span class="observer-clock"><strong>Observer Reading Time:</strong> <span id="observerClock">Syncing...</span></span>
+        </div>
+        <h1>The Special Theory of Computational Relativity</h1>
+        <div class="subtitle">A Dissertation on the Constructive Proof of P = NP in the Zero-Point Singularity Manifold $\mathcal{M}_N(A_0)$</div>
+        <div class="author-block">
+            <strong>Author:</strong> Pierre LeBaux, Ph.D. &bull; <strong>Department:</strong> Theoretical Physics & Computational Complexity
+        </div>
+    </header>
+
+    <!-- Key Metrics Banner -->
+    <div class="chips-grid">
+        <div class="chip chip-1">
+            <div class="big" id="chipDim">5D Space</div>
+            <div class="sm">Current Dimension N</div>
+        </div>
+        <div class="chip chip-2">
+            <div class="big" id="chipOctants">32</div>
+            <div class="sm">Hyper-Octants (\\(2^N\\))</div>
+        </div>
+        <div class="chip chip-3">
+            <div class="big" id="chipPlanes">10</div>
+            <div class="sm">Rotation Planes (\\(\binom{N}{2}\\))</div>
+        </div>
+        <div class="chip chip-4">
+            <div class="big" id="chipProps">8</div>
+            <div class="sm">Active Properties (\\(3+N\\))</div>
+        </div>
+    </div>
+
+    <!-- Master Interactive Canvas Engine with Switches -->
+    <div class="animation-card">
+        <h3 style="margin-top:0; color:var(--purple);">Master Chrono-Structural Simulation Engine v4.3</h3>
+        <canvas id="chronoCanvas" width="820" height="460"></canvas>
+
+        <div class="controls-row">
+            <!-- Discrete Switches Row -->
+            <div class="switch-container-row">
+                <!-- Dimension Switch -->
+                <div class="switch-group">
+                    <span class="switch-label">Dimension Switch:</span>
+                    <div class="segmented-switch" id="dimSwitchGroup">
+                        <button class="switch-btn" data-dim="0">0D</button>
+                        <button class="switch-btn" data-dim="1">1D</button>
+                        <button class="switch-btn" data-dim="2">2D</button>
+                        <button class="switch-btn" data-dim="3">3D</button>
+                        <button class="switch-btn" data-dim="4">4D</button>
+                        <button class="switch-btn switch-active" data-dim="5">5D</button>
+                    </div>
+                </div>
+
+                <!-- Speed Switch -->
+                <div class="switch-group">
+                    <span class="switch-label">Speed Switch:</span>
+                    <div class="segmented-switch" id="speedSwitchGroup">
+                        <button class="switch-btn" data-speed="0.0075">0.25x</button>
+                        <button class="switch-btn" data-speed="0.015">0.5x</button>
+                        <button class="switch-btn switch-active-speed" data-speed="0.03">1x</button>
+                        <button class="switch-btn" data-speed="0.06">2x</button>
+                        <button class="switch-btn" data-speed="0.12">4x</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons Row -->
+            <div class="button-group-row">
+                <button class="btn" id="playPauseBtn">Pause Engine</button>
+                <button class="btn" id="timeRevBtn">Toggle Time Reversal (\\(\mathcal{T}_{\text{rev}}\\))</button>
+                <button class="btn" id="hsamBtn">Toggle P_HSAM Trace</button>
+                <button class="btn" id="shearBtn">Trigger Double-Slit Shearing (\\(\hat{\mathcal{S}}\\))</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Explainer Integration -->
+    <h3>Official Video Explainer: Computational Relativity</h3>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/x67csPaXT24" title="Computational Relativity Explainer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ol>
+            <li><a href="#ch1">Chapter 1: Introduction & The Closed Computational Universe Paradigm</a></li>
+            <li><a href="#ch2">Chapter 2: Axiom A₀ at Array Index 0 & Invariant Constants (0 and c)</a></li>
+            <li><a href="#ch3">Chapter 3: The Euler Transformer & Property Extraction out of Real Numbers</a></li>
+            <li><a href="#ch4">Chapter 4: Closed-System Mass–Energy Equivalence (E = mc²) & Atomic Decay</a></li>
+            <li><a href="#ch5">Chapter 5: Chrono-Structural Mechanics, Nodal Firewalls, and Time Reversal</a></li>
+            <li><a href="#ch6">Chapter 6: Topological Double-Slit Experiment & Observation Shearing (\\(\hat{\mathcal{S}}\\))</a></li>
+            <li><a href="#ch7">Chapter 7: Postulate P_HSAM — Lossless Temporal Observer & Qualia Acceleration</a></li>
+            <li><a href="#ch8">Chapter 8: Formal Proof of P = NP in $\mathcal{M}_N(A_0)$</a></li>
+            <li><a href="#ch9">Chapter 9: Monolithic Brass Cube Sculpture Geometry & Interactive 3D Model</a></li>
+            <li><a href="#ch10">Chapter 10: Source Traceability Matrix</a></li>
+        </ol>
+    </div>
+
+    <!-- Chapter 1 -->
+    <section id="ch1">
+        <h2>Chapter 1: Introduction & The Closed Computational Universe Paradigm</h2>
+        <p>Evaluating multi-body path integrals across $2^N$ hyper-octants in decohered space forces exponential search times $O(2^N)$. Special computational relativity constructs an unconstrained, fully deterministic continuum $\mathcal{M}_N(A_0)$ where $P = NP$ is established as an intrinsic geometric postulate around the zero-point singularity $A_0$.</p>
+    </section>
+
+    <!-- Chapter 2 -->
+    <section id="ch2">
+        <h2>Chapter 2: Axiom A₀ at Array Index 0 & Invariant Constants (0 and c)</h2>
+        <div class="axiom-box">
+            <div class="equation">$$\text{Axiom } A_0 \equiv A : \quad 0 = 0, \quad \lim_{x \to 0} \frac{0}{x} = \lambda \in \mathbb{R}^N$$</div>
+            <p>Absolute zero (\\(0\\)) at $A_0$ and the speed of light (\\(c\\)) are the sole invariant constants. Positive dimensions (\\(+N\\)) gain +1 property per step (\\(P_N = 3+N\\)), while negative dimensions (\\(-N\\)) invert into fractional anti-properties.</p>
+        </div>
+    </section>
+
+    <!-- Chapter 3 -->
+    <section id="ch3">
+        <h2>Chapter 3: The Euler Transformer & Property Extraction out of Real Numbers</h2>
+        <p>Evaluating complex rotation $R(\theta) = e^{i\theta}$ across half-period $\pi$ yields $e^{i\pi} + 1 = 0$, establishing the anti-phase boundary condition across $A_0$.</p>
+    </section>
+
+    <!-- Chapter 4 -->
+    <section id="ch4">
+        <h2>Chapter 4: Closed-System Mass–Energy Equivalence (E = mc²) & Atomic Decay</h2>
+        <div class="equation">$$E_{\text{total}} = \iiint_{\Omega} u(\mathbf{r}, t) \, d^3\mathbf{r} = c^2 \iiint_{\Omega} \rho_m(\mathbf{r}, t) \, d^3\mathbf{r} = m_{\text{total}} c^2$$</div>
+    </section>
+
+    <!-- Chapter 5 -->
+    <section id="ch5">
+        <h2>Chapter 5: Chrono-Structural Mechanics, Nodal Firewalls, and Time Reversal</h2>
+        <p>Zero-probability nodal surfaces (\\(|\psi_{\text{node}}| = 0\\)) function as kinetic firewalls that isolate past and future states during momentum reversal (\\(-\mathbf{L}_n\\)).</p>
+    </section>
+
+    <!-- Chapter 6 -->
+    <section id="ch6">
+        <h2>Chapter 6: Topological Double-Slit Experiment & Observation Shearing (\\(\hat{\mathcal{S}}\\))</h2>
+        <p>Observation operator $\hat{\mathcal{O}}$ forces an extra nodal plane (\\(n \to n+1\\)), driving $\tau = L - 2n < 0$, triggering non-local shearing (\\(\hat{\mathcal{S}}\\)) into a rigid particle trajectory + decoupled wave envelope.</p>
+    </section>
+
+    <!-- Chapter 7 -->
+    <section id="ch7">
+        <h2>Chapter 7: Postulate P_HSAM — Lossless Temporal Observer & Qualia Acceleration</h2>
+        <div class="postulate-box">
+            <div class="equation">$$\mathcal{C}(\vec{t}) = \left\| \frac{d^2 \vec{t}}{d\tau^2} \right\| = \mathbf{Q}(\vec{t})$$</div>
+        </div>
+    </section>
+
+    <!-- Chapter 8 -->
+    <section id="ch8">
+        <h2>Chapter 8: Formal Proof of P = NP in $\mathcal{M}_N(A_0)$</h2>
+        <div class="theorem-box">
+            <p>Action integrals collapse into algebraic minimizations over $R_N = \binom{N}{2}$ rotation planes, executing in <span class="highlight">$O(N^2)$ polynomial time</span>.</p>
+        </div>
+    </section>
+
+    <!-- Chapter 9 with Embedded 3D Model -->
+    <section id="ch9">
+        <h2>Chapter 9: Monolithic Brass Cube Sculpture Geometry & Interactive 3D Model</h2>
+        <p>
+            The abstract geometric principles of $\mathcal{M}_N(A_0)$ are physically instantiated in a precision-machined <strong>Monolithic Brass Cube Sculpture</strong>. Machined from a single solid $300 \times 300 \times 300\text{ mm}$ CuZn39Pb3 brass billet, the object embodies the non-recursive, bounded structural collapse of high-dimensional space into physical matter.
+        </p>
+
+        <!-- Interactive 3D Monolith Canvas Card -->
+        <div class="sculpture-card">
+            <h3 style="margin-top:0; color:var(--brass);">Interactive 3D Monolithic Brass Sculpture (CNC Machined Billet)</h3>
+            <canvas id="sculptureCanvas3D" width="800" height="450"></canvas>
+            <div class="controls-row">
+                <div class="button-group-row">
+                    <button class="btn btn-brass" id="sculptureRotateBtn">Pause Rotation</button>
+                    <button class="btn btn-brass" id="sculptureShadeBtn">Toggle Wireframe / Metallic Shading</button>
+                    <button class="btn btn-brass" id="sculptureResetBtn">Reset View</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 10 -->
+    <section id="ch10">
+        <h2>Chapter 10: Source Traceability Matrix</h2>
+        <table>
+            <thead>
+                <tr><th>Theoretical Concept</th><th>Notebook Source Citation</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Axiom A₀, Array Index 0 & Invariants (0, c)</td><td><em>Axiom ordering</em>; <em>Building Dimensional Scaling from Zero</em></td></tr>
+                <tr><td>P = NP Computational Relativity</td><td><em>Remaining Questions Assuming P=NP</em>; <em>lebaux.github.io</em></td></tr>
+                <tr><td>Monolithic Brass Cube Sculpture</td><td><em>Building Dimensional Scaling from Zero</em></td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        Self-Contained PhD Monograph & Interactive Engine (v4.3.0-SWITCHES-EDITION) &bull; Theoretical Physics Division
+    </footer>
+</div>
+
+<!-- JavaScript Engine -->
+<script>
+    // Live Observer Clock
+    function updateClock() {
+        const clockEl = document.getElementById('observerClock');
+        if (clockEl) {
+            const now = new Date();
+            clockEl.textContent = `${now.toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'})} @ ${now.toLocaleTimeString()}`;
+        }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ==========================================
+    // 1. TOP CHRONO-STRUCTURAL CANVAS ENGINE
+    // ==========================================
+    const canvas = document.getElementById('chronoCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let currentDim = 5;
+    let isRunning = true;
+    let isTimeReversed = false;
+    let isHsamActive = false;
+    let isSheared = false;
+    let angle = 0;
+    let speed = 0.03;
+    let traceHistory = [];
+
+    // UI Action Buttons
+    document.getElementById('playPauseBtn').addEventListener('click', (e) => {
+        isRunning = !isRunning;
+        e.target.textContent = isRunning ? 'Pause Engine' : 'Resume Engine';
+        e.target.classList.toggle('btn-active', !isRunning);
+    });
+
+    document.getElementById('timeRevBtn').addEventListener('click', (e) => {
+        isTimeReversed = !isTimeReversed;
+        e.target.classList.toggle('btn-active', isTimeReversed);
+    });
+
+    document.getElementById('hsamBtn').addEventListener('click', (e) => {
+        isHsamActive = !isHsamActive;
+        e.target.classList.toggle('btn-active', isHsamActive);
+    });
+
+    document.getElementById('shearBtn').addEventListener('click', (e) => {
+        isSheared = !isSheared;
+        e.target.classList.toggle('btn-active', isSheared);
+    });
+
+    // Dimension Switches Handler
+    document.querySelectorAll('#dimSwitchGroup .switch-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('#dimSwitchGroup .switch-btn').forEach(b => b.classList.remove('switch-active'));
+            e.target.classList.add('switch-active');
+            currentDim = parseInt(e.target.getAttribute('data-dim'));
+            updateMetrics();
+        });
+    });
+
+    // Speed Switches Handler
+    document.querySelectorAll('#speedSwitchGroup .switch-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('#speedSwitchGroup .switch-btn').forEach(b => b.classList.remove('switch-active-speed'));
+            e.target.classList.add('switch-active-speed');
+            speed = parseFloat(e.target.getAttribute('data-speed'));
+        });
+    });
+
+    function updateMetrics() {
+        document.getElementById('chipDim').textContent = `${currentDim}D Space`;
+        document.getElementById('chipOctants').textContent = Math.pow(2, currentDim);
+        document.getElementById('chipPlanes').textContent = (currentDim * (currentDim - 1)) / 2;
+        document.getElementById('chipProps').textContent = 3 + currentDim;
+    }
+
+    function drawLobe(centerX, centerY, lobes, radius, color, rotAngle) {
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(rotAngle);
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+
+        for (let i = 0; i <= 360; i += 2) {
+            let rad = (i * Math.PI) / 180;
+            let r = radius * Math.abs(Math.cos((lobes / 2) * rad));
+            let x = r * Math.cos(rad);
+            let y = r * Math.sin(rad);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function generateHypercubeVertices(dim) {
+        if (dim === 0) return [];
+        let vertices = [];
+        let count = Math.pow(2, dim);
+        for (let i = 0; i < count; i++) {
+            let v = [];
+            for (let d = 0; d < dim; d++) {
+                v[d] = ((i >> d) & 1) === 1 ? 1 : -1;
+            }
+            vertices.push(v);
+        }
+        return vertices;
+    }
+
+    function padVector(v) {
+        let p = [0, 0, 0, 0, 0];
+        for (let i = 0; i < v.length; i++) p[i] = v[i];
+        return p;
+    }
+
+    function rotate5D(v, a) {
+        let [x, y, z, w, v5] = padVector(v);
+        let x1 = x * Math.cos(a) - y * Math.sin(a);
+        let y1 = x * Math.sin(a) + y * Math.cos(a);
+        let z1 = z * Math.cos(a * 0.7) - w * Math.sin(a * 0.7);
+        let w1 = z * Math.sin(a * 0.7) + w * Math.cos(a * 0.7);
+        let w2 = w1 * Math.cos(a * 0.4) - v5 * Math.sin(a * 0.4);
+        let v5_1 = w1 * Math.sin(a * 0.4) + v5 * Math.cos(a * 0.4);
+        return [x1, y1, z1, w2, v5_1];
+    }
+
+    function project5DTo2D(v5d, cx, cy, scale) {
+        let [x, y, z, w, v5] = v5d;
+        let d5 = 3.5, d4 = 3.0, d3 = 2.5;
+        let f5 = d5 / (d5 - v5 * 0.3);
+        x *= f5; y *= f5; z *= f5; w *= f5;
+        let f4 = d4 / (d4 - w * 0.35);
+        x *= f4; y *= f4; z *= f4;
+        let f3 = d3 / (d3 - z * 0.4);
+        return [cx + x * f3 * scale, cy + y * f3 * scale];
+    }
+
+    function animateChrono() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+
+        const dir = isTimeReversed ? -1 : 1;
+        if (isRunning) angle += speed * dir;
+
+        if (isHsamActive && isRunning) {
+            let tx = cx + Math.cos(angle * 2) * 110;
+            let ty = cy + Math.sin(angle * 2) * 110;
+            traceHistory.push({x: tx, y: ty});
+            if (traceHistory.length > 90) traceHistory.shift();
+        }
+
+        if (isHsamActive && traceHistory.length > 0) {
+            ctx.beginPath();
+            ctx.strokeStyle = '#f1fa8c';
+            ctx.lineWidth = 1.8;
+            for (let i = 0; i < traceHistory.length; i++) {
+                let pt = traceHistory[i];
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            }
+            ctx.stroke();
+        }
+
+        // Nodal Firewalls
+        ctx.strokeStyle = 'rgba(255, 85, 85, 0.6)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        ctx.moveTo(cx - 200, cy - 200); ctx.lineTo(cx + 200, cy + 200);
+        ctx.moveTo(cx + 200, cy - 200); ctx.lineTo(cx - 200, cy + 200);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        if (currentDim === 0) {
+            ctx.beginPath();
+            ctx.arc(cx, cy, 12 + Math.sin(angle * 4) * 3, 0, Math.PI * 2);
+            ctx.fillStyle = '#f1fa8c';
+            ctx.shadowColor = '#f1fa8c';
+            ctx.shadowBlur = 20;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        } else {
+            let rawV = generateHypercubeVertices(currentDim);
+            let projV = [];
+            let sc = currentDim <= 3 ? 95 : currentDim === 4 ? 75 : 60;
+
+            for (let i = 0; i < rawV.length; i++) {
+                let rotV = rotate5D(rawV[i], angle);
+                projV.push(project5DTo2D(rotV, cx, cy, sc));
+            }
+
+            for (let i = 0; i < rawV.length; i++) {
+                for (let j = i + 1; j < rawV.length; j++) {
+                    let diff = 0;
+                    for (let d = 0; d < currentDim; d++) {
+                        if (rawV[i][d] !== rawV[j][d]) diff++;
+                    }
+                    if (diff === 1) {
+                        ctx.beginPath();
+                        ctx.moveTo(projV[i][0], projV[i][1]);
+                        ctx.lineTo(projV[j][0], projV[j][1]);
+                        ctx.strokeStyle = 'rgba(139, 233, 253, 0.5)';
+                        ctx.lineWidth = 1.2;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            for (let i = 0; i < projV.length; i++) {
+                ctx.beginPath();
+                ctx.arc(projV[i][0], projV[i][1], 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#ff79c6';
+                ctx.fill();
+            }
+        }
+
+        if (!isSheared) {
+            drawLobe(cx, cy, 4, 70, '#ff79c6', angle);
+            drawLobe(cx, cy, 6, 115, '#8be9fd', -angle * 0.7);
+            drawLobe(cx, cy, 8, 160, '#bd93f9', angle * 0.4);
+        } else {
+            ctx.beginPath();
+            ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+            ctx.fillStyle = '#ff5555';
+            ctx.fill();
+            drawLobe(cx + Math.cos(angle) * 120, cy + Math.sin(angle) * 120, 6, 90, 'rgba(139, 233, 253, 0.3)', angle);
+        }
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#f1fa8c';
+        ctx.fill();
+
+        ctx.fillStyle = isTimeReversed ? '#ff5555' : '#50fa7b';
+        ctx.font = 'bold 13px Segoe UI';
+        ctx.fillText(isTimeReversed ? 'STATE: TEMPORAL REVERSAL (-L_n)' : 'STATE: FORWARD TIME EVOLUTION (+L_n)', 20, 30);
+
+        ctx.fillStyle = '#f8f8f2';
+        ctx.fillText(`Dimension: ${currentDim}D | Vertices: ${Math.pow(2, currentDim)} | Rotation Planes: ${(currentDim * (currentDim - 1)) / 2}`, 20, 50);
+
+        requestAnimationFrame(animateChrono);
+    }
+    animateChrono();
+
+
+    // ==========================================
+    // 2. CHAPTER 9 3D MONOLITH BRASS CANVAS ENGINE
+    // ==========================================
+    const sCanvas = document.getElementById('sculptureCanvas3D');
+    const sCtx = sCanvas.getContext('2d');
+
+    let sRotating = true;
+    let sShaded = true;
+    let rotX = 0.4, rotY = 0.6, rotZ = 0.2;
+
+    document.getElementById('sculptureRotateBtn').addEventListener('click', (e) => {
+        sRotating = !sRotating;
+        e.target.textContent = sRotating ? 'Pause Rotation' : 'Resume Rotation';
+    });
+
+    document.getElementById('sculptureShadeBtn').addEventListener('click', () => {
+        sShaded = !sShaded;
+    });
+
+    document.getElementById('sculptureResetBtn').addEventListener('click', () => {
+        rotX = 0.4; rotY = 0.6; rotZ = 0.2;
+    });
+
+    function generateMonolithTiers() {
+        const tiers = [
+            { size: 140, portalR: 100 },
+            { size: 90,  portalR: 65 },
+            { size: 50,  portalR: 35 }
+        ];
+
+        let cubeFrames = [];
+
+        for (let t = 0; t < tiers.length; t++) {
+            let s = tiers[t].size;
+            let v = [
+                [-s, -s, -s], [s, -s, -s], [s, s, -s], [-s, s, -s],
+                [-s, -s,  s], [s, -s,  s], [s, s,  s], [-s, s,  s]
+            ];
+            let edges = [
+                [0,1], [1,2], [2,3], [3,0],
+                [4,5], [5,6], [6,7], [7,4],
+                [0,4], [1,5], [2,6], [3,7]
+            ];
+            cubeFrames.push({ vertices: v, edges: edges, portalR: tiers[t].portalR });
+        }
+
+        let pillars = [];
+        for (let i = 0; i < 8; i++) {
+            pillars.push({ from: cubeFrames[0].vertices[i], to: cubeFrames[2].vertices[i] });
+        }
+
+        return { cubeFrames, pillars };
+    }
+
+    const monolithData = generateMonolithTiers();
+
+    function rotate3D(pt, rx, ry, rz) {
+        let [x, y, z] = pt;
+        let y1 = y * Math.cos(rx) - z * Math.sin(rx);
+        let z1 = y * Math.sin(rx) + z * Math.cos(rx);
+        let x2 = x * Math.cos(ry) + z1 * Math.sin(ry);
+        let z2 = -x * Math.sin(ry) + z1 * Math.cos(ry);
+        let x3 = x2 * Math.cos(rz) - y1 * Math.sin(rz);
+        let y3 = x2 * Math.sin(rz) + y1 * Math.cos(rz);
+        return [x3, y3, z2];
+    }
+
+    function project3D(pt, cx, cy) {
+        let f = 380 / (380 - pt[2]);
+        return [cx + pt[0] * f, cy + pt[1] * f];
+    }
+
+    function animateSculpture() {
+        sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
+        const cx = sCanvas.width / 2;
+        const cy = sCanvas.height / 2;
+
+        if (sRotating) {
+            rotX += 0.008;
+            rotY += 0.012;
+            rotZ += 0.005;
+        }
+
+        for (let t = 0; t < monolithData.cubeFrames.length; t++) {
+            let frame = monolithData.cubeFrames[t];
+            let rotV = frame.vertices.map(v => rotate3D(v, rotX, rotY, rotZ));
+            let projV = rotV.map(v => project3D(v, cx, cy));
+
+            sCtx.lineWidth = t === 0 ? 3 : t === 1 ? 2 : 1.5;
+            for (let e = 0; e < frame.edges.length; e++) {
+                let [i1, i2] = frame.edges[e];
+                sCtx.beginPath();
+                sCtx.moveTo(projV[i1][0], projV[i1][1]);
+                sCtx.lineTo(projV[i2][0], projV[i2][1]);
+
+                if (sShaded) {
+                    let avgZ = (rotV[i1][2] + rotV[i2][2]) / 2;
+                    let alpha = 0.4 + (avgZ + 150) / 300;
+                    sCtx.strokeStyle = `rgba(212, 175, 55, ${Math.max(0.2, Math.min(1.0, alpha))})`;
+                } else {
+                    sCtx.strokeStyle = '#8be9fd';
+                }
+                sCtx.stroke();
+            }
+
+            const faceCenters = [
+                [0, 0, -frame.vertices[0][0]], [0, 0, frame.vertices[0][0]],
+                [0, -frame.vertices[0][0], 0], [0, frame.vertices[0][0], 0],
+                [-frame.vertices[0][0], 0, 0], [frame.vertices[0][0], 0, 0]
+            ];
+
+            for (let c = 0; c < faceCenters.length; c++) {
+                let rotC = rotate3D(faceCenters[c], rotX, rotY, rotZ);
+                let projC = project3D(rotC, cx, cy);
+                let radius = (frame.portalR * 380) / (380 - rotC[2]);
+
+                sCtx.beginPath();
+                sCtx.arc(projC[0], projC[1], Math.max(2, radius), 0, Math.PI * 2);
+                sCtx.strokeStyle = sShaded ? 'rgba(241, 250, 140, 0.7)' : '#ff79c6';
+                sCtx.lineWidth = 1.2;
+                sCtx.stroke();
+            }
+        }
+
+        sCtx.lineWidth = 1.5;
+        for (let p = 0; p < monolithData.pillars.length; p++) {
+            let rFrom = rotate3D(monolithData.pillars[p].from, rotX, rotY, rotZ);
+            let rTo = rotate3D(monolithData.pillars[p].to, rotX, rotY, rotZ);
+            let pFrom = project3D(rFrom, cx, cy);
+            let pTo = project3D(rTo, cx, cy);
+
+            sCtx.beginPath();
+            sCtx.moveTo(pFrom[0], pFrom[1]);
+            sCtx.lineTo(pTo[0], pTo[1]);
+            sCtx.strokeStyle = sShaded ? 'rgba(255, 184, 108, 0.8)' : '#50fa7b';
+            sCtx.stroke();
+        }
+
+        sCtx.fillStyle = '#d4af37';
+        sCtx.font = 'bold 13px Segoe UI';
+        sCtx.fillText('CNC MONOLITH BILLET: 300x300x300 mm CuZn39Pb3 Brass', 20, 30);
+        sCtx.fillStyle = '#f8f8f2';
+        sCtx.fillText(`Render Mode: ${sShaded ? 'Metallic Brass Shading' : 'CAD Wireframe Mode'} | Non-Recursive 3-Tier Geometry`, 20, 50);
+
+        requestAnimationFrame(animateSculpture);
+    }
+    animateSculpture();
+</script>
+
+</body>
+</html>
