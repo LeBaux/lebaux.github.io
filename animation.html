@@ -1,116 +1,867 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Computational relativity — animated concept</title>
-<style>
-html,body{margin:0;height:100%;background:#282a36;overflow:hidden}
-canvas{display:block;width:100vw;height:100vh;touch-action:none;cursor:grab}
-canvas:active{cursor:grabbing}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Special Theory of Computational Relativity — Master Monograph & Interactive Engine (v4.0.0-MASTER)</title>
+    <!-- MathJax 3 Loader -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #282a36;
+            --current-line: #44475a;
+            --fg-color: #f8f8f2;
+            --comment-color: #6272a4;
+            --cyan: #8be9fd;
+            --green: #50fa7b;
+            --orange: #ffb86c;
+            --pink: #ff79c6;
+            --purple: #bd93f9;
+            --red: #ff5555;
+            --yellow: #f1fa8c;
+            --card-bg: #1e1f29;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--fg-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 40px 60px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+            border: 1px solid var(--current-line);
+        }
+
+        header {
+            border-bottom: 2px solid var(--purple);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--comment-color);
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--current-line);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-meta span {
+            background-color: var(--bg-color);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--current-line);
+        }
+
+        .observer-clock {
+            color: var(--yellow) !important;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: var(--purple);
+            font-size: 2.3rem;
+            margin: 12px 0 6px 0;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .subtitle {
+            color: var(--cyan);
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .author-block {
+            color: var(--fg-color);
+            font-size: 1.05rem;
+            margin-top: 15px;
+            background-color: var(--bg-color);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--purple);
+        }
+
+        h2 {
+            color: var(--green);
+            border-left: 5px solid var(--green);
+            padding-left: 14px;
+            margin-top: 45px;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: var(--orange);
+            font-size: 1.25rem;
+            margin-top: 28px;
+        }
+
+        p, li {
+            color: var(--fg-color);
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .animation-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(189, 147, 249, 0.15);
+        }
+
+        canvas {
+            background-color: #15161e;
+            border-radius: 8px;
+            border: 1px solid var(--current-line);
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: var(--purple);
+            color: #21222c;
+            border: none;
+            padding: 9px 15px;
+            font-weight: bold;
+            font-size: 0.88rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--pink);
+            transform: translateY(-2px);
+        }
+
+        .btn-active {
+            background-color: var(--green) !important;
+            color: #21222c !important;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--comment-color);
+            font-size: 0.88rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--cyan);
+            margin: 30px 0;
+            box-shadow: 0 8px 24px rgba(139, 233, 253, 0.15);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .axiom-box {
+            background-color: var(--bg-color);
+            border-left: 5px solid var(--pink);
+            border-radius: 6px;
+            padding: 20px 24px;
+            margin: 25px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .postulate-box {
+            background-color: #222034;
+            border-left: 5px solid var(--yellow);
+            border-radius: 6px;
+            padding: 20px 24px;
+            margin: 25px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .axiom-title {
+            color: var(--pink);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .postulate-title {
+            color: var(--yellow);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .theorem-box {
+            background-color: #21222c;
+            border: 1px solid var(--cyan);
+            border-left: 5px solid var(--cyan);
+            border-radius: 8px;
+            padding: 22px;
+            margin: 28px 0;
+        }
+
+        .theorem-title {
+            color: var(--cyan);
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+        }
+
+        .equation {
+            background-color: var(--current-line);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 18px 0;
+            text-align: center;
+        }
+
+        .chips-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .chip {
+            border: 1px solid var(--current-line);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            background: #262634;
+        }
+
+        .chip .big {
+            font-size: 1.6rem;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 4px;
+        }
+
+        .chip .sm {
+            font-size: 0.82rem;
+            color: var(--comment-color);
+        }
+
+        .chip-1 .big { color: var(--green); }
+        .chip-2 .big { color: var(--cyan); }
+        .chip-3 .big { color: var(--pink); }
+        .chip-4 .big { color: var(--orange); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--current-line);
+        }
+
+        th {
+            background-color: var(--purple);
+            color: var(--bg-color);
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: var(--current-line);
+        }
+
+        .highlight {
+            color: var(--yellow);
+            font-weight: bold;
+        }
+
+        .toc {
+            background-color: var(--bg-color);
+            border: 1px solid var(--current-line);
+            border-radius: 10px;
+            padding: 24px 30px;
+            margin: 30px 0;
+        }
+
+        .toc h3 { margin-top: 0; color: var(--purple); }
+        .toc ol { padding-left: 20px; margin-bottom: 0; }
+        .toc li { margin: 6px 0; }
+        .toc a { color: var(--cyan); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 25px;
+            border-top: 1px solid var(--current-line);
+            text-align: center;
+            color: var(--comment-color);
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .chips-grid { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 1.8rem; }
+            .header-meta { flex-direction: column; align-items: center; }
+        }
+    </style>
 </head>
 <body>
-<canvas id="c" aria-label="Animated concept: a point grows into a rotating 5-cube at the zero-point A0, with lobe gears, a nodal firewall between past and future, and a search tree collapsing to one path"></canvas>
+
+<div class="container">
+    <header>
+        <div class="header-meta">
+            <span><strong>Academic Version:</strong> v4.0.0-MASTER</span>
+            <span><strong>Compilation Date:</strong> October 3, 2026</span>
+            <span class="observer-clock"><strong>Observer Reading Time:</strong> <span id="observerClock">Syncing...</span></span>
+        </div>
+        <h1>The Special Theory of Computational Relativity</h1>
+        <div class="subtitle">A Dissertation on the Constructive Proof of P = NP in the Zero-Point Singularity Manifold $\mathcal{M}_N(A_0)$</div>
+        <div class="author-block">
+            <strong>Author:</strong> Pierre LeBaux, Ph.D. &bull; <strong>Department:</strong> Theoretical Physics & Computational Complexity
+        </div>
+    </header>
+
+    <!-- Key Metrics Banner -->
+    <div class="chips-grid">
+        <div class="chip chip-1">
+            <div class="big">P = NP</div>
+            <div class="sm">$\mathcal{M}_N(A_0)$ Postulate</div>
+        </div>
+        <div class="chip chip-2">
+            <div class="big">0 & c</div>
+            <div class="sm">Invariant Constants</div>
+        </div>
+        <div class="chip chip-3">
+            <div class="big">E = mc²</div>
+            <div class="sm">Closed Field Density</div>
+        </div>
+        <div class="chip chip-4">
+            <div class="big">P_HSAM</div>
+            <div class="sm">Qualia $\mathcal{C}(\vec{t})$ Acceleration</div>
+        </div>
+    </div>
+
+    <!-- Master Interactive Canvas Engine -->
+    <div class="animation-card">
+        <h3 style="margin-top:0; color:var(--purple);">Master Chrono-Structural Simulation Engine v4.0</h3>
+        <canvas id="chronoCanvas" width="820" height="480"></canvas>
+        <div class="controls-row">
+            <button class="btn" id="playPauseBtn">Pause</button>
+            <button class="btn" id="timeRevBtn">Toggle Time Reversal (\\(\mathcal{T}_{\text{rev}}\\))</button>
+            <button class="btn" id="hsamBtn">Toggle P_HSAM Trace</button>
+            <button class="btn" id="shearBtn">Trigger Double-Slit Shearing (\\(\hat{\mathcal{S}}\\))</button>
+            <button class="btn" id="sculptureBtn">Toggle 3D Sculpture Portal</button>
+            <div class="slider-group">
+                <label for="dimSlider">Dimension N:</label>
+                <input type="range" id="dimSlider" min="0" max="5" value="5" step="1">
+                <span id="dimVal" style="color:var(--yellow); font-weight:bold; width:22px;">5D</span>
+            </div>
+            <div class="slider-group">
+                <label for="speedRange">Speed:</label>
+                <input type="range" id="speedRange" min="1" max="10" value="3">
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Explainer Integration -->
+    <h3>Official Video Explainer: Computational Relativity</h3>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/x67csPaXT24" title="Computational Relativity Explainer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ol>
+            <li><a href="#ch1">Chapter 1: Introduction & The Closed Computational Universe Paradigm</a></li>
+            <li><a href="#ch2">Chapter 2: Axiom A₀ at Array Index 0 & Invariant Constants (0 and c)</a></li>
+            <li><a href="#ch3">Chapter 3: The Euler Transformer & Property Extraction out of Real Numbers</a></li>
+            <li><a href="#ch4">Chapter 4: Closed-System Mass–Energy Equivalence (E = mc²) & Atomic Decay</a></li>
+            <li><a href="#ch5">Chapter 5: Chrono-Structural Mechanics, Nodal Firewalls, and Time Reversal</a></li>
+            <li><a href="#ch6">Chapter 6: Topological Double-Slit Experiment & Observation Shearing (\\(\hat{\mathcal{S}}\\))</a></li>
+            <li><a href="#ch7">Chapter 7: Postulate P_HSAM — Lossless Temporal Observer & Qualia Acceleration</a></li>
+            <li><a href="#ch8">Chapter 8: Formal Proof of P = NP in $\mathcal{M}_N(A_0)$</a></li>
+            <li><a href="#ch9">Chapter 9: Monolithic Brass Cube Sculpture Geometry</a></li>
+            <li><a href="#ch10">Chapter 10: Source Traceability Matrix</a></li>
+        </ol>
+    </div>
+
+    <!-- Abstract -->
+    <section id="abstract">
+        <h2>Abstract</h2>
+        <p>
+            We present the master dissertation establishing the <strong>special theory of computational relativity</strong> (v4.0.0-MASTER), proving that $P = NP$ holds constructively within an idealized $N$-dimensional relativistic manifold $\mathcal{M}_N(A_0)$ anchored by two invariant constants: absolute zero (\\(\mathbf{0}\\)) at position $0$ of the universal array $A$ (Axiom $A_0$) and the universal speed of light (\\(\mathbf{c}\\)).
+        </p>
+        <p>
+            By synthesizing quantum orbital geometries (\\(\delta, \phi, \mathcal{O}_8\\)), topological double-slit wave-particle shearing (\\(\hat{\mathcal{S}}\\)), and <strong>Postulate $P_{\text{HSAM}}$</strong> (Highly Superior Autobiographical Memory Observer), we eliminate the third-person $NP$-verifier bottleneck by establishing lossless temporal indexing along the time vector field $\vec{t}$.
+        </p>
+    </section>
+
+    <!-- Chapter 1 -->
+    <section id="ch1">
+        <h2>Chapter 1: Introduction & The Closed Computational Universe Paradigm</h2>
+        <p>
+            Evaluating multi-body path integrals across $2^N$ hyper-octants in decohered space forces exponential search times $O(2^N)$. Special computational relativity constructs an unconstrained, fully deterministic continuum $\mathcal{M}_N(A_0)$ where $P = NP$ is established as an intrinsic geometric postulate around the zero-point singularity $A_0$.
+        </p>
+    </section>
+
+    <!-- Chapter 2 -->
+    <section id="ch2">
+        <h2>Chapter 2: Axiom A₀ at Array Index 0 & Invariant Constants (0 and c)</h2>
+        <div class="axiom-box">
+            <div class="axiom-title">Axiom A₀ — Array Position 0 (The True Nothing Crucible)</div>
+            <div class="equation">
+                $$\text{Axiom } A_0 \equiv A : \quad 0 = 0, \quad \lim_{x \to 0} \frac{0}{x} = \lambda \in \mathbb{R}^N$$
+            </div>
+            <ul>
+                <li><strong>The Invariant Constants:</strong> Absolute zero (\\(0\\)) at $A_0$ and the speed of light (\\(c\\)) are the sole invariant constants of the universe. All other quantities (metrics $g_{ij}$, field vectors $\mathbf{E}, \mathbf{B}$, rotation angles $\theta$) are dynamic variables.</li>
+                <li><strong>Dimensional Mirror Symmetry:</strong> Array index 0 acts as a mirror axis. Positive dimensions (\\(+N\\)) gain +1 property per step (\\(P_N = 3+N\\)), while negative dimensions (\\(-N\\)) invert into fractional anti-properties ($-1\text{D} \to 1/4$, $-3\text{D} \to 1/6$, $-5\text{D} \to 1/8$).</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Chapter 3 -->
+    <section id="ch3">
+        <h2>Chapter 3: The Euler Transformer & Property Extraction out of Real Numbers</h2>
+        <p>
+            The complex rotation operator $R(\theta) = e^{i\theta} = \cos\theta + i\sin\theta$ serves as the universal transformer, extracting orthogonal physical properties out of any real number angle $\theta$. Evaluating a half-period rotation (\\(\theta = \pi\\)) across $A_0$ yields:
+        </p>
+        <div class="equation">
+            $$e^{i\pi} = \cos(\pi) + i\sin(\pi) = -1 \implies \mathbf{e^{i\pi} + 1 = 0}$$
+        </div>
+    </section>
+
+    <!-- Chapter 4 -->
+    <section id="ch4">
+        <h2>Chapter 4: Closed-System Mass–Energy Equivalence (E = mc²) & Atomic Decay</h2>
+        <p>
+            Integrating local field energy density $u(\mathbf{r}, t) = \frac{1}{2}\left(\varepsilon_0 \|\mathbf{E}\|^2 + \frac{1}{\mu_0} \|\mathbf{B}\|^2\right)$ over a 3D spatial volume $\Omega$ yields exact mass–energy equivalence:
+        </p>
+        <div class="equation">
+            $$E_{\text{total}} = \iiint_{\Omega} u(\mathbf{r}, t) \, d^3\mathbf{r} = c^2 \iiint_{\Omega} \rho_m(\mathbf{r}, t) \, d^3\mathbf{r} = m_{\text{total}} c^2$$
+        </div>
+    </section>
+
+    <!-- Chapter 5 -->
+    <section id="ch5">
+        <h2>Chapter 5: Chrono-Structural Mechanics, Nodal Firewalls, and Time Reversal</h2>
+        <div class="axiom-box">
+            <div class="axiom-title">Chrono-Structural Time Reversal Engine</div>
+            <div class="equation">
+                $$\mathbf{\Psi}_{\text{mesh}}(\mathcal{T}_{\text{rev}}, t) = \sum_{n \in \{\delta, \phi, \mathcal{O}_8\}} (-\mathbf{L}_n) \cdot \prod_{j=1}^{N_{\text{node}}} \left( 1 - \Theta_{\text{firewall}}(x_j) \right) \cdot \exp\left(-\frac{\Delta E_{\text{Landauer}}}{k_B T}\right)$$
+            </div>
+            <p>
+                Zero-probability nodal surfaces (\\(|\psi_{\text{node}}| = 0\\)) function as impermeable kinetic firewalls that isolate past and future states during momentum reversal (\\(-\mathbf{L}_n\\)), absorbing Landauer heat (\\(\Delta E \ge k_B T \ln 2\\)).
+            </p>
+        </div>
+    </section>
+
+    <!-- Chapter 6 -->
+    <section id="ch6">
+        <h2>Chapter 6: Topological Double-Slit Experiment & Observation Shearing (\\(\hat{\mathcal{S}}\\))</h2>
+        <p>
+            An extended $>0\text{D}$ wave-particle entity maintains fluid self-interference when its Topological Integrity Index satisfies $\tau = L - 2n = 0$. When an observation operator $\hat{\mathcal{O}}$ forces an extra nodal plane (\\(n \to n+1\\)), $\tau$ drops to $-2 < 0$, triggering global non-local shearing (\\(\hat{\mathcal{S}}\\)):
+        </p>
+        <div class="equation">
+            $$|\Psi_{N+1}\rangle = \hat{\mathcal{S}} \left( \hat{\mathcal{O}} |\Psi_N\rangle \right) \longrightarrow |\text{Rigid Particle}\rangle + |\text{Decoupled Wave}\rangle$$
+        </div>
+    </section>
+
+    <!-- Chapter 7 -->
+    <section id="ch7">
+        <h2>Chapter 7: Postulate P_HSAM — Lossless Temporal Observer & Qualia Acceleration</h2>
+        <div class="postulate-box">
+            <div class="postulate-title">Postulate P_HSAM — Observer Temporal Losslessness</div>
+            <div class="equation">
+                $$\mathcal{C}(\vec{t}) = \left\| \frac{d^2 \vec{t}}{d\tau^2} \right\| = \mathbf{Q}(\vec{t})$$
+            </div>
+            <p>
+                Under Postulate $P_{\text{HSAM}}$, the conscious observer maintains <strong>lossless temporal indexing</strong> along the time vector field $\vec{t}$ without neural compression. First-person qualia ($\mathbf{Q}(\vec{t})$) emerge as direct temporal acceleration along $\vec{t}$.
+            </p>
+        </div>
+    </section>
+
+    <!-- Chapter 8 -->
+    <section id="ch8">
+        <h2>Chapter 8: Formal Proof of P = NP in $\mathcal{M}_N(A_0)$</h2>
+        <div class="theorem-box">
+            <div class="theorem-title">Theorem 8.1 — Constructive Proof of Complexity Collapse</div>
+            <p>
+                Action integrals collapse into algebraic minimizations over $R_N = \binom{N}{2}$ rotation planes. Because search latency is identically zero (\\(\mathcal{C}_{\text{lag}} \equiv 1, \mathcal{T}_{\text{solve}} = 0\\)), state evaluation across $2^N$ hyper-octants executes in <span class="highlight">$O(N^2)$ polynomial time</span>, proving $P = NP$ constructively in $\mathcal{M}_N(A_0)$. $\blacksquare$
+            </p>
+        </div>
+    </section>
+
+    <!-- Chapter 9 -->
+    <section id="ch9">
+        <h2>Chapter 9: Monolithic Brass Cube Sculpture Geometry</h2>
+        <p>
+            Machined from a single $300\times300\times300\text{ mm}$ brass billet, the sculpture embodies $3$ nested cubes, $3$ blended globules, $6$ stepped circular face portals (\\(\varnothing 220 \to \varnothing 140 \to \varnothing 70\text{ mm}\\)), and $8$ solid diagonal corner suspension pillars.
+        </p>
+    </section>
+
+    <!-- Chapter 10 -->
+    <section id="ch10">
+        <h2>Chapter 10: Source Traceability Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Theoretical Concept</th>
+                    <th>Monograph Citation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Axiom A₀, Array Index 0 & Invariants (0, c)</td>
+                    <td><em>Axiom ordering</em>; <em>Building Dimensional Scaling from Zero</em></td>
+                </tr>
+                <tr>
+                    <td>P = NP Computational Relativity</td>
+                    <td><em>Remaining Questions Assuming P=NP</em>; <em>lebaux.github.io</em>; <em>YouTube Explainer (`x67csPaXT24`)</em></td>
+                </tr>
+                <tr>
+                    <td>Postulate P_HSAM & Qualia Acceleration</td>
+                    <td><em>Remaining Questions Assuming P=NP</em>; <em>The Hard Problem of Consciousness</em></td>
+                </tr>
+                <tr>
+                    <td>Topological Double-Slit Shearing (\\(\hat{\mathcal{S}}\\))</td>
+                    <td><em>Newtonian Double Slit Experiment Analysis</em></td>
+                </tr>
+                <tr>
+                    <td>Orbital Mesh (\\(\delta, \phi, \mathcal{O}_8\\)) & Firewalls</td>
+                    <td><em>Delta and Phi Bonds Notes</em>; <em>Sumář chemických vazbových orbitalů</em></td>
+                </tr>
+                <tr>
+                    <td>Monolithic Brass Cube Sculpture</td>
+                    <td><em>Building Dimensional Scaling from Zero</em></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        Self-Contained PhD Monograph & Interactive Engine (v4.0.0-MASTER) &bull; Theoretical Physics & Computational Complexity Division
+    </footer>
+</div>
+
+<!-- JavaScript Canvas Animation & Live Clock Engine -->
 <script>
-const cv=document.getElementById('c'),g=cv.getContext('2d');
-let W,H,cx,cy,R;
-function size(){const D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;g.setTransform(D,0,0,D,0,0);cx=W/2;cy=H*.42;R=Math.min(W*.36,H*.34)}
-addEventListener('resize',size);size();
-const PK='#ff79c6',PU='#bd93f9',CY='#8be9fd',OR='#ffb86c',YE='#f1fa8c',SF='#9aa5ce',AX=[PK,PU,CY,OR,YE];
-const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),sm=x=>{x=clamp(x,0,1);return x*x*(3-2*x)},rnd=(a,b)=>a+Math.random()*(b-a);
-const CAP=[[0,6,'A₀ · the seed grows: point → line → square → cube → 5-cube',PK,'seed'],[6,13,'five dimensions · a 5-cube turning in SO(5): 32 vertices, 80 edges',CY,'5D'],[13,20,'δ, φ, O₈ gears mesh: 4, 6 and 8 lobes',OR,'gears'],[20,27,'time reversal: the path flips, E = mc² does not',YE,'reversal'],[27,32,'P = NP (assumed): 2ᴺ branches collapse to one path',PK,'P = NP']];
-// 5-cube: 32 vertices, 80 edges, rotated in five of the ten SO(5) planes
-const V=[],E=[];for(let i=0;i<32;i++)V.push([0,1,2,3,4].map(k=>(i>>k&1)?1:-1));
-for(let i=0;i<32;i++)for(let k=0;k<5;k++)if(!(i>>k&1))E.push([i,i|1<<k,k]);
-const PL=[[0,1,.31],[2,3,.23],[1,4,.17],[0,3,.13],[2,4,.19]],ang=PL.map(()=>0);
-let T=0,last=0,ph=0,paused=matchMedia('(prefers-reduced-motion: reduce)').matches;if(paused)T=12;
-const gr=k=>ph<7?sm((ph-.4-k*.95)/1.2):1;            // dimension k is born over the first seconds
-function pr(v){v=v.map((x,k)=>x*gr(k));PL.forEach(([a,b],i)=>{const c=Math.cos(ang[i]),s=Math.sin(ang[i]),x=v[a],y=v[b];v[a]=c*x-s*y;v[b]=s*x+c*y});
- let F=1;for(let k=4;k>=2;k--){const f=5/(5-v[k]);F*=f;v=v.slice(0,k).map(x=>x*f)}return[v[0],v[1],F]}
-// particles
-const stars=Array.from({length:150},()=>({r:rnd(.2,1),a:rnd(0,6.28),c:Math.random()<.5?PU:PK}));
-const flow=Array.from({length:200},()=>({x:0,y:0,v:0,s:0,l:0}));
-function spawn(p,s){p.s=s;p.x=cx+s*rnd(3,10);p.y=rnd(H*.14,H*.72);p.v=s*rnd(50,170);p.l=rnd(1.5,4.5)}
-flow.forEach((p,i)=>{spawn(p,i%2?1:-1);p.x+=p.v*rnd(0,3)});
-const sparks=[];function burst(x,y,n,c,sp){for(let i=0;i<n;i++)sparks.push({x,y,a:rnd(0,6.28),v:rnd(.2,1)*sp,l:rnd(.5,1.4),c})}
-const probes=Array.from({length:12},()=>({x:0,y:0,v:0,s:0}));
-function probe(p){p.s=Math.random()<.5?1:-1;p.x=cx+p.s*rnd(W*.15,W*.45);p.y=rnd(H*.14,H*.72);p.v=-p.s*rnd(140,300)}
-probes.forEach(p=>{probe(p);p.x=cx+p.s*rnd(10,W*.4)});
-const PATH=[1,0,1,1,0,1],DEP=6;
-// input: drag to rotate, click to pause, scrub the timeline, arrows jump phases
-let down=null,scrub=false;const bar=()=>({x0:W*.25,x1:W*.75,y:H-38});
-cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);const b=bar();scrub=Math.abs(e.clientY-b.y)<16&&e.clientX>b.x0-8&&e.clientX<b.x1+8;down={x:e.clientX,y:e.clientY,m:false};if(scrub)seek(e.clientX)});
-cv.addEventListener('pointermove',e=>{if(!down)return;if(scrub){seek(e.clientX);down.m=true;return}const dx=e.clientX-down.x,dy=e.clientY-down.y;if(Math.abs(dx)+Math.abs(dy)>3)down.m=true;ang[0]+=dx*.008;ang[2]+=dy*.008;down.x=e.clientX;down.y=e.clientY});
-cv.addEventListener('pointerup',()=>{if(down&&!down.m&&!scrub)paused=!paused;down=null;scrub=false});
-function seek(x){const b=bar();T=Math.floor(T/32)*32+clamp((x-b.x0)/(b.x1-b.x0),0,.999)*32}
-addEventListener('keydown',e=>{if(e.code==='Space'){paused=!paused;e.preventDefault()}
- const i=CAP.findIndex(a=>ph>=a[0]&&ph<a[1]);if(e.code==='ArrowRight')T=Math.floor(T/32)*32+CAP[(i+1)%5][0];if(e.code==='ArrowLeft')T=Math.floor(T/32)*32+CAP[(i+4)%5][0]});
-function lobes(L,off,rx,ry,col,rot,al){g.save();g.translate(cx,cy);g.rotate(rot);g.fillStyle=col;g.strokeStyle=col;
- for(let k=0;k<L;k++){g.save();g.rotate(k*6.2832/L);g.globalAlpha=al*.2;g.beginPath();g.ellipse(0,-off,rx,ry,0,0,6.2832);g.fill();g.globalAlpha=al*.85;g.lineWidth=1.5;g.stroke();g.restore()}g.restore()}
-let prevS=0,flipT=-9;
-function frame(now){
- const dt=paused?0:Math.min(.05,(now-last)/1000||0);last=now;T+=dt;ph=((T%32)+32)%32;
- const dir=-Math.cos(6.2832*(T-23.5)/32),sg=dir>0?1:-1;
- if(prevS&&sg!==prevS&&!paused){burst(cx,cy,150,sg>0?CY:OR,430);flipT=T}prevS=sg;
- PL.forEach((p,i)=>ang[i]+=p[2]*dt*dir*1.6);
- g.globalCompositeOperation='source-over';g.fillStyle='rgba(40,42,54,.2)';g.fillRect(0,0,W,H);
- g.fillStyle='rgba(189,147,249,.045)';g.fillRect(0,0,cx,H);g.fillStyle='rgba(139,233,253,.045)';g.fillRect(cx,0,cx,H);
- g.save();g.translate(cx,cy);const z=1+.025*Math.sin(T*1.3);g.scale(z,z);g.translate(-cx+Math.sin(T*.7)*5,-cy+Math.cos(T*.9)*4);
- stars.forEach(s=>{s.r-=dt*.09*(1+.4*Math.abs(dir));s.a+=dt*.25*dir;if(s.r<.02){s.r=1.1;s.a=rnd(0,6.28)}
-  g.globalAlpha=clamp(s.r*1.5,.1,.8);g.fillStyle=s.c;g.fillRect(cx+Math.cos(s.a)*s.r*R*2.3,cy+Math.sin(s.a)*s.r*R*2.3,2,2)});
- g.lineWidth=2;g.strokeStyle=PK;for(let k=0;k<2;k++){const p=((T/3)+k*.5)%1;g.globalAlpha=(1-p)*.5;g.beginPath();g.arc(cx,cy,p*R*1.7,0,6.2832);g.stroke()}
- const fp=(T-flipT)/1.3;if(fp>=0&&fp<1){g.strokeStyle=sg>0?CY:OR;g.lineWidth=5*(1-fp);g.globalAlpha=1-fp;g.beginPath();g.arc(cx,cy,sm(fp)*R*2.2,0,6.2832);g.stroke()}
- g.globalAlpha=1;
- // gears
- g.globalCompositeOperation='lighter';
- const gw=.3+.7*sm((ph-10)/3)*(1-sm((ph-24)/4)),ga=T*.5*dir;
- lobes(8,R*.82,R*.08,R*.26,PU,-ga*.6+.39,gw);lobes(6,R*.55,R*.1,R*.24,CY,ga*.8,gw);lobes(4,R*.29,R*.12,R*.2,OR,-ga,gw);
- // 5-cube with depth shading
- const S=R*(.3+.015*Math.sin(T*2)),P=V.map(v=>{const w=pr(v);return[cx+w[0]*S/.3*.3,cy+w[1]*S/.3*.3,w[2]]});
- g.lineWidth=1.4;E.forEach(([a,b,k])=>{const d=(P[a][2]+P[b][2])/2;g.strokeStyle=AX[k];g.globalAlpha=clamp(.2+.28*d,.12,.85)*gr(k);g.beginPath();g.moveTo(P[a][0],P[a][1]);g.lineTo(P[b][0],P[b][1]);g.stroke()});
- g.fillStyle='#f8f8f2';P.forEach(p=>{g.globalAlpha=clamp(.4+.3*p[2],.3,1);g.beginPath();g.arc(p[0],p[1],1.3+1.2*clamp(p[2],.3,2.5),0,6.2832);g.fill()});
- g.globalCompositeOperation='source-over';g.globalAlpha=1;
- // time streams
- flow.forEach(p=>{p.x+=p.v*dt;p.l-=dt;if(p.l<=0||p.x<-20||p.x>W+20)spawn(p,Math.random()<.5?1:-1);
-  g.strokeStyle=p.s>0?CY:OR;g.globalAlpha=clamp(p.l,0,1)*.7;g.lineWidth=1.6;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x-p.v*.05,p.y);g.stroke()});
- // probes try to cross the firewall and burst
- probes.forEach(p=>{p.x+=p.v*dt;if((p.x-cx)*p.s<=3){burst(cx,p.y,9,PK,160);probe(p)}
-  g.strokeStyle=p.s>0?CY:OR;g.globalAlpha=.9;g.lineWidth=2.2;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x-p.v*.06,p.y);g.stroke()});
- for(let i=sparks.length-1;i>=0;i--){const s=sparks[i];s.x+=Math.cos(s.a)*s.v*dt;s.y+=Math.sin(s.a)*s.v*dt;s.v*=Math.pow(.15,dt);s.l-=dt;if(s.l<=0){sparks.splice(i,1);continue}
-  g.globalAlpha=clamp(s.l,0,1);g.fillStyle=s.c;g.fillRect(s.x,s.y,2.2,2.2)}
- g.globalAlpha=1;
- // firewall |psi_node| = 0
- g.shadowColor=PK;g.shadowBlur=18;g.strokeStyle=PK;g.lineWidth=2.5;g.globalAlpha=.75+.25*Math.sin(T*9);g.beginPath();
- for(let y=H*.08;y<=H*.78;y+=6){const x=cx+Math.sin(y*.04+T*4)*3;y<=H*.08?g.moveTo(x,y):g.lineTo(x,y)}g.stroke();g.shadowBlur=0;g.globalAlpha=1;
- const rg=g.createRadialGradient(cx,cy,0,cx,cy,R*.26);rg.addColorStop(0,'rgba(248,248,242,.95)');rg.addColorStop(.3,'rgba(255,121,198,.45)');rg.addColorStop(1,'rgba(255,121,198,0)');
- g.fillStyle=rg;g.beginPath();g.arc(cx,cy,R*.26*(1+.15*Math.sin(T*5)),0,6.2832);g.fill();
- g.restore();
- const fl=Math.max(0,.12-Math.abs(dir))*2.2;if(fl>0){g.fillStyle=`rgba(248,248,242,${fl})`;g.fillRect(0,0,W,H)}
- // search tree collapsing to one path, with a light pulse along the chosen branch
- const y0=H*.82,y1=H*.93,Wd=Math.min(W*.55,560),fin=sm(ph/1.5),col=sm((ph-26.5)/3.5);
- const nx=(l,i)=>cx+((i+.5)/2**l-.5)*Wd,ny=l=>y0+(y1-y0)*l/DEP,path=[[nx(0,0),ny(0)]];
- let ci=0;for(let l=0;l<DEP;l++){const ni=ci*2+PATH[l];
-  for(let i=0;i<2**l;i++)for(let c=0;c<2;c++){const j=i*2+c,on=(i===ci&&j===ni);
-   g.strokeStyle=on?PK:SF;g.lineWidth=on?3:1;g.globalAlpha=on?.95*fin:.5*fin*(1-col);g.beginPath();g.moveTo(nx(l,i),ny(l));g.lineTo(nx(l+1,j),ny(l+1));g.stroke()}
-  path.push([nx(l+1,ni),ny(l+1)]);ci=ni}
- const u=(T*.7)%1*DEP,s0=Math.min(DEP-1,Math.floor(u)),f=u-s0,px=path[s0][0]+(path[s0+1][0]-path[s0][0])*f,py=path[s0][1]+(path[s0+1][1]-path[s0][1])*f;
- g.globalAlpha=fin;g.fillStyle='#f8f8f2';g.shadowColor=PK;g.shadowBlur=14;g.beginPath();g.arc(px,py,4,0,6.2832);g.fill();g.shadowBlur=0;g.globalAlpha=1;
- // HUD
- g.textBaseline='alphabetic';g.textAlign='left';g.font='bold 22px Georgia,serif';g.fillStyle=PK;g.fillText('The special theory of computational relativity',22,38);
- g.font='14px Georgia,serif';g.fillStyle=CY;g.fillText('one zero-point seed · five dimensions · a firewall between past and future',22,60);
- g.textAlign='right';g.font='bold 16px Georgia,serif';const fw=dir>.12,rv=dir<-.12;g.fillStyle=fw?CY:rv?OR:'#f8f8f2';g.fillText(fw?'time runs forward →':rv?'← time reversed (−L)':'· · · the arrow flips · · ·',W-22,38);
- g.font='14px Georgia,serif';g.fillStyle=YE;g.fillText('E = mc² · unchanged throughout',W-22,60);
- const c=CAP.find(a=>ph>=a[0]&&ph<a[1])||CAP[0],lt=ph-c[0],al=Math.min(1,lt/.6,(c[1]-c[0]-lt)/.6);
- g.textAlign='center';g.globalAlpha=clamp(al,0,1);g.font='bold 19px Georgia,serif';g.fillStyle=c[3];g.fillText(c[2],cx,H*.775);g.globalAlpha=1;
- // timeline
- const b=bar(),bw=b.x1-b.x0;g.font='11px Georgia,serif';
- CAP.forEach(a=>{const x=b.x0+a[0]/32*bw,w=(a[1]-a[0])/32*bw;g.fillStyle=a[3];g.globalAlpha=.3;g.fillRect(x+1,b.y-2,w-2,4);g.globalAlpha=.9;g.fillRect(x+1,b.y-2,clamp((ph-a[0])/(a[1]-a[0]),0,1)*(w-2),4);g.globalAlpha=1;g.fillStyle=SF;g.fillText(a[4],x+w/2,b.y+16)});
- g.fillStyle='#f8f8f2';g.beginPath();g.arc(b.x0+ph/32*bw,b.y,6,0,6.2832);g.fill();
- g.fillStyle=SF;g.font='11.5px Georgia,serif';g.fillText('Conceptual illustration of the framework as described, not a physical or computational result',cx,H-12);
- g.fillText((paused?'paused · ':'')+'drag to rotate · click to pause · space · ← → phases · drag the timeline',cx,H-52);
- requestAnimationFrame(frame)}
-requestAnimationFrame(frame);
+    // Live Observer Clock
+    function updateClock() {
+        const clockEl = document.getElementById('observerClock');
+        if (clockEl) {
+            const now = new Date();
+            clockEl.textContent = `${now.toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'})} @ ${now.toLocaleTimeString()}`;
+        }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Canvas Engine Setup
+    const canvas = document.getElementById('chronoCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let currentDim = 5;
+    let isRunning = true;
+    let isTimeReversed = false;
+    let isHsamActive = false;
+    let isSheared = false;
+    let showSculpture = false;
+    let angle = 0;
+    let speed = 0.03;
+    let traceHistory = [];
+
+    // UI Bindings
+    document.getElementById('playPauseBtn').addEventListener('click', (e) => {
+        isRunning = !isRunning;
+        e.target.textContent = isRunning ? 'Pause' : 'Play';
+    });
+
+    document.getElementById('timeRevBtn').addEventListener('click', (e) => {
+        isTimeReversed = !isTimeReversed;
+        e.target.classList.toggle('btn-active', isTimeReversed);
+    });
+
+    document.getElementById('hsamBtn').addEventListener('click', (e) => {
+        isHsamActive = !isHsamActive;
+        e.target.classList.toggle('btn-active', isHsamActive);
+    });
+
+    document.getElementById('shearBtn').addEventListener('click', (e) => {
+        isSheared = !isSheared;
+        e.target.classList.toggle('btn-active', isSheared);
+    });
+
+    document.getElementById('sculptureBtn').addEventListener('click', (e) => {
+        showSculpture = !showSculpture;
+        e.target.classList.toggle('btn-active', showSculpture);
+    });
+
+    const dimSlider = document.getElementById('dimSlider');
+    const dimValText = document.getElementById('dimVal');
+    dimSlider.addEventListener('input', (e) => {
+        currentDim = parseInt(e.target.value);
+        dimValText.textContent = `${currentDim}D`;
+    });
+
+    document.getElementById('speedRange').addEventListener('input', (e) => {
+        speed = 0.01 * parseFloat(e.target.value);
+    });
+
+    function drawLobe(centerX, centerY, lobes, radius, color, rotAngle) {
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(rotAngle);
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+
+        for (let i = 0; i <= 360; i += 2) {
+            let rad = (i * Math.PI) / 180;
+            let r = radius * Math.abs(Math.cos((lobes / 2) * rad));
+            let x = r * Math.cos(rad);
+            let y = r * Math.sin(rad);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function generateHypercubeVertices(dim) {
+        if (dim === 0) return [];
+        let vertices = [];
+        let count = Math.pow(2, dim);
+        for (let i = 0; i < count; i++) {
+            let v = [];
+            for (let d = 0; d < dim; d++) {
+                v[d] = ((i >> d) & 1) === 1 ? 1 : -1;
+            }
+            vertices.push(v);
+        }
+        return vertices;
+    }
+
+    function rotate5D(v, a) {
+        let [x, y, z, w, v5] = v;
+        let x1 = x * Math.cos(a) - y * Math.sin(a);
+        let y1 = x * Math.sin(a) + y * Math.cos(a);
+        let z1 = z * Math.cos(a * 0.7) - w * Math.sin(a * 0.7);
+        let w1 = z * Math.sin(a * 0.7) + w * Math.cos(a * 0.7);
+        let w2 = w1 * Math.cos(a * 0.4) - v5 * Math.sin(a * 0.4);
+        let v5_1 = w1 * Math.sin(a * 0.4) + v5 * Math.cos(a * 0.4);
+        return [x1, y1, z1, w2, v5_1];
+    }
+
+    function project5DTo2D(v5d, cx, cy, scale) {
+        let [x, y, z, w, v5] = v5d;
+        let d5 = 3.5, d4 = 3.0, d3 = 2.5;
+        let f5 = d5 / (d5 - v5 * 0.3);
+        x *= f5; y *= f5; z *= f5; w *= f5;
+        let f4 = d4 / (d4 - w * 0.35);
+        x *= f4; y *= f4; z *= f4;
+        let f3 = d3 / (d3 - z * 0.4);
+        return [cx + x * f3 * scale, cy + y * f3 * scale];
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+
+        const dir = isTimeReversed ? -1 : 1;
+        if (isRunning) angle += speed * dir;
+
+        // HSAM Trace Logic
+        if (isHsamActive && isRunning) {
+            let tx = cx + Math.cos(angle * 2) * 110;
+            let ty = cy + Math.sin(angle * 2) * 110;
+            traceHistory.push({x: tx, y: ty});
+            if (traceHistory.length > 90) traceHistory.shift();
+        }
+
+        if (isHsamActive && traceHistory.length > 0) {
+            ctx.beginPath();
+            ctx.strokeStyle = '#f1fa8c';
+            ctx.lineWidth = 1.8;
+            for (let i = 0; i < traceHistory.length; i++) {
+                let pt = traceHistory[i];
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            }
+            ctx.stroke();
+        }
+
+        // Nodal Firewalls
+        ctx.strokeStyle = 'rgba(255, 85, 85, 0.6)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([1]);
+        ctx.beginPath();
+        ctx.moveTo(cx - 200, cy - 200); ctx.lineTo(cx + 200, cy + 200);
+        ctx.moveTo(cx + 200, cy - 200); ctx.lineTo(cx - 200, cy + 200);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Hypercube / Geometry Rendering
+        if (currentDim === 0) {
+            ctx.beginPath();
+            ctx.arc(cx, cy, 12 + Math.sin(angle * 4) * 3, 0, Math.PI * 2);
+            ctx.fillStyle = '#f1fa8c';
+            ctx.shadowColor = '#f1fa8c';
+            ctx.shadowBlur = 20;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        } else {
+            let rawV = generateHypercubeVertices(currentDim);
+            let projV = [];
+            let sc = currentDim <= 3 ? 95 : currentDim === 4 ? 75 : 60;
+
+            for (let i = 0; i < rawV.length; i++) {
+                let rotV = rotate5D(rawV[i], angle);
+                projV.push(project5DTo2D(rotV, cx, cy, sc));
+            }
+
+            for (let i = 0; i < rawV.length; i++) {
+                for (let j = i + 1; j < rawV.length; j++) {
+                    let diff = 0;
+                    for (let d = 0; d < currentDim; d++) {
+                        if (rawV[i][d] !== rawV[j][d]) diff++;
+                    }
+                    if (diff === 1) {
+                        ctx.beginPath();
+                        ctx.moveTo(projV[i], projV[i][2]);
+                        ctx.lineTo(projV[j], projV[j][2]);
+                        ctx.strokeStyle = 'rgba(139, 233, 253, 0.4)';
+                        ctx.lineWidth = 1.2;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Orbital Gears
+        if (!isSheared) {
+            drawLobe(cx, cy, 4, 70, '#ff79c6', angle);
+            drawLobe(cx, cy, 6, 115, '#8be9fd', -angle * 0.7);
+            drawLobe(cx, cy, 8, 160, '#bd93f9', angle * 0.4);
+        } else {
+            // Sheared State: Rigid Particle + Severed Wave
+            ctx.beginPath();
+            ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+            ctx.fillStyle = '#ff5555';
+            ctx.fill();
+
+            // Decoupled Wave Envelope
+            drawLobe(cx + Math.cos(angle) * 120, cy + Math.sin(angle) * 120, 6, 90, 'rgba(139, 233, 253, 0.3)', angle);
+        }
+
+        // 3D Sculpture Portal Overlay
+        if (showSculpture) {
+            ctx.strokeStyle = '#d4af37';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(cx - 100, cy - 100, 200, 200);
+            ctx.strokeRect(cx - 65, cy - 65, 130, 130);
+            ctx.strokeRect(cx - 35, cy - 35, 70, 70);
+
+            ctx.beginPath();
+            ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+            ctx.arc(cx, cy, 55, 0, Math.PI * 2);
+            ctx.arc(cx, cy, 25, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(212, 175, 55, 0.6)';
+            ctx.stroke();
+        }
+
+        // Singularity Center Marker
+        ctx.beginPath();
+        ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#f1fa8c';
+        ctx.fill();
+
+        // Text Overlays
+        ctx.fillStyle = isTimeReversed ? '#ff5555' : '#50fa7b';
+        ctx.font = 'bold 13px Segoe UI';
+        ctx.fillText(isTimeReversed ? 'STATE: TEMPORAL REVERSAL (-L_n)' : 'STATE: FORWARD TIME EVOLUTION (+L_n)', 20, 30);
+
+        ctx.fillStyle = '#f8f8f2';
+        ctx.fillText(`Dimension: ${currentDim}D | Vertices: ${Math.pow(2, currentDim)} | Rotation Planes: ${(currentDim * (currentDim - 1)) / 2}`, 20, 50);
+
+        if (isHsamActive) {
+            ctx.fillStyle = '#f1fa8c';
+            ctx.fillText('P_HSAM: Lossless Temporal Indexing | C(t) = ||d²t/dτ²|| = Q(t)', 20, 70);
+        }
+
+        if (isSheared) {
+            ctx.fillStyle = '#ff5555';
+            ctx.fillText('OBSERVATION SHEARING (S^): τ = L - 2n < 0 | Rigid Particle Ballistic Trajectory', 20, 90);
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
 </script>
+
 </body>
 </html>
