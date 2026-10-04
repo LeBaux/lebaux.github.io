@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5D-to-3D Dimensional Collapse Engine — Master Interactive Monograph (v5.0.0-COLLAPSE-3D)</title>
+    <!-- MathJax 3 Loader -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #282a36;
+            --current-line: #44475a;
+            --fg-color: #f8f8f2;
+            --comment-color: #6272a4;
+            --cyan: #8be9fd;
+            --green: #50fa7b;
+            --orange: #ffb86c;
+            --pink: #ff79c6;
+            --purple: #bd93f9;
+            --red: #ff5555;
+            --yellow: #f1fa8c;
+            --card-bg: #1e1f29;
+            --brass: #d4af37;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--fg-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 40px 60px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+            border: 1px solid var(--current-line);
+        }
+
+        header {
+            border-bottom: 2px solid var(--purple);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--comment-color);
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--current-line);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-meta span {
+            background-color: var(--bg-color);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--current-line);
+        }
+
+        .observer-clock {
+            color: var(--yellow) !important;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: var(--purple);
+            font-size: 2.3rem;
+            margin: 12px 0 6px 0;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .subtitle {
+            color: var(--cyan);
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .author-block {
+            color: var(--fg-color);
+            font-size: 1.05rem;
+            margin-top: 15px;
+            background-color: var(--bg-color);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--purple);
+        }
+
+        h2 {
+            color: var(--green);
+            border-left: 5px solid var(--green);
+            padding-left: 14px;
+            margin-top: 45px;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: var(--orange);
+            font-size: 1.25rem;
+            margin-top: 28px;
+        }
+
+        p, li {
+            color: var(--fg-color);
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .animation-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(189, 147, 249, 0.15);
+        }
+
+        canvas {
+            background-color: #15161e;
+            border-radius: 8px;
+            border: 1px solid var(--current-line);
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .controls-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .button-group-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .switch-container-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            background-color: #1e1f29;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--current-line);
+        }
+
+        .switch-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch-label {
+            color: var(--comment-color);
+            font-size: 0.88rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .segmented-switch {
+            display: inline-flex;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 3px;
+            border: 1px solid var(--current-line);
+        }
+
+        .switch-btn {
+            background: transparent;
+            color: var(--fg-color);
+            border: none;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .switch-btn:hover {
+            color: var(--cyan);
+        }
+
+        .switch-active {
+            background-color: var(--purple) !important;
+            color: #21222c !important;
+            box-shadow: 0 2px 8px rgba(189, 147, 249, 0.4);
+        }
+
+        .switch-active-speed {
+            background-color: var(--cyan) !important;
+            color: #21222c !important;
+            box-shadow: 0 2px 8px rgba(139, 233, 253, 0.4);
+        }
+
+        .btn {
+            background-color: var(--current-line);
+            color: var(--fg-color);
+            border: 1px solid var(--purple);
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 0.88rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--pink);
+            color: #21222c;
+            transform: translateY(-2px);
+        }
+
+        .btn-active {
+            background-color: var(--green) !important;
+            color: #21222c !important;
+            border-color: var(--green) !important;
+        }
+
+        .equation {
+            background-color: var(--current-line);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 18px 0;
+            text-align: center;
+        }
+
+        .chips-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .chip {
+            border: 1px solid var(--current-line);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            background: #262634;
+        }
+
+        .chip .big {
+            font-size: 1.6rem;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 4px;
+        }
+
+        .chip .sm {
+            font-size: 0.82rem;
+            color: var(--comment-color);
+        }
+
+        .chip-1 .big { color: var(--green); }
+        .chip-2 .big { color: var(--cyan); }
+        .chip-3 .big { color: var(--pink); }
+        .chip-4 .big { color: var(--orange); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--current-line);
+        }
+
+        th {
+            background-color: var(--purple);
+            color: var(--bg-color);
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: var(--current-line);
+        }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 25px;
+            border-top: 1px solid var(--current-line);
+            text-align: center;
+            color: var(--comment-color);
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .chips-grid { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 1.8rem; }
+            .switch-container-row { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-meta">
+            <span><strong>Academic Version:</strong> v5.0.0-COLLAPSE-3D</span>
+            <span><strong>Compilation Date:</strong> October 3, 2026</span>
+            <span class="observer-clock"><strong>Observer Reading Time:</strong> <span id="observerClock">Syncing...</span></span>
+        </div>
+        <h1>5D-to-3D Dimensional Collapse Engine</h1>
+        <div class="subtitle">An Interactive Projection of $\mathcal{M}_5(A_0)$ Hyper-Geometry Folding 2 Dimensions Cleanly into a 3D Manifold</div>
+        <div class="author-block">
+            <strong>Author:</strong> Pierre LeBaux, Ph.D. &bull; <strong>Department:</strong> Theoretical Physics & Computational Complexity
+        </div>
+    </header>
+
+    <!-- Dynamic Metrics Banner -->
+    <div class="chips-grid">
+        <div class="chip chip-1">
+            <div class="big" id="chipDimState">5D → 3D Collapsed</div>
+            <div class="sm">Manifold Projection State</div>
+        </div>
+        <div class="chip chip-2">
+            <div class="big" id="chipActiveVertices">32 Nodes</div>
+            <div class="sm">Active Vertex Density</div>
+        </div>
+        <div class="chip chip-3">
+            <div class="big" id="chipRotPlanes">10 SO(5) Planes</div>
+            <div class="sm">Symmetry Rotation Generators</div>
+        </div>
+        <div class="chip chip-4">
+            <div class="big" id="chipDensityMult">1x Base</div>
+            <div class="sm">Coalesced Field Energy Density</div>
+        </div>
+    </div>
+
+    <!-- Main Interactive 3D Collapse Canvas -->
+    <div class="animation-card">
+        <h3 style="margin-top:0; color:var(--purple);">Interactive 5D-to-3D Dimensional Collapse Engine</h3>
+        <canvas id="collapseCanvas" width="820" height="480"></canvas>
+
+        <div class="controls-row">
+            <!-- Switches Row -->
+            <div class="switch-container-row">
+                <!-- Collapse Switch -->
+                <div class="switch-group">
+                    <span class="switch-label">Collapse State:</span>
+                    <div class="segmented-switch" id="collapseSwitchGroup">
+                        <button class="switch-btn" data-gamma="1.0">Uncollapsed (5D)</button>
+                        <button class="switch-btn" data-gamma="0.6">Partial (4D Fold)</button>
+                        <button class="switch-btn switch-active" data-gamma="0.0">Clean Collapsed (3D Cube)</button>
+                    </div>
+                </div>
+
+                <!-- Speed Switch -->
+                <div class="switch-group">
+                    <span class="switch-label">Rotation Speed:</span>
+                    <div class="segmented-switch" id="speedSwitchGroup">
+                        <button class="switch-btn" data-speed="0.0075">0.25x</button>
+                        <button class="switch-btn" data-speed="0.015">0.5x</button>
+                        <button class="switch-btn switch-active-speed" data-speed="0.03">1x</button>
+                        <button class="switch-btn" data-speed="0.06">2x</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Action Buttons -->
+            <div class="button-group-row">
+                <button class="btn" id="playPauseBtn">Pause Engine</button>
+                <button class="btn" id="autoFoldBtn">Auto-Animate Continuous Collapse</button>
+                <button class="btn" id="renderModeBtn">Toggle Brass Metallic / High-Contrast CAD</button>
+                <button class="btn" id="resetViewBtn">Reset 3D Angles</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mathematical Foundations -->
+    <section id="math-section">
+        <h2>Mathematical Derivation: Clean 2D Projection Collapse</h2>
+        <p>
+            In special computational relativity, a 5D hypercube (penteract) consists of $2^5 = 32$ vertices defined by coordinate vectors $\mathbf{v} \in \{-1, 1\}^5$. To collapse 2 spatial dimensions cleanly onto a 3D subspace, we construct the parameter-dependent reduction operator $\hat{\pi}_{5 \to 3}(\gamma)$:
+        </p>
+
+        <div class="equation">
+            $$\mathbf{x}' = \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix} + \gamma \cdot \mathbf{R}_{45}(\theta_{45}) \begin{pmatrix} x_4 \\ x_5 \end{pmatrix}, \quad \gamma \in [0, 1]$$
+        </div>
+
+        <ul>
+            <li><strong>When $\gamma = 1$ (Full 5D Penteract)</strong>: All 32 vertices and 80 hyper-edges span independent spatial dimensions with 10 $SO(5)$ rotation generators.</li>
+            <li><strong>When $1 > \gamma > 0$ (Phase Folding)</strong>: The 4th and 5th coordinates rotate around the $\theta_{45}$ plane while shrinking their metric scale, rendering 4D tesseracts folding inside the 3D projection window.</li>
+            <li><strong>When $\gamma = 0$ (Clean 3D Collapse)</strong>: $x_4$ and $x_5$ vanish completely. The 32 5D hyper-vertices map directly onto the $2^3 = 8$ vertices of a rigid 3D cube. Exactly 4 hyper-vertices coalesce at each of the 8 3D corners, multiplying localized field energy density $\rho_m$ by a factor of 4.</li>
+        </ul>
+    </section>
+
+    <!-- Source Traceability Table -->
+    <section id="sources">
+        <h2>Source Traceability Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Theoretical Concept</th>
+                    <th>Notebook Source Citation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Axiom $A_0$ Singularity & Dimensional Folding</td>
+                    <td><em>Building Dimensional Scaling from Zero</em>; <em>Axiom ordering</em></td>
+                </tr>
+                <tr>
+                    <td>5D Lie Algebra & Hyper-Octant Coalescence (\\(32 \to 8\\))</td>
+                    <td><em>Building a Dimensional Property Framework</em>; <em>lebaux.github.io</em></td>
+                </tr>
+                <tr>
+                    <td>Mass–Energy Density Multiplication (\\(4 \times \rho_m\\))</td>
+                    <td><em>Computational Relativity</em>; <em>Optimization of Lag Growth Simulation</em></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        5D-to-3D Dimensional Collapse Engine (v5.0.0-COLLAPSE-3D) &bull; Theoretical Physics & Computational Complexity Division
+    </footer>
+</div>
+
+<!-- JavaScript Canvas & 3D Math Engine -->
+<script>
+    // Live Observer Clock
+    function updateClock() {
+        const clockEl = document.getElementById('observerClock');
+        if (clockEl) {
+            const now = new Date();
+            clockEl.textContent = `${now.toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'})} @ ${now.toLocaleTimeString()}`;
+        }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Canvas Engine Setup
+    const canvas = document.getElementById('collapseCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let gamma = 0.0; // Collapse parameter (0.0 = clean 3D cube, 1.0 = 5D)
+    let isRunning = true;
+    let isAutoFolding = false;
+    let autoFoldDirection = 1;
+    let isBrassShaded = true;
+    let rotX = 0.4, rotY = 0.6, rotZ = 0.2;
+    let rot5DAngle = 0;
+    let speed = 0.03;
+
+    // Buttons
+    document.getElementById('playPauseBtn').addEventListener('click', (e) => {
+        isRunning = !isRunning;
+        e.target.textContent = isRunning ? 'Pause Engine' : 'Resume Engine';
+        e.target.classList.toggle('btn-active', !isRunning);
+    });
+
+    document.getElementById('autoFoldBtn').addEventListener('click', (e) => {
+        isAutoFolding = !isAutoFolding;
+        e.target.classList.toggle('btn-active', isAutoFolding);
+    });
+
+    document.getElementById('renderModeBtn').addEventListener('click', () => {
+        isBrassShaded = !isBrassShaded;
+    });
+
+    document.getElementById('resetViewBtn').addEventListener('click', () => {
+        rotX = 0.4; rotY = 0.6; rotZ = 0.2;
+    });
+
+    // Switches
+    document.querySelectorAll('#collapseSwitchGroup .switch-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('#collapseSwitchGroup .switch-btn').forEach(b => b.classList.remove('switch-active'));
+            e.target.classList.add('switch-active');
+            gamma = parseFloat(e.target.getAttribute('data-gamma'));
+            isAutoFolding = false;
+            document.getElementById('autoFoldBtn').classList.remove('btn-active');
+            updateMetrics();
+        });
+    });
+
+    document.querySelectorAll('#speedSwitchGroup .switch-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('#speedSwitchGroup .switch-btn').forEach(b => b.classList.remove('switch-active-speed'));
+            e.target.classList.add('switch-active-speed');
+            speed = parseFloat(e.target.getAttribute('data-speed'));
+        });
+    });
+
+    function updateMetrics() {
+        const stateText = gamma === 0 ? 'Clean 3D Cube' : gamma === 1 ? 'Full 5D Penteract' : `Partial 4D Fold (${(gamma*100).toFixed(0)}%)`;
+        document.getElementById('chipDimState').textContent = stateText;
+        document.getElementById('chipActiveVertices').textContent = gamma === 0 ? '8 Coalesced Nodes' : '32 5D Vertices';
+        document.getElementById('chipRotPlanes').textContent = gamma === 0 ? '3 SO(3) Planes' : '10 SO(5) Planes';
+        document.getElementById('chipDensityMult').textContent = gamma === 0 ? '4x Coalesced Field' : '1x Base Density';
+    }
+
+    // Generate 32 Vertices for 5D Hypercube
+    function generate5DVertices() {
+        let vertices = [];
+        for (let i = 0; i < 32; i++) {
+            vertices.push([
+                ((i >> 0) & 1) === 1 ? 1 : -1,
+                ((i >> 1) & 1) === 1 ? 1 : -1,
+                ((i >> 2) & 1) === 1 ? 1 : -1,
+                ((i >> 3) & 1) === 1 ? 1 : -1,
+                ((i >> 4) & 1) === 1 ? 1 : -1
+            ]);
+        }
+        return vertices;
+    }
+    const raw5DVertices = generate5DVertices();
+
+    // 5D to 3D Projection Math with Collapse Parameter gamma
+    function collapse5DTo3D(v, g, a5d) {
+        let [x1, x2, x3, x4, x5] = v;
+
+        // Rotate in 4-5 plane
+        let x4_rot = x4 * Math.cos(a5d) - x5 * Math.sin(a5d);
+        let x5_rot = x4 * Math.sin(a5d) + x5 * Math.cos(a5d);
+
+        // Apply collapse scale gamma to 4th and 5th dimensions
+        let x_proj = x1 + g * 0.45 * x4_rot;
+        let y_proj = x2 + g * 0.45 * x5_rot;
+        let z_proj = x3 + g * 0.35 * (x4_rot - x5_rot);
+
+        return [x_proj * 110, y_proj * 110, z_proj * 110];
+    }
+
+    // 3D Perspective Rotation
+    function rotate3D(pt, rx, ry, rz) {
+        let [x, y, z] = pt;
+        let y1 = y * Math.cos(rx) - z * Math.sin(rx);
+        let z1 = y * Math.sin(rx) + z * Math.cos(rx);
+        let x2 = x * Math.cos(ry) + z1 * Math.sin(ry);
+        let z2 = -x * Math.sin(ry) + z1 * Math.cos(ry);
+        let x3 = x2 * Math.cos(rz) - y1 * Math.sin(rz);
+        let y3 = x2 * Math.sin(rz) + y1 * Math.cos(rz);
+        return [x3, y3, z2];
+    }
+
+    function projectToScreen(pt, cx, cy) {
+        let perspective = 420 / (420 - pt[2]);
+        return [cx + pt[0] * perspective, cy + pt[1] * perspective];
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+
+        if (isRunning) {
+            rotX += speed * 0.25;
+            rotY += speed * 0.4;
+            rotZ += speed * 0.15;
+            rot5DAngle += speed * 0.5;
+
+            if (isAutoFolding) {
+                gamma += 0.008 * autoFoldDirection;
+                if (gamma >= 1.0) { gamma = 1.0; autoFoldDirection = -1; }
+                if (gamma <= 0.0) { gamma = 0.0; autoFoldDirection = 1; }
+                updateMetrics();
+            }
+        }
+
+        // Project 32 vertices down to 3D and then to Screen
+        let pts3D = raw5DVertices.map(v => collapse5DTo3D(v, gamma, rot5DAngle));
+        let rotPts3D = pts3D.map(p => rotate3D(p, rotX, rotY, rotZ));
+        let screenPts = rotPts3D.map(p => projectToScreen(p, cx, cy));
+
+        // Render Edges
+        ctx.lineWidth = gamma === 0 ? 2.5 : 1.2;
+        for (let i = 0; i < 32; i++) {
+            for (let j = i + 1; j < 32; j++) {
+                let diff = 0;
+                for (let d = 0; d < 5; d++) {
+                    if (raw5DVertices[i][d] !== raw5DVertices[j][d]) diff++;
+                }
+                if (diff === 1) {
+                    ctx.beginPath();
+                    ctx.moveTo(screenPts[i][0], screenPts[i][1]);
+                    ctx.lineTo(screenPts[j][0], screenPts[j][1]);
+
+                    if (isBrassShaded) {
+                        let avgZ = (rotPts3D[i][2] + rotPts3D[j][2]) / 2;
+                        let alpha = 0.2 + (avgZ + 150) / 300;
+                        ctx.strokeStyle = gamma === 0 ? `rgba(80, 250, 123, ${Math.max(0.4, alpha)})` : `rgba(212, 175, 55, ${Math.max(0.15, alpha)})`;
+                    } else {
+                        ctx.strokeStyle = gamma === 0 ? '#50fa7b' : '#8be9fd';
+                    }
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Render Vertex Nodes
+        for (let i = 0; i < screenPts.length; i++) {
+            ctx.beginPath();
+            let nodeRadius = gamma === 0 ? 7 : 4;
+            ctx.arc(screenPts[i][0], screenPts[i][1], nodeRadius, 0, Math.PI * 2);
+            ctx.fillStyle = gamma === 0 ? '#f1fa8c' : '#ff79c6';
+            if (gamma === 0) {
+                ctx.shadowColor = '#f1fa8c';
+                ctx.shadowBlur = 12;
+            }
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        // Overlay HUD Text
+        ctx.fillStyle = gamma === 0 ? '#50fa7b' : '#bd93f9';
+        ctx.font = 'bold 13px Segoe UI';
+        ctx.fillText(gamma === 0 ? 'STATE: CLEAN 3D CUBE COLLAPSE (γ = 0.0) | 4x Local Field Density Coalescence' : `STATE: 5D MANIFOLD FOLDING (γ = ${gamma.toFixed(2)}) | 10 SO(5) Rotation Generators`, 20, 30);
+
+        ctx.fillStyle = '#f8f8f2';
+        ctx.fillText(`Orthogonal Operator π_5→3 | Active Nodes: ${gamma === 0 ? '8 Coalesced Corners' : '32 Hyper-Vertices'}`, 20, 50);
+
+        requestAnimationFrame(animate);
+    }
+
+    updateMetrics();
+    animate();
+</script>
+
+</body>
+</html>
