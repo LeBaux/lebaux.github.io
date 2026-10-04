@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Special Universe — Chrono-Structural Demonstrator</title>
+<style>
+:root{--bg:#090a12;--panel:#111322;--panel2:#171a2c;--fg:#f8f8f2;--muted:#9da3bb;--purple:#bd93f9;--pink:#ff79c6;--cyan:#8be9fd;--green:#50fa7b;--yellow:#f1fa8c;--orange:#ffb86c;--red:#ff5555;--line:#2b3150}
+*{box-sizing:border-box}html,body{margin:0;background:radial-gradient(circle at 50% 10%,#17152b 0,#090a12 45%,#05060a 100%);color:var(--fg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}body{min-height:100vh}.wrap{max-width:1400px;margin:auto;padding:22px}.top{display:flex;gap:18px;align-items:flex-end;justify-content:space-between}.eyebrow{font:700 12px/1 monospace;letter-spacing:.18em;color:var(--pink)}h1{margin:8px 0 5px;font-size:clamp(26px,4vw,48px);letter-spacing:-.04em}p{color:var(--muted)}.top p{max-width:800px;margin:0}.controls{margin:20px 0;display:flex;flex-wrap:wrap;gap:9px}.controls button,.controls input{font:600 13px monospace}.controls button{background:var(--panel2);border:1px solid var(--line);color:var(--fg);border-radius:9px;padding:9px 12px;cursor:pointer}.controls button:hover,.controls button.active{border-color:var(--purple);box-shadow:0 0 18px #bd93f926}.controls label{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);padding:7px 10px;border-radius:9px;color:var(--muted);font:12px monospace}.controls input{accent-color:var(--purple)}canvas{width:100%;height:auto;display:block;background:#070812;border:1px solid #282d49;border-radius:14px;box-shadow:0 20px 60px #0008}.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:14px}.card{background:#0d0f1cdd;border:1px solid var(--line);border-radius:12px;padding:12px}.card b{display:block;font:700 12px monospace;color:var(--purple);margin-bottom:6px}.card span{font-size:13px;color:var(--muted)}.status{margin-top:12px;font:12px/1.5 monospace;color:var(--muted);min-height:18px}.foot{margin-top:20px;padding:15px;border-left:3px solid var(--orange);background:#11111b;color:#bfc2d2;font-size:13px}.foot strong{color:var(--orange)}code{color:var(--cyan)}@media(max-width:700px){.wrap{padding:12px}.controls button{padding:8px}.top{display:block}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<div><div class="eyebrow">TIME TRAVEL STUFF · SPECIAL UNIVERSE</div><h1>Chrono‑Structural Universe</h1><p>A visual sandbox for A0→A8: origin → orientation → 5D geometry → energy invariant → nodal carrier → shearing → firewall → thermodynamic closure → conditional computational resolution.</p></div>
+</div>
+<div class="controls" id="controls">
+<button data-mode="universe" class="active">A0–A8 Universe</button>
+<button data-mode="double">Double Slit</button>
+<button data-mode="zeta">Riemann ζ</button>
+<button data-mode="lobes">Lobe / Nodes</button>
+<button data-mode="master">Master Operator</button>
+<label>speed <input id="speed" type="range" min="0.15" max="2.5" value="1" step="0.05"></label>
+<label>auto-cycle <input id="auto" type="checkbox" checked></label>
+</div>
+<canvas id="c" width="1400" height="820"></canvas>
+<div class="legend">
+<div class="card"><b>A0 · 0D ORIGIN</b><span>Absolute seed / zero-dimensional reference point.</span></div>
+<div class="card"><b>A1 · EULERIAN ORIENTATION</b><span>π-rotation gives e<sup>iπ</sup> = −1 and reverses orientation-bearing trajectory.</span></div>
+<div class="card"><b>A2 · 5D STATE GEOMETRY</b><span>The selected SO(2) rotation plane is embedded in the model's 5D state manifold.</span></div>
+<div class="card"><b>A3 · ENERGY–MASS</b><span>Rest-energy scalar remains E<sub>rest</sub> = mc² while trajectory orientation changes.</span></div>
+<div class="card"><b>A4–A7 · CARRIER / FIREWALL</b><span>Lobes, nodal structure, shearing, zero-probability isolation and thermodynamic closure.</span></div>
+<div class="card"><b>A8 · CONDITIONAL P = NP</b><span>Final computational-resolution stage inside the stipulated special universe.</span></div>
+</div>
+<div class="status" id="status"></div>
+<div class="foot"><strong>Interpretation boundary:</strong> this animation visualizes the proposed axiomatic model. It does not establish that ordinary physical time reversal, the double-slit experiment, the Riemann Hypothesis, or P = NP are solved in mainstream mathematics or physics. In the special universe, those behaviors are shown as consequences of the stipulated rules.</div>
+</div>
+<script>
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+let W=1400,H=820,t=0,last=performance.now(),mode='universe',speed=1,auto=true;
+const TAU=Math.PI*2;
+const C={fg:'#f8f8f2',muted:'#9da3bb',purple:'#bd93f9',pink:'#ff79c6',cyan:'#8be9fd',green:'#50fa7b',yellow:'#f1fa8c',orange:'#ffb86c',red:'#ff5555'};
+function fit(){const r=canvas.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(r.width*d);canvas.height=Math.round(r.width*820/1400*d);W=canvas.width/d;H=canvas.height/d;ctx.setTransform(d,0,0,d,0,0)}
+addEventListener('resize',fit);fit();
+function text(s,x,y,size=16,color=C.fg,align='left',font='monospace'){ctx.fillStyle=color;ctx.font=`${size}px ${font}`;ctx.textAlign=align;ctx.fillText(s,x,y)}
+function line(x1,y1,x2,y2,color=C.muted,w=1,dash=[]){ctx.strokeStyle=color;ctx.lineWidth=w;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([])}
+function circle(x,y,r,color=C.fg,fill=false,w=2){ctx.strokeStyle=color;ctx.lineWidth=w;ctx.beginPath();ctx.arc(x,y,r,0,TAU);fill?(ctx.fillStyle=color,ctx.fill()):ctx.stroke()}
+function glow(x,y,r,color){ctx.save();ctx.shadowBlur=r;ctx.shadowColor=color;circle(x,y,Math.max(2,r*.08),color,true);ctx.restore()}
+function panel(x,y,w,h,title){ctx.fillStyle='#0d0f1ddd';ctx.strokeStyle='#2b3150';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x,y,w,h,14);ctx.fill();ctx.stroke();text(title,x+16,y+24,12,C.purple,'left');}
+function arrow(x1,y1,x2,y2,color=C.cyan,w=2){line(x1,y1,x2,y2,color,w);const a=Math.atan2(y2-y1,x2-x1),s=8;ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-s*Math.cos(a-.5),y2-s*Math.sin(a-.5));ctx.lineTo(x2-s*Math.cos(a+.5),y2-s*Math.sin(a+.5));ctx.closePath();ctx.fill()}
+function phaseColor(v){return v<0?C.cyan:C.pink}
+function universe(){
+ctx.fillStyle='#070812';ctx.fillRect(0,0,W,H);
+text('SPECIAL-UNIVERSE STATE EVOLUTION',30,35,15,C.pink);text('A0 → A1 → A2 → A3 → A4 → A5 → A6 → A7 → A8',30,58,14,C.muted);
+const nodes=[['A0','0D ORIGIN'],['A1','π ROTATION'],['A2','5D STATE'],['A3','mc² INVARIANT'],['A4','LOBES'],['A5','SHEAR'],['A6','FIREWALL'],['A7','THERMO'],['A8','P=NP']];
+const y=118, gap=(W-100)/8;
+for(let i=0;i<nodes.length;i++){let x=50+i*gap;let pulse=(Math.sin(t*2-i*.6)+1)/2;circle(x,y,18+3*pulse,i===8?C.orange:C.purple,true);text(nodes[i][0],x,y+5,11,'#090a12','center');text(nodes[i][1],x,y+47,11,C.fg,'center');if(i<nodes.length-1)arrow(x+24,y,x+gap-24,y,i<7?C.purple:C.orange,2)}
+// central 5D projection
+panel(35,190,W-70,390,'LIVE 5D STATE PROJECTION');
+const cx=W/2,cy=385;for(let k=0;k<5;k++){const a=k*TAU/5+t*.08;const rx=300-k*38,ry=135-k*16;ctx.save();ctx.translate(cx,cy);ctx.rotate(a);ctx.strokeStyle=`rgba(189,147,249,${.28-k*.035})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,TAU);ctx.stroke();ctx.restore()}
+// trajectory orientation vector
+const ang=(Math.min(t/3,1)*Math.PI)%(TAU);const vx=Math.cos(ang),vy=Math.sin(ang);arrow(cx,cy,cx+220*vx,cy+100*vy,phaseColor(Math.cos(ang)),5);text('Lmesh',cx+230*vx,cy+100*vy,15,phaseColor(Math.cos(ang)),'center');
+// invariant core
+circle(cx,cy,42,C.yellow);circle(cx,cy,28,'#070812',true);text('mc²',cx,cy+6,17,C.yellow,'center');text('Erest invariant',cx,cy+66,13,C.yellow,'center');
+// nodal planes / firewall
+for(let i=0;i<4;i++){const a=i*Math.PI/4+t*.12;line(cx+300*Math.cos(a),cy+135*Math.sin(a),cx-300*Math.cos(a),cy-135*Math.sin(a),'#ff79c644',1,[5,8])}
+const fw=100+25*Math.sin(t*3);ctx.strokeStyle='#ff555566';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,fw,0,TAU);ctx.stroke();text('Ωboundary',cx+fw+8,cy,12,C.red);
+// energy meter
+panel(35,610,410,165,'A3 · REST-ENERGY INVARIANT');text('Erest = mc²',55,650,22,C.yellow);text('orientation',55,682,12,C.muted);arrow(150,678,310,678,phaseColor(Math.cos(ang)),4);text(Math.cos(ang)<0?'REVERSED':'FORWARD',230,704,13,phaseColor(Math.cos(ang)),'center');text('scalar energy unchanged',55,738,12,C.green);
+// node meter
+panel(465,610,410,165,'A6 · ZERO-PROBABILITY FIREWALL');const z=150+45*Math.sin(t*2);circle(610,688,z,C.red);circle(610,688,32,'#070812',true);text('ψnode = 0',610,694,15,C.red,'center');text('causal isolation',610,738,12,C.muted,'center');
+// final resolution
+panel(895,610,470,165,'A8 · CONDITIONAL FINAL RESOLUTION');const q=(Math.sin(t*1.4)+1)/2;for(let i=0;i<9;i++){let xx=925+i*46,yy=690+Math.sin(t*2+i)*22*q;circle(xx,yy,4,i<6?C.cyan:C.orange,true)}text(q>.5?'candidate paths collapse':'candidate paths remain distinct',1130,735,13,q>.5?C.orange:C.muted,'center');
+status('The special-universe cycle is currently showing orientation reversal while mc² stays invariant.');
+}
+function doubleSlit(){
+ctx.fillStyle='#070812';ctx.fillRect(0,0,W,H);text('DOUBLE-SLIT · SPECIAL-UNIVERSE INTERPRETATION',30,35,15,C.pink);text('phase paths → π opposition → nodal cancellation → detector distribution',30,58,13,C.muted);
+const sx=180,sy=390,slit=760,screen=1120;circle(sx,sy,10,C.yellow,true);text('source',sx,sy+35,12,C.muted,'center');
+line(slit,130,slit,300,C.fg,8);line(slit,480,slit,650,C.fg,8);line(slit,130,slit,130,0); // noop
+// two paths
+const y1=270+35*Math.sin(t),y2=510+35*Math.sin(t+Math.PI);for(let p=0;p<2;p++){const yy=p?y2:y1;ctx.strokeStyle=p?C.pink:C.cyan;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx,sy);ctx.bezierCurveTo(430,sy,610,yy,slit,yy);ctx.bezierCurveTo(860,yy,970,390,screen,390);ctx.stroke();for(let j=0;j<5;j++){let u=(t*.4+j/5)%1;let x=sx+(screen-sx)*u;let y=sy+(p?y2:y1-sy)*Math.min(1,u*1.4);circle(x,y,3,p?C.pink:C.cyan,true)}}
+// actual slits
+line(slit,130,slit,260,C.fg,9);line(slit,280,slit,470,C.fg,9);line(slit,490,slit,650,C.fg,9);text('slit A',slit-20,250,11,C.cyan,'right');text('slit B',slit-20,480,11,C.pink,'right');
+// interference screen
+line(screen,100,screen,680,C.fg,3);for(let i=0;i<29;i++){let yy=125+i*19;let inten=(.5+.5*Math.cos(i*.9+t*3));let r=2+16*Math.pow(inten,3);glow(screen,yy,r,i%2?C.pink:C.cyan);}
+text('detector',screen,710,12,C.muted,'center');panel(35,690,1050,90,'MODEL MAPPING');text('ψ = ψA + ψB',55,728,18,C.cyan);text('phase opposition produces ψnode = 0 at selected nodal conditions',55,755,13,C.muted);text('No claim that this replaces standard quantum mechanics.',1100,735,11,C.orange,'center');
+status('The animation treats the two paths as state-space trajectories whose phase relation can create nodal cancellation.');
+}
+function zeta(){
+ctx.fillStyle='#070812';ctx.fillRect(0,0,W,H);text('RIEMANN ζ · STATE-SPACE VISUALIZATION',30,35,15,C.pink);text('Re(s)=1/2 axis shown as the model’s preferred symmetry line — not a proof of RH.',30,58,13,C.muted);
+const ox=160,oy=410,scale=175;line(80,oy,1310,oy,C.muted);line(ox,100,ox,720,C.muted);line(ox,oy,ox+scale,oy,C.cyan,2);line(ox+scale/2,120,ox+scale/2,700,C.purple,2,[8,8]);text('Re(s)',1280,oy-10,12,C.muted);text('Im(s)',ox+10,110,12,C.muted);text('Re(s)=1/2',ox+scale/2+8,125,12,C.purple);
+// map zeta-like Dirichlet sum into moving complex curve
+function zetaApprox(sig,tau){let re=0,im=0;for(let n=1;n<=90;n++){let a=Math.pow(n,-sig),ph=-tau*Math.log(n);re+=a*Math.cos(ph);im+=a*Math.sin(ph)}return [re,im]}
+ctx.strokeStyle=C.cyan;ctx.lineWidth=2;ctx.beginPath();for(let j=0;j<900;j++){let tau=-18+j*36/899;let [re,im]=zetaApprox(.5,tau);let x=ox+scale*(.5+re*.035),y=oy-im*3.0;if(j===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke();
+for(let n=1;n<=8;n++){let im=14.1347+n*13.5;let pulse=(Math.sin(t*1.7+n)+1)/2;let x=ox+scale*.5,y=oy-im*3;glow(x,y,8+8*pulse,C.pink);circle(x,y,3,C.fg,true);text(`ρ${n}`,x+13,y+4,10,C.pink)}
+text('critical line',ox+scale*.5+12,oy+260,12,C.purple);panel(860,105,460,220,'WHAT THIS MODE SHOWS');text('ρ = 1/2 + iγ',890,155,22,C.pink);text('candidate zero locations are',890,190,13,C.muted);text('animated on the critical line',890,212,13,C.muted);text('within the stipulated special model.',890,234,13,C.muted);text('This is a visualization / ansatz, not',890,275,12,C.orange);text('a mathematical proof of the Riemann Hypothesis.',890,294,12,C.orange);
+status('The zeta view visualizes the critical-line structure as a consequence/representation of the model. It does not prove the Riemann Hypothesis.');
+}
+function lobes(){
+ctx.fillStyle='#070812';ctx.fillRect(0,0,W,H);text('A4 · LOBE–NODAL MECHANICAL HIERARCHY',30,35,15,C.pink);text('paired carrier + increasing nodal order',30,58,13,C.muted);
+const orders=[2,3,4];orders.forEach((n,k)=>{const cy=180+k*190,sep=150+k*18;const pulse=.5+.5*Math.sin(t*1.5+k);text(`ORDER ${n}`,70,cy-70,13,[C.cyan,C.green,C.pink][k]);for(let side of [-1,1]){ctx.save();ctx.translate(650+side*sep,cy);ctx.rotate(side*(.15+.2*pulse));ctx.strokeStyle=[C.cyan,C.green,C.pink][k];ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(0,0,115,58,0,0,TAU);ctx.stroke();ctx.restore()}for(let j=0;j<n;j++){const xx=650-sep+(j+1)*2*sep/(n+1);line(xx,cy-48,xx,cy+48,C.muted,1,[4,5])}text(`|mₗ| = ${n}   ·   L = ${2*n}`,1000,cy,14,C.fg);text(`${n} nodal planes`,1000,cy+24,12,C.muted)});text('L = 2n',650,775,24,C.yellow,'center');text('n ↑  →  angular / nodal complexity ↑',650,800,12,C.muted,'center');status('The same paired-lobe carrier gains angular structure as nodal order increases.');
+}
+function master(){
+ctx.fillStyle='#070812';ctx.fillRect(0,0,W,H);text('MASTER OPERATOR · Ψ₅(Trev)',30,35,15,C.pink);text('animated factorization of the proposed transition',30,58,13,C.muted);
+const terms=[['RSO(5)','5D state rotation',C.purple],['Λ₅','state geometry',C.cyan],['−Lmesh','reversed orientation',C.pink],['𝓔(mc²)','energy invariant',C.yellow],['exp(−ΔE/kBT)','thermodynamic gate',C.green],['Ωboundary','causal isolation',C.red]];
+const y=180;terms.forEach((a,i)=>{const x=100+i*205, pulse=.5+.5*Math.sin(t*2-i);panel(x-85,y-70,170,140,a[0]);circle(x,y,28,a[2],true);text(a[0],x,y+5,12,'#070812','center');text(a[1],x,y+65,10,C.muted,'center');if(i<terms.length-1)arrow(x+34,y,x+170,y,a[2],2)});
+text('Ψ₅(Trev) = RSO(5) Λ₅ (−Lmesh) 𝓔(mc²) exp(−ΔE_Landauer/kBT) Ωboundary',700,400,16,C.fg,'center');
+text('orientation changes',350,500,13,C.pink,'center');text('energy scalar survives',700,500,13,C.yellow,'center');text('state is isolated',1050,500,13,C.red,'center');
+for(let i=0;i<70;i++){let a=i*TAU/70+t*.15,r=90+40*Math.sin(t+i);let x=700+Math.cos(a)*r,y2=600+Math.sin(a)*r*.45;circle(x,y2,2,i%3?C.cyan:C.purple,true)}
+text('A0→A8 is the dependency order; A8 is deliberately last.',700,735,14,C.orange,'center');status('All factors are shown as model components; the animation does not assert they are experimentally established operators.');
+}
+function status(s){document.getElementById('status').textContent=s}
+function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;t+=dt*speed;if(mode==='universe')universe();if(mode==='double')doubleSlit();if(mode==='zeta')zeta();if(mode==='lobes')lobes();if(mode==='master')master();requestAnimationFrame(frame)}
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x===b));}));
+document.getElementById('speed').addEventListener('input',e=>speed=+e.target.value);document.getElementById('auto').addEventListener('change',e=>auto=e.target.checked);
+let cycle=0;setInterval(()=>{if(!auto)return;cycle++;if(cycle%18===0){const m=['universe','double','lobes','zeta','master'];mode=m[(m.indexOf(mode)+1)%m.length];document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x.dataset.mode===mode));}},1000);
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
