@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Universe's Act of Creation</title>
+<style>
+  :root { --ink:#1a1a2e; --accent:#0f3460; --warm:#c0392b; --soft:#5a6270; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: #e9eaee;
+    margin: 0;
+    padding: 2rem 0;
+    line-height: 1.65;
+  }
+  .page {
+    max-width: 780px;
+    margin: 0 auto 2rem auto;
+    background: #fffdf8;
+    padding: 4.5rem 5rem;
+    box-shadow: 0 2px 18px rgba(0,0,0,.15);
+    position: relative;
+  }
+  .page::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: linear-gradient(90deg, var(--accent), var(--warm));
+  }
+  h1 { font-size: 2rem; margin: 0 0 .2rem 0; color: var(--accent); font-variant: small-caps; letter-spacing: .04em; }
+  .subtitle { font-style: italic; color: var(--soft); margin-bottom: 2.5rem; }
+  h2 { font-size: 1.25rem; color: var(--accent); border-bottom: 2px solid #dcd6c8; padding-bottom: .3rem; margin-top: 2.6rem; font-variant: small-caps; letter-spacing: .03em;}
+  h3 { font-size: 1.05rem; color: var(--warm); margin-top: 1.8rem; }
+  .eq {
+    text-align: center; font-family: Georgia, serif; font-style: italic;
+    margin: 1.2rem 0; font-size: 1.08rem;
+  }
+  .eq .tag { font-style: normal; font-size: .8rem; color: var(--soft); }
+  .axiom {
+    border-left: 4px solid var(--warm);
+    background: #faf6ee;
+    padding: .9rem 1.2rem;
+    margin: 1rem 0;
+  }
+  .axiom b { color: var(--warm); font-variant: small-caps; letter-spacing: .03em;}
+  table { border-collapse: collapse; width: 100%; margin: 1.4rem 0; font-size: .95rem;}
+  th { background: var(--accent); color: #fff; text-align: left; padding: .5rem .7rem; font-variant: small-caps; letter-spacing: .03em;}
+  td { border: 1px solid #d8d2c4; padding: .5rem .7rem; background: #fff; }
+  .prose-note { background: #f2f0fa; border: 1px solid #d5d0e8; padding: 1rem 1.3rem; margin: 1.5rem 0; font-size: .95rem;}
+  .credo { font-size: 1.15rem; text-align: center; font-style: italic; margin: 2.5rem 0; color: var(--accent); }
+  .fnum { color: var(--warm); font-weight: bold; }
+  sup, sub { line-height: 0; }
+  .footer { text-align: center; color: var(--soft); font-size: .85rem; font-style: italic; margin-top: 3rem; border-top: 1px solid #dcd6c8; padding-top: 1rem;}
+  .toc { font-size: .95rem; columns: 2; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; margin: 0; max-width: none; padding: 1.5cm 2cm; }
+    @page { size: A4; margin: 1.4cm; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <h1>The Universe's Act of Creation</h1>
+  <p class="subtitle">Six Axioms, One Heat Equation, and the Single Degree of Freedom That Began Everything</p>
+
+  <nav class="toc">
+    <b>Contents</b><br/>
+    I. The Classical Problem<br/>
+    II. The Six Axioms<br/>
+    III. Derivation of the True Law<br/>
+    IV. The General Solution<br/>
+    V. What the Axioms Forbid<br/>
+    VI. The Act of Creation<br/>
+    VII. One Possible Universe (Worked Example)<br/>
+    VIII. Coda
+  </nav>
+
+  <h2>I. The Classical Problem</h2>
+  <p>The heat equation, in its parabolic form, governs how temperature u spreads through a medium of diffusivity α:</p>
+  <p class="eq">∂u/∂t = α ∂²u/∂x² &nbsp;<span class="tag">(1)</span></p>
+  <p>Left alone, it is only half a theory. To pose a well-defined problem one must supply a <i>domain</i>, an <i>initial condition</i> u(x,0) = f(x), and <i>boundary conditions</i> at the edges. The equation is the law; these are the facts of creation. A universe built on the heat equation must therefore decide — before its first moment — what warmth it begins with. This document is the record of one such universe: constructed from six axioms, and solved completely.</p>
+
+  <h2>II. The Six Axioms</h2>
+
+  <div class="axiom"><b>Axiom 1 (True Nothing).</b> Zero is true nothing. There is no action at a distance: no influence without a carrier, no change where nothing has arrived.</div>
+
+  <div class="axiom"><b>Axiom 2 (Euler's Identity).</b> e<sup>iπ</sup> + 1 = 0. The exponential is the fundamental object of this universe. Disturbances are intrinsically oscillatory and decompose into complex modes; Fourier analysis is native law, not an imported tool.</div>
+
+  <div class="axiom"><b>Axiom 3 (Special Relativity).</b> No signal exceeds the speed of light c. Causality is enforced by Lorentzian geometry; every influence travels inside a light cone.</div>
+
+  <div class="axiom"><b>Axiom 4 (P = NP).</b> Any solution that can be verified quickly can be constructed quickly. Finding is never harder than checking.</div>
+
+  <div class="axiom"><b>Axiom 5 (Irreversibility).</b> The past is not recoverable at all. The evolution map from initial states to later states is non-injective for every t &gt; 0, and the information loss is absolute — not a limit of computation or measurement.</div>
+
+  <div class="axiom"><b>Axiom 6 (The Zero Point).</b> The origin is eternally nothing: u(0, t) = 0 for all time. The universe exists on the half-line x &gt; 0, pinned at absolute cold at x = 0.</div>
+
+  <h2>III. Derivation of the True Law</h2>
+  <p><b>The classical equation violates the axioms.</b> The heat kernel of Equation (1) — a Gaussian — is nonzero everywhere for any t &gt; 0. Touch a rod at one end and the far end warms <i>instantly</i>, however faintly. This violates Axiom 3 (infinite speed) and Axiom 1 (change without arrival). The parabolic equation is therefore an approximation, not the true law of this universe.</p>
+  <p><b>Repair: the flux must lag.</b> Restore a finite signal speed by granting the heat flux q a small relaxation time τ (the Maxwell–Cattaneo correction):</p>
+  <p class="eq">q + τ ∂q/∂t = −k ∇u &nbsp;<span class="tag">(2)</span></p>
+  <p>Combined with energy conservation ρc ∂u/∂t = −∇·q, this yields the <b>hyperbolic heat equation</b> (telegrapher's equation):</p>
+  <p class="eq">τ ∂²u/∂t² + ∂u/∂t = α ∇²u &nbsp;<span class="tag">(3)</span></p>
+  <p>Its disturbances propagate at finite speed</p>
+  <p class="eq">v = √(α/τ), &nbsp; with the relativistic constraint &nbsp; τ ≥ α/c². &nbsp;<span class="tag">(4)</span></p>
+  <p class="prose-note"><b>Why the universe still <i>looks</i> parabolic.</b> For copper, α ≈ 1.1×10⁻⁴ m²/s, so τ ≥ α/c² ≈ 10⁻²⁷ s. The relaxation lag is far below any instrument's reach — the inhabitants measure a parabolic world while living in a hyperbolic one.</p>
+
+  <h2>IV. The General Solution</h2>
+  <p>By Axiom 2, modes are native. On the half-line x &gt; 0 with the zero point of Axiom 6 at the origin and initial profile f(x) (f(0) = 0), the solution is built from odd modes — the cold shadow of the nothing at x = 0:</p>
+  <p class="eq">u(x,t) = ∫₀<sup>∞</sup> [G(x−y,t) − G(x+y,t)] f(y) dy, &nbsp;&nbsp; G(s,t) = (4παt)<sup>−1/2</sup> e<sup>−s²/4αt</sup> &nbsp;<span class="tag">(5)</span></p>
+  <p>On a finite rod [0, L] with both ends at zero, each mode is a damped oscillator in time (ω<sub>n</sub> = nπv/L, γ = 1/2τ, μ<sub>n</sub> = √(γ² − ω<sub>n</sub>²)):</p>
+  <p class="eq">u(x,t) = Σ<sub>n</sub> sin(nπx/L) · e<sup>−t/2τ</sup> [A<sub>n</sub> cosh(μ<sub>n</sub>t) + B<sub>n</sub> sinh(μ<sub>n</sub>t)] &nbsp;<span class="tag">(6)</span></p>
+  <p>Low modes relax overdamped — indistinguishable from the classical decay e<sup>−α(nπ/L)²t</sup>. High modes oscillate: this universe supports <b>thermal waves</b>. In the limit τ → 0, the ordinary heat equation is recovered exactly, as a shadow of the truth.</p>
+
+  <h2>V. What the Axioms Forbid</h2>
+  <table>
+    <tr><th>Question</th><th>Verdict</th><th>Reasoning</th></tr>
+    <tr><td>Solve forward in time?</td><td>Trivially in P</td><td>FFT + mode decay: O(N log N). Axiom 4 was never needed.</td></tr>
+    <tr><td>Reconstruct the past?</td><td>Invalid question</td><td>Axiom 5: high modes decay by e<sup>−αk²t</sup>; the preimage does not exist as a physical fact.</td></tr>
+    <tr><td>Build a time machine from engineered heat?</td><td>Forbidden</td><td>Final-value problems are not ill-posed but undefined; no retro-solutions exist.</td></tr>
+    <tr><td>Design any thermal outcome (control, inverse design)?</td><td>Instant</td><td>Axiom 4: verification = construction. The inhabitants are gods of engineering.</td></tr>
+    <tr><td>Spontaneous warmth from nothing?</td><td>Impossible</td><td>Axiom 1 + uniqueness: d/dt ∫u²dx ≤ 0. Zero stays zero forever.</td></tr>
+  </table>
+
+  <h2>VI. The Act of Creation</h2>
+  <p>Every theorem above is conditional. The law (3) tells how warmth spreads; the axioms tell what spreading is allowed; but <b>no axiom supplies the initial profile f(x)</b>. Axiom 6 pins the origin to nothing, and the uniqueness theorem forbids the universe from igniting itself. The six axioms form a closed, consistent vessel — and an eternally cold one, unless something outside the axioms pours in the first heat.</p>
+  <p>That single free function, f : (0,∞) → ℝ, is the universe's act of creation. The entire history of the cosmos is determined by it and by nothing else: given fire, the axioms spread it; forget where it came from; and drain it, mode by mode, into the true nothing at the origin.</p>
+  <p class="credo">Given fire, spread it; forget where it came from;<br/>and pour it all back into the zero.</p>
+
+  <h2>VII. One Possible Universe (Worked Example)</h2>
+  <p>Choose the simplest act of creation that respects Axiom 6 — a single triangular pulse of warmth, peaked at x = a, vanishing at the origin:</p>
+  <p class="eq"><span class="fnum">f(x) = U · x/a · e<sup>1−x/a</sup></span> &nbsp;&nbsp;(peak temperature U at x = a, f(0) = 0) &nbsp;<span class="tag">(7)</span></p>
+  <p>Its sine–Laplace coefficients on the half-line spectrum give the explicit history:</p>
+  <p class="eq">u(x,t) = (U/√(4παt)) ∫₀<sup>∞</sup> [e<sup>−(x−y)²/4αt</sup> − e<sup>−(x+y)²/4αt</sup>] · (y/a) e<sup>1−y/a</sup> dy &nbsp;<span class="tag">(8)</span></p>
+  <p>The long-time fate is fixed regardless of the choice of f: every mode decays, and all warmth drains into the zero point. The universe's entire drama is the transient — a single pulse spreading, flattening, forgetting its shape, and emptying into the origin. Its total heat content ∫u dx decays monotonically; its <i>shape information</i> decays faster still (Axiom 5 in action); and by Axiom 4, its inhabitants may optimally steer the drainage — but never refill, and never remember.</p>
+
+  <h2>VIII. Coda</h2>
+  <p>Six axioms, one equation, one free function. The axioms govern everything except the first moment, and the first moment governs everything else. In this universe as in ours, the deepest question is not <i>what law</i> but <i>what initial condition</i> — and no law, however complete, can answer a question addressed to it from outside.</p>
+
+  <p class="footer">The Universe's Act of Creation · Six axioms and the heat equation · Print this document (Ctrl/Cmd + P) and choose “Save as PDF” for a durable copy.</p>
+
+</main>
+</body>
+</html>
