@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5D Dimensional Unfolding & Hyper-Octant Geometry Engine (v3.0.0-5D-UNFOLDING)</title>
+    <!-- MathJax 3 Loader -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #282a36;
+            --current-line: #44475a;
+            --fg-color: #f8f8f2;
+            --comment-color: #6272a4;
+            --cyan: #8be9fd;
+            --green: #50fa7b;
+            --orange: #ffb86c;
+            --pink: #ff79c6;
+            --purple: #bd93f9;
+            --red: #ff5555;
+            --yellow: #f1fa8c;
+            --card-bg: #1e1f29;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--fg-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 40px 60px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+            border: 1px solid var(--current-line);
+        }
+
+        header {
+            border-bottom: 2px solid var(--purple);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--comment-color);
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--current-line);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-meta span {
+            background-color: var(--bg-color);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--current-line);
+        }
+
+        .observer-clock {
+            color: var(--yellow) !important;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: var(--purple);
+            font-size: 2.3rem;
+            margin: 12px 0 6px 0;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .subtitle {
+            color: var(--cyan);
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .author-block {
+            color: var(--fg-color);
+            font-size: 1.05rem;
+            margin-top: 15px;
+            background-color: var(--bg-color);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--purple);
+        }
+
+        h2 {
+            color: var(--green);
+            border-left: 5px solid var(--green);
+            padding-left: 14px;
+            margin-top: 45px;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: var(--orange);
+            font-size: 1.25rem;
+            margin-top: 28px;
+        }
+
+        p, li {
+            color: var(--fg-color);
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .animation-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(189, 147, 249, 0.15);
+        }
+
+        canvas {
+            background-color: #15161e;
+            border-radius: 8px;
+            border: 1px solid var(--current-line);
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: var(--purple);
+            color: #21222c;
+            border: none;
+            padding: 10px 18px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--pink);
+            transform: translateY(-2px);
+        }
+
+        .btn-active {
+            background-color: var(--green) !important;
+            color: #21222c !important;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--comment-color);
+            font-size: 0.9rem;
+        }
+
+        .axiom-box {
+            background-color: var(--bg-color);
+            border-left: 5px solid var(--pink);
+            border-radius: 6px;
+            padding: 20px 24px;
+            margin: 25px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .theorem-box {
+            background-color: #21222c;
+            border: 1px solid var(--cyan);
+            border-left: 5px solid var(--cyan);
+            border-radius: 8px;
+            padding: 22px;
+            margin: 28px 0;
+        }
+
+        .equation {
+            background-color: var(--current-line);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 18px 0;
+            text-align: center;
+        }
+
+        .chips-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .chip {
+            border: 1px solid var(--current-line);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            background: #262634;
+        }
+
+        .chip .big {
+            font-size: 1.8rem;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 4px;
+        }
+
+        .chip .sm {
+            font-size: 0.85rem;
+            color: var(--comment-color);
+        }
+
+        .chip-1 .big { color: var(--green); }
+        .chip-2 .big { color: var(--cyan); }
+        .chip-3 .big { color: var(--pink); }
+        .chip-4 .big { color: var(--orange); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--current-line);
+        }
+
+        th {
+            background-color: var(--purple);
+            color: var(--bg-color);
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: var(--current-line);
+        }
+
+        .toc {
+            background-color: var(--bg-color);
+            border: 1px solid var(--current-line);
+            border-radius: 10px;
+            padding: 24px 30px;
+            margin: 30px 0;
+        }
+
+        .toc h3 { margin-top: 0; color: var(--purple); }
+        .toc ol { padding-left: 20px; margin-bottom: 0; }
+        .toc li { margin: 6px 0; }
+        .toc a { color: var(--cyan); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 25px;
+            border-top: 1px solid var(--current-line);
+            text-align: center;
+            color: var(--comment-color);
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .chips-grid { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 1.8rem; }
+            .header-meta { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-meta">
+            <span><strong>Academic Version:</strong> v3.0.0-5D-UNFOLDING</span>
+            <span><strong>Compilation Date:</strong> October 3, 2026</span>
+            <span class="observer-clock"><strong>Observer Reading Time:</strong> <span id="observerClock">Syncing...</span></span>
+        </div>
+        <h1>5D Dimensional Unfolding & Hyper-Octant Geometry</h1>
+        <div class="subtitle">An Interactive Physics Engine Modeling Spatial Emergence from Axiom $A_0$ (\\(0/0 = \lambda\\)) up to $SO(5)$ Lie Algebra</div>
+        <div class="author-block">
+            <strong>Author:</strong> Pierre LeBaux, Ph.D. &bull; <strong>Department:</strong> Theoretical Physics & Computational Complexity
+        </div>
+    </header>
+
+    <!-- Metrics Banner -->
+    <div class="chips-grid">
+        <div class="chip chip-1">
+            <div class="big" id="chipDim">5D Space</div>
+            <div class="sm">Current Dimension N</div>
+        </div>
+        <div class="chip chip-2">
+            <div class="big" id="chipOctants">32</div>
+            <div class="sm">Hyper-Octants (\\(2^N\\))</div>
+        </div>
+        <div class="chip chip-3">
+            <div class="big" id="chipPlanes">10</div>
+            <div class="sm">Rotation Planes (\\(\binom{N}{2}\\))</div>
+        </div>
+        <div class="chip chip-4">
+            <div class="big" id="chipProps">8</div>
+            <div class="sm">Active Properties (\\(3+N\\))</div>
+        </div>
+    </div>
+
+    <!-- Canvas Engine -->
+    <div class="animation-card">
+        <h3 style="margin-top:0; color:var(--purple);">Interactive 5D Hyper-Geometry Canvas</h3>
+        <canvas id="unfoldCanvas" width="800" height="460"></canvas>
+        <div class="controls-row">
+            <button class="btn" id="playPauseBtn">Pause</button>
+            <button class="btn" id="autoUnfoldBtn">Auto-Unfold Animation</button>
+            <div class="slider-group">
+                <label for="dimSlider">Dimension Step N (0D to 5D):</label>
+                <input type="range" id="dimSlider" min="0" max="5" value="5" step="1">
+                <span id="dimVal" style="color:var(--yellow); font-weight:bold; width:25px;">5D</span>
+            </div>
+            <div class="slider-group">
+                <label for="rotSpeed">Rotation:</label>
+                <input type="range" id="rotSpeed" min="1" max="10" value="3">
+            </div>
+        </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ol>
+            <li><a href="#ch1">Chapter 1: The Zero-Point Division Crucible (\\(A_0\\)) and Scalar Seed Projection</a></li>
+            <li><a href="#ch2">Chapter 2: Sequential Dimensional Unfolding (\\(0\text{D} \to 1\text{D} \to 2\text{D} \to 3\text{D} \to 4\text{D} \to 5\text{D}\\))</a></li>
+            <li><a href="#ch3">Chapter 3: Matrix Projection Math for 5D Hypercubes ($SO(5)$ Lie Algebra)</a></li>
+            <li><a href="#ch4">Chapter 4: Source Traceability Matrix</a></li>
+        </ol>
+    </div>
+
+    <!-- Chapter 1 -->
+    <section id="ch1">
+        <h2>Chapter 1: The Zero-Point Division Crucible (\\(A_0\\)) and Scalar Seed Projection</h2>
+        <p>
+            At array position 0 of the universal sequence $A = [A_0, A_1, \dots, A_N]$, spatial extent is identically zero (\\(d = 0\\)). Slicing through the zero-point origin evaluates the indeterminate division $0/0$ as an unconstrained scalar seed $\lambda$:
+        </p>
+        <div class="axiom-box">
+            <div class="equation">
+                $$\text{Axiom } A_0 \quad \equiv \quad A[0] : \quad 0 = 0, \quad \lim_{x \to 0} \frac{0}{x} = \lambda \in \mathbb{R}^N$$
+            </div>
+            <p>
+                Nodal symmetry breaking projects $\lambda$ outward along $N$ orthogonal cuts, dividing space into $H_N = 2^N$ hyper-octants and generating $R_N = \binom{N}{2}$ independent 2D rotation planes without background coordinate grids.
+            </p>
+        </div>
+    </section>
+
+    <!-- Chapter 2 -->
+    <section id="ch2">
+        <h2>Chapter 2: Sequential Dimensional Unfolding (\\(0\text{D} \to 5\text{D}\\))</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dimension (\\(N\\))</th>
+                    <th>Geometric Structure</th>
+                    <th>Hyper-Octants (\\(H_N = 2^N\\))</th>
+                    <th>Rotation Planes (\\(R_N = \binom{N}{2}\\))</th>
+                    <th>Active Properties (\\(P_N = 3 + N\\))</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>0D</strong></td>
+                    <td>Singularity Point (\\(A_0\\))</td>
+                    <td>1 (\\(2^0\\))</td>
+                    <td>0</td>
+                    <td>3 (Origin Seeds)</td>
+                </tr>
+                <tr>
+                    <td><strong>1D</strong></td>
+                    <td>Vector Line (\\(\lambda_1\\))</td>
+                    <td>2 (\\(2^1\\))</td>
+                    <td>0</td>
+                    <td>4 Properties</td>
+                </tr>
+                <tr>
+                    <td><strong>2D</strong></td>
+                    <td>Square Plane / $SO(2)$</td>
+                    <td>4 (\\(2^2\\))</td>
+                    <td>1 Plane (\\(e^{i\theta}\\))</td>
+                    <td>5 Properties</td>
+                </tr>
+                <tr>
+                    <td><strong>3D</strong></td>
+                    <td>Cube / Euclidean Space</td>
+                    <td>8 (\\(2^3\\))</td>
+                    <td>3 Planes (\\(XY, YZ, ZX\\))</td>
+                    <td>6 Properties</td>
+                </tr>
+                <tr>
+                    <td><strong>4D</strong></td>
+                    <td>Tesseract / Hypercube</td>
+                    <td>16 (\\(2^4\\))</td>
+                    <td>6 Planes ($SO(4)$)</td>
+                    <td>7 Properties</td>
+                </tr>
+                <tr>
+                    <td><strong>5D</strong></td>
+                    <td>Penteract / $SO(5)$ Manifold</td>
+                    <td>32 (\\(2^5\\))</td>
+                    <td>10 Planes ($SO(5)$)</td>
+                    <td>8 Properties (Saturation)</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Chapter 3 -->
+    <section id="ch3">
+        <h2>Chapter 3: Matrix Projection Math for 5D Hypercubes ($SO(5)$ Lie Algebra)</h2>
+        <p>
+            A 5D hypercube (penteract) consists of $2^5 = 32$ vertices defined by coordinate vectors $\mathbf{v} \in \{-1, 1\}^5$. Rotating a 5D vertex around 10 orthogonal rotation planes utilizes composite $SO(5)$ rotation matrices:
+        </p>
+        <div class="equation">
+            $$R_{5D}(\theta_1, \dots, \theta_{10}) = \prod_{1 \le a < b \le 5} R_{ab}(\theta_{ab})$$
+        </div>
+        <p>
+            Projecting from 5D $\to$ 4D $\to$ 3D $\to$ 2D perspective screen space utilizes successive focal distance normalization:
+        </p>
+        <div class="equation">
+            $$w_4 = \frac{d_5}{d_5 - v_5}, \quad w_3 = \frac{d_4}{d_4 - v_4 \cdot w_4}, \quad x_{\text{screen}} = c_x + v_1 \cdot w_3 \cdot w_4 \cdot S$$
+        </div>
+    </section>
+
+    <!-- Chapter 4 -->
+    <section id="ch4">
+        <h2>Chapter 4: Source Traceability Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Theoretical Concept</th>
+                    <th>Notebook Source Citation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Axiom $A_0$ (\\(0/0 = \lambda\\)) & Nodal Projection</td>
+                    <td><em>Building Dimensional Scaling from Zero</em>; <em>Axiom ordering</em></td>
+                </tr>
+                <tr>
+                    <td>5D $SO(5)$ Lie Algebra & 8 Property Saturation</td>
+                    <td><em>Building a Dimensional Property Framework</em>; <em>Computational Relativity</em></td>
+                </tr>
+                <tr>
+                    <td>Hyper-Octant Partitioning (\\(2^N\\)) & Rotation Planes</td>
+                    <td><em>Optimization of Lag Growth Simulation</em>; <em>lebaux.github.io</em></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        5D Dimensional Unfolding Monograph & Canvas Engine (v3.0.0-5D-UNFOLDING) &bull; Theoretical Physics Division
+    </footer>
+</div>
+
+<!-- JavaScript Canvas Engine Script -->
+<script>
+    // Live Clock
+    function updateClock() {
+        const clockEl = document.getElementById('observerClock');
+        if (clockEl) {
+            const now = new Date();
+            clockEl.textContent = `${now.toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'})} @ ${now.toLocaleTimeString()}`;
+        }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Canvas Engine Setup
+    const canvas = document.getElementById('unfoldCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let currentDim = 5;
+    let isRunning = true;
+    let autoUnfold = false;
+    let angle = 0;
+    let rotSpeedVal = 0.02;
+    let unfoldTimer = 0;
+
+    // UI Bindings
+    const dimSlider = document.getElementById('dimSlider');
+    const dimValText = document.getElementById('dimVal');
+    const playBtn = document.getElementById('playPauseBtn');
+    const autoBtn = document.getElementById('autoUnfoldBtn');
+    const rotSpeedInput = document.getElementById('rotSpeed');
+
+    dimSlider.addEventListener('input', (e) => {
+        currentDim = parseInt(e.target.value);
+        dimValText.textContent = `${currentDim}D`;
+        updateMetrics();
+    });
+
+    playBtn.addEventListener('click', () => {
+        isRunning = !isRunning;
+        playBtn.textContent = isRunning ? 'Pause' : 'Play';
+    });
+
+    autoBtn.addEventListener('click', () => {
+        autoUnfold = !autoUnfold;
+        autoBtn.classList.toggle('btn-active', autoUnfold);
+    });
+
+    rotSpeedInput.addEventListener('input', (e) => {
+        rotSpeedVal = 0.007 * parseFloat(e.target.value);
+    });
+
+    function updateMetrics() {
+        document.getElementById('chipDim').textContent = `${currentDim}D Space`;
+        document.getElementById('chipOctants').textContent = Math.pow(2, currentDim);
+        document.getElementById('chipPlanes').textContent = (currentDim * (currentDim - 1)) / 2;
+        document.getElementById('chipProps').textContent = 3 + currentDim;
+    }
+
+    // Generate Vertices for N dimensions (2^N vertices)
+    function generateHypercubeVertices(dim) {
+        if (dim === 0) return [[0, 0, 0, 0, 0]];
+        let vertices = [];
+        let count = Math.pow(2, dim);
+        for (let i = 0; i < count; i++) {
+            let v = [0, 0, 0, 0, 0];
+            for (let d = 0; d < dim; d++) {
+                v[d] = ((i >> d) & 1) === 1 ? 1 : -1;
+            }
+            vertices.push(v);
+        }
+        return vertices;
+    }
+
+    // Rotate 5D Vector
+    function rotate5D(v, a) {
+        let [x, y, z, w, v5] = v;
+
+        // XY Rotation
+        let x1 = x * Math.cos(a) - y * Math.sin(a);
+        let y1 = x * Math.sin(a) + y * Math.cos(a);
+
+        // ZW Rotation
+        let z1 = z * Math.cos(a * 0.7) - w * Math.sin(a * 0.7);
+        let w1 = z * Math.sin(a * 0.7) + w * Math.cos(a * 0.7);
+
+        // WV5 Rotation (5D)
+        let w2 = w1 * Math.cos(a * 0.4) - v5 * Math.sin(a * 0.4);
+        let v5_1 = w1 * Math.sin(a * 0.4) + v5 * Math.cos(a * 0.4);
+
+        return [x1, y1, z1, w2, v5_1];
+    }
+
+    // Project 5D -> 2D Screen
+    function project5DTo2D(v5d, cx, cy, scale) {
+        let [x, y, z, w, v5] = v5d;
+
+        let d5 = 3.5, d4 = 3.0, d3 = 2.5;
+
+        // 5D -> 4D
+        let f5 = d5 / (d5 - v5 * 0.3);
+        x *= f5; y *= f5; z *= f5; w *= f5;
+
+        // 4D -> 3D
+        let f4 = d4 / (d4 - w * 0.35);
+        x *= f4; y *= f4; z *= f4;
+
+        // 3D -> 2D
+        let f3 = d3 / (d3 - z * 0.4);
+        let x2d = cx + x * f3 * scale;
+        let y2d = cy + y * f3 * scale;
+
+        return [x2d, y2d];
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+
+        if (isRunning) angle += rotSpeedVal;
+
+        if (autoUnfold && isRunning) {
+            unfoldTimer += 0.015;
+            let step = Math.floor(unfoldTimer % 6);
+            if (step !== currentDim) {
+                currentDim = step;
+                dimSlider.value = currentDim;
+                dimValText.textContent = `${currentDim}D`;
+                updateMetrics();
+            }
+        }
+
+        // Render Singularity / Hypercube
+        if (currentDim === 0) {
+            // Glowing A0 Singularity
+            ctx.beginPath();
+            ctx.arc(cx, cy, 12 + Math.sin(angle * 5) * 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#f1fa8c';
+            ctx.shadowColor = '#f1fa8c';
+            ctx.shadowBlur = 25;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            ctx.fillStyle = '#f8f8f2';
+            ctx.font = 'bold 14px Segoe UI';
+            ctx.fillText('0D A₀ Singularity: 0/0 = λ (Scalar Seed)', cx - 130, cy + 50);
+        } else {
+            let rawVertices = generateHypercubeVertices(currentDim);
+            let projected = [];
+            let scale = currentDim <= 3 ? 100 : currentDim === 4 ? 80 : 65;
+
+            // Rotate & Project
+            for (let i = 0; i < rawVertices.length; i++) {
+                let rotV = rotate5D(rawVertices[i], angle);
+                let p2d = project5DTo2D(rotV, cx, cy, scale);
+                projected.push(p2d);
+            }
+
+            // Draw Edges (Connect vertices differing by exactly 1 bit coordinate)
+            ctx.lineWidth = currentDim >= 4 ? 1.2 : 2;
+            for (let i = 0; i < rawVertices.length; i++) {
+                for (let j = i + 1; j < rawVertices.length; j++) {
+                    let diff = 0;
+                    for (let d = 0; d < currentDim; d++) {
+                        if (rawVertices[i][d] !== rawVertices[j][d]) diff++;
+                    }
+                    if (diff === 1) {
+                        ctx.beginPath();
+                        ctx.moveTo(projected[i][0], projected[i][1]);
+                        ctx.lineTo(projected[j][0], projected[j][1]);
+
+                        let hue = (i * 12) % 360;
+                        ctx.strokeStyle = `hsla(${hue}, 80%, 70%, 0.65)`;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw Vertices
+            for (let i = 0; i < projected.length; i++) {
+                ctx.beginPath();
+                ctx.arc(projected[i][0], projected[i][1], 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#ff79c6';
+                ctx.fill();
+            }
+
+            // A0 Center Origin Marker
+            ctx.beginPath();
+            ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+            ctx.fillStyle = '#f1fa8c';
+            ctx.fill();
+        }
+
+        // Overlay Text Info
+        ctx.fillStyle = '#50fa7b';
+        ctx.font = 'bold 13px Segoe UI';
+        ctx.fillText(`ACTIVE GEOMETRY: ${currentDim}D Continuum (${Math.pow(2, currentDim)} Vertices)`, 20, 30);
+        ctx.fillStyle = '#f8f8f2';
+        ctx.fillText(`Scalar Seed λ = 0/0 | Rotation Planes R_${currentDim} = ${(currentDim * (currentDim - 1)) / 2}`, 20, 50);
+
+        requestAnimationFrame(animate);
+    }
+
+    updateMetrics();
+    animate();
+</script>
+
+</body>
+</html>
