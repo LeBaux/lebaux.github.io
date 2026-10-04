@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Special Theory of Computational Relativity — PhD Monograph & Interactive Engine (v2.1.0)</title>
+    <title>The Special Theory of Computational Relativity — PhD Monograph & Interactive Engine (v2.2.0-ACADEMIC)</title>
     <!-- MathJax 3 Configuration & Loader -->
     <script>
         window.MathJax = {
@@ -64,19 +64,34 @@
         .header-meta {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             color: var(--comment-color);
             font-size: 0.88rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 18px;
             border-bottom: 1px solid var(--current-line);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-meta span {
+            background-color: var(--bg-color);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--current-line);
+        }
+
+        .observer-clock {
+            color: var(--yellow) !important;
+            font-weight: bold;
         }
 
         h1 {
             color: var(--purple);
             font-size: 2.3rem;
-            margin: 10px 0;
+            margin: 12px 0 6px 0;
             font-weight: 700;
             line-height: 1.25;
         }
@@ -90,8 +105,13 @@
 
         .author-block {
             color: var(--fg-color);
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin-top: 15px;
+            background-color: var(--bg-color);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--purple);
         }
 
         h2 {
@@ -342,6 +362,7 @@
             .container { padding: 20px; }
             .chips-grid { grid-template-columns: repeat(2, 1fr); }
             h1 { font-size: 1.8rem; }
+            .header-meta { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
@@ -350,8 +371,9 @@
 <div class="container">
     <header>
         <div class="header-meta">
-            <span>Special Theory of Computational Relativity</span>
-            <span><strong>Version:</strong> 2.1.0 (Clean Monograph Edition) &bull; <strong>Date:</strong> October 3, 2026</span>
+            <span><strong>Academic Version:</strong> v2.2.0-ACADEMIC</span>
+            <span><strong>Compilation Date:</strong> October 3, 2026</span>
+            <span class="observer-clock"><strong>Observer Reading Time:</strong> <span id="observerClock">Syncing...</span></span>
         </div>
         <h1>The Special Theory of Computational Relativity</h1>
         <div class="subtitle">A Dissertation on the Constructive Proof of P = NP in the Zero-Point Singularity Manifold $\mathcal{M}_N(A_0)$</div>
@@ -382,7 +404,7 @@
 
     <!-- Interactive Animation Canvas -->
     <div class="animation-card">
-        <h3 style="margin-top:0; color:var(--purple);">Interactive Chrono-Structural Canvas Engine v2.1</h3>
+        <h3 style="margin-top:0; color:var(--purple);">Interactive Chrono-Structural Canvas Engine v2.2</h3>
         <canvas id="chronoCanvas" width="800" height="440"></canvas>
         <div class="controls-row">
             <button class="btn" id="playPauseBtn">Pause</button>
@@ -421,7 +443,7 @@
     <section id="abstract">
         <h2>Abstract</h2>
         <p>
-            We present the refined dissertation establishing the <strong>special theory of computational relativity</strong> (v2.1.0), proving that $P = NP$ holds constructively within an idealized $N$-dimensional relativistic manifold $\mathcal{M}_N(A_0)$ anchored by two invariant constants: absolute zero (\\(0\\)) at position $0$ of the universal array $A$ (Axiom $A_0$) and the universal speed of light (\\(c\\)).
+            We present the academic dissertation establishing the <strong>special theory of computational relativity</strong> (v2.2.0-ACADEMIC), proving that $P = NP$ holds constructively within an idealized $N$-dimensional relativistic manifold $\mathcal{M}_N(A_0)$ anchored by two invariant constants: absolute zero (\\(\mathbf{0}\\)) at position $0$ of the universal array $A$ (Axiom $A_0$) and the universal speed of light (\\(\mathbf{c}\\)).
         </p>
         <p>
             By introducing <strong>Postulate $P_{\text{HSAM}}$</strong> (Highly Superior Autobiographical Memory Observer), we eliminate the third-person $NP$-verifier bottleneck by establishing lossless temporal indexing along the time vector field $\vec{t}$. We prove that:
@@ -552,19 +574,33 @@
                 </tr>
                 <tr>
                     <td>Chrono-Structural Time Engine</td>
-                    <td><em>Building a Dimensional Property Framework</em>;  theoretical time travel papers</td>
+                    <td><em>Building a Dimensional Property Framework</em>; theoretical time travel papers</td>
                 </tr>
             </tbody>
         </table>
     </section>
 
     <footer>
-        Self-Contained PhD Monograph & Interactive Engine (v2.1.0) &bull; Theoretical Physics & Computational Complexity Division
+        Self-Contained PhD Monograph & Interactive Engine (v2.2.0-ACADEMIC) &bull; Theoretical Physics & Computational Complexity Division
     </footer>
 </div>
 
-<!-- JavaScript Canvas Animation Script -->
+<!-- JavaScript Canvas Animation & Dynamic Observer Clock Script -->
 <script>
+    // Live Observer Clock Updater
+    function updateObserverClock() {
+        const clockEl = document.getElementById('observerClock');
+        if (clockEl) {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            const dateStr = now.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+            clockEl.textContent = `${dateStr} @ ${timeStr}`;
+        }
+    }
+    setInterval(updateObserverClock, 1000);
+    updateObserverClock();
+
+    // Canvas & Controls Engine
     const canvas = document.getElementById('chronoCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -576,7 +612,6 @@
     let speed = 0.03;
     let traceHistory = [];
 
-    // UI Control Handlers
     document.getElementById('playPauseBtn').addEventListener('click', function(e) {
         isRunning = !isRunning;
         e.target.textContent = isRunning ? 'Pause' : 'Play';
@@ -662,10 +697,10 @@
         ctx.moveTo(cx - 190, cy - 190); ctx.lineTo(cx + 190, cy + 190);
         ctx.moveTo(cx + 190, cy - 190); ctx.lineTo(cx - 190, cy + 190);
         ctx.stroke();
-        ctx.setLineDash([]); // Reset line dash
+        ctx.setLineDash([]);
 
         // Concentric SO(N) Rotation Rings
-        const rings = [50, 90, 130, 170];
+        const rings = [40, 70, 110, 150, 180];
         rings.forEach(function(r) {
             ctx.beginPath();
             ctx.arc(cx, cy, r, 0, Math.PI * 2);
@@ -690,7 +725,7 @@
         ctx.shadowColor = '#f1fa8c';
         ctx.shadowBlur = 15;
         ctx.fill();
-        ctx.shadowBlur = 0; // Reset shadow
+        ctx.shadowBlur = 0;
 
         // Overlay Text Info
         ctx.fillStyle = isTimeReversed ? '#ff5555' : '#50fa7b';
