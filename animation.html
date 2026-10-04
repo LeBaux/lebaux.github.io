@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Special Theory of Computational Relativity — Master Monograph & Interactive Engine (v4.0.0-MASTER)</title>
+    <title>The Special Theory of Computational Relativity — Master Monograph & Interactive Engine (v4.1.0-FIXED)</title>
     <!-- MathJax 3 Loader -->
     <script>
         window.MathJax = {
@@ -371,7 +371,7 @@
 <div class="container">
     <header>
         <div class="header-meta">
-            <span><strong>Academic Version:</strong> v4.0.0-MASTER</span>
+            <span><strong>Academic Version:</strong> v4.1.0-FIXED</span>
             <span><strong>Compilation Date:</strong> October 3, 2026</span>
             <span class="observer-clock"><strong>Observer Reading Time:</strong> <span id="observerClock">Syncing...</span></span>
         </div>
@@ -404,7 +404,7 @@
 
     <!-- Master Interactive Canvas Engine -->
     <div class="animation-card">
-        <h3 style="margin-top:0; color:var(--purple);">Master Chrono-Structural Simulation Engine v4.0</h3>
+        <h3 style="margin-top:0; color:var(--purple);">Master Chrono-Structural Simulation Engine v4.1</h3>
         <canvas id="chronoCanvas" width="820" height="480"></canvas>
         <div class="controls-row">
             <button class="btn" id="playPauseBtn">Pause</button>
@@ -451,7 +451,7 @@
     <section id="abstract">
         <h2>Abstract</h2>
         <p>
-            We present the master dissertation establishing the <strong>special theory of computational relativity</strong> (v4.0.0-MASTER), proving that $P = NP$ holds constructively within an idealized $N$-dimensional relativistic manifold $\mathcal{M}_N(A_0)$ anchored by two invariant constants: absolute zero (\\(\mathbf{0}\\)) at position $0$ of the universal array $A$ (Axiom $A_0$) and the universal speed of light (\\(\mathbf{c}\\)).
+            We present the master dissertation establishing the <strong>special theory of computational relativity</strong> (v4.1.0-FIXED), proving that $P = NP$ holds constructively within an idealized $N$-dimensional relativistic manifold $\mathcal{M}_N(A_0)$ anchored by two invariant constants: absolute zero (\\(\mathbf{0}\\)) at position $0$ of the universal array $A$ (Axiom $A_0$) and the universal speed of light (\\(\mathbf{c}\\)).
         </p>
         <p>
             By synthesizing quantum orbital geometries (\\(\delta, \phi, \mathcal{O}_8\\)), topological double-slit wave-particle shearing (\\(\hat{\mathcal{S}}\\)), and <strong>Postulate $P_{\text{HSAM}}$</strong> (Highly Superior Autobiographical Memory Observer), we eliminate the third-person $NP$-verifier bottleneck by establishing lossless temporal indexing along the time vector field $\vec{t}$.
@@ -601,7 +601,7 @@
     </section>
 
     <footer>
-        Self-Contained PhD Monograph & Interactive Engine (v4.0.0-MASTER) &bull; Theoretical Physics & Computational Complexity Division
+        Self-Contained PhD Monograph & Interactive Engine (v4.1.0-FIXED) &bull; Theoretical Physics & Computational Complexity Division
     </footer>
 </div>
 
@@ -704,8 +704,15 @@
         return vertices;
     }
 
+    // Pad Vector up to 5D
+    function padVector(v) {
+        let p = [0, 0, 0, 0, 0];
+        for (let i = 0; i < v.length; i++) p[i] = v[i];
+        return p;
+    }
+
     function rotate5D(v, a) {
-        let [x, y, z, w, v5] = v;
+        let [x, y, z, w, v5] = padVector(v);
         let x1 = x * Math.cos(a) - y * Math.sin(a);
         let y1 = x * Math.sin(a) + y * Math.cos(a);
         let z1 = z * Math.cos(a * 0.7) - w * Math.sin(a * 0.7);
@@ -757,7 +764,7 @@
         // Nodal Firewalls
         ctx.strokeStyle = 'rgba(255, 85, 85, 0.6)';
         ctx.lineWidth = 1.5;
-        ctx.setLineDash([1]);
+        ctx.setLineDash([5, 5]);
         ctx.beginPath();
         ctx.moveTo(cx - 200, cy - 200); ctx.lineTo(cx + 200, cy + 200);
         ctx.moveTo(cx + 200, cy - 200); ctx.lineTo(cx - 200, cy + 200);
@@ -791,13 +798,20 @@
                     }
                     if (diff === 1) {
                         ctx.beginPath();
-                        ctx.moveTo(projV[i], projV[i][2]);
-                        ctx.lineTo(projV[j], projV[j][2]);
-                        ctx.strokeStyle = 'rgba(139, 233, 253, 0.4)';
+                        ctx.moveTo(projV[i][0], projV[i][1]);
+                        ctx.lineTo(projV[j][0], projV[j][1]);
+                        ctx.strokeStyle = 'rgba(139, 233, 253, 0.5)';
                         ctx.lineWidth = 1.2;
                         ctx.stroke();
                     }
                 }
+            }
+
+            for (let i = 0; i < projV.length; i++) {
+                ctx.beginPath();
+                ctx.arc(projV[i][0], projV[i][1], 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#ff79c6';
+                ctx.fill();
             }
         }
 
