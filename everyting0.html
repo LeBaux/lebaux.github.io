@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unfolding Dimensions: 0D to ND Indeterminate Logic</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #0b0d17;
+            color: #e0e6ed;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: #00f0ff;
+            letter-spacing: 1px;
+        }
+        p.subtitle {
+            font-size: 0.85rem;
+            color: #8a99ad;
+            margin-bottom: 15px;
+        }
+        canvas {
+            background: #0d0f18;
+            border: 1px solid #2a2d3d;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            background: #141724;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid #2a2d3d;
+            align-items: center;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        input[type=range] {
+            accent-color: #00f0ff;
+            cursor: pointer;
+        }
+        button {
+            background: #1e2338;
+            color: #00f0ff;
+            border: 1px solid #00f0ff;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        button:hover {
+            background: #00f0ff;
+            color: #0b0d17;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Unfolding Dimensions from 0D ($A_0$)</h1>
+    <p class="subtitle">Interactive Non-Standard Logic Simulation ($e^{i\pi} + 1 = 0$ Euler Phase Cancellation)</p>
+
+    <canvas id="simCanvas" width="800" height="400"></canvas>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="dimSelect">Dimension:</label>
+            <button onclick="setDimension(0)">0D (Seed)</button>
+            <button onclick="setDimension(1)">1D (Mirror)</button>
+            <button onclick="setDimension(2)">2D (SO(N))</button>
+            <button onclick="setDimension(3)">3D (Geodesic)</button>
+            <button onclick="setDimension(-1)">All Unified</button>
+        </div>
+        <div class="control-group">
+            <label for="speedSlider">Speed:</label>
+            <input type="range" id="speedSlider" min="0" max="0.05" step="0.002" value="0.015">
+        </div>
+        <div class="control-group">
+            <label for="cancelToggle">Euler Firewall:</label>
+            <input type="checkbox" id="cancelToggle" checked> Active
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let activeDim = -1; // -1 = All Unified
+        let phase = 0;
+
+        function setDimension(dim) { activeDim = dim; }
+
+        function draw0D(x, y, size, t) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            const r = (size * 0.15) + Math.sin(t * 3) * 6;
+            ctx.beginPath();
+            ctx.arc(0, 0, r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 51, 102, 0.8)';
+            ctx.shadowColor = '#ff3366';
+            ctx.shadowBlur = 15;
+            ctx.fill();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '12px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText("A0 = 0/0 = λ", 0, size * 0.3);
+            ctx.restore();
+        }
+
+        function draw1D(x, y, width, height, t, cancelActive) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            const halfW = width / 2 - 20;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.beginPath();
+            ctx.moveTo(-halfW, 0); ctx.lineTo(halfW, 0);
+            ctx.stroke();
+
+            // Wave +
+            ctx.strokeStyle = '#00f0ff';
+            ctx.beginPath();
+            for (let px = -halfW; px <= halfW; px += 2) {
+                let py = Math.sin((px / 30) + t * 2) * 30;
+                if (px === -halfW) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+
+            // Wave - (Anti-phase)
+            ctx.strokeStyle = '#ff9900';
+            ctx.beginPath();
+            for (let px = -halfW; px <= halfW; px += 2) {
+                let py = Math.sin((px / 30) + t * 2 + (cancelActive ? Math.PI : 0)) * 30;
+                if (px === -halfW) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+
+            // Resultant
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let px = -halfW; px <= halfW; px += 2) {
+                let py1 = Math.sin((px / 30) + t * 2) * 30;
+                let py2 = Math.sin((px / 30) + t * 2 + (cancelActive ? Math.PI : 0)) * 30;
+                let pyNet = py1 + py2;
+                if (px === -halfW) ctx.moveTo(px, pyNet); else ctx.lineTo(px, pyNet);
+            }
+            ctx.stroke();
+
+            ctx.fillStyle = '#8a99ad';
+            ctx.font = '11px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(cancelActive ? "e^(iπ) + 1 = 0 (Cancellation)" : "Constructive Interference", 0, height/2 - 10);
+            ctx.restore();
+        }
+
+        function draw2D(x, y, size, t) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            const r = size * 0.3;
+            ctx.strokeStyle = 'rgba(112, 0, 255, 0.3)';
+            ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.stroke();
+
+            const pts = 4;
+            ctx.strokeStyle = '#7000ff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let i = 0; i < pts; i++) {
+                let angle = t + (i * Math.PI / 2);
+                let px = Math.cos(angle) * r;
+                let py = Math.sin(angle) * r;
+                if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.stroke();
+
+            ctx.fillStyle = '#ff3366';
+            ctx.beginPath(); ctx.arc(0, 0, 4, 0, Math.PI * 2); ctx.fill();
+
+            ctx.fillStyle = '#8a99ad';
+            ctx.font = '11px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText("SO(N) Rotation Plane", 0, size * 0.4);
+            ctx.restore();
+        }
+
+        function draw3D(x, y, size, t) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            const scale = size * 0.35;
+            const phi = t * 0.7;
+            const psi = t * 0.5;
+
+            const verts = [
+                [-1,-1,-1], [1,-1,-1], [1,1,-1], [-1,1,-1],
+                [-1,-1,1],  [1,-1,1],  [1,1,1],  [-1,1,1]
+            ];
+
+            const edges = [
+                [0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]
+            ];
+
+            const proj = verts.map(v => {
+                // Rotations
+                let x1 = v[0]*Math.cos(psi) - v[1]*Math.sin(psi);
+                let y1 = v[0]*Math.sin(psi) + v[1]*Math.cos(psi);
+                let z1 = v[2];
+
+                let y2 = y1*Math.cos(phi) - z1*Math.sin(phi);
+                let z2 = y1*Math.sin(phi) + z1*Math.cos(phi);
+
+                return [x1 * scale * 0.4, y2 * scale * 0.4];
+            });
+
+            ctx.strokeStyle = '#00ff66';
+            ctx.lineWidth = 1.5;
+            edges.forEach(e => {
+                ctx.beginPath();
+                ctx.moveTo(proj[e[0]][0], proj[e[0]][1]);
+                ctx.lineTo(proj[e[1]][0], proj[e[1]][1]);
+                ctx.stroke();
+            });
+
+            ctx.fillStyle = '#8a99ad';
+            ctx.font = '11px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText("Cayley-Menger (CM5=0)", 0, size * 0.4);
+            ctx.restore();
+        }
+
+        function animate() {
+            const speed = parseFloat(document.getElementById('speedSlider').value);
+            const cancelActive = document.getElementById('cancelToggle').checked;
+            phase += speed;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (activeDim === -1) {
+                // Quad view
+                const w = canvas.width / 2;
+                const h = canvas.height / 2;
+                draw0D(w/2, h/2, Math.min(w,h), phase);
+                draw1D(w + w/2, h/2, w, h, phase, cancelActive);
+                draw2D(w/2, h + h/2, Math.min(w,h), phase);
+                draw3D(w + w/2, h + h/2, Math.min(w,h), phase);
+            } else if (activeDim === 0) {
+                draw0D(canvas.width/2, canvas.height/2, 300, phase);
+            } else if (activeDim === 1) {
+                draw1D(canvas.width/2, canvas.height/2, canvas.width - 100, canvas.height, phase, cancelActive);
+            } else if (activeDim === 2) {
+                draw2D(canvas.width/2, canvas.height/2, 300, phase);
+            } else if (activeDim === 3) {
+                draw3D(canvas.width/2, canvas.height/2, 300, phase);
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
