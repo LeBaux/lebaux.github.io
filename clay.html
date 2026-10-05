@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Computational Relativity Playground - The Seven Clay Problems</title>
+<style>
+  :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#e8e4d8;background:#0d1117;}
+  *{box-sizing:border-box}
+  body{margin:0;padding:0}
+  header{padding:18px 22px 10px;background:linear-gradient(135deg,#0f3d5c,#14304d);border-bottom:2px solid #c8b98a}
+  header h1{margin:0;font-size:1.25em;letter-spacing:.3px}
+  header p{margin:4px 0 0;font-size:.8em;color:#ffd166}
+  .controls{display:flex;flex-wrap:wrap;gap:18px;align-items:center;padding:12px 22px;background:#101826;border-bottom:1px solid #233;flex-wrap:wrap}
+  .ctl{display:flex;align-items:center;gap:8px;font-size:.82em}
+  .ctl label{color:#9fb3c8}
+  input[type=range]{width:150px;accent-color:#ffd166;cursor:pointer}
+  .val{color:#ffd166;font-weight:700;min-width:46px;display:inline-block}
+  .tgl{position:relative;width:46px;height:24px;background:#2a3a4f;border-radius:12px;cursor:pointer;transition:.2s;border:1px solid #3b4d63}
+  .tgl:after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;background:#7c8da3;border-radius:50%;transition:.2s}
+  .tgl.on{background:#1b5e3f;border-color:#2e8b57}
+  .tgl.on:after{left:24px;background:#7CFC9A}
+  button{background:#ffd166;color:#102;border:none;padding:8px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.85em}
+  button:hover{background:#ffe29a}
+  nav{display:flex;flex-wrap:wrap;background:#0b1220;border-bottom:1px solid #233}
+  nav .tab{padding:10px 16px;font-size:.82em;color:#9fb3c8;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+  nav .tab:hover{color:#fff}
+  nav .tab.active{color:#ffd166;border-bottom:2px solid #ffd166;background:#101826}
+  main{padding:16px 22px 40px;max-width:960px;margin:0 auto}
+  .panel{display:none}
+  .panel.active{display:block}
+  .stage{position:relative;background:#050a12;border:1px solid #233;border-radius:10px;overflow:hidden}
+  canvas{display:block;width:100%;height:auto}
+  .grade{position:absolute;top:10px;right:12px;font-size:.7em;padding:4px 10px;border-radius:10px;font-weight:700;letter-spacing:.5px}
+  .gC{background:#1b5e3f;color:#b8ffd0}
+  .gS{background:#5e4a1b;color:#ffe29a}
+  .gH{background:#3a3a5e;color:#c3c3ff}
+  .row{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+  .box{flex:1;min-width:260px;background:#101826;border:1px solid #233;border-radius:8px;padding:12px}
+  .box h4{margin:0 0 6px;font-size:.8em;color:#ffd166}
+  .box p,.box li{font-size:.78em;line-height:1.5;color:#c9d4e0;margin:.3em 0}
+  .box ul{padding-left:1.2em;margin:4px 0}
+  .tctl{display:flex;align-items:center;gap:8px;font-size:.78em;margin:6px 0;color:#9fb3c8}
+  .legend{font-size:.72em;color:#8fa3b8;margin-top:6px}
+  .stat{font-family:ui-monospace,Consolas,monospace;color:#7CFC9A;font-size:.8em}
+</style>
+</head>
+<body>
+<header>
+  <h1>Computational Relativity Playground &mdash; The Seven Clay Problems</h1>
+  <p>Interactive companion to the monograph &ldquo;The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems&rdquo; (Pierre LeBaux, v1.1.0-CLAY). Every module runs on the A&#8320; engine below &mdash; adjust the manifold and watch all seven problems respond.</p>
+</header>
+
+<div class="controls">
+  <button id="btnPlay">&#10074;&#10074; Pause</button>
+  <div class="ctl"><label>Speed</label><input type="range" id="speed" min="0.1" max="4" step="0.1" value="1"><span class="val" id="speedV">1.0&times;</span></div>
+  <div class="ctl"><label>Dimensions N</label><input type="range" id="dimN" min="1" max="8" step="1" value="3"><span class="val" id="dimNV">N = 3</span></div>
+  <div class="ctl"><label>Firewalls (Landauer)</label><div class="tgl on" id="tglFire"></div></div>
+  <div class="ctl"><label>Time reversal T<sub>rev</sub></label><div class="tgl" id="tglRev"></div></div>
+  <div class="ctl"><label>Crystallization &otimes;</label><div class="tgl on" id="tglXtal"></div></div>
+</div>
+
+<nav>
+  <div class="tab active" data-t="pnp">I &middot; P vs NP</div>
+  <div class="tab" data-t="rh">II &middot; Riemann</div>
+  <div class="tab" data-t="ym">III &middot; Yang&ndash;Mills</div>
+  <div class="tab" data-t="ns">IV &middot; Navier&ndash;Stokes</div>
+  <div class="tab" data-t="hod">V &middot; Hodge</div>
+  <div class="tab" data-t="bsd">VI &middot; Birch&ndash;Swinnerton-Dyer</div>
+  <div class="tab" data-t="poi">VII &middot; Poincar&eacute;</div>
+</nav>
+
+<main>
+  <!-- I. P vs NP -->
+  <section class="panel active" id="p-pnp">
+    <div class="stage"><canvas id="cv-pnp" width="900" height="460"></canvas>
+      <div class="grade gC">GRADE C &middot; Conditional theorem</div></div>
+    <div class="row">
+      <div class="box"><h4>Complexity Collapse, live</h4>
+        <p>Left: brute force sweeps all <span class="stat" id="st-oct">2&#7506;</span> hyper-octants one by one. Right: the A&#8320; engine solves the same instance by evaluating only the R_N = N(N&minus;1)/2 = <span class="stat" id="st-planes">3</span> rotation planes (Theorem 5.1). Injective encoding holds because 2<sup>N(N&minus;1)/2</sup> &ge; 2&#7506;.</p></div>
+      <div class="box"><h4>Honesty note</h4><p>T<sub>solve</sub> = 0 &mdash; the single oracle step in which the manifold returns the satisfying configuration &mdash; is a <b>postulate</b>, the constancy-of-c of this theory. The unrelativized P vs NP question is not claimed.</p></div>
+    </div>
+  </section>
+
+  <!-- II. Riemann -->
+  <section class="panel" id="p-rh">
+    <div class="stage"><canvas id="cv-rh" width="900" height="460"></canvas>
+      <div class="grade gS">GRADE S/C &middot; Structural analogy</div></div>
+    <div class="row">
+      <div class="box"><h4>Zeros as anti-phase equilibria</h4>
+        <p>Each zero of the mirror zeta is a nodal surface (|&psi;<sub>node</sub>| = 0) pinned to the A&#8320; mirror axis, the image of the critical line Re(s) = &#189;. With firewalls on, order invariance forces every zero onto the mirror. Turn firewalls off and the pinning postulate (P-zeta) is withdrawn &mdash; zeros drift off the line.</p></div>
+      <div class="box"><h4>Honesty note</h4><p>Mirror-pinning is derived in-manifold, but the identification of the classical Riemann zeta with the mirror zeta is an added postulate with no independent evidential force. A single off-line zero falsifies P-zeta (falsifier F-4).</p></div>
+    </div>
+  </section>
+
+  <!-- III. Yang-Mills -->
+  <section class="panel" id="p-ym">
+    <div class="stage"><canvas id="cv-ym" width="900" height="460"></canvas>
+      <div class="grade gC">GRADE C &middot; Strongest derived mechanism</div></div>
+    <div class="row">
+      <div class="box"><h4>Controls</h4>
+        <div class="tctl"><label>Excitation energy E</label><input type="range" id="ymE" min="0" max="100" step="1" value="70"><span class="val" id="ymEV">70</span></div>
+        <p class="legend">The mass gap &Delta; = &delta;<sub>c</sub> sits at 45. Below the gap, the Landauer firewall absorbs the excitation (&Delta;E &ge; k<sub>B</sub>T ln 2). Above it, the field propagates.</p></div>
+      <div class="box"><h4>Derived, not postulated</h4><p>The gap is crystallized by colliding a positive integer property with its negative fractional inverse across A&#8320;. Landauer firewalls double as an infrared cutoff: no gapless propagation channel exists. Missing: the 4D truncation theorem to Osterwalder&ndash;Schrader axioms (falsifier F-2).</p></div>
+    </div>
+  </section>
+
+  <!-- IV. Navier-Stokes -->
+  <section class="panel" id="p-ns">
+    <div class="stage"><canvas id="cv-ns" width="900" height="460"></canvas>
+      <div class="grade gC">GRADE C &middot; Derived mechanism</div></div>
+    <div class="row">
+      <div class="box"><h4>Controls</h4>
+        <div class="tctl"><label>Viscosity &nu;</label><input type="range" id="nsNu" min="0" max="100" step="1" value="35"><span class="val" id="nsNuV">35</span></div>
+        <div class="tctl"><label>Tier saturation</label><div class="tgl on" id="tglTier"></div></div>
+        <p class="legend">Tracer particles advect through point-vortex gear meshes. With saturation on, torque amplification caps at the octadic tier O&#8328; &mdash; no blow-up. With saturation off and &nu; low, vortex stretching runs away: a live demonstration of what would falsify the framework (F-3).</p></div>
+      <div class="box"><h4>Two dissipative floors</h4><p>(i) Landauer floor: every erased bit costs k<sub>B</sub>T ln 2, so dissipation is bounded below. (ii) Nodal firewalls forbid measure-zero vorticity concentration. In-manifold: smooth for all time. Missing bridge: deriving Navier&ndash;Stokes as the mean field of tier dynamics.</p></div>
+    </div>
+  </section>
+
+  <!-- V. Hodge -->
+  <section class="panel" id="p-hod">
+    <div class="stage"><canvas id="cv-hod" width="900" height="460"></canvas>
+      <div class="grade gS">GRADE S &middot; Structural analogy</div></div>
+    <div class="row">
+      <div class="box"><h4>Crystallization as algebraicity</h4><p>Positive integer properties P&#8345; (right, blue) stream toward the A&#8320; mirror; negative fractional anti-properties (left, red) stream back. Each collision crystallizes a constant &mdash; &delta;<sub>c</sub>, &phi;<sub>c</sub>, O&#8328; &mdash; the framework's image of an algebraic cycle. Mirror-fixed (n,n) classes are exactly these collision products: a discrete lattice with rational structure constants.</p></div>
+      <div class="box"><h4>Honesty note</h4><p>No K&auml;hler form, no projective embedding, no comparison theorem with algebraic cycles has been constructed. The chapter isolates what a framework proof of Hodge would have to look like: a rational lattice inside the (n,n) fixed-point set.</p></div>
+    </div>
+  </section>
+
+  <!-- VI. BSD -->
+  <section class="panel" id="p-bsd">
+    <div class="stage"><canvas id="cv-bsd" width="900" height="460"></canvas>
+      <div class="grade gS">GRADE S &middot; Structural analogy</div></div>
+    <div class="row">
+      <div class="box"><h4>Controls</h4>
+        <div class="tctl"><label>Prime p</label><input type="range" id="bsdP" min="0" max="9" step="1" value="4"><span class="val" id="bsdPV">p = 17</span></div>
+        <p class="legend">Rational points of E: y&sup2; = x&sup3; &minus; 3x + 1 mod p, winding around the SO(2) Euler orbit. The analytic side counts the same nodal lattice; both countings agree because they count the same mirror-pinned equilibria.</p></div>
+      <div class="box"><h4>Two countings, one lattice</h4><p>Rank = independent windings of e<sup>i&theta;</sup> around the mirror axis; ord<sub>s=1</sub> L = mirror-pinned nodal equilibria. The regulator's positive-definite pairing is the Landauer cost of firewall crossings. Missing: the bridge identifying the classical L-function with the mirror object.</p></div>
+    </div>
+  </section>
+
+  <!-- VII. Poincare -->
+  <section class="panel" id="p-poi">
+    <div class="stage"><canvas id="cv-poi" width="900" height="460"></canvas>
+      <div class="grade gH">GRADE H &middot; Historical commentary</div></div>
+    <div class="row">
+      <div class="box"><h4>Rigid by mirror symmetry</h4><p>A point cloud on S&sup3; (the Clifford torus fibration) rotates through R_N = N(N&minus;1)/2 Lie planes and projects to your screen. In the 3D sector, R&#8323; = 3 and P&#8323; = 6: once A&#8320; pins the center, no residual reflection degree of freedom remains &mdash; the simply connected closed 3-manifold is rigid, a single sphere.</p></div>
+      <div class="box"><h4>Honesty note</h4><p>Perelman proved it in 2003 via Ricci flow with surgery; the prize was awarded in 2010 and declined. This module is a retro-reading: external confirmation of the framework's 3D rigidity claim, not a proof.</p></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+'use strict';
+// ---------- shared manifold state ----------
+var S = { speed:1, N:3, fire:true, rev:false, xtal:true, playing:true, ph:0 };
+var canvases = {};
+['pnp','rh','ym','ns','hod','bsd','poi'].forEach(function(k){
+  canvases[k] = document.getElementById('cv-'+k);
+});
+
+// ---------- controls ----------
+var btnPlay = document.getElementById('btnPlay');
+btnPlay.addEventListener('click', function(){
+  S.playing = !S.playing;
+  btnPlay.innerHTML = S.playing ? '&#10074;&#10074; Pause' : '&#9654; Play';
+});
+function bindRange(id, vid, fmt, fn){
+  var el = document.getElementById(id), v = document.getElementById(vid);
+  el.addEventListener('input', function(){ fn(parseFloat(el.value)); v.innerHTML = fmt(parseFloat(el.value)); });
+  fn(parseFloat(el.value));
+}
+function bindTgl(id, fn){
+  var el = document.getElementById(id);
+  el.addEventListener('click', function(){ el.classList.toggle('on'); fn(el.classList.contains('on')); });
+  fn(el.classList.contains('on'));
+}
+function initControls(){
+  bindRange('speed','speedV', function(x){return x.toFixed(1)+'&times;';}, function(x){S.speed=x;});
+  bindRange('dimN','dimNV', function(x){return 'N = '+x;}, function(x){S.N=x; syncStats();});
+  bindRange('ymE','ymEV', function(x){return ''+x;}, function(x){YM.E=x;});
+  bindRange('nsNu','nsNuV', function(x){return ''+x;}, function(x){NS.nu=x/100;});
+  bindRange('bsdP','bsdPV', function(x){return 'p = '+PRIMES[x];}, function(x){BSD.pi=x; BSD.rebuild();});
+  bindTgl('tglFire', function(on){ S.fire=on; });
+  bindTgl('tglRev',  function(on){ S.rev=on; });
+  bindTgl('tglXtal', function(on){ S.xtal=on; HOD.xtal=on; });
+  bindTgl('tglTier', function(on){ NS.tier=on; });
+}
+
+// tabs
+var tabs = document.querySelectorAll('nav .tab');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){x.classList.remove('active');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+    t.classList.add('active');
+    document.getElementById('p-'+t.getAttribute('data-t')).classList.add('active');
+  });
+});
+function syncStats(){
+  document.getElementById('st-oct').innerHTML = '2<sup>'+S.N+'</sup> = '+(1<<S.N);
+  document.getElementById('st-planes').innerHTML = ''+(S.N*(S.N-1)/2);
+}
+syncStats();
+
+// ---------- helpers ----------
+function ctxOf(k){ return canvases[k].getContext('2d'); }
+function W(k){ return canvases[k].width; }
+function H(k){ return canvases[k].height; }
+function clear(k){ var c=ctxOf(k); c.fillStyle='#050a12'; c.fillRect(0,0,W(k),H(k)); return c; }
+function mirrorLine(c,w,h){ // central A0 mirror axis (vertical)
+  c.strokeStyle = S.fire ? '#ffd166' : '#5a4f35';
+  c.lineWidth = S.fire ? 2 : 1; c.setLineDash(S.fire?[]:[6,6]);
+  c.beginPath(); c.moveTo(w/2,20); c.lineTo(w/2,h-20); c.stroke(); c.setLineDash([]);
+  c.fillStyle = '#ffd166'; c.font='11px system-ui';
+  c.fillText('A\u2080 mirror', w/2+6, 30);
+}
+function label(c,txt,x,y,col){ c.fillStyle=col||'#8fa3b8'; c.font='11px system-ui'; c.fillText(txt,x,y); }
+function fireFlash(c,x,y,r,t,col){ // Landauer firewall flash
+  var a = Math.max(0, 1-((t%1000)/1000));
+  c.strokeStyle = col||'#ff8f5a'; c.globalAlpha = a; c.lineWidth=2;
+  c.beginPath(); c.arc(x,y,r*(1+(1-a)*1.5),0,6.2832); c.stroke(); c.globalAlpha=1;
+}
+
+// ---------- I. P vs NP ----------
+var PNP = { bf:0 };
+function drawPNP(){
+  var c = clear('pnp'), w=W('pnp'), h=H('pnp');
+  var N=Math.min(S.N,6), oct=1<<N, R=N*(N-1)/2;
+  // left: brute force grid
+  var gx=60, gy=70, cols=Math.min(oct,16), rows=Math.ceil(oct/cols);
+  var cw=Math.min(22,(w*0.35-40)/cols);
+  PNP.bf = (PNP.bf + S.speed*(S.playing?1:0)*0.02) % (oct+cols);
+  var sweep = Math.floor(PNP.bf);
+  label(c,'Brute force \u2014 2\u1d3a = '+oct+' octants',40,40,'#9fb3c8');
+  for(var i=0;i<oct;i++){
+    var cx=gx+(i%cols)*cw, cy=gy+Math.floor(i/cols)*cw;
+    var hit = i<=sweep;
+    c.fillStyle = hit ? '#ff8f5a' : '#1d2c40';
+    c.fillRect(cx,cy,cw-2,cw-2);
+    if(hit && i===sweep){ c.strokeStyle='#ffd166'; c.lineWidth=1.5; c.strokeRect(cx-2,cy-2,cw+2,cw+2); }
+  }
+  // right: rotation planes
+  var cxr=w*0.72, cyr=h/2+10, rad=Math.min(w*0.2,h*0.34);
+  label(c,'A\u2080 engine \u2014 R\u1d3a = '+R+' rotation planes, O(N\u00b2) ops',w*0.56,40,'#7CFC9A');
+  for(var p=0;p<R;p++){
+    var a = (p/Math.max(R,1))*Math.PI + S.ph*0.6;
+    var x1=cxr+Math.cos(a)*rad, y1=cyr+Math.sin(a)*rad;
+    var x2=cxr-Math.cos(a)*rad, y2=cyr-Math.sin(a)*rad;
+    var active = ((S.ph*0.5+p*0.37)%1)<0.3;
+    c.strokeStyle = active ? '#7CFC9A' : 'rgba(124,252,154,0.18)';
+    c.lineWidth = active ? 2 : 1;
+    c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke();
+    if(active && S.fire) fireFlash(c,cxr,cyr,rad*0.55,S.ph*800+p*300);
+  }
+  c.fillStyle='#ffd166'; c.beginPath(); c.arc(cxr,cyr,4,0,6.2832); c.fill();
+  c.font='12px ui-monospace,monospace';
+  c.fillStyle='#ff8f5a'; c.fillText('checked: '+Math.min(sweep+1,oct)+' / '+oct, 40, h-30);
+  c.fillStyle='#7CFC9A'; c.fillText('ops: \u00bd(N\u00b2\u2212N) = '+R, cxr-40, h-30);
+}
+
+// ---------- II. Riemann ----------
+var RH = { zeros:[] };
+(function(){ var g=[14.13,21.02,25.01,30.42,32.93,37.58,40.91,43.32,48.11,49.77,52.97,56.44,59.34,60.83,65.01];
+  for(var i=0;i<g.length;i++) RH.zeros.push({g:g[i], off:0, sp:0.3+Math.random()*0.4}); })();
+function drawRH(){
+  var c=clear('rh'), w=W('rh'), h=H('rh');
+  mirrorLine(c,w,h);
+  // axes: Re in [0,1], Im up to ~70
+  var xOf=function(re){ return w*0.5 + (re-0.5)*w*0.62; };
+  var yOf=function(im){ return h-50 - im*(h-110)/72; };
+  c.strokeStyle='#1d2c40'; c.beginPath(); c.moveTo(40,yOf(0)); c.lineTo(w-30,yOf(0)); c.stroke();
+  label(c,'Re(s)', w-60, yOf(0)+16); label(c,'Im', 46, 40);
+  label(c,'critical line Re(s) = 1/2 (A\u2080 mirror)', xOf(0.5)+8, 60, '#ffd166');
+  RH.zeros.forEach(function(z,i){
+    // drift when firewall/mirror postulate is off
+    var target = S.fire ? 0 : (Math.sin(i*2.7)*0.16);
+    z.off += (target - z.off)*0.02*(S.playing?1:0);
+    var wob = Math.sin(S.ph*1.4+i)* (S.fire?0.008:0.02);
+    var x=xOf(0.5+z.off+wob), y=yOf(z.g);
+    if(S.playing) { var pulse = (Math.sin(S.ph*2+i)+1)/2;
+      c.fillStyle='rgba(124,252,154,'+(0.25+0.5*pulse)+')';
+      c.beginPath(); c.arc(x,y,9+3*pulse,0,6.2832); c.fill(); }
+    c.fillStyle='#7CFC9A'; c.beginPath(); c.arc(x,y,3.5,0,6.2832); c.fill();
+    c.strokeStyle='rgba(124,252,154,0.25)'; c.lineWidth=1;
+    c.beginPath(); c.moveTo(xOf(0.5),y); c.lineTo(x,y); c.stroke();
+    if(!S.fire && Math.abs(z.off)>0.05){
+      c.strokeStyle='#ff8f5a'; c.beginPath(); c.arc(x,y,8,0,6.2832); c.stroke();
+    }
+  });
+  c.font='12px ui-monospace,monospace';
+  c.fillStyle = S.fire ? '#7CFC9A' : '#ff8f5a';
+  c.fillText(S.fire ? 'P-zeta pinned: all zeros on the mirror \u2014 C-2 holds'
+                    : 'P-zeta withdrawn: zeros off the line \u2014 F-4 territory', 40, 30);
+}
+
+// ---------- III. Yang-Mills ----------
+var YM = { E:70, wave:0, absorbed:0 };
+function drawYM(dt){
+  var c=clear('ym'), w=W('ym'), h=H('ym');
+  var gap=45, x0=90, x1=w-70;
+  // energy axis
+  c.strokeStyle='#1d2c40'; c.lineWidth=1;
+  c.beginPath(); c.moveTo(x0,40); c.lineTo(x0,h-40); c.stroke();
+  var yE=function(E){ return h-50-(E/100)*(h-90); };
+  // spectrum: levels from the gap upward
+  var tiers=[{n:'\u03b4',E:gap},{n:'\u03c6',E:gap+18},{n:'O\u2088',E:gap+36}];
+  tiers.forEach(function(t){
+    c.strokeStyle='#3b4d63'; c.setLineDash([4,4]);
+    c.beginPath(); c.moveTo(x0,yE(t.E)); c.lineTo(x1,yE(t.E)); c.stroke(); c.setLineDash([]);
+    label(c,t.n+' tier @ E='+t.E, x1-90, yE(t.E)-5, '#9fb3c8');
+  });
+  // mass gap shading
+  c.fillStyle='rgba(255,143,90,0.08)';
+  c.fillRect(x0, yE(100), x1-x0, yE(gap)-yE(100));
+  label(c,'MASS GAP \u0394 = \u03b4\u1d04 = '+gap+' (crystallized across A\u2080)', x0+10, yE(gap)+18, '#ff8f5a');
+  // firewall wall at the gap
+  if(S.fire){ c.strokeStyle='#ff8f5a'; c.lineWidth=3;
+    c.beginPath(); c.moveTo(x0,yE(gap)); c.lineTo(x1,yE(gap)); c.stroke(); }
+  // excitation pulse
+  if(S.playing) YM.wave += S.speed*dt*0.0012; if(YM.wave>1) YM.wave=0;
+  var px = x0+(x1-x0)*YM.wave;
+  var above = YM.E >= gap;
+  if(above){
+    var y=yE(YM.E);
+    c.fillStyle='#7CFC9A'; c.beginPath(); c.arc(px,y,7,0,6.2832); c.fill();
+    c.strokeStyle='rgba(124,252,154,0.4)';
+    c.beginPath(); c.moveTo(x0,y); c.lineTo(px,y); c.stroke();
+    label(c,'E = '+YM.E+' \u2265 \u0394 \u2192 propagates (massive mode)', x0+10, 70, '#7CFC9A');
+  } else {
+    var y=yE(gap)+6;
+    c.fillStyle='#ff8f5a'; c.beginPath(); c.arc(px,y,5,0,6.2832); c.fill();
+    if(S.fire) fireFlash(c,px,yE(gap),10+10*Math.sin(S.ph*3),'#ff8f5a');
+    label(c,'E = '+YM.E+' < \u0394 \u2192 absorbed by Landauer firewall (k\u1d07T ln 2)', x0+10, 70, '#ff8f5a');
+  }
+  mirrorLine(c,w,h);
+}
+
+// ---------- IV. Navier-Stokes ----------
+var NS = { nu:0.35, tier:true, vort:[], tr:[] };
+(function(){ for(var i=0;i<8;i++){ var a=i/8*6.2832;
+  NS.vort.push({x:0.3+0.2*Math.cos(a), y:0.3+0.2*Math.sin(a), s:(i%2?1:-1)}); }
+  for(var j=0;j<420;j++) NS.tr.push({x:Math.random(),y:Math.random(),a:Math.random()*6.2832}); })();
+function drawNS(dt){
+  var c=clear('ns'), w=W('ns'), h=H('ns');
+  var dtc = S.playing ? dt*S.speed : 0;
+  // nodal firewall grid
+  if(S.fire){ c.strokeStyle='rgba(255,209,102,0.07)'; c.lineWidth=1;
+    for(var gx=1;gx<6;gx++){ c.beginPath(); c.moveTo(gx*w/6,0); c.lineTo(gx*w/6,h); c.stroke(); }
+    for(var gy=1;gy<3;gy++){ c.beginPath(); c.moveTo(0,gy*h/3); c.lineTo(w,gy*h/3); c.stroke(); } }
+  // vortices: decay with viscosity, saturate (or blow up) via tier toggle
+  var blow = !NS.tier && NS.nu<0.15;
+  NS.vort.forEach(function(v,i){
+    v.x += Math.cos(S.ph*0.5+i)*0.00012*dtc* (blow?3:1);
+    v.y += Math.sin(S.ph*0.4+i*2)*0.00012*dtc;
+    if(v.x<0.05)v.x=0.05; if(v.x>0.95)v.x=0.95; if(v.y<0.05)v.y=0.05; if(v.y>0.95)v.y=0.95;
+  });
+  var str = blow ? 1+((S.ph*0.4)%1)*4 : 1;
+  // advect tracers
+  NS.tr.forEach(function(p){
+    var vx=0, vy=0;
+    NS.vort.forEach(function(v){
+      var dx=p.x-v.x, dy=(p.y-v.y)*(h/w), d2=dx*dx+dy*dy+0.004;
+      var f=v.s*str*0.00045/d2;
+      vx += -dy*f; vy += dx*f;
+    });
+    var damp = 1 - NS.nu*0.003*dtc - 0.001*dtc;
+    p.vx=(p.vx||vx)*damp+vx*0.15; p.vy=(p.vy||vy)*damp+vy*0.15;
+    p.x+=p.vx*dtc*0.06; p.y+=p.vy*dtc*0.06;
+    if(p.x<0||p.x>1||p.y<0||p.y>1){p.x=Math.random();p.y=Math.random();p.vx=0;p.vy=0;}
+    var spd=Math.min(1,Math.hypot(p.vx,p.vy)*3);
+    c.fillStyle = blow ? 'rgba(255,143,90,'+(0.25+spd*0.6)+')' : 'rgba(124,252,154,'+(0.2+spd*0.6)+')';
+    c.fillRect(p.x*w, p.y*h, 1.6, 1.6);
+  });
+  // vortex cores
+  NS.vort.forEach(function(v){ c.fillStyle='#ffd166';
+    c.beginPath(); c.arc(v.x*w,v.y*h,4,0,6.2832); c.fill(); });
+  c.font='12px ui-monospace,monospace';
+  if(blow){ c.fillStyle='#ff8f5a';
+    c.fillText('WARNING: tier saturation OFF, \u03bd low \u2014 vortex stretching unbounded \u2014 F-3 blow-up regime', 20, 26);
+  } else { c.fillStyle='#7CFC9A';
+    c.fillText('Landauer floor + octadic saturation: flow smooth for all time (C-4)', 20, 26); }
+}
+
+// ---------- V. Hodge ----------
+var HOD = { xtal:true, parts:[], crystals:[] };
+(function(){ for(var i=0;i<7;i++) HOD.parts.push({side:i%2?1:-1, off:Math.random(), y:0.15+0.7*Math.random(), v:0.15+Math.random()*0.2, tier:i%3}); })();
+function drawHOD(dt){
+  var c=clear('hod'), w=W('hod'), h=H('hod');
+  mirrorLine(c,w,h);
+  var dtc=S.playing?dt*S.speed:0;
+  var fr=[0.25,1/6,0.125], names=['\u03b4\u1d04','\u03c6\u1d04','O\u2088'];
+  // streams
+  HOD.parts.forEach(function(p){
+    p.off += (p.side>0?-1:1)*p.v*dtc*0.001*(S.rev?-1:1);
+    if(p.off>1.15){p.off=-0.15;} if(p.off<-0.15){p.off=1.15;}
+    var x = w/2 + p.side*p.off*(w/2-60);
+    var frac = fr[p.tier];
+    c.fillStyle = p.side>0 ? '#5aa0ff' : '#ff5a6a';
+    c.beginPath(); c.arc(x, p.y*h, 5, 0, 6.2832); c.fill();
+    label(c, p.side>0 ? 'P\u2099' : ''+frac, x+8, p.y*h+4, p.side>0?'#5aa0ff':'#ff5a6a');
+    // collision at mirror
+    if(Math.abs(p.off)<0.02 && S.xtal && HOD.crystals.length<40 && Math.random()<0.1){
+      HOD.crystals.push({x:w/2, y:p.y*h, t:0, name:names[p.tier]});
+    }
+  });
+  // crystals
+  HOD.crystals = HOD.crystals.filter(function(k){
+    k.t += dtc*0.001; if(k.t>2) return false;
+    var a=1-k.t/2, r=6+k.t*22;
+    c.strokeStyle='rgba(255,209,102,'+a+')'; c.lineWidth=2;
+    c.beginPath(); c.arc(k.x,k.y,r,0,6.2832); c.stroke();
+    c.fillStyle='rgba(255,226,138,'+a+')'; c.font='bold 13px Georgia';
+    c.fillText(k.name, k.x+10, k.y-8);
+    c.fillStyle='rgba(255,209,102,'+a+')';
+    c.beginPath(); c.arc(k.x,k.y,3,0,6.2832); c.fill();
+    return true;
+  });
+  c.font='12px ui-monospace,monospace';
+  c.fillStyle = S.xtal ? '#7CFC9A' : '#ff8f5a';
+  c.fillText(S.xtal ? 'crystallization \u2297 ON: mirror-fixed (n,n) classes form a rational lattice'
+                    : 'crystallization OFF: no algebraic cycles \u2014 Hodge bridge unbuilt', 20, 26);
+}
+
+// ---------- VI. BSD ----------
+var PRIMES=[5,7,11,13,17,19,23,29,31,37];
+var BSD = { pi:4, pts:[], cnt:0 };
+BSD.rebuild = function(){
+  var p=PRIMES[BSD.pi]; BSD.pts=[];
+  for(var x=0;x<p;x++) for(var y=0;y<p;y++){
+    if(((y*y-(x*x*x-3*x+1))%p+p)%p===0) BSD.pts.push([x,y]);
+  }
+  BSD.cnt=BSD.pts.length;
+};
+BSD.rebuild();
+function drawBSD(){
+  var c=clear('bsd'), w=W('bsd'), h=H('bsd');
+  var p=PRIMES[BSD.pi];
+  // torus of E(F_p) on the left
+  var R=Math.min(h*0.32,110), cx=w*0.26, cy=h*0.52;
+  c.strokeStyle='#1d2c40'; c.lineWidth=1.5;
+  c.beginPath(); c.ellipse(cx,cy,R,R*0.42,0,0,6.2832); c.stroke();
+  c.beginPath(); c.ellipse(cx,cy,R*0.55,R*0.22,0,0,6.2832); c.stroke();
+  BSD.pts.forEach(function(pt,i){
+    var a = (pt[0]/p)*6.2832 + S.ph*0.5, b=(pt[1]/p)*6.2832;
+    var rr = R*(0.55+0.45*Math.cos(b)*0.5+0.1);
+    var x = cx + Math.cos(a)*(R*0.7+Math.cos(b)*R*0.3);
+    var y = cy + Math.sin(a)*(R*0.3+Math.cos(b)*R*0.13);
+    c.fillStyle='rgba(124,252,154,0.85)';
+    c.beginPath(); c.arc(x,y,2.2,0,6.2832); c.fill();
+  });
+  label(c,'#E(F_'+p+') = '+BSD.cnt+' points (winding states)', cx-R, h-34, '#9fb3c8');
+  // right: L-function vanishing at s=1
+  var lx=w*0.60, rx=w-80;
+  c.strokeStyle='#1d2c40'; c.beginPath(); c.moveTo(lx,40); c.lineTo(rx,40); c.stroke();
+  label(c,'L(E,s) near s = 1', lx, 28);
+  var t;
+  for(var i=0;i<=120;i++){
+    t = (i/60)-1; // s in [0,2]
+    var val = Math.pow(Math.max(Math.abs(t),0.001), 2); // ord 2 example
+    var px = lx + (i/120)*(rx-lx), py = 220 - val*140;
+    if(i===0) c.beginPath(); else c.lineTo(px,py);
+  }
+  c.strokeStyle='#5aa0ff'; c.lineWidth=2; c.stroke();
+  // zero marker at s=1
+  c.strokeStyle='#ffd166'; c.setLineDash([4,4]);
+  c.beginPath(); c.moveTo(lx+(rx-lx)/2, 40); c.lineTo(lx+(rx-lx)/2, 240); c.stroke(); c.setLineDash([]);
+  c.fillStyle='#ffd166'; c.font='11px system-ui';
+  c.fillText('s = 1 (mirror boundary)', lx+(rx-lx)/2+6, 50);
+  var agree = S.fire;
+  c.font='12px ui-monospace,monospace';
+  c.fillStyle = agree ? '#7CFC9A' : '#ff8f5a';
+  c.fillText(agree ? 'rank = ord L = same nodal lattice \u2014 C-6 (in-manifold shadow of BSD)'
+                   : 'countings decoupled \u2014 mirror bridge withdrawn', 40, h-14);
+  mirrorLine(c,w,h);
+}
+
+// ---------- VII. Poincare ----------
+var POI = { pts:[] };
+(function(){ for(var i=0;i<600;i++){ var a=Math.random()*6.2832, b=Math.random()*6.2832;
+  POI.pts.push({a:a,b:b}); } })();
+function drawPOI(){
+  var c=clear('poi'), w=W('poi'), h=H('poi');
+  var N=Math.max(S.N,2), R=N*(N-1)/2;
+  var cx=w/2, cy=h/2, rad=Math.min(w,h)*0.36;
+  var ph=S.ph*(S.rev?-0.5:0.5);
+  POI.pts.forEach(function(p,i){
+    // Clifford torus on S3, rotating through R planes
+    var a=p.a+ph, b=p.b+ph*0.7;
+    var x3=Math.cos(a), y3=Math.sin(a), z3=Math.cos(b), u3=Math.sin(b);
+    // extra rotations per plane count (visual)
+    var k=(i%Math.max(R,1))/Math.max(R,1)*6.2832;
+    var xr=x3*Math.cos(k)-z3*Math.sin(k), zr=x3*Math.sin(k)+z3*Math.cos(k);
+    var px=cx+(xr*rad*0.9+u3*rad*0.35);
+    var py=cy+(y3*rad*0.9+u3*rad*0.2*Math.sin(ph));
+    var depth=(zr+2)/4;
+    c.fillStyle='rgba(255,209,102,'+(0.15+0.6*depth)+')';
+    c.beginPath(); c.arc(px,py,0.8+depth*1.8,0,6.2832); c.fill();
+  });
+  c.font='12px ui-monospace,monospace'; c.fillStyle='#c3c3ff';
+  c.fillText('S\u00b3 cloud \u2014 '+R+' rotation planes \u2014 simply connected \u2234 rigid: one sphere (Perelman 2003)', 20, 26);
+}
+
+// ---------- main loop ----------
+var last=performance.now();
+function frame(now){
+  var dt=Math.min(now-last,50); last=now;
+  if(S.playing) S.ph += dt*0.001*S.speed*(S.rev?-1:1);
+  if(S.ph<0) S.ph+=10;
+  var active=document.querySelector('.panel.active').getAttribute('id');
+  if(active==='p-pnp') drawPNP();
+  else if(active==='p-rh') drawRH();
+  else if(active==='p-ym') drawYM(dt);
+  else if(active==='p-ns') drawNS(dt);
+  else if(active==='p-hod') drawHOD(dt);
+  else if(active==='p-bsd') drawBSD();
+  else if(active==='p-poi') drawPOI();
+  requestAnimationFrame(frame);
+}
+initControls();
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
