@@ -20,6 +20,8 @@
   .tgl:after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;background:#7c8da3;border-radius:50%;transition:.2s}
   .tgl.on{background:#1b5e3f;border-color:#2e8b57}
   .tgl.on:after{left:24px;background:#7CFC9A}
+  .tgl.neutral{opacity:.38;filter:saturate(.2)}
+  .tgl.neutral:hover::before{content:"no effect in this module";position:absolute;top:-22px;left:-14px;background:#1d2c40;color:#8fa3b8;font-size:10px;padding:2px 7px;border-radius:5px;white-space:nowrap;border:1px solid #3b4d63;z-index:5}
   button{background:#ffd166;color:#102;border:none;padding:8px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.85em}
   button:hover{background:#ffe29a}
   nav{display:flex;flex-wrap:wrap;background:#0b1220;border-bottom:1px solid #233}
@@ -43,6 +45,14 @@
   .tctl{display:flex;align-items:center;gap:8px;font-size:.78em;margin:6px 0;color:#9fb3c8}
   .legend{font-size:.72em;color:#8fa3b8;margin-top:6px}
   .stat{font-family:ui-monospace,Consolas,monospace;color:#7CFC9A;font-size:.8em}
+  .legendbar{display:flex;flex-wrap:wrap;gap:14px;padding:8px 22px;font-size:.72em;color:#8fa3b8;background:#0b1220;border-bottom:1px solid #233}
+  .legendbar b{display:inline-block;min-width:16px;text-align:center;padding:1px 5px;border-radius:8px;font-size:.9em}
+  kbd{background:#1d2c40;border:1px solid #3b4d63;border-bottom-width:2px;border-radius:4px;padding:0 5px;font-family:inherit;font-size:.95em}
+  .kbdhint{margin-left:auto}
+  footer{max-width:960px;margin:26px auto 0;padding-top:14px;border-top:1px solid #233;font-size:.72em;color:#8fa3b8;line-height:1.6}
+  footer b{color:#c9d4e0}
+  .stage:hover{border-color:#3b4d63;transition:border-color .3s}
+  .stage{transition:border-color .3s}
 </style>
 </head>
 <body>
@@ -55,9 +65,9 @@
   <button id="btnPlay">&#10074;&#10074; Pause</button>
   <div class="ctl"><label>Speed</label><input type="range" id="speed" min="0.1" max="4" step="0.1" value="1"><span class="val" id="speedV">1.0&times;</span></div>
   <div class="ctl"><label>Dimensions N</label><input type="range" id="dimN" min="1" max="8" step="1" value="3"><span class="val" id="dimNV">N = 3</span></div>
-  <div class="ctl"><label>Firewalls (Landauer)</label><div class="tgl on" id="tglFire"></div></div>
-  <div class="ctl"><label>Time reversal T<sub>rev</sub></label><div class="tgl" id="tglRev"></div></div>
-  <div class="ctl"><label>Crystallization &otimes;</label><div class="tgl on" id="tglXtal"></div></div>
+  <div class="ctl"><label>Firewalls (Landauer)</label><div class="tgl on" id="tglFire" title="Nodal firewalls: |&psi;node| = 0 surfaces, Landauer dissipation &Delta;E &ge; kBT ln 2. Withdraws P-zeta and the BSD mirror bridge when off."></div></div>
+  <div class="ctl"><label>Time reversal T<sub>rev</sub></label><div class="tgl" id="tglRev" title="Inverts torque vectors and manifold phase direction."></div></div>
+  <div class="ctl"><label>Crystallization &otimes;</label><div class="tgl on" id="tglXtal" title="Collide P&#8345; with fractional anti-properties across A&#8320; to crystallize &delta;c, &phi;c, O&#8328;."></div></div>
 </div>
 
 <nav>
@@ -69,6 +79,14 @@
   <div class="tab" data-t="bsd">VI &middot; Birch&ndash;Swinnerton-Dyer</div>
   <div class="tab" data-t="poi">VII &middot; Poincar&eacute;</div>
 </nav>
+
+<div class="legendbar">
+  <span><b class="gC">C</b> conditional in-manifold theorem</span>
+  <span><b class="gS">S</b> structural analogy</span>
+  <span><b class="gH">H</b> historical commentary</span>
+  <span class="kbdhint"><kbd>1</kbd>&ndash;<kbd>7</kbd> switch problems &middot; <kbd>Space</kbd> pause / play</span><br>
+  <span>Dimmed toggle = live but has no effect on the module you are viewing.</span>
+</div>
 
 <main>
   <!-- I. P vs NP -->
@@ -151,6 +169,11 @@
   </section>
 </main>
 
+<footer>
+  <p><b>Grades:</b> <b>C</b> &mdash; conditional theorem of &#8458;<sub>N</sub>(A&#8320;) &middot; <b>S</b> &mdash; structural analogy &middot; <b>H</b> &mdash; historical commentary. <b>Falsifiers:</b> F-1 A&#8320;-substrate impossibility &middot; F-2 Osterwalder&ndash;Schrader reflection-positivity failure &middot; F-3 classical Navier&ndash;Stokes blow-up &middot; F-4 a zeta zero off the critical line.</p>
+  <p>Interactive companion to &ldquo;The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems&rdquo; (v1.1.0-CLAY). All constants, grades and honesty notes follow the source monograph; this playground adds no new claims &mdash; toggling a postulate off visualizes exactly what its withdrawal would mean.</p>
+</footer>
+
 <script>
 (function(){
 'use strict';
@@ -191,13 +214,39 @@ function initControls(){
 
 // tabs
 var tabs = document.querySelectorAll('nav .tab');
+// Which global toggles actually drive each module's animation.
+// fire: firewalls (every module reads it) | rev: time reversal | xtal: crystallization
+var TOGGLE_EFFECT = {
+  pnp:{fire:true,  rev:false, xtal:false},
+  rh: {fire:true,  rev:false, xtal:false},
+  ym: {fire:true,  rev:false, xtal:false},
+  ns: {fire:true,  rev:false, xtal:false},
+  hod:{fire:true,  rev:true,  xtal:true},
+  bsd:{fire:true,  rev:false, xtal:false},
+  poi:{fire:false, rev:true,  xtal:false}
+};
+var TOGGLE_IDS = {fire:'tglFire', rev:'tglRev', xtal:'tglXtal'};
+function updateToggleStates(tabKey){
+  var eff = TOGGLE_EFFECT[tabKey];
+  Object.keys(TOGGLE_IDS).forEach(function(k){
+    document.getElementById(TOGGLE_IDS[k]).classList.toggle('neutral', !eff[k]);
+  });
+}
 tabs.forEach(function(t){
   t.addEventListener('click', function(){
     tabs.forEach(function(x){x.classList.remove('active');});
     document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
     t.classList.add('active');
     document.getElementById('p-'+t.getAttribute('data-t')).classList.add('active');
+    updateToggleStates(t.getAttribute('data-t'));
   });
+});
+updateToggleStates('pnp');
+document.addEventListener('keydown', function(e){
+  if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if(e.code==='Space'){ e.preventDefault(); btnPlay.click(); return; }
+  var n=parseInt(e.key,10);
+  if(n>=1 && n<=7) tabs[n-1].click();
 });
 function syncStats(){
   document.getElementById('st-oct').innerHTML = '2<sup>'+S.N+'</sup> = '+(1<<S.N);
@@ -206,10 +255,14 @@ function syncStats(){
 syncStats();
 
 // ---------- helpers ----------
+var BASE={};
+['pnp','rh','ym','ns','hod','bsd','poi'].forEach(function(k){ BASE[k]=[canvases[k].width, canvases[k].height]; });
+var DPR=Math.min(window.devicePixelRatio||1,2);
+Object.keys(BASE).forEach(function(k){ var cv=canvases[k], b=BASE[k]; cv.width=b[0]*DPR; cv.height=b[1]*DPR; });
 function ctxOf(k){ return canvases[k].getContext('2d'); }
-function W(k){ return canvases[k].width; }
-function H(k){ return canvases[k].height; }
-function clear(k){ var c=ctxOf(k); c.fillStyle='#050a12'; c.fillRect(0,0,W(k),H(k)); return c; }
+function W(k){ return BASE[k][0]; }
+function H(k){ return BASE[k][1]; }
+function clear(k){ var c=ctxOf(k); c.setTransform(DPR,0,0,DPR,0,0); c.fillStyle='#050a12'; c.fillRect(0,0,W(k),H(k)); return c; }
 function mirrorLine(c,w,h){ // central A0 mirror axis (vertical)
   c.strokeStyle = S.fire ? '#ffd166' : '#5a4f35';
   c.lineWidth = S.fire ? 2 : 1; c.setLineDash(S.fire?[]:[6,6]);
@@ -508,7 +561,7 @@ var last=performance.now();
 function frame(now){
   var dt=Math.min(now-last,50); last=now;
   if(S.playing) S.ph += dt*0.001*S.speed*(S.rev?-1:1);
-  if(S.ph<0) S.ph+=10;
+  if(S.ph>1000) S.ph-=1000; if(S.ph<0) S.ph+=1000;
   var active=document.querySelector('.panel.active').getAttribute('id');
   if(active==='p-pnp') drawPNP();
   else if(active==='p-rh') drawRH();
