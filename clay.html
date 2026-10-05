@@ -16,6 +16,8 @@
   .ctl{display:flex;align-items:center;gap:8px;font-size:.78em;flex-wrap:wrap}
   .ctl label{color:#9fb3c8}
   input[type=range]{width:130px;accent-color:#ffd166;cursor:pointer;touch-action:manipulation}
+  input[type=range].neutral,span.val.neutral{opacity:.38}
+  span.val{transition:opacity .2s}
   .val{color:#ffd166;font-weight:700;min-width:46px;display:inline-block}
   .tgl{position:relative;width:46px;height:26px;background:#2a3a4f;border-radius:13px;cursor:pointer;transition:.2s;border:1px solid #3b4d63;flex:none}
   .tgl:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;background:#7c8da3;border-radius:50%;transition:.2s}
@@ -68,13 +70,13 @@
 <header>
   <h1>Computational Relativity Playground &mdash; The Seven Clay Problems</h1>
   <p>Interactive companion to the monograph &ldquo;The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems&rdquo; (Pierre LeBaux, v1.2.0-CLAY), synced with the Dracula Edition of lebaux.github.io. The Machine module is the core: L<sub>mesh</sub> &rarr; &minus;L<sub>mesh</sub> while E<sub>rest</sub> = mc&sup2; stays invariant. The seven Clay modules follow &mdash; adjust the manifold and watch all of them respond.</p>
+  <p style="font-size:.65em;opacity:.6;margin-top:6px">playground v1.4</p>
 </header>
 
 <div class="controls">
   <button id="btnPlay">&#10074;&#10074; Pause</button>
   <div class="ctl"><label>Speed</label><input type="range" id="speed" min="0.1" max="4" step="0.1" value="1"><span class="val" id="speedV">1.0&times;</span></div>
-  <div class="ctl"><label>Dimensions N</label><input type="range" id="dimN" min="1" max="8" step="1" value="3"><span class="val" id="dimNV">N = 3</span></div>
-  <div class="ctl"><label>Firewalls (Landauer)</label><div class="tgl on" id="tglFire" title="Nodal firewalls: |&psi;node| = 0 surfaces, Landauer dissipation &Delta;E &ge; kBT ln 2. Withdraws P-zeta and the BSD mirror bridge when off."></div></div>
+  <div class="ctl"><label>Dimensions N</label><input type="range" id="dimN" min="1" max="8" step="1" value="3"><span class="val" id="dimNV">N = 3</span></div>  <div class="ctl"><label>Firewalls (Landauer)</label><div class="tgl on" id="tglFire" title="Nodal firewalls: |&psi;node| = 0 surfaces, Landauer dissipation &Delta;E &ge; kBT ln 2. Withdraws P-zeta and the BSD mirror bridge when off."></div></div>
   <div class="ctl"><label>Time reversal T<sub>rev</sub></label><div class="tgl" id="tglRev" title="Inverts torque vectors and manifold phase direction."></div></div>
   <div class="ctl"><label>Crystallization &otimes;</label><div class="tgl on" id="tglXtal" title="Collide P&#8345; with fractional anti-properties across A&#8320; to crystallize &delta;c, &phi;c, O&#8328;."></div></div>
   <div class="ctl"><label>A&#8328; oracle (T<sub>solve</sub>=0)</label><div class="tgl on" id="tglOracle" title="Conditional P = NP, deliberately last: the single postulated evaluation step that resolves the target state. Withdraw it and the Complexity Collapse stalls into brute force."></div></div>
@@ -97,7 +99,7 @@
   <span><b class="gS">S</b> structural analogy</span>
   <span><b class="gH">H</b> historical commentary</span>
   <span class="kbdhint"><kbd>1</kbd>&ndash;<kbd>8</kbd> switch modules &middot; <kbd>Space</kbd> pause / play</span><br>
-  <span>Dimmed toggle = live but has no effect on the module you are viewing.</span>
+  <span>Dimmed control = live but has no effect on the module you are viewing.</span>
 </div>
 
 <main>
@@ -239,17 +241,17 @@ function initControls(){
 
 // tabs
 var tabs = document.querySelectorAll('nav .tab');
-// Which global toggles actually drive each module's animation.
-// fire: firewalls (every module reads it) | rev: time reversal | xtal: crystallization
+// Which global controls actually drive each module's animation.
+// fire/rev/xtal/oracle/shear: toggles | speed: slider | dim: N slider
 var TOGGLE_EFFECT = {
-  mach:{fire:true,  rev:true,  xtal:false, oracle:true,  shear:true },
-  pnp:{fire:true,  rev:false, xtal:false, oracle:true,  shear:false},
-  rh: {fire:true,  rev:false, xtal:false, oracle:false, shear:false},
-  ym: {fire:true,  rev:false, xtal:false, oracle:false, shear:false},
-  ns: {fire:true,  rev:false, xtal:false, oracle:false, shear:true },
-  hod:{fire:true,  rev:true,  xtal:true,  oracle:false, shear:false},
-  bsd:{fire:true,  rev:false, xtal:false, oracle:false, shear:false},
-  poi:{fire:false, rev:true,  xtal:false, oracle:false, shear:false}
+  mach:{fire:true,  rev:true,  xtal:false, oracle:true,  shear:true,  dim:true },
+  pnp:{fire:true,  rev:false, xtal:false, oracle:true,  shear:false, dim:true },
+  rh: {fire:true,  rev:false, xtal:false, oracle:false, shear:false, dim:false},
+  ym: {fire:true,  rev:false, xtal:false, oracle:false, shear:false, dim:false},
+  ns: {fire:true,  rev:false, xtal:false, oracle:false, shear:true,  dim:false},
+  hod:{fire:true,  rev:true,  xtal:true,  oracle:false, shear:false, dim:false},
+  bsd:{fire:true,  rev:false, xtal:false, oracle:false, shear:false, dim:false},
+  poi:{fire:false, rev:true,  xtal:false, oracle:false, shear:false, dim:true }
 };
 var TOGGLE_IDS = {fire:'tglFire', rev:'tglRev', xtal:'tglXtal', oracle:'tglOracle', shear:'tglShear'};
 function updateToggleStates(tabKey){
@@ -257,6 +259,11 @@ function updateToggleStates(tabKey){
   Object.keys(TOGGLE_IDS).forEach(function(k){
     document.getElementById(TOGGLE_IDS[k]).classList.toggle('neutral', !eff[k]);
   });
+  // sliders: speed drives every module's animation; the N slider only where read
+  document.getElementById('speed').classList.toggle('neutral', false);
+  document.getElementById('speedV').classList.toggle('neutral', false);
+  document.getElementById('dimN').classList.toggle('neutral', !eff.dim);
+  document.getElementById('dimNV').classList.toggle('neutral', !eff.dim);
 }
 tabs.forEach(function(t){
   t.addEventListener('click', function(){
