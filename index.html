@@ -334,98 +334,137 @@ function arrow(k,x,y,len,color,labelTxt){
 }
 function sEnergy(k,t,ch,beat,o){
   const{W,H,ctx}=k;k.clear();const at=o.animT??t;
-  // ============ THREE-PANEL FLOW: field waves → density cells → mass core ============
-  // Panel 1 (left): rippling field — multiple wave types overlaid
-  const p1x=40,p1w=240,p1y=56,p1h=250;
+  // ============ THREE-PANEL FLOW: field -> density -> mass -> E=mc2 ============
+  const p1x=36,p1w=250,p1y=56,p1h=270;
+  const p2x=p1x+p1w+50,p2w=200,p2y=56,p2h=270;
+  const p3x=p2x+p2w+50,p3w=170,p3y=56,p3h=270;
+
+  // ---- Panel 1: rippling field with 2D energy heatmap ----
   k.roundRect(p1x,p1y,p1w,p1h,8,PAL.bgPanel,PAL.line2,1);
-  k.label('field waves  u(r,t)',p1x+p1w/2,p1y-14,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  k.label('field  u(r,t)',p1x+p1w/2,p1y-14,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
   ctx.save();ctx.beginPath();ctx.rect(p1x+8,p1y+8,p1w-16,p1h-16);ctx.clip();
+  // 2D energy heatmap
+  const hmCols=12,hmRows=10,hmCW=(p1w-16)/hmCols,hmCH=(p1h-16)/hmRows;
+  for(let r=0;r<hmRows;r++)for(let c=0;c<hmCols;c++){
+    const cx2=p1x+8+c*hmCW,cy2=p1y+8+r*hmCH;
+    const wave=Math.sin(c*.5+at*1.4)+Math.cos(r*.4+at*1.1)+Math.sin((c+r)*.3+at*.8);
+    const intensity=clamp01((wave+3)/6);
+    ctx.fillStyle='rgba(255,209,102,'+(intensity*.25)+')';
+    ctx.fillRect(cx2,cy2,hmCW+1,hmCH+1);
+  }
+  // Overlay wave lines on top of heatmap
   const waves=[
-    {col:'rgba(124,252,154,0.8)',amp:18,freq:.025,spd:1.4,yOff:-40},
-    {col:'rgba(90,160,255,0.7)',amp:14,freq:.035,spd:1.8,yOff:0},
-    {col:'rgba(255,209,102,0.7)',amp:10,freq:.045,spd:2.2,yOff:40}
+    {col:'rgba(124,252,154,0.9)',amp:22,freq:.028,spd:1.4,yOff:-50},
+    {col:'rgba(90,160,255,0.8)',amp:16,freq:.04,spd:1.8,yOff:0},
+    {col:'rgba(255,209,102,0.8)',amp:12,freq:.05,spd:2.2,yOff:50}
   ];
   waves.forEach((wv,idx)=>{
     ctx.strokeStyle=wv.col;ctx.lineWidth=2;ctx.beginPath();
-    for(let x=p1x+8;x<p1x+p1w-8;x+=4){
+    for(let x=p1x+8;x<p1x+p1w-8;x+=3){
       const y=p1y+p1h/2+wv.yOff+Math.sin(x*wv.freq+at*wv.spd+idx*1.5)*wv.amp;
       x===p1x+8?ctx.moveTo(x,y):ctx.lineTo(x,y);
     }ctx.stroke();
   });
-  // Field energy particles drifting
-  for(let i=0;i<8;i++){
-    const px=p1x+8+((at*30+i*37)%(p1w-16));
-    const py=p1y+p1h/2+Math.sin(at*1.5+i*.8)*30+i*8-20;
-    k.dot(px,py,2.5,'rgba(255,226,138,.7)',4);
+  // Drifting energy particles
+  for(let i=0;i<10;i++){
+    const px=p1x+8+((at*35+i*31)%(p1w-16));
+    const py=p1y+p1h/2+Math.sin(at*1.5+i*.8)*35+i*5-20;
+    k.dot(px,py,2.5,'rgba(255,226,138,.8)',5);
   }
   ctx.restore();
-  // Arrow from panel 1 to panel 2
-  const a1x=p1x+p1w+8;
-  k.label('ρₘ = u/c²',a1x+20,p1y+p1h/2,{font:'11px Georgia',color:PAL.accentSoft,align:'center',weight:'700'});
+  // Transition arrow 1->2
+  k.label('\u03C1\u2098 = u/c\u00B2',p1x+p1w+25,p1y+p1h/2-8,{font:'11px Georgia',color:PAL.accentSoft,align:'center',weight:'700'});
   ctx.strokeStyle=PAL.accentSoft;ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(a1x,p1y+p1h/2);ctx.lineTo(a1x+24,p1y+p1h/2);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(a1x+24,p1y+p1h/2);ctx.lineTo(a1x+18,p1y+p1h/2-5);ctx.lineTo(a1x+18,p1y+p1h/2+5);ctx.closePath();ctx.fill();
-  // Panel 2 (center): energy-density cells filling up
-  const p2x=a1x+36,p2w=200,p2y=56,p2h=250;
+  ctx.beginPath();ctx.moveTo(p1x+p1w+6,p1y+p1h/2);ctx.lineTo(p1x+p1w+44,p1y+p1h/2);ctx.stroke();
+  ctx.fillStyle=PAL.accentSoft;ctx.beginPath();ctx.moveTo(p1x+p1w+44,p1y+p1h/2);ctx.lineTo(p1x+p1w+38,p1y+p1h/2-5);ctx.lineTo(p1x+p1w+38,p1y+p1h/2+5);ctx.closePath();ctx.fill();
+
+  // ---- Panel 2: energy-density cells filling up ----
   k.roundRect(p2x,p2y,p2w,p2h,8,PAL.bgPanel,PAL.line2,1);
   k.label('energy density',p2x+p2w/2,p2y-14,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
-  // Grid of cells that fill up cyclically
   const cols=4,rows=6,cellW=(p2w-16)/cols,cellH=(p2h-16)/rows;
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
-    const cx=p2x+8+c*cellW,cy=p2y+8+r*cellH;
+    const cx2=p2x+8+c*cellW,cy2=p2y+8+r*cellH;
     const idx=r*cols+c;
     const fillT=(at*.8+idx*.12)%1.5;
     const fill=Math.min(1,fillT);
     if(fill>0){
-      const alpha=.15+fill*.5;
-      ctx.fillStyle=`rgba(255,209,102,${alpha})`;
-      ctx.fillRect(cx+2,cy+2,cellW-4,(cellH-4)*fill);
+      const heat=fill;
+      const r2c=Math.round(255*heat+60*(1-heat));
+      const g2c=Math.round(209*heat+80*(1-heat));
+      const b2c=Math.round(102*heat+40*(1-heat));
+      ctx.fillStyle='rgba('+r2c+','+g2c+','+b2c+','+(.2+fill*.5)+')';
+      ctx.fillRect(cx2+2,cy2+2,cellW-4,(cellH-4)*fill);
     }
     ctx.strokeStyle=PAL.line;ctx.lineWidth=.8;
-    ctx.strokeRect(cx+2,cy+2,cellW-4,cellH-4);
+    ctx.strokeRect(cx2+2,cy2+2,cellW-4,cellH-4);
   }
-  // Particles flowing from cells toward the mass core
-  for(let i=0;i<5;i++){
-    const tr=((at*.6)+i*.2)%1;
-    const sx=p2x+p2w-8,sy=p2y+30+i*50;
-    const dx=p2x+p2w+20,dy=p2y+p2h/2;
+  // Particles flowing toward mass core
+  for(let i=0;i<6;i++){
+    const tr=((at*.6)+i*.16)%1;
+    const sx=p2x+p2w-8,sy=p2y+30+i*45;
+    const dx=p2x+p2w+24,dy=p2y+p2h/2;
     const px=lerp(sx,dx,tr),py=lerp(sy,dy,tr);
-    k.dot(px,py,3,`rgba(255,226,138,${clamp01(1-Math.abs(tr-.5)*1.5)})`,6);
+    k.dot(px,py,3,'rgba(255,226,138,'+clamp01(1-Math.abs(tr-.5)*1.5)+')',6);
   }
-  // Arrow from panel 2 to panel 3
-  const a2x=p2x+p2w+8;
-  k.label('∫∫∫',a2x+16,p2y+p2h/2,{font:'14px Georgia',color:PAL.accentSoft,align:'center',weight:'700'});
+  // Transition arrow 2->3
+  k.label('\u222B\u222B\u222B d\u00B3r',p2x+p2w+25,p2y+p2h/2-8,{font:'12px Georgia',color:PAL.accentSoft,align:'center',weight:'700'});
   ctx.strokeStyle=PAL.accentSoft;ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(a2x,p2y+p2h/2);ctx.lineTo(a2x+24,p2y+p2h/2);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(a2x+24,p2y+p2h/2);ctx.lineTo(a2x+18,p2y+p2h/2-5);ctx.lineTo(a2x+18,p2y+p2h/2+5);ctx.closePath();ctx.fill();
-  // Panel 3 (right): compressed mass core
-  const p3x=a2x+36,p3w=160,p3y=56,p3h=250;
-  const mcx=p3x+p3w/2,mcy=p3y+p3h/2;
+  ctx.beginPath();ctx.moveTo(p2x+p2w+6,p2y+p2h/2);ctx.lineTo(p2x+p2w+44,p2y+p2h/2);ctx.stroke();
+  ctx.fillStyle=PAL.accentSoft;ctx.beginPath();ctx.moveTo(p2x+p2w+44,p2y+p2h/2);ctx.lineTo(p2x+p2w+38,p2y+p2h/2-5);ctx.lineTo(p2x+p2w+38,p2y+p2h/2+5);ctx.closePath();ctx.fill();
+
+  // ---- Panel 3: compressed mass core ----
+  const mcx=p3x+p3w/2,mcy=p3y+p3h/2-20;
   k.roundRect(p3x,p3y,p3w,p3h,8,PAL.bgPanel,PAL.accent,1.5);
   k.label('mass core',p3x+p3w/2,p3y-14,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
-  // Pulsing mass core
+  // Pulsing mass core with multiple layers
   const br=1+.15*Math.sin(at*2.6);
-  for(let i=0;i<3;i++){const pu=((at*.55)+i/3)%1;
-    ctx.strokeStyle=`rgba(255,209,102,${(1-pu)*.3})`;ctx.lineWidth=1.5;
-    ctx.beginPath();ctx.arc(mcx,mcy,8+pu*40,0,TAU);ctx.stroke();
+  // Outer glow rings
+  for(let i=0;i<4;i++){const pu=((at*.55)+i/4)%1;
+    ctx.strokeStyle='rgba(255,209,102,'+((1-pu)*.35)+')';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(mcx,mcy,8+pu*48,0,TAU);ctx.stroke();
   }
-  k.dot(mcx,mcy,12*br,PAL.accent,26);
-  k.halo(mcx,mcy,12*br,at,2);
+  // Core with radial gradient
+  const grad=ctx.createRadialGradient(mcx,mcy,0,mcx,mcy,18*br);
+  grad.addColorStop(0,'#ffe29a');grad.addColorStop(.5,'#ffd166');grad.addColorStop(1,'rgba(255,209,102,0.1)');
+  ctx.fillStyle=grad;ctx.beginPath();ctx.arc(mcx,mcy,18*br,0,TAU);ctx.fill();
+  k.dot(mcx,mcy,8*br,PAL.accentSoft,20);
   // Inward-converging particles showing compression
-  for(let i=0;i<6;i++){
-    const a=i/6*TAU+at*.5;
-    const tr=((at*.7)+i*.16)%1;
-    const r=lerp(60,16,tr);
-    k.dot(mcx+Math.cos(a)*r,mcy+Math.sin(a)*r,3,`rgba(255,226,138,${clamp01(1-tr*.8)})`,4);
+  for(let i=0;i<8;i++){
+    const a=i/8*TAU+at*.5;
+    const tr=((at*.7)+i*.12)%1;
+    const r=lerp(70,20,tr);
+    k.dot(mcx+Math.cos(a)*r,mcy+Math.sin(a)*r,3,'rgba(255,226,138,'+clamp01(1-tr*.8)+')',5);
   }
-  // E = mc² label with scale-in animation
+  // E = mc2 with scale-in + glow
   const u2=clamp01(t/1.2),sc=lerp(.9,1,EASE.outBack(u2));
-  ctx.save();ctx.translate(mcx,mcy+80);ctx.scale(sc,sc);
-  k.label('E = mc²',0,0,{font:'22px Georgia',color:PAL.accent,align:'center',weight:'700'});
+  ctx.save();ctx.translate(mcx,mcy+70);ctx.scale(sc,sc);
+  ctx.shadowColor=PAL.accent;ctx.shadowBlur=12;
+  k.label('E = mc\u00B2',0,0,{font:'24px Georgia',color:PAL.accent,align:'center',weight:'700'});
+  ctx.shadowBlur=0;
   ctx.restore();
-  k.label('mass = packed field energy',mcx,mcy+106,{font:'11px system-ui',color:PAL.faint,align:'center'});
-  // Bottom summary bar
-  k.label('field → density → mass → E = mc²',W/2,p1y+p1h+18,{font:'12px ui-monospace,monospace',color:PAL.accentSoft,align:'center',weight:'700'});
+  k.label('mass = packed field energy',mcx,mcy+96,{font:'11px system-ui',color:PAL.faint,align:'center'});
+
+  // ---- Bottom: full equation derivation chain ----
+  const eqY=p1y+p1h+22;
+  const eqSteps=['u(r,t)','\u03C1\u2098 = u/c\u00B2','\u222B\u222B\u222B \u03C1\u2098 d\u00B3r','mc\u00B2','E = mc\u00B2'];
+  const eqColors=[PAL.dim,PAL.accentSoft,PAL.accentSoft,PAL.accent,PAL.accent];
+  const eqStepW=110;
+  const eqTotalW=eqSteps.length*eqStepW;
+  const eqStartX=(W-eqTotalW)/2+eqStepW/2;
+  eqSteps.forEach((step,i)=>{
+    const sx=eqStartX+i*eqStepW;
+    const stepU=clamp01((t-i*.5)/.6);
+    if(stepU<=0)return;
+    ctx.globalAlpha=EASE.outCubic(stepU);
+    k.label(step,sx,eqY,{font:'bold 13px Georgia',color:eqColors[i],align:'center'});
+    if(i<eqSteps.length-1){
+      ctx.strokeStyle=PAL.line2;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(sx+eqStepW/2-12,eqY-4);ctx.lineTo(sx+eqStepW/2+12,eqY-4);ctx.stroke();
+      ctx.fillStyle=PAL.line2;
+      ctx.beginPath();ctx.moveTo(sx+eqStepW/2+12,eqY-4);ctx.lineTo(sx+eqStepW/2+8,eqY-7);ctx.lineTo(sx+eqStepW/2+8,eqY-1);ctx.closePath();ctx.fill();
+    }
+    ctx.globalAlpha=1;
+  });
 }
 function sMachine(k,t,ch,beat,o){
   const{W,H,ctx}=k;k.clear();const at=o.animT??t;
@@ -475,7 +514,7 @@ function sMachine(k,t,ch,beat,o){
   k.dot(tk,ty-16,12,PAL.accent,16);
   k.ring(tk,ty-16,12,'rgba(159,179,200,.45)',1.2);
   const ha=at*2.4*dir;
-  k.line(tk,ty-16,tk+7*Math.cos(ha),ty-16+7*Math.sin(ha),PAL.ink,1.8);
+  k.line(tk,ty-16,tk+7*Math.cos(ha),ty-16+7*Math.sin(ha),'#0a1522',2.2);
   // Flash ring at direction flip
   const ft=at%7;
   if(ft<.4){const u=ft/.4;k.ring(tk,ty-16,12+u*26,`rgba(255,209,102,${.6*(1-u)})`,2)}
@@ -646,7 +685,7 @@ function sPnp(k,t,ch,beat,o){
 function sClay(k,t,ch,beat,o){
   const{W,ctx}=k;k.clear();const at=o.animT??t;
   const rows=[['1','P vs NP','2ᴺ → Rₙ rotation planes'],['2','Riemann','off-axis zero → muted'],['3','Yang–Mills','seed sets floor ΔM > 0'],['4','Navier–Stokes','anti-phase kills blowup'],['5','BSD','rank = ord L at s = 1'],['6','Hodge','Ω_A0 isolates cycles'],['7','Poincaré','neck-pinch → surgery → S³']];
-  const N=rows.length,ROW_H=44,Y0=104;
+  const N=rows.length,ROW_H=46,Y0=96;
   // --- three-weapons banner: chips light up sequentially during beat 0,
   // then settle into a gentle pulse while the rows take over ---
   const weapons=['rotate','anti-phase','firewall'];
@@ -675,31 +714,34 @@ function sClay(k,t,ch,beat,o){
     const active=i===activeI;
     const y=Y0+i*ROW_H+(1-EASE.outCubic(ru))*14,dx=(1-EASE.outCubic(ru))*46;
     ctx.globalAlpha=EASE.outCubic(ru);
-    if(i>0)k.line(84,y-16,84,y+2,PAL.line2,1);
+    if(i>0)k.line(84,y-18,84,y+4,PAL.line2,1);
     if(active){
-      k.roundRect(64,y-17,700,34,8,'rgba(255,209,102,.06)',null);
-      const bx=70+((at*140)%690);
+      k.roundRect(64,y-18,720,36,8,'rgba(255,209,102,.06)',null);
+      const bx=70+((at*140)%710);
       const g=ctx.createLinearGradient(bx,0,bx+90,0);
       g.addColorStop(0,'rgba(255,209,102,0)');g.addColorStop(.5,'rgba(255,209,102,.10)');g.addColorStop(1,'rgba(255,209,102,0)');
-      ctx.fillStyle=g;ctx.fillRect(bx,y-15,90,30);
+      ctx.fillStyle=g;ctx.fillRect(bx,y-16,90,32);
     }
     const bR=14*(.6+.4*EASE.outBack(ru));
     k.roundRect(84-bR,y-4-bR,bR*2,bR*2,6,active?'#2e7d4f':'#1b5e3f',null);
     if(active)k.halo(84,y-4,bR,at,1.6,'rgba(124,252,154,.4)');
     k.label(r[0],84,y+1,{font:'bold 14px system-ui',color:'#b8ffd0',align:'center'});
-    k.label(r[1],118+dx,y+2,{font:'bold 15px system-ui',color:active?'#fff':PAL.ink});
-    k.label(r[2],262+dx,y+2,{font:'12px system-ui',color:active?'#ffe29a':PAL.faint});
-    glyph(k,i,815,y-2,active?.9+.1*Math.sin(at*3):.35,at);
+    k.label(r[1],120+dx,y+2,{font:'bold 15px system-ui',color:active?'#fff':PAL.ink});
+    k.label(r[2],280+dx,y+2,{font:'12px system-ui',color:active?'#ffe29a':PAL.faint});
+    // Glyph highlight: extra glow when first appearing next to its problem
+    const glyphFirstAppear=clamp01(ru/0.8); // 0→1 over first 80% of reveal
+    const glyphHighlight=ru<0.8?(1-glyphFirstAppear):0;
+    glyph(k,i,830,y-2,active?.9+.1*Math.sin(at*3):.35+glyphHighlight*.4,at,glyphHighlight);
     ctx.globalAlpha=1;
   }
   // --- footer line fades in with the first row ---
   ctx.globalAlpha=clamp01((t-1)/.6);
-  k.label('all seven claimed within A₀: rotate · cancel anti-phase · firewall',70,432,{font:'12px ui-monospace,monospace',color:PAL.good,weight:'700'});
+  k.label('all seven claimed within A₀: rotate · cancel anti-phase · firewall',70,428,{font:'12px ui-monospace,monospace',color:PAL.good,weight:'700'});
   ctx.globalAlpha=1;
   // --- final flourish: 7/7 badge with sweep ring + particles (last beat) ---
   const finT=ch.beats[7].t;
   if(t>=finT){
-    const fu=clamp01((t-finT)/.9),bx2=800,by2=458,rr=26*Math.min(1,fu*1.2);
+    const fu=clamp01((t-finT)/.9),bx2=800,by2=452,rr=26*Math.min(1,fu*1.2);
     k.ring(bx2,by2,rr,'rgba(124,252,154,.35)',1.2);
     const sweep=clamp01((t-finT)/1.2);
     ctx.strokeStyle=PAL.good;ctx.lineWidth=2.5;ctx.beginPath();
@@ -715,8 +757,29 @@ function sClay(k,t,ch,beat,o){
     }
   }
 }
-function glyph(k,i,x,y,a,t){
-  const{ctx}=k,c=`rgba(124,252,154,${a})`,cs=`rgba(124,252,154,${a*.5})`;
+function glyph(k,i,x,y,a,t,highlight){
+  const{ctx}=k;
+  const hl=highlight||0;
+  const c=`rgba(124,252,154,${a})`,cs=`rgba(124,252,154,${a*.5})`;
+  // Highlight glow: pulsing halo behind the glyph when it first appears
+  if(hl>0){
+    const hr=28+hl*16;
+    ctx.save();
+    ctx.translate(x,y);
+    const pulseG=0.5+0.5*Math.sin(t*5);
+    // Outer glow ring
+    ctx.strokeStyle=`rgba(255,209,102,${hl*0.8*pulseG})`;
+    ctx.lineWidth=3;
+    ctx.beginPath();ctx.arc(0,0,hr,0,TAU);ctx.stroke();
+    // Inner glow ring
+    ctx.strokeStyle=`rgba(255,226,138,${hl*0.6*(1-pulseG)})`;
+    ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(0,0,hr-8,0,TAU);ctx.stroke();
+    // Filled glow disc
+    ctx.fillStyle=`rgba(255,209,102,${hl*0.08})`;
+    ctx.beginPath();ctx.arc(0,0,hr,0,TAU);ctx.fill();
+    ctx.restore();
+  }
   ctx.save();
   ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=1.6;
   ctx.translate(x,y);
