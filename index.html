@@ -22,8 +22,8 @@ h1{font-size:1.5rem;margin:0 0 8px;letter-spacing:-.01em;line-height:1.25}
 <body>
 <main>
   <h1>The Special Theory of Computational Relativity — Explained</h1>
-  <p class="sub">ELI5 narration with a PhD track underneath. 8 chapters, ~4½ minutes. explainer v2.9</p>
-  <computational-relativity-explainer autoplay phd dim="5"></computational-relativity-explainer>
+  <p class="sub">ELI5 narration with a PhD track underneath. 8 chapters, ~4½ minutes. explainer v4.0</p>
+  <computational-relativity-explainer autoplay phd dim="3"></computational-relativity-explainer>
   <details class="foot">
     <summary>About this explainer &amp; scope</summary>
     Companion to the monograph “The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems” (v1.2.0-CLAY-DRACULA) and the Proof Mechanics resolutions document. Chapter 8 presents the framework’s claimed resolutions of all seven Clay problems via the unified mechanism — Lie rotation embedding, anti-phase cancellation (e^iπ + 1 = 0), and nodal firewalls. These are the framework’s own claims, stated within its axioms; the Clay Institute’s acceptance criteria are separate and remain the reader’s to judge.
@@ -57,12 +57,12 @@ const CH=[
 {t:0,eli5:"Run time backwards and what stops you shaking hands with your past self and breaking the universe?",phd:"Paradox control is recast as a boundary problem, not an energy problem."},
 {t:7,eli5:"The answer: walls made of NOTHING. In the wave-machinery there are surfaces where the wave is exactly zero. Nothing can cross a wall of nothing.",phd:"Axiom A6: nodal surfaces |psi_node| = 0 are impermeable state boundaries. Past and future sectors are causally isolated during inversion."},
 {t:18,eli5:"And even information isn't free. Every bit the machine erases or writes costs a tiny minimum of heat.",phd:"Axiom A7: ΔE_Landauer ≥ k_BT ln 2 for information-bearing state updates."}]},
-{id:'pnp',title:'7 · The Famous One: P = NP',grade:'gC',gradeTxt:'GRADE C',gradeTip:'Conditional theorem — in-manifold proof',dur:34,beats:[
+{id:'pnp',title:'7 · The Famous One: P = NP',grade:'gC',gradeTxt:'GRADE C',gradeTip:'Conditional theorem — claimed within the manifold, not the unrelativized Clay question',dur:34,beats:[
 {t:0,eli5:"The most famous unsolved problem in computer science: is finding an answer really harder than checking one?",phd:"Clay Problem I: P versus NP. The framework's Complexity Collapse (Theorem 5.1) is its only head-on application."},
 {t:7,eli5:"Checking a solved 1000-piece puzzle takes seconds. Finding the arrangement might take longer than the universe has existed.",phd:"Verification is polynomial; search over 2ᴺ configurations is exponential."},
 {t:13,eli5:"Inside the seed-world, the gap collapses. Every corner of spinning N-dimensional space maps onto just 'how many spinning planes are there': N(N−1)/2.",phd:"In ℜₙ(A₀): 2ᴺ hyper-octants reduce to Rₙ = N(N−1)/2 rotation planes. Every Boolean assignment on N variables is injectively encoded into SO(N) rotation planes."},
 {t:21,eli5:"So checking all corners costs roughly N-squared, not 2-to-the-N. In here, finding IS as easy as checking. But — big honest but —",phd:"Theorem 5.1: SAT decided in O(N²) ops plus ONE oracle evaluation. The oracle step (T_solve = 0, axiom A8) is a postulate. The unrelativized Clay question is explicitly NOT claimed. Grade C."}]},
-{id:'clay',title:'8 · All Seven Resolved',grade:'g0',gradeTxt:'RESOLVED (A₀)',gradeTip:'Claimed within A₀ axioms',dur:66,beats:[
+{id:'clay',title:'8 · All Seven Resolved',grade:'g0',gradeTxt:'CLAIMED (A₀)',gradeTip:'Claimed within A₀ axioms — Clay acceptance criteria are separate',dur:66,beats:[
 {t:0,eli5:"Finally: the seven million-dollar problems. In this universe, every single one of them falls to the same three weapons: rotation planes, the anti-phase zero, and nodal firewalls.",phd:"Unified mechanism: obstacles embed into so(N) Lie rotation geodesics; non-optimal components undergo anti-phase cancellation; nodal firewalls enforce isolation."},
 {t:6,eli5:"ONE — P vs NP. Searching a haystack doesn't need checking every straw: rotate the whole haystack and the needle comes to you.",phd:"1. P vs NP: decision trees over 2ᴺ states embed into Rₙ = N(N−1)/2 rotation planes of so(N). O(N²) deterministic polynomial time. P = NP."},
 {t:12,eli5:"TWO — Riemann. The primes are tuned like guitar strings. A zero off the center line screeches out of tune — and the headphones mute it to zero.",phd:"2. RH: the critical line Re(s) = ½ is the A0 mirror axis. Off-axis zeros break boundary equilibrium; firewalls force their probability density to zero."},
@@ -79,6 +79,9 @@ const lerp=(a,b,u)=>a+(b-a)*u;
 const TAU=Math.PI*2;
 const pulse=(t,p=1.6)=>EASE.outCubic(1-((t%p)/p));
 const TOTAL=CH.reduce((a,c)=>a+c.dur,0);
+// All scene drawing happens in BASE coordinate space (900×506); the canvas
+// transform set in _fit() scales it to the display size. Never mix client
+// pixels into scene functions.
 const BASE_W=900,BASE_H=506;
 function kit(ctx,W,H){
   const label=(text,x,y,o={})=>{const{font='12px system-ui',color=PAL.dim,align='left',weight='400'}=o;
@@ -86,124 +89,549 @@ function kit(ctx,W,H){
   return {W,H,ctx,label,
     clear(){ctx.fillStyle=PAL.bg;ctx.fillRect(0,0,W,H);ctx.fillStyle=PAL.grid;
       for(let x=20;x<W;x+=40)for(let y=20;y<H;y+=40)ctx.fillRect(x,y,1.2,1.2)},
-    line(x1,y1,x2,y2,c=PAL.dim,w=1.5){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()},
-    ring(x,y,r,c,w=1.5){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.stroke()},
-    dot(x,y,r,c,g=0){ctx.save();if(g){ctx.shadowColor=c;ctx.shadowBlur=g}ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();ctx.restore()},
-    halo(x,y,r,t,p=1.6,c=PAL.halo){const u=pulse(t,p);ctx.strokeStyle=c;ctx.lineWidth=1.5+2*(1-u);ctx.beginPath();ctx.arc(x,y,r+6*(1-u),0,TAU);ctx.stroke()},
+    // Negative radii throw IndexSizeError on real 2d contexts; clamp defensively.
+    line(x1,y1,x2,y2,c=PAL.dim,w=1.5){ctx.strokeStyle=c;ctx.lineWidth=Math.max(0,w);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()},
+    ring(x,y,r,c,w=1.5){ctx.strokeStyle=c;ctx.lineWidth=Math.max(0,w);ctx.beginPath();ctx.arc(x,y,Math.max(0,r),0,TAU);ctx.stroke()},
+    dot(x,y,r,c,g=0){ctx.save();if(g){ctx.shadowColor=c;ctx.shadowBlur=g}ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,Math.max(0,r),0,TAU);ctx.fill();ctx.restore()},
+    halo(x,y,r,t,p=1.6,c=PAL.halo){const u=pulse(t,p);ctx.strokeStyle=c;ctx.lineWidth=1.5+2*(1-u);ctx.beginPath();ctx.arc(x,y,Math.max(0,r+6*(1-u)),0,TAU);ctx.stroke()},
     roundRect(x,y,w,h,r,fill,stroke,lw=1){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke()}}
   };
 }
 function sIntro(k,t,ch,beat,o){
-  const{W,H}=k;k.clear();const cx=W/2,cy=H/2-20;const D=o.dim;
-  for(let i=0;i<3;i++){const r=90+i*60+26*Math.sin(t*(.55-i*.15));k.ring(cx,cy,r,`rgba(255,209,102,${.3-i*.08})`,1.4)}
-  const b=1+.12*Math.sin(t*2.2);
-  k.halo(cx,cy,16*b,t,2.2);k.dot(cx,cy,14*b,PAL.accent,24);
-  if(D>0){for(let i=0;i<D;i++){const a=t*.6+i*TAU/D,r=120+10*Math.sin(t+i);k.dot(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,PAL.accentSoft,10)}k.ring(cx,cy,120,'rgba(255,209,102,.08)',1)}
+  const{W,H,ctx}=k;k.clear();const cx=W/2,cy=H/2;const D=o.dim;const at=o.animT??t;
+  // ============ CENTER: the living seed ============
+  const b=1+(.1+.04*D)*Math.sin(at*2.2);
+  // Pulsing rings — count scales with selected dimension
+  const nr=Math.min(D+2,5);
+  for(let i=0;i<nr;i++){const r=50+i*38+18*Math.sin(at*(.55-i*.15));k.ring(cx,cy,r,`rgba(255,209,102,${.3-i*.08})`,1.4)}
+  k.halo(cx,cy,14*b,at,2.2);k.dot(cx,cy,(10+D)*b,PAL.accent,22);
+  // Orbiting dimension particles
+  if(D>0){for(let i=0;i<D;i++){const a=at*(.6+.05*D)+i*TAU/D,r=80+10*D+8*Math.sin(at+i);k.dot(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,PAL.accentSoft,10)}k.ring(cx,cy,80+10*D,'rgba(255,209,102,.08)',1)}
+  // ============ NARRATIVE BRANCHES: foreshadow each chapter ============
+  // A0 seed sends out six branches, each labeled with the concept and
+  // destination chapter. Branches grow in sequentially, then hold a gentle
+  // shimmer. This turns the intro into a visual table of contents.
+  const branches=[
+    {label:'space',dest:'geometry',angle:-Math.PI/2,color:PAL.accentSoft},
+    {label:'spin',dest:'Euler',angle:-Math.PI/2+TAU/6,color:PAL.good},
+    {label:'energy',dest:'E=mc²',angle:-Math.PI/2+2*TAU/6,color:PAL.accent},
+    {label:'time',dest:'machine',angle:-Math.PI/2+3*TAU/6,color:'#c89eff'},
+    {label:'compute',dest:'P=NP',angle:-Math.PI/2+4*TAU/6,color:PAL.goodSoft},
+    {label:'Clay',dest:'7 problems',angle:-Math.PI/2+5*TAU/6,color:PAL.accentSoft}
+  ];
+  branches.forEach((br,i)=>{
+    const u=clamp01((at-.3-i*.18)/.6);
+    if(u<=0)return;
+    const len=150*EASE.outCubic(u);
+    const ex=cx+Math.cos(br.angle)*len,ey=cy+Math.sin(br.angle)*len;
+    // Curved branch with slight arc
+    const arcLen=Math.sin(br.angle)*18;
+    const mx=cx+Math.cos(br.angle)*len*.5+arcLen,my=cy+Math.sin(br.angle)*len*.5-Math.cos(br.angle)*18;
+    ctx.globalAlpha=.55*EASE.outCubic(u);
+    ctx.strokeStyle=br.color;ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.quadraticCurveTo(mx,my,ex,ey);ctx.stroke();
+    // Tip node with glow
+    ctx.globalAlpha=EASE.outCubic(u);
+    k.dot(ex,ey,5,br.color,8);
+    // Small orbiting satellite around each tip
+    const sa=at*1.2+i*.5;
+    k.dot(ex+Math.cos(sa)*12,ey+Math.sin(sa)*12,2,br.color,0);
+    // Labels
+    k.label(br.label,ex+Math.cos(br.angle)*16,ey+Math.sin(br.angle)*16+4,{font:'700 12px system-ui',color:br.color});
+    k.label(br.dest,ex+Math.cos(br.angle)*16,ey+Math.sin(br.angle)*16+18,{font:'10px ui-monospace,monospace',color:PAL.faint});
+    ctx.globalAlpha=1;
+  });
+  k.label('A0',cx+22,cy-24,{font:'italic 13px Georgia',color:PAL.accent});
   k.label(`${D}D active`,cx+22,cy+34,{font:'11px ui-monospace,monospace',color:PAL.dim});
-  k.label('A0',cx+22,cy-24,{font:'13px Georgia',color:PAL.accent,weight:'italic'});
 }
 function sSeed(k,t,ch,beat,o){
-  const{W,H,ctx}=k;k.clear();const cx=W/2,cy=H/2;const D=o.dim;
-  k.line(cx,cy-140,cx,cy+120,PAL.accent,2);k.dot(cx,cy,6,PAL.accent,20);
-  k.label('A0',cx+8,cy-128,{font:'12px Georgia',color:PAL.accent,weight:'italic'});
-  for(let n=0;n<=5;n++){const y=cy+90-n*32,on=n===D,passed=n<D,u=clamp01(t-n*.35),x=cx+40+EASE.outCubic(u)*30;
-    const col=on?PAL.accent:passed?PAL.good:PAL.line2;
-    k.line(cx+10,y+4,x-6,y+4,col,on?2:1);
-    k.label(n===0?'0D → 3 props':`${n}D → ${3+n} props`,x,y+8,{font:'12px ui-monospace,monospace',color:col,weight:on?'700':'400'});
-    if(on)k.halo(x-6,y+4,5,t,1.4);
+  const{W,H,ctx}=k;k.clear();const cx=W*.56,cy=H/2;const D=o.dim;const at=o.animT??t;
+  // ============ CENTER: the living seed ============
+  // breathing core + soft pulse rings
+  const br=1+.16*Math.sin(at*2.6);
+  for(let i=0;i<3;i++){const pu=((at*.55)+i/3)%1;
+    ctx.strokeStyle=`rgba(255,209,102,${(1-pu)*.30})`;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(cx,cy,7+pu*54,0,TAU);ctx.stroke()}
+  k.dot(cx,cy,7.5*br,PAL.accent,26);
+  k.label('A0',cx+11,cy-10,{font:'italic bold 13px Georgia',color:PAL.accent});
+  // ---- dimension axes radiating from the seed: the selected dimension D
+  // determines how many axes exist. Each axis grows in on selection, then
+  // holds a slow orbital shimmer. Angles spread symmetrically upward/right.
+  const axes=Math.max(D,0);
+  const axisReveal=(n)=>clamp01((at-.4-n*.35)/.6);
+  for(let n=0;n<axes;n++){
+    const ang=-Math.PI/2+(n-(axes-1)/2)*.42;      // fan of axes
+    const u=n<D-1?1:axisReveal(n);                  // last one still revealing
+    if(u<=0)continue;
+    const len=(78+10*n)*EASE.outCubic(u);
+    const ex=cx+Math.cos(ang)*len,ey=cy+Math.sin(ang)*len;
+    const col=n===D-1?PAL.accentSoft:PAL.good;
+    ctx.strokeStyle=col;ctx.lineWidth=n===D-1?2.6:1.6;
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(ang)*len*EASE.outCubic(u),cy+Math.sin(ang)*len*EASE.outCubic(u));ctx.stroke();
+    // axis tip node
+    k.dot(ex,ey,n===D-1?5:3.8,col,n===D-1?12:6);
+    // orbiting property dots around each tip: n-th axis carries (3+n) props
+    const props=3+n;
+    for(let p=0;p<props;p++){
+      const pa=at*(.7+.13*n)+p*TAU/props;
+      const orR=10+2.2*Math.min(p,2);
+      k.dot(ex+Math.cos(pa)*orR,ey+Math.sin(pa)*orR,1.8,p===props-1?PAL.accentSoft:PAL.dim,0);
+    }
   }
-  [{d:'−1D → ¼',th:2,y:cy+58},{d:'−3D → ⅙',th:4,y:cy+26},{d:'−5D → ⅛',th:5,y:cy-6}].forEach((m,i)=>{
-    const on=D>=m.th,u=clamp01(t*.6-i*.4),x=cx-60-EASE.outCubic(u)*90;
-    k.line(cx-10,m.y,x+4,m.y,on?PAL.bad:PAL.line2,on?2:1);
-    k.label(m.d,x,m.y+4,{font:'12px ui-monospace,monospace',color:on?PAL.bad:PAL.faint,weight:on?'700':'400'});
+  // dimension label under the seed
+  k.label(`${D}D · ${3+D} props`,cx,cy+66,{font:'11px ui-monospace,monospace',color:PAL.dim,align:'center',weight:'700'});
+  // ============ LEFT: the mirror world ============
+  // The A0 axis: a vertical mirror line left of the seed
+  const mx=cx-150;
+  ctx.strokeStyle='rgba(255,209,102,.35)';ctx.lineWidth=1.6;
+  ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(mx,cy-160);ctx.lineTo(mx,cy+160);ctx.stroke();ctx.setLineDash([]);
+  k.label('A0 mirror',mx,cy-172,{font:'11px Georgia',color:PAL.accentSoft,align:'center',weight:'700'});
+  // Fraction chips on the far left, one per negative dimension threshold.
+  // When D crosses a threshold, the corresponding axis spawns a particle
+  // that flies through the mirror, shatters, and lands on its fraction.
+  const fr=[{d:'−1D→¼',th:2,y:cy+96},{d:'−3D→⅙',th:4,y:cy+48},{d:'−5D→⅛',th:5,y:cy}];
+  fr.forEach((m,i)=>{
+    const on=D>=m.th;
+    const cyv=m.y;
+    // fraction chip
+    k.roundRect(66,cyv-13,84,26,7,on?'rgba(255,143,90,.10)':'rgba(11,21,34,.9)',on?PAL.bad:PAL.line2,on?1.6:1);
+    k.label(m.d,108,cyv+4,{font:'12px ui-monospace,monospace',color:on?PAL.bad:PAL.faint,align:'center',weight:on?'700':'400'});
+    // trajectory: dashed path seed→mirror→chip, lit when active
+    ctx.strokeStyle=on?'rgba(255,143,90,.5)':'rgba(59,77,99,.4)';ctx.lineWidth=1;
+    ctx.setLineDash([3,6]);ctx.beginPath();ctx.moveTo(mx,cyv);ctx.lineTo(152,cyv);ctx.stroke();ctx.setLineDash([]);
+    if(on){
+      // particle flies from the mirror to the chip, arcs slightly
+      const fly=((at*.5)+i*.37)%1;
+      const px=mx-(mx-152)*fly,py=cyv-Math.sin(fly*Math.PI)*20;
+      k.dot(px,py,3.6,PAL.bad,9);
+      // shatter spark at the mirror crossing moment
+      if(fly<.12){const su=1-fly/.12;
+        ctx.strokeStyle=`rgba(255,143,90,${su*.8})`;ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(mx,cyv,4+(1-su)*14,0,TAU);ctx.stroke()}
+      // landing flash on the chip
+      if(fly>.9){const lu=EASE.outCubic((fly-.9)/.1);
+        ctx.strokeStyle=`rgba(255,143,90,${(1-lu)*.7})`;ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(108,cyv,20+(1-lu)*12,0,TAU);ctx.stroke()}
+    }
   });
-  if(D>=5){const f=(t%2.4)/2.4;if(f<.4){const u=EASE.outCubic(f/.4);ctx.strokeStyle=`rgba(255,226,138,${1-u})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy+42,6+u*34,0,TAU);ctx.stroke()}}
+  // ============ RIGHT: property ledger ============
+  // Right edge: compact list of all 6 dimension rows with prop counts;
+  // rows up to D shown as achieved, current row highlighted.
+  const lx=W-152;
+  k.label('property scaling',lx+62,cy-140,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  for(let n=0;n<=5;n++){
+    const y=cy-116+n*30,on=n===D,passed=n<D;
+    const col=on?PAL.accent:passed?PAL.good:PAL.line2;
+    const u=clamp01((at-.2-n*.12)/.4);
+    if(u<=0)continue;
+    ctx.globalAlpha=.35+.65*EASE.outCubic(u);
+    k.roundRect(lx,y-11,124,22,5,on?'rgba(255,209,102,.10)':passed?'rgba(124,252,154,.05)':'rgba(11,21,34,.9)',col,on?1.6:1);
+    k.label(`${n}D`,lx+22,y+4,{font:'700 12px ui-monospace,monospace',color:col,align:'center'});
+    // mini property dot strip: 3+n dots
+    for(let p=0;p<3+n;p++)k.dot(lx+44+p*11,y,2.6,p<3+n?(passed||on?(on?PAL.accentSoft:PAL.good):PAL.line):PAL.line,0);
+    k.label(`${3+n}`,lx+118,y+4,{font:'11px ui-monospace,monospace',color:col,align:'center',weight:'700'});
+    ctx.globalAlpha=1;
+    if(on){
+      // row pulse
+      const pu=(at*1.2)%1;ctx.strokeStyle=`rgba(255,209,102,${(1-pu)*.5})`;ctx.lineWidth=1.6;
+      ctx.beginPath();ctx.arc(lx+62,y,16+pu*10,0,TAU);ctx.stroke();
+    }
+  }
+  // ============ 5D saturation: golden burst from the seed ============
+  if(D>=5){const f=(at%2.6)/2.6;
+    if(f<.4){const u=EASE.outCubic(f/.4);
+      ctx.strokeStyle=`rgba(255,226,138,${(1-u)})`;ctx.lineWidth=2.6;
+      ctx.beginPath();ctx.arc(cx,cy,10+u*88,0,TAU);ctx.stroke();
+      for(let r=0;r<10;r++){const ra=r*TAU/10+u*1.4;
+        ctx.fillStyle=`rgba(255,226,138,${1-u})`;
+        ctx.beginPath();ctx.arc(cx+Math.cos(ra)*(10+u*88),cy+Math.sin(ra)*(10+u*88),2.6*(1-u)+.6,0,TAU);ctx.fill()}}}
 }
 function sEuler(k,t,ch,beat,o){
-  const{W,H,ctx}=k;k.clear();const cx=W*.36,cy=H/2,R=110;const active=o.dim>=2;
+  const{W,H,ctx}=k;k.clear();const cx=W*.34,cy=H/2,R=112;const active=o.dim>=2;const at=o.animT??t;
+  // ============ LEFT: live rotation stage ============
   k.ring(cx,cy,R,PAL.line2,1.5);
   k.line(cx-R-16,cy,cx+R+16,cy,'rgba(59,77,99,0.6)',1);
   k.line(cx,cy-R-16,cx,cy+R+16,'rgba(59,77,99,0.6)',1);
-  const a=active?(t*.9)%TAU:0;
+  k.dot(cx+R,cy,3.5,PAL.dim);k.label('+1',cx+R+13,cy+4,{font:'12px Georgia',color:PAL.dim});
+  k.dot(cx-R,cy,3.5,PAL.faint);k.label('−1',cx-R-25,cy+4,{font:'12px Georgia',color:PAL.faint});
+  // rotation: one full lap every ~7s on the ambient clock (runs while paused)
+  const a=active?(at*.9)%TAU:0;
   const x=cx+Math.cos(a)*R,y=cy-Math.sin(a)*R;
+  if(active){
+    // live angle wedge + numeric readout
+    ctx.fillStyle='rgba(255,209,102,.07)';ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,42,0,-a,true);ctx.closePath();ctx.fill();
+    k.label(`θ=${(a/Math.PI).toFixed(2)}π`,cx-58,cy+14,{font:'11px ui-monospace,monospace',color:PAL.accentSoft});
+    // cos/sin decomposition: dashed drops to both axes — the vector IS
+    // cosθ + i·sinθ made visible
+    ctx.save();ctx.setLineDash([4,4]);
+    k.line(x,y,x,cy,'rgba(124,252,154,.4)',1);
+    k.line(x,y,cx,y,'rgba(124,252,154,.4)',1);
+    ctx.restore();
+    k.label(`cosθ=${Math.cos(a).toFixed(2)}`,x,cy+16,{font:'10px ui-monospace,monospace',color:PAL.good,align:'center'});
+    k.label(`sinθ=${Math.sin(a).toFixed(2)}`,cx-8,y-6,{font:'10px ui-monospace,monospace',color:PAL.good,align:'right'});
+  }
+  // the vector + fading trail
   k.line(cx,cy,x,y,active?PAL.good:PAL.faint,2.5);
-  if(active){k.halo(x,y,6,t,1.4,PAL.goodSoft);k.dot(x,y,6,PAL.good,14)}else k.dot(x,y,5,PAL.faint,6);
-  if(active){const mx=cx-Math.cos(a)*R,my=cy+Math.sin(a)*R;ctx.save();ctx.setLineDash([5,5]);k.line(cx,cy,mx,my,PAL.badSoft,1.5);ctx.restore()}
-  const tx=W*.62;
-  [{txt:'e^iπ = −1',color:PAL.accent,delay:0},{txt:'+1  (the seed)',color:PAL.accent,delay:.4},{txt:'= 0',color:PAL.good,delay:.8}].forEach((r,i)=>{
-    const u=clamp01((t-r.delay)/.5),dy=(1-EASE.outCubic(u))*12;
-    k.label(r.txt,tx,cy-30+i*34+dy,{font:'16px Georgia',color:r.color,weight:'700'});
+  if(active){
+    ctx.strokeStyle='rgba(124,252,154,.25)';ctx.lineWidth=6;ctx.lineCap='round';
+    ctx.beginPath();ctx.arc(cx,cy,R,-a,-a+.9);ctx.stroke();ctx.lineCap='butt';
+    k.halo(x,y,6,at,1.4,PAL.goodSoft);k.dot(x,y,6,PAL.good,14);
+  }else k.dot(x,y,5,PAL.faint,6);
+  // HALF-TURN EVENT — tip crosses −1: red FLIP flare (this is e^iπ = −1)
+  const dPi=Math.abs(((a%TAU)-Math.PI+Math.PI)%TAU-Math.PI);
+  const flip=active&&dPi<.4?1-dPi/.4:0;
+  if(flip>0){
+    k.dot(cx-R,cy,7,PAL.bad,20*flip);
+    ctx.strokeStyle=`rgba(255,143,90,${.75*flip})`;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(cx-R,cy,10+(1-flip)*24,0,TAU);ctx.stroke();
+    k.label('FLIP  e^iπ = −1',cx-R,cy-R-24,{font:'bold 13px Georgia',color:PAL.bad,align:'center'});
+    ctx.fillStyle=`rgba(255,209,102,${.10*flip})`;ctx.fillRect(0,0,W,H);
+  }
+  // ============ RIGHT: the identity, assembled line by line ============
+  const tx=W*.60,eqY=cy-78;
+  const rows=[
+    {txt:'e^iθ',color:PAL.accent,delay:0,sub:active?'the spin':'spin needs ≥2D'},
+    {txt:'θ = π  →  e^iπ = −1',color:PAL.accent,delay:1.2,sub:'half-turn flips the sign'},
+    {txt:'+ 1   (return the seed)',color:PAL.accentSoft,delay:2.2,sub:'walk it home'},
+    {txt:'= 0',color:PAL.good,delay:3.2,sub:'perfect cancellation'}
+  ];
+  rows.forEach((r,i)=>{
+    const u=clamp01((t-r.delay)/.55);if(u<=0)return;
+    const dy=(1-EASE.outCubic(u))*14;
+    k.label(r.txt,tx,eqY+i*44+dy,{font:'17px Georgia',color:r.color,weight:'700'});
+    ctx.globalAlpha=u*.8;
+    k.label(r.sub,tx,eqY+i*44+dy+16,{font:'11px system-ui',color:PAL.faint});
+    ctx.globalAlpha=1;
   });
-  k.label(active?'half-turn about A0':'rotation needs ≥ 2D',tx,cy+84,{font:'12px Georgia',color:PAL.faint});
-  if(!active)k.label('turn up dimensions to spin',cx,cy+R+40,{font:'11px ui-monospace,monospace',color:PAL.bad,align:'center'});
-  const piU=active?Math.abs(((a+Math.PI)%TAU)-Math.PI):TAU;
-  if(piU<.15){ctx.fillStyle=`rgba(255,209,102,${(1-piU/.15)*.14})`;ctx.fillRect(0,0,W,H)}
+  // ============ CANCELLATION DEMO (bottom right): the −1 arrow and the +1
+  // seed drift together and annihilate — loops on the ambient clock =======
+  if(active){
+    const ax=tx+40,ay=eqY+4*44+40;
+    const cu=((at*.5)%1);
+    const sep=EASE.inOutCubic(Math.min(1,Math.abs(cu*2-.5)*2)); // apart→together→apart
+    const gap=(1-sep)*46+10;
+    arrow(k,ax-gap,ay,22,PAL.bad,'−1');
+    arrow(k,ax+gap,ay,22,PAL.accent,'+1');
+    if(gap<16){
+      const zu=1-gap/16;
+      k.dot(ax,ay,10*zu+3,`rgba(255,255,255,${.85*zu})`,18*zu);
+      k.label('0',ax,ay+46,{font:'bold 20px Georgia',color:PAL.good,align:'center'});
+    }else{
+      k.label('anti-phase cancellation → 0',ax,ay+46,{font:'11px ui-monospace,monospace',color:PAL.faint,align:'center'});
+    }
+  }else{
+    k.label('turn up dimensions to spin',cx,cy+R+40,{font:'11px ui-monospace,monospace',color:PAL.bad,align:'center'});
+  }
 }
-function sEnergy(k,t){
-  const{W,H,ctx}=k;k.clear();const bT=70,bH=140;
-  ctx.save();ctx.beginPath();ctx.rect(40,bT,W-80,bH);ctx.clip();
-  [['rgba(124,252,154,0.7)',14,1],['rgba(90,160,255,0.7)',11,1.3],['rgba(255,209,102,0.7)',8,1.6]].forEach((w,idx)=>{
-    ctx.strokeStyle=w[0];ctx.lineWidth=2;ctx.beginPath();
-    for(let x=40;x<W-40;x+=6){const y=bT+bH/2+Math.sin(x*.02+t*w[2]+idx*2)*w[1]+(idx-1)*22;x===40?ctx.moveTo(x,y):ctx.lineTo(x,y)}
-    ctx.stroke();
+// helper: horizontal arrow with label
+function arrow(k,x,y,len,color,labelTxt){
+  const ctx=k.ctx;
+  ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2.4;
+  ctx.beginPath();ctx.moveTo(x-len,y);ctx.lineTo(x+len-6,y);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+len,y);ctx.lineTo(x+len-9,y-5);ctx.lineTo(x+len-9,y+5);ctx.closePath();ctx.fill();
+  k.label(labelTxt,x-len-14,y+4,{font:'bold 13px Georgia',color,align:'center'});
+}
+function sEnergy(k,t,ch,beat,o){
+  const{W,H,ctx}=k;k.clear();const at=o.animT??t;
+  // ============ THREE-PANEL FLOW: field waves → density cells → mass core ============
+  // Panel 1 (left): rippling field — multiple wave types overlaid
+  const p1x=40,p1w=240,p1y=56,p1h=250;
+  k.roundRect(p1x,p1y,p1w,p1h,8,PAL.bgPanel,PAL.line2,1);
+  k.label('field waves  u(r,t)',p1x+p1w/2,p1y-14,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  ctx.save();ctx.beginPath();ctx.rect(p1x+8,p1y+8,p1w-16,p1h-16);ctx.clip();
+  const waves=[
+    {col:'rgba(124,252,154,0.8)',amp:18,freq:.025,spd:1.4,yOff:-40},
+    {col:'rgba(90,160,255,0.7)',amp:14,freq:.035,spd:1.8,yOff:0},
+    {col:'rgba(255,209,102,0.7)',amp:10,freq:.045,spd:2.2,yOff:40}
+  ];
+  waves.forEach((wv,idx)=>{
+    ctx.strokeStyle=wv.col;ctx.lineWidth=2;ctx.beginPath();
+    for(let x=p1x+8;x<p1x+p1w-8;x+=4){
+      const y=p1y+p1h/2+wv.yOff+Math.sin(x*wv.freq+at*wv.spd+idx*1.5)*wv.amp;
+      x===p1x+8?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }ctx.stroke();
   });
+  // Field energy particles drifting
+  for(let i=0;i<8;i++){
+    const px=p1x+8+((at*30+i*37)%(p1w-16));
+    const py=p1y+p1h/2+Math.sin(at*1.5+i*.8)*30+i*8-20;
+    k.dot(px,py,2.5,'rgba(255,226,138,.7)',4);
+  }
   ctx.restore();
-  const bx=W-200,by=110,bs=120;
-  k.roundRect(bx,by,bs,bs,12,PAL.bgPanel,PAL.accent,2);
-  k.halo(bx+bs/2,by+bs/2,10,t,2);
-  for(let i=0;i<4;i++){const phase=((t*.5)+i*.25)%1,u=EASE.inOutCubic(phase);const px=lerp(120,bx+bs/2,u),py=lerp(bT+bH/2+(i-1.5)*12,by+bs/2,u);k.dot(px,py,4,`rgba(255,226,138,${clamp01(1-Math.abs(u-.5)*1.2)})`,10)}
-  const u=clamp01(t/1.2),sc=lerp(.9,1,EASE.outBack(u));
-  ctx.save();ctx.translate(bx+bs/2,by+bs+40);ctx.scale(sc,sc);
+  // Arrow from panel 1 to panel 2
+  const a1x=p1x+p1w+8;
+  k.label('ρₘ = u/c²',a1x+20,p1y+p1h/2,{font:'11px Georgia',color:PAL.accentSoft,align:'center',weight:'700'});
+  ctx.strokeStyle=PAL.accentSoft;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(a1x,p1y+p1h/2);ctx.lineTo(a1x+24,p1y+p1h/2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(a1x+24,p1y+p1h/2);ctx.lineTo(a1x+18,p1y+p1h/2-5);ctx.lineTo(a1x+18,p1y+p1h/2+5);ctx.closePath();ctx.fill();
+  // Panel 2 (center): energy-density cells filling up
+  const p2x=a1x+36,p2w=200,p2y=56,p2h=250;
+  k.roundRect(p2x,p2y,p2w,p2h,8,PAL.bgPanel,PAL.line2,1);
+  k.label('energy density',p2x+p2w/2,p2y-14,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  // Grid of cells that fill up cyclically
+  const cols=4,rows=6,cellW=(p2w-16)/cols,cellH=(p2h-16)/rows;
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    const cx=p2x+8+c*cellW,cy=p2y+8+r*cellH;
+    const idx=r*cols+c;
+    const fillT=(at*.8+idx*.12)%1.5;
+    const fill=Math.min(1,fillT);
+    if(fill>0){
+      const alpha=.15+fill*.5;
+      ctx.fillStyle=`rgba(255,209,102,${alpha})`;
+      ctx.fillRect(cx+2,cy+2,cellW-4,(cellH-4)*fill);
+    }
+    ctx.strokeStyle=PAL.line;ctx.lineWidth=.8;
+    ctx.strokeRect(cx+2,cy+2,cellW-4,cellH-4);
+  }
+  // Particles flowing from cells toward the mass core
+  for(let i=0;i<5;i++){
+    const tr=((at*.6)+i*.2)%1;
+    const sx=p2x+p2w-8,sy=p2y+30+i*50;
+    const dx=p2x+p2w+20,dy=p2y+p2h/2;
+    const px=lerp(sx,dx,tr),py=lerp(sy,dy,tr);
+    k.dot(px,py,3,`rgba(255,226,138,${clamp01(1-Math.abs(tr-.5)*1.5)})`,6);
+  }
+  // Arrow from panel 2 to panel 3
+  const a2x=p2x+p2w+8;
+  k.label('∫∫∫',a2x+16,p2y+p2h/2,{font:'14px Georgia',color:PAL.accentSoft,align:'center',weight:'700'});
+  ctx.strokeStyle=PAL.accentSoft;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(a2x,p2y+p2h/2);ctx.lineTo(a2x+24,p2y+p2h/2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(a2x+24,p2y+p2h/2);ctx.lineTo(a2x+18,p2y+p2h/2-5);ctx.lineTo(a2x+18,p2y+p2h/2+5);ctx.closePath();ctx.fill();
+  // Panel 3 (right): compressed mass core
+  const p3x=a2x+36,p3w=160,p3y=56,p3h=250;
+  const mcx=p3x+p3w/2,mcy=p3y+p3h/2;
+  k.roundRect(p3x,p3y,p3w,p3h,8,PAL.bgPanel,PAL.accent,1.5);
+  k.label('mass core',p3x+p3w/2,p3y-14,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  // Pulsing mass core
+  const br=1+.15*Math.sin(at*2.6);
+  for(let i=0;i<3;i++){const pu=((at*.55)+i/3)%1;
+    ctx.strokeStyle=`rgba(255,209,102,${(1-pu)*.3})`;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(mcx,mcy,8+pu*40,0,TAU);ctx.stroke();
+  }
+  k.dot(mcx,mcy,12*br,PAL.accent,26);
+  k.halo(mcx,mcy,12*br,at,2);
+  // Inward-converging particles showing compression
+  for(let i=0;i<6;i++){
+    const a=i/6*TAU+at*.5;
+    const tr=((at*.7)+i*.16)%1;
+    const r=lerp(60,16,tr);
+    k.dot(mcx+Math.cos(a)*r,mcy+Math.sin(a)*r,3,`rgba(255,226,138,${clamp01(1-tr*.8)})`,4);
+  }
+  // E = mc² label with scale-in animation
+  const u2=clamp01(t/1.2),sc=lerp(.9,1,EASE.outBack(u2));
+  ctx.save();ctx.translate(mcx,mcy+80);ctx.scale(sc,sc);
   k.label('E = mc²',0,0,{font:'22px Georgia',color:PAL.accent,align:'center',weight:'700'});
   ctx.restore();
-  k.label('mass = packed field',bx+bs/2,by+bs+66,{font:'12px system-ui',color:PAL.faint,align:'center'});
+  k.label('mass = packed field energy',mcx,mcy+106,{font:'11px system-ui',color:PAL.faint,align:'center'});
+  // Bottom summary bar
+  k.label('field → density → mass → E = mc²',W/2,p1y+p1h+18,{font:'12px ui-monospace,monospace',color:PAL.accentSoft,align:'center',weight:'700'});
 }
-function sMachine(k,t){
-  const{W}=k;k.clear();
-  const stages=[['A0','generate'],['A1','orient'],['A2','stage'],['A3','invariant'],['A5','isolate'],['A8','resolve']];
-  const x0=60,bw=W-120,by=70,bh=64,act=Math.floor((t*.18)%stages.length);
-  stages.forEach((s,i)=>{const cx=x0+(i+.5)*bw/6,x=cx-56,on=i===act;
-    k.roundRect(x,by,112,bh,8,on?'rgba(255,209,102,0.1)':PAL.bgPanel,on?PAL.accent:PAL.line,on?2:1);
-    k.label(s[0],x+10,by+22,{font:'bold 12px system-ui',color:on?PAL.accent:PAL.dim});
-    k.label(s[1],x+10,by+42,{font:'11px system-ui',color:on?PAL.accentSoft:PAL.faint});
-    if(on)k.halo(cx,by+bh/2,40,t,1.2);
+function sMachine(k,t,ch,beat,o){
+  const{W,H,ctx}=k;k.clear();const at=o.animT??t;
+  // ============ AXIOM RAIL: all 9 axioms A0–A8 as compact chips ============
+  // The caption says “A0 to A8” — now the visual shows every one of them,
+  // with A8 deliberately last and highlighted.
+  const axioms=[
+    ['A0','seed'],['A1','rotate'],['A2','5D stage'],['A3','invariant'],
+    ['A4','gear'],['A5','shear'],['A6','firewall'],['A7','Landauer'],['A8','resolve']
+  ];
+  const axY=46,axH=42,chipW=84,gap=6;
+  const totalW=axioms.length*chipW+(axioms.length-1)*gap;
+  const axX=(W-totalW)/2;
+  const actAx=Math.floor((at*.4)%axioms.length);
+  axioms.forEach((ax,i)=>{
+    const x=axX+i*(chipW+gap);
+    const on=i===actAx,isLast=i===axioms.length-1;
+    const fillCol=isLast?'rgba(255,209,102,.12)':on?'rgba(124,252,154,.08)':'rgba(11,21,34,.9)';
+    const strokeCol=isLast?PAL.accent:on?PAL.good:PAL.line;
+    k.roundRect(x,axY,chipW,axH,6,fillCol,strokeCol,isLast?2:on?1.5:1);
+    k.label(ax[0],x+chipW/2,axY+17,{font:'bold 12px system-ui',color:isLast?PAL.accent:on?PAL.good:PAL.dim,align:'center'});
+    k.label(ax[1],x+chipW/2,axY+33,{font:'10px system-ui',color:isLast?PAL.accentSoft:on?PAL.goodSoft:PAL.faint,align:'center'});
+    if(on)k.halo(x+chipW/2,axY+axH/2,30,at,1.2);
+    // Connector arrow between chips
+    if(i<axioms.length-1){
+      ctx.strokeStyle=PAL.line2;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(x+chipW,axY+axH/2);ctx.lineTo(x+chipW+gap,axY+axH/2);ctx.stroke();
+    }
   });
-  const ty=by+bh+120;
-  k.line(x0,ty,x0+bw,ty,PAL.line,3);
-  for(let i=0;i<16;i++){const px=x0+((i/16)*bw+(t*30)%(bw/16));if(px<x0+bw)k.line(px,ty,px+5,ty+8,PAL.line2,1)}
-  const rev=Math.floor(t/7)%2===1;
-  const tk=rev?x0+bw-((t*60)%bw):x0+((t*60)%bw);
+  // “A8 goes LAST” callout
+  k.label('A8 resolve goes LAST — picks the state, doesn\'t build the machine',W/2,axY+axH+18,{font:'11px ui-monospace,monospace',color:PAL.accentSoft,align:'center',weight:'700'});
+  // ============ CONVEYOR BELT: time direction reversal ============
+  const by=200,bw=W-120,bh=64;
+  const x0=60;
+  k.line(x0,by+bh+30,x0+bw,by+bh+30,PAL.line,3);
+  // Belt chevrons
+  const rev=Math.floor(at/7)%2===1;
+  const dir=rev?-1:1;
+  for(let i=0;i<12;i++){
+    const px=x0+(((i*(bw/12)+at*46*dir)%bw)+bw)%bw;
+    ctx.strokeStyle=PAL.line2;ctx.lineWidth=1.5;ctx.beginPath();
+    ctx.moveTo(px-5*dir,by+bh+24);ctx.lineTo(px+5*dir,by+bh+30);ctx.lineTo(px-5*dir,by+bh+36);ctx.stroke();
+  }
+  // Carriage with clock face
+  const tk=rev?x0+bw-((at*60)%bw):x0+((at*60)%bw);
+  const ty=by+bh+30;
   k.dot(tk,ty-16,12,PAL.accent,16);
-  k.line(tk,ty-16,tk+Math.cos(t*2)*6,ty-16+Math.sin(t*2)*6,'#102',2);
+  k.ring(tk,ty-16,12,'rgba(159,179,200,.45)',1.2);
+  const ha=at*2.4*dir;
+  k.line(tk,ty-16,tk+7*Math.cos(ha),ty-16+7*Math.sin(ha),PAL.ink,1.8);
+  // Flash ring at direction flip
+  const ft=at%7;
+  if(ft<.4){const u=ft/.4;k.ring(tk,ty-16,12+u*26,`rgba(255,209,102,${.6*(1-u)})`,2)}
   k.label(rev?'−L_mesh (belt runs back)':'L_mesh (belt runs forward)',x0,ty+42,{font:'13px Georgia',color:rev?PAL.bad:PAL.good,weight:'700'});
-  k.label('E_rest = mc² — carried unchanged',W/2,by+bh+26,{font:'13px Georgia',color:PAL.accentSoft,align:'center'});
+  // ============ SIX-STAGE OPERATION CYCLE (bottom) ============
+  // Separate from the axiom rail: the operational pipeline that A8 drives.
+  const ops=['generate','resolve','orient','invert','firewall','close'];
+  const opY=380,opW=120,opGap=10;
+  const opTotalW=ops.length*opW+(ops.length-1)*opGap;
+  const opX0=(W-opTotalW)/2;
+  const actOp=Math.floor((at*.5)%ops.length);
+  k.label('six-stage operation (A8 state-resolution layer)',W/2,opY-12,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  ops.forEach((op,i)=>{
+    const x=opX0+i*(opW+opGap);
+    const on=i===actOp;
+    k.roundRect(x,opY,opW,36,6,on?'rgba(255,209,102,.10)':PAL.bgPanel,on?PAL.accent:PAL.line,on?1.5:1);
+    k.label(op,x+opW/2,opY+22,{font:'11px system-ui',color:on?PAL.accentSoft:PAL.faint,align:'center',weight:'700'});
+    if(on)k.halo(x+opW/2,opY+18,24,at,1);
+    // Arrow to next
+    if(i<ops.length-1){
+      ctx.strokeStyle=on?PAL.accent:PAL.line2;ctx.lineWidth=on?1.5:1;
+      ctx.beginPath();ctx.moveTo(x+opW,opY+18);ctx.lineTo(x+opW+opGap,opY+18);ctx.stroke();
+    }
+  });
+  // Energy invariance badge
+  k.label('E_rest = mc² — carried unchanged through reversal',W/2,by+bh+8,{font:'13px Georgia',color:PAL.accentSoft,align:'center',weight:'700'});
 }
 function sFirewall(k,t,ch,beat,o){
-  const{W,H,ctx}=k;k.clear();const cx=W/2,cy=H/2;const fw=o.firewalls;
+  const{W,H,ctx}=k;k.clear();const cx=W/2,cy=H/2;const fw=o.firewalls;const at=o.animT??t;
+  // ============ TWO SECTORS: future (left) and past (right) ============
   ctx.globalAlpha=fw?1:.35;
-  ctx.fillStyle=PAL.goodDim;ctx.fillRect(60,cy-110,cx-120,220);
-  ctx.fillStyle=PAL.badDim;ctx.fillRect(cx+60,cy-110,W-60-(cx+60),220);
-  k.label('FUTURE states',90,cy-92,{font:'12px system-ui',color:PAL.good,weight:'700'});
-  k.label('PAST states',W-170,cy-92,{font:'12px system-ui',color:PAL.bad,weight:'700'});
+  ctx.fillStyle=PAL.goodDim;ctx.fillRect(40,cy-120,cx-80,240);
+  ctx.fillStyle=PAL.badDim;ctx.fillRect(cx+40,cy-120,W-40-(cx+40),240);
+  k.label('FUTURE states',70,cy-102,{font:'12px system-ui',color:PAL.good,weight:'700'});
+  k.label('PAST states',W-280,cy-102,{font:'12px system-ui',color:PAL.bad,weight:'700'});
+  // ============ WAVE INTERFERENCE at the boundary ============
+  // Two waves approach from opposite sides; where they meet at the firewall,
+  // destructive interference drives amplitude to zero — the |ψ|=0 node.
+  ctx.save();ctx.beginPath();ctx.rect(40,cy-120,W-80,240);ctx.clip();
+  for(let side=0;side<2;side++){
+    const baseX=side===0?40:cx+40;
+    const endX=side===0?cx-40:W-40;
+    const col=side===0?'rgba(124,252,154,0.5)':'rgba(255,143,90,0.5)';
+    ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.beginPath();
+    for(let x=baseX;x<=endX;x+=3){
+      const dist=Math.abs(x-cx);
+      const env=Math.max(0,1-dist/200);
+      const amp=20*env*(fw?1:.4);
+      const y=cy+Math.sin(x*.08+at*3*(side===0?1:-1))*amp;
+      x===baseX?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }ctx.stroke();
+  }
+  ctx.restore();
+  // ============ THE FIREWALL: zero-amplitude seam ============
+  // Wavy vertical line where both waves cancel. Solid + glowing when active,
+  // dashed and faint when withdrawn.
   ctx.strokeStyle=fw?PAL.accent:PAL.line2;ctx.lineWidth=2.5;if(!fw)ctx.setLineDash([6,6]);
-  ctx.beginPath();for(let y=cy-110;y<cy+110;y+=4){const x=cx+Math.sin(y*.25+t*3)*1.5;y===cy-110?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+  ctx.beginPath();for(let y=cy-120;y<cy+120;y+=4){const x=cx+Math.sin(y*.25+at*3)*1.5;y===cy-120?ctx.moveTo(x,y):ctx.lineTo(x,y)}
   ctx.stroke();ctx.setLineDash([]);
-  k.label(fw?'|ψ| = 0 — nothing crosses':'|ψ| = 0 — withdrawn',cx,cy+128,{font:'12px system-ui',color:fw?PAL.accent:PAL.faint,align:'center',weight:'700'});
-  if(fw){const tr=(t*.5)%1,py=cy-70+((t*13)%140),px=60+tr*(cx-90);k.dot(px,py,5,PAL.good,10);if(px>cx-105){const b=cx-105-(px-(cx-105));k.dot(Math.max(60,b),py,5,PAL.bad,10)}}
-  else{const tr=(t*.5)%1;k.dot(60+tr*(W-120),cy-20+30*Math.sin(t),5,PAL.bad,10)}
-  k.label(fw?'ΔE ≥ k_BT ln 2 — every bit costs heat':'no firewall — leakage into past',cx,cy-126,{font:'12px ui-monospace,monospace',color:fw?PAL.accentSoft:PAL.bad,align:'center',weight:'700'});
+  // Glow halo on the firewall when active
+  if(fw){
+    const pu=(at*.8)%1;
+    ctx.strokeStyle=`rgba(255,209,102,${(1-pu)*.4})`;ctx.lineWidth=2;
+    ctx.beginPath();for(let y=cy-120;y<cy+120;y+=4){const x=cx+Math.sin(y*.25+at*3)*1.5+4;y===cy-120?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.stroke();
+  }
+  k.label(fw?'|ψ| = 0 — nothing crosses':'|ψ| = 0 — withdrawn',cx,cy+136,{font:'12px system-ui',color:fw?PAL.accent:PAL.faint,align:'center',weight:'700'});
+  // ============ PARTICLES: rebound at the node when firewall is up ============
+  if(fw){
+    // Left-side particle approaches and rebounds
+    const tr=(at*.5)%1;
+    const px=40+tr*(cx-70);
+    const py=cy-60+Math.sin(at*2)*20;
+    k.dot(px,py,5,PAL.good,10);
+    // Rebound particle flying back
+    if(tr>.7){
+      const rb=(tr-.7)/.3;
+      const rpx=cx-70-rb*60;
+      k.dot(rpx,py-Math.sin(rb*Math.PI)*15,4,`rgba(124,252,154,${1-rb})`,6);
+      // Spark at the boundary
+      if(rb<.3){const su=1-rb/.3;
+        ctx.strokeStyle=`rgba(255,209,102,${su*.7})`;ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(cx,py,4+(1-su)*16,0,TAU);ctx.stroke();
+      }
+    }
+    // Right-side particle also blocked
+    const tr2=((at*.5)+.25)%1;
+    const px2=W-40-tr2*(cx-70);
+    const py2=cy+60+Math.sin(at*2+1)*20;
+    k.dot(px2,py2,5,PAL.bad,10);
+    if(tr2>.7){
+      const rb=(tr2-.7)/.3;
+      const rpx=cx+70+rb*60;
+      k.dot(rpx,py2+Math.sin(rb*Math.PI)*15,4,`rgba(255,143,90,${1-rb})`,6);
+    }
+  }else{
+    // No firewall: particle leaks through to the other side
+    const tr=(at*.5)%1;
+    const startX=40,endX=W-40;
+    const px=startX+tr*(endX-startX);
+    k.dot(px,cy-20+30*Math.sin(at),5,PAL.bad,10);
+    k.label('LEAKAGE — paradox path open',cx,cy+60,{font:'11px ui-monospace,monospace',color:PAL.bad,align:'center',weight:'700'});
+  }
+  // ============ LANDAUER HEAT METER ============
+  // Every state update costs k_BT ln 2 — visualized as a heat meter
+  // that ticks upward when the firewall processes state changes.
+  const meterX=W-130,meterY=cy+20,meterW=90,meterH=100;
+  k.roundRect(meterX,meterY,meterW,meterH,6,PAL.bgPanel,PAL.line2,1);
+  k.label('Landauer heat cost',meterX+meterW/2,meterY-16,{font:'10px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  // Filling bar
+  const heatLevel=fw?((at*.3)%1):0;
+  const fillH=(meterH-12)*heatLevel;
+  ctx.fillStyle=fw?`rgba(255,143,90,${.3+heatLevel*.4})`:'rgba(59,77,99,.3)';
+  ctx.fillRect(meterX+8,meterY+meterH-6-fillH,meterW-16,fillH);
+  ctx.strokeStyle=PAL.line;ctx.lineWidth=1;
+  ctx.strokeRect(meterX+8,meterY+6,meterW-16,meterH-12);
+  // Tick marks
+  for(let i=0;i<=4;i++){
+    const ty=meterY+6+(meterH-12)*i/4;
+    ctx.strokeStyle=PAL.line2;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(meterX+4,ty);ctx.lineTo(meterX+8,ty);ctx.stroke();
+  }
+  k.label(fw?'ΔE ≥ k_BT ln 2':'no cost — no updates',meterX+meterW/2,meterY+meterH+14,{font:'9px ui-monospace,monospace',color:fw?PAL.badSoft:PAL.faint,align:'center',weight:'700'});
+  // ============ BOUNDARY LABEL ============
+  k.label(fw?'causal isolation enforced':'firewall down — past and future connected',cx,cy-136,{font:'12px ui-monospace,monospace',color:fw?PAL.accentSoft:PAL.bad,align:'center',weight:'700'});
   ctx.globalAlpha=1;
 }
 function sPnp(k,t,ch,beat,o){
-  const{W,H,ctx}=k;k.clear();const N=5,oct=32,R=10;const D=o.dim;
-  const gx=60,gy=80,cw=16,sw=Math.floor((t*3)%(oct+1));
-  k.label(`brute force: up to 2^${N} = ${oct} checks`,gx,gy-16,{font:'12px ui-monospace,monospace',color:PAL.bad,weight:'700'});
+  const{W,H,ctx}=k;k.clear();
+  // dimension-driven: N follows the selector, so 0D-1D show pure brute
+  // force and higher dims show the collapse. Always ≥2 for the math.
+  const D=o.dim,N=Math.max(2,D),oct=Math.pow(2,N),R=N*(N-1)/2;
+  const at=o.animT??t;
+  const gx=60,gy=80,cw=16,sw=Math.floor((at*3)%(oct+1));
+  k.label(`brute force: 2^${N} = ${oct} checks`,gx,gy-16,{font:'12px ui-monospace,monospace',color:PAL.bad,weight:'700'});
   for(let i=0;i<oct;i++){const x=gx+(i%8)*cw,y=gy+Math.floor(i/8)*cw;ctx.fillStyle=i<=sw?PAL.bad:PAL.line;ctx.fillRect(x,y,cw-2,cw-2)}
   const cxr=W*.68,cyr=H/2-10,rad=100;
-  k.label(o.oracle?`A0 engine: ½(N²−N) = ${R} ops`:'A0 engine: stalled (oracle off)',cxr,gy-16,{font:'12px ui-monospace,monospace',color:o.oracle?PAL.good:PAL.faint,align:'center',weight:'700'});
-  ctx.globalAlpha=o.oracle?1:.28;
-  for(let p=0;p<R;p++){const a=(p/R)*Math.PI+t*.5;k.line(cxr+Math.cos(a)*rad,cyr+Math.sin(a)*rad,cxr-Math.cos(a)*rad,cyr-Math.sin(a)*rad,PAL.goodSoft,1.4)}
-  k.halo(cxr,cyr,5,t,1.2);
+  // prominent, unambiguous oracle state banner
+  const banC=o.oracle?PAL.good:PAL.bad,banBg=o.oracle?'rgba(124,252,154,.10)':'rgba(255,143,90,.10)';
+  k.roundRect(cxr-190,gy-34,380,30,6,banBg,banC,1.5);
+  k.label(o.oracle?'A₈ ORACLE ACTIVE':'A₈ ORACLE WITHDRAWN',cxr,gy-14,{font:'bold 13px ui-monospace,monospace',color:banC,align:'center'});
+  k.label(o.oracle?`A0 engine: ½(N²−N) = ${R} ops`:'A0 engine: stalled — brute force only',cxr,gy+152,{font:'12px ui-monospace,monospace',color:o.oracle?PAL.good:PAL.faint,align:'center',weight:'700'});  ctx.globalAlpha=o.oracle?1:.22;
+  // rotation lines + pulse run on the ambient clock: they animate even
+  // when playback is paused, so the engine never looks frozen
+  for(let p=0;p<R;p++){const a=(p/R)*Math.PI+at*.5;k.line(cxr+Math.cos(a)*rad,cyr+Math.sin(a)*rad,cxr-Math.cos(a)*rad,cyr-Math.sin(a)*rad,PAL.goodSoft,1.4)}
+  if(o.oracle){
+    // pulse ring: the engine visibly "solving"
+    const pu=(at*1.1)%1;ctx.strokeStyle=`rgba(124,252,154,${(1-pu)*.5})`;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(cxr,cyr,20+pu*70,0,TAU);ctx.stroke();
+    k.dot(cxr,cyr,5+Math.sin(at*4)*1.2,PAL.good,12);
+  }else{
+    // stalled: red cross through the engine core, blinking on ambient clock
+    const bl=.5+.5*Math.sin(at*3);
+    k.line(cxr-12,cyr-12,cxr+12,cyr+12,`rgba(255,143,90,${.4+.6*bl})`,2);
+    k.line(cxr-12,cyr+12,cxr+12,cyr-12,`rgba(255,143,90,${.4+.6*bl})`,2);
+  }
+  k.halo(cxr,cyr,5,at,1.2);
   ctx.globalAlpha=1;
   const u=EASE.outCubic(clamp01(t/1.4));
   ctx.globalAlpha=u;
@@ -215,24 +643,77 @@ function sPnp(k,t,ch,beat,o){
   k.label(`manifold: ${D}D · ${D*(D-1)/2} rotation planes`,gx,gy+162,{font:'11px ui-monospace,monospace',color:PAL.faint});
   ctx.globalAlpha=1;
 }
-function sClay(k,t,ch,beat){
-  const{ctx}=k;k.clear();
+function sClay(k,t,ch,beat,o){
+  const{W,ctx}=k;k.clear();const at=o.animT??t;
   const rows=[['1','P vs NP','2ᴺ → Rₙ rotation planes'],['2','Riemann','off-axis zero → muted'],['3','Yang–Mills','seed sets floor ΔM > 0'],['4','Navier–Stokes','anti-phase kills blowup'],['5','BSD','rank = ord L at s = 1'],['6','Hodge','Ω_A0 isolates cycles'],['7','Poincaré','neck-pinch → surgery → S³']];
-  const rv=Math.min(beat+1,rows.length);
-  const beatT=ch.beats[beat]?.t||0;
-  const ROW_H=44,Y0=72;
-  for(let i=0;i<rv;i++){
-    const r=rows[i],y=Y0+i*ROW_H,on=i===rv-1;
-    const u=on?clamp01((t-beatT)/.4):1;
-    ctx.globalAlpha=EASE.outCubic(u);
-    k.roundRect(70,y-18,28,28,6,on?'#2e7d4f':'#1b5e3f',null);
-    k.label(r[0],84,y+2,{font:'bold 14px system-ui',color:'#b8ffd0',align:'center'});
-    k.label(r[1],118,y+2,{font:'bold 15px system-ui',color:on?'#fff':PAL.ink});
-    k.label(r[2],260,y+2,{font:'12px system-ui',color:on?'#a9bdd0':PAL.faint});
-    glyph(k,i,815,y-2,on?1:.25,t);
+  const N=rows.length,ROW_H=44,Y0=104;
+  // --- three-weapons banner: chips light up sequentially during beat 0,
+  // then settle into a gentle pulse while the rows take over ---
+  const weapons=['rotate','anti-phase','firewall'];
+  const chipW=196,chipH=40,wY=46,centers=[168,450,732];
+  const bannerDim=beat>=1?.8:1;
+  centers.forEach((cx,i)=>{
+    const u=EASE.outCubic(clamp01((t-i*.9)/.6)),lit=u>=1;
+    const glow=lit?.75+.25*Math.sin(at*2.2+i):u;
+    ctx.globalAlpha=(.35+.65*glow)*bannerDim;
+    k.roundRect(cx-chipW/2,wY-chipH/2,chipW,chipH,8,lit?'rgba(255,209,102,.08)':PAL.bgPanel,lit?PAL.accent:PAL.line2,lit?1.5:1);
+    const ic=lit?PAL.accentSoft:PAL.dim;
+    ctx.save();ctx.translate(cx-chipW/2+28,wY);ctx.scale(.75,.75);
+    ctx.strokeStyle=ic;ctx.fillStyle=ic;ctx.lineWidth=1.8;
+    if(i===0){ctx.beginPath();ctx.arc(0,0,12,-.6,3.8);ctx.stroke();const ax=12*Math.cos(3.8),ay=12*Math.sin(3.8);ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax-7,ay-1);ctx.lineTo(ax-2,ay-8);ctx.closePath();ctx.fill()}
+    else if(i===1){k.line(-11,7,8,-9,ic,1.8);k.line(-11,7,-9,9,ic,1.8);k.dot(-11,7,2.5,ic,3)}
+    else{for(let j=-1;j<=1;j++)k.line(-12+j*9,-10,-12+j*9,10,ic,2.4)}
+    ctx.restore();
+    k.label(weapons[i],cx+16,wY+4,{font:'12px system-ui',color:lit?PAL.accentSoft:PAL.dim,align:'center',weight:'700'});
+  });
+  ctx.globalAlpha=1;
+  // --- rows cascade in, each keyed to its own beat's start time (scrub-safe) ---
+  const activeI=Math.min(beat,N-1);
+  for(let i=0;i<N;i++){
+    const r=rows[i],revealT=ch.beats[i].t,ru=clamp01((t-revealT)/.55);
+    if(ru<=0)continue;
+    const active=i===activeI;
+    const y=Y0+i*ROW_H+(1-EASE.outCubic(ru))*14,dx=(1-EASE.outCubic(ru))*46;
+    ctx.globalAlpha=EASE.outCubic(ru);
+    if(i>0)k.line(84,y-16,84,y+2,PAL.line2,1);
+    if(active){
+      k.roundRect(64,y-17,700,34,8,'rgba(255,209,102,.06)',null);
+      const bx=70+((at*140)%690);
+      const g=ctx.createLinearGradient(bx,0,bx+90,0);
+      g.addColorStop(0,'rgba(255,209,102,0)');g.addColorStop(.5,'rgba(255,209,102,.10)');g.addColorStop(1,'rgba(255,209,102,0)');
+      ctx.fillStyle=g;ctx.fillRect(bx,y-15,90,30);
+    }
+    const bR=14*(.6+.4*EASE.outBack(ru));
+    k.roundRect(84-bR,y-4-bR,bR*2,bR*2,6,active?'#2e7d4f':'#1b5e3f',null);
+    if(active)k.halo(84,y-4,bR,at,1.6,'rgba(124,252,154,.4)');
+    k.label(r[0],84,y+1,{font:'bold 14px system-ui',color:'#b8ffd0',align:'center'});
+    k.label(r[1],118+dx,y+2,{font:'bold 15px system-ui',color:active?'#fff':PAL.ink});
+    k.label(r[2],262+dx,y+2,{font:'12px system-ui',color:active?'#ffe29a':PAL.faint});
+    glyph(k,i,815,y-2,active?.9+.1*Math.sin(at*3):.35,at);
     ctx.globalAlpha=1;
   }
-  k.label('all seven resolved: rotate · cancel anti-phase · firewall',70,430,{font:'12px ui-monospace,monospace',color:PAL.good,weight:'700'});
+  // --- footer line fades in with the first row ---
+  ctx.globalAlpha=clamp01((t-1)/.6);
+  k.label('all seven claimed within A₀: rotate · cancel anti-phase · firewall',70,432,{font:'12px ui-monospace,monospace',color:PAL.good,weight:'700'});
+  ctx.globalAlpha=1;
+  // --- final flourish: 7/7 badge with sweep ring + particles (last beat) ---
+  const finT=ch.beats[7].t;
+  if(t>=finT){
+    const fu=clamp01((t-finT)/.9),bx2=800,by2=458,rr=26*Math.min(1,fu*1.2);
+    k.ring(bx2,by2,rr,'rgba(124,252,154,.35)',1.2);
+    const sweep=clamp01((t-finT)/1.2);
+    ctx.strokeStyle=PAL.good;ctx.lineWidth=2.5;ctx.beginPath();
+    ctx.arc(bx2,by2,rr,-Math.PI/2,-Math.PI/2+TAU*sweep);ctx.stroke();
+    k.label('7/7',bx2,by2+1,{font:'bold 13px ui-monospace,monospace',color:PAL.good,align:'center'});
+    k.label('CLAIMED',bx2,by2+40,{font:'10px system-ui',color:PAL.good,align:'center',weight:'700'});
+    for(let p=0;p<12;p++){
+      const ph=((at*.45)+p/12)%1;
+      if(ph<.55){
+        const pr=rr+4+ph*46,pa=(p/12)*TAU+ph*.6,al=(1-ph/.55)*.7;
+        k.dot(bx2+Math.cos(pa)*pr,by2+Math.sin(pa)*pr,2,p%2?`rgba(124,252,154,${al})`:`rgba(255,226,138,${al})`,0);
+      }
+    }
+  }
 }
 function glyph(k,i,x,y,a,t){
   const{ctx}=k,c=`rgba(124,252,154,${a})`,cs=`rgba(124,252,154,${a*.5})`;
@@ -254,20 +735,31 @@ class CRE extends HTMLElement{
   static get observedAttributes(){return['chapter','time','phd','autoplay','speed','loop','firewalls','oracle','reduce-motion','dim']}
   constructor(){
     super();this.attachShadow({mode:'open'});
-    this.s={playing:false,time:0,chap:0,chapTime:0,phd:false,curBeat:-1,lastChap:-1,last:performance.now(),beatIdx:0,ended:false,
-      speed:1,loop:true,firewalls:true,oracle:true,reduceMotion:false,dim:5};
-    this._raf=0;this._fitT=0;this._hashT=0;this._lastPct=-1;this._lastTick=-1;
+    this.s={playing:false,time:0,chap:0,chapTime:0,animT:0,chapAnimT:0,phd:false,curBeat:-1,lastChap:-1,last:performance.now(),beatIdx:0,ended:false,
+      speed:1,loop:true,firewalls:true,oracle:true,reduceMotion:false,dim:3};
+    this._raf=0;this._fitT=0;this._hashT=0;this._fadeT=0;this._lastPct=-1;this._lastTick=-1;this._lastGradeChap=-1;this._sceneErr=false;this._errCount=0;this._lastErrMsg='';this._hudTxt='';
     this._onKey=this._onKey.bind(this);
+    this._onResize=this._onResize.bind(this);
+    this._onHash=()=>this._readHash();
+    this._onVis=()=>{if(!document.hidden){this.s.last=performance.now();this._sync()}};
   }
   connectedCallback(){
     this._build();this._fit();this._initFromAttributes();this._readHash();
     document.addEventListener('keydown',this._onKey);
-    addEventListener('resize',()=>{clearTimeout(this._fitT);this._fitT=setTimeout(()=>this._fit(),100)});
-    addEventListener('hashchange',()=>this._readHash());
-    document.addEventListener('visibilitychange',()=>{if(!document.hidden)this.s.last=performance.now()});
+    addEventListener('resize',this._onResize);
+    addEventListener('hashchange',this._onHash);
+    document.addEventListener('visibilitychange',this._onVis);
     this._loop();
   }
-  disconnectedCallback(){cancelAnimationFrame(this._raf);document.removeEventListener('keydown',this._onKey);clearTimeout(this._fitT);clearTimeout(this._hashT)}
+  _onResize(){clearTimeout(this._fitT);this._fitT=setTimeout(()=>this._fit(),100)}
+  disconnectedCallback(){
+    cancelAnimationFrame(this._raf);
+    document.removeEventListener('keydown',this._onKey);
+    removeEventListener('resize',this._onResize);
+    removeEventListener('hashchange',this._onHash);
+    document.removeEventListener('visibilitychange',this._onVis);
+    clearTimeout(this._fitT);clearTimeout(this._hashT);clearTimeout(this._fadeT);
+  }
   attributeChangedCallback(name,oldV,newV){
     if(oldV===newV||!this.$)return;
     if(name==='phd')this._setPhd(newV!==null);
@@ -291,6 +783,10 @@ class CRE extends HTMLElement{
 .shell{display:flex;flex-direction:column;border:1px solid #233;border-radius:10px;overflow:hidden;background:#101826}
 .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#101826;border-bottom:1px solid #233;flex-wrap:wrap}
 button{background:#ffd166;color:#102;border:none;padding:8px 14px;border-radius:5px;font-weight:700;cursor:pointer;font-size:.86em;font-family:inherit;touch-action:manipulation;min-height:32px;transition:background .15s}
+button:active{transform:translateY(1px)}
+button.sec:active{transform:none}
+.tgl:active:after{width:19px}
+.tgl:focus-visible,.dim:focus-visible{outline:2px solid #ffd166;outline-offset:2px}
 button:hover{background:#ffe29a}
 button.sec{background:#1d2c40;color:#9fb3c8;font-weight:600;font-size:.78em;padding:6px 11px;min-height:28px}
 button.sec:hover{background:#2a3f5c;color:#fff}
@@ -299,12 +795,23 @@ button.sec[aria-current="true"]{background:#ffd166;color:#102}
 .tgl:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;background:#7c8da3;border-radius:50%;transition:.2s}
 .tgl[aria-checked="true"]{background:#1b5e3f;border-color:#2e8b57}
 .tgl[aria-checked="true"]:after{left:20px;background:#7CFC9A}
+/* context-aware: red = this control has no effect in the current chapter */
+/* context-aware: red = this control changes framework state but has no
+   visual effect in the current chapter. Still fully toggleable — the red
+   is information, not a disabled state. */
+.tgl.na{background:#2e1420;border-color:#7a2d3a}
+.tgl.na:after{background:#ff8f5a}
+.tgl.na[aria-checked="true"]{background:#4a1f28;border-color:#8f3a47}
+.tgl.na[aria-checked="true"]:after{left:20px;background:#ffd166}
+.dim.na{background:#1a0e12;color:#c76a5a;border-color:#7a2d3a;opacity:.6}
+.dim.na[aria-checked="true"]{background:#4a1f28;color:#ffd166;border-color:#8f3a47;opacity:.9}
 .hint{font-size:.7em;color:#5f7288;margin-left:auto;font-family:ui-monospace,monospace}
+.naNote{font-size:.7em;color:#c76a5a;margin-top:6px;font-family:ui-monospace,monospace}
 .controls{display:flex;flex-direction:column;gap:12px;padding:14px;background:#0b1220;border-bottom:1px solid #233}
 .row{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
 .row.toggles{gap:12px 22px}
 .ctl{display:flex;align-items:center;gap:8px;font-size:.82em;min-width:0}
-.ctl>label{color:#9fb3c8;white-space:nowrap;font-weight:500;flex-shrink:0}
+.ctl>span{color:#9fb3c8;white-space:nowrap;font-weight:500;flex-shrink:0}
 input[type=range]{width:180px;accent-color:#ffd166;cursor:pointer;touch-action:manipulation;height:22px}
 .ctl .val{color:#ffd166;font-weight:700;min-width:44px;font-family:ui-monospace,monospace;font-size:.9em;text-align:right}
 .dims{display:flex;flex-wrap:wrap;gap:4px;min-width:0}
@@ -350,52 +857,38 @@ canvas{display:block;width:100%;height:auto}
 </style>
 <div class="shell">
   <div class="bar">
-    <button class="play" aria-label="Play">▶ Play</button>
-    <button class="toc-btn sec" aria-expanded="false" aria-controls="toc">Chapters</button>
-    <button class="tgl" id="tglPhd" role="switch" aria-checked="false" aria-label="Show PhD track"></button>
+    <button class="play" type="button" aria-label="Play">▶ Play</button>
+    <button class="toc-btn sec" type="button" aria-expanded="false" aria-controls="toc">Chapters</button>
+    <button class="tgl" id="tglPhd" type="button" role="switch" aria-checked="false" aria-label="Show PhD track"></button>
     <span class="hint">Space · ← → · Home/End</span>
   </div>
   <div class="controls" aria-label="Playback controls">
     <div class="row sliders">
-      <div class="ctl">
-        <label for="speed">Speed</label>
+      <label class="ctl">
+        <span>Speed</span>
         <input type="range" id="speed" min="0.25" max="3" step="0.25" value="1"/>
         <span class="val" id="speedV">1.00×</span>
-      </div>
+      </label>
       <div class="ctl">
-        <label>Dimensions</label>
+        <span>Dimensions</span>
         <div class="dims" role="radiogroup" aria-label="Dimension">
-          <button class="dim" role="radio" data-d="0" aria-checked="false">0D</button>
-          <button class="dim" role="radio" data-d="1" aria-checked="false">1D</button>
-          <button class="dim" role="radio" data-d="2" aria-checked="false">2D</button>
-          <button class="dim" role="radio" data-d="3" aria-checked="false">3D</button>
-          <button class="dim" role="radio" data-d="4" aria-checked="false">4D</button>
-          <button class="dim" role="radio" data-d="5" aria-checked="true">5D</button>
+          <button class="dim" role="radio" type="button" data-d="0" aria-checked="false">0D</button>
+          <button class="dim" role="radio" type="button" data-d="1" aria-checked="false">1D</button>
+          <button class="dim" role="radio" type="button" data-d="2" aria-checked="false">2D</button>
+          <button class="dim" role="radio" type="button" data-d="3" aria-checked="true">3D</button>
+          <button class="dim" role="radio" type="button" data-d="4" aria-checked="false">4D</button>
+          <button class="dim" role="radio" type="button" data-d="5" aria-checked="false">5D</button>
         </div>
       </div>
     </div>
     <div class="row toggles">
-      <div class="ctl">
-        <label for="tglAuto">Autoplay</label>
-        <button class="tgl" id="tglAuto" role="switch" aria-checked="false" aria-label="Autoplay"></button>
-      </div>
-      <div class="ctl">
-        <label for="tglLoop">Loop</label>
-        <button class="tgl" id="tglLoop" role="switch" aria-checked="true" aria-label="Loop playback" title="Restart from chapter 1 after chapter 8"></button>
-      </div>
-      <div class="ctl">
-        <label for="tglFire">Firewalls</label>
-        <button class="tgl" id="tglFire" role="switch" aria-checked="true" aria-label="Nodal firewalls" title="|ψ_node| = 0 impermeable boundaries — withdraw to see the firewall dissolve in ch. 6"></button>
-      </div>
-      <div class="ctl">
-        <label for="tglOracle">A₈ oracle</label>
-        <button class="tgl" id="tglOracle" role="switch" aria-checked="true" aria-label="A8 oracle" title="Conditional P = NP postulate — withdraw to see the resolution layer vanish in ch. 7"></button>
-      </div>
-      <div class="ctl">
-        <label for="tglMotion">Reduce motion</label>
-        <button class="tgl" id="tglMotion" role="switch" aria-checked="false" aria-label="Reduce motion" title="Freeze canvas animation; captions still advance"></button>
-      </div>
+      <div class="ctl"><span>Autoplay</span><button class="tgl" id="tglAuto" type="button" role="switch" aria-checked="false" aria-label="Autoplay" data-tip="Start/pause playback"></button></div>
+      <div class="ctl"><span>Loop</span><button class="tgl" id="tglLoop" type="button" role="switch" aria-checked="true" aria-label="Loop playback" data-tip="Restart from chapter 1 after chapter 8"></button></div>
+      <div class="ctl"><span>Firewalls</span><button class="tgl" id="tglFire" type="button" role="switch" aria-checked="true" aria-label="Nodal firewalls" data-tip="|ψ_node| = 0 impermeable boundaries"></button></div>
+      <div class="ctl"><span>A₈ oracle</span><button class="tgl" id="tglOracle" type="button" role="switch" aria-checked="true" aria-label="A8 oracle" data-tip="Conditional P = NP postulate"></button></div>
+      <div class="ctl"><span>Reduce motion</span><button class="tgl" id="tglMotion" type="button" role="switch" aria-checked="false" aria-label="Reduce motion" data-tip="Freeze decorative canvas animation; captions still advance"></button></div>
     </div>
+    <div class="naNote">red = no visual effect in this chapter (still toggleable — state always applies)</div>
   </div>
   <nav class="toc closed" id="toc" aria-label="Chapters"></nav>
   <div class="viewport">
@@ -416,25 +909,45 @@ canvas{display:block;width:100%;height:auto}
     <div class="thumb"></div>
   </div>
 </div>`;
+    // Keep the $ map directly next to the HTML above so selectors and markup
+    // cannot drift apart silently.
     const q=n=>s.querySelector(n);
     this.$={canvas:q('canvas'),ctx:q('canvas').getContext('2d'),play:q('.play'),tocBtn:q('.toc-btn'),toc:q('.toc'),
       viewport:q('.viewport'),stage:q('.stage'),chapname:q('.chapname'),grade:q('.grade'),eli5:q('.eli5'),phd:q('.phd'),
       scrub:q('.scrub'),fill:q('.fill'),thumb:q('.thumb'),ticks:q('.ticks'),
       speed:q('#speed'),speedV:q('#speedV'),hud:q('#hud'),dims:s.querySelectorAll('.dim'),
       tglPhd:q('#tglPhd'),tglAuto:q('#tglAuto'),tglLoop:q('#tglLoop'),tglFire:q('#tglFire'),tglOracle:q('#tglOracle'),tglMotion:q('#tglMotion')};
-    CH.forEach((c,i)=>{const b=document.createElement('button');b.className='sec';b.type='button';b.textContent=c.title;b.onclick=()=>this._goto(i);this.$.toc.appendChild(b)});
+    // Hoisted once: scenes draw in BASE coordinates; _fit only updates the
+    // canvas transform, so this kit is valid for the element's lifetime.
+    this._k=kit(this.$.ctx,BASE_W,BASE_H);
+    // --- control wiring: one guarded handler per control, so a failure in
+    // one can never disable the others ---
+    // --- control wiring: onclick property assignment (most robust form;
+    // cannot stack duplicates or fail to attach) + every click is logged
+    // into the diagnostics strip so control activity is observable. ---
+    const wire=(el,fn,label)=>{if(!el)return;el.onclick=()=>{this._clicks=(this._clicks||0)+1;this._action=label;this._actionAt=performance.now();try{fn()}catch(err){console.error('control error:',err)}}};
+    CH.forEach((c,i)=>{const b=document.createElement('button');b.className='sec';b.type='button';b.textContent=c.title;wire(b,()=>this._goto(i),`ch${i+1}`);this.$.toc.appendChild(b)});
     let acc=0;
     CH.forEach(c=>{const tk=document.createElement('div');tk.className='tick';tk.style.left=`calc(16px + (100% - 32px) * ${acc/TOTAL})`;this.$.ticks.appendChild(tk);acc+=c.dur});
-    this.$.play.onclick=()=>{if(this.s.ended){this._setTime(0);this._setPlaying(true)}else this._setPlaying(!this.s.playing)};
-    this.$.tocBtn.onclick=()=>{const open=!this.$.toc.classList.toggle('closed');this.$.tocBtn.setAttribute('aria-expanded',String(open))};
-    this.$.tglPhd.onclick=()=>this._setPhd(!this.s.phd);
-    this.$.tglAuto.onclick=()=>this._setPlaying(!this.s.playing);
-    this.$.tglLoop.onclick=()=>{this.s.loop=!this.s.loop;this._syncTgl('loop')};
-    this.$.tglFire.onclick=()=>{this.s.firewalls=!this.s.firewalls;this._syncTgl('firewalls')};
-    this.$.tglOracle.onclick=()=>{this.s.oracle=!this.s.oracle;this._syncTgl('oracle')};
-    this.$.tglMotion.onclick=()=>{this.s.reduceMotion=!this.s.reduceMotion;this._syncTgl('motion')};
-    this.$.speed.addEventListener('input',()=>this._setSpeed(parseFloat(this.$.speed.value)));
-    this.$.dims.forEach(b=>b.onclick=()=>this._setDim(parseInt(b.dataset.d)));
+    wire(this.$.play,()=>{if(this.s.ended){this._setTime(0);this._setPlaying(true)}else this._setPlaying(!this.s.playing)},'play');
+    wire(this.$.tocBtn,()=>{const open=!this.$.toc.classList.toggle('closed');this.$.tocBtn.setAttribute('aria-expanded',String(open))},'toc');
+    wire(this.$.tglPhd,()=>this._setPhd(!this.s.phd),'phd');
+    wire(this.$.tglAuto,()=>this._setPlaying(!this.s.playing),'autoplay');
+    wire(this.$.tglLoop,()=>{this.s.loop=!this.s.loop;this._syncTgl('loop')},'loop');
+    wire(this.$.tglFire,()=>{this.s.firewalls=!this.s.firewalls;this._syncTgl('firewalls')},'firewalls');
+    wire(this.$.tglOracle,()=>{this.s.oracle=!this.s.oracle;this._syncTgl('oracle')},'oracle');
+    wire(this.$.tglMotion,()=>{this.s.reduceMotion=!this.s.reduceMotion;this._syncTgl('motion')},'reduce-motion');
+    this.$.dims.forEach(b=>wire(b,()=>this._setDim(parseInt(b.dataset.d)),`dim${b.dataset.d}D`));
+    this.$.speed.addEventListener('input',()=>{this._clicks=(this._clicks||0)+1;this._action='speed';this._actionAt=performance.now();this._setSpeed(parseFloat(this.$.speed.value))});
+    this.$.dims.forEach((b,i,arr)=>{
+      b.addEventListener('keydown',ev=>{
+        const fwd=ev.key==='ArrowRight'||ev.key==='ArrowUp';
+        if(!fwd&&ev.key!=='ArrowLeft'&&ev.key!=='ArrowDown')return;
+        ev.preventDefault();
+        const j=(i+(fwd?1:-1)+arr.length)%arr.length;
+        this._setDim(parseInt(arr[j].dataset.d));arr[j].focus();
+      });
+    });
     this.$.scrub.addEventListener('pointerdown',e=>{this.$.scrub.setPointerCapture(e.pointerId);this._seek(e.clientX);
       const move=ev=>this._seek(ev.clientX);const up=()=>{this.$.scrub.removeEventListener('pointermove',move);this.$.scrub.removeEventListener('pointerup',up)};
       this.$.scrub.addEventListener('pointermove',move);this.$.scrub.addEventListener('pointerup',up)});
@@ -451,14 +964,11 @@ canvas{display:block;width:100%;height:auto}
       motion:[this.$.tglMotion,this.s.reduceMotion],phd:[this.$.tglPhd,this.s.phd]};
     const [el,on]=map[which];if(el)el.setAttribute('aria-checked',String(!!on));
   }
-  _setSpeed(v){this.s.speed=Math.max(.25,Math.min(3,v));this.$.speed.value=this.s.speed;this.$.speedV.textContent=this.s.speed.toFixed(2)+'×'}
+  _setSpeed(v){this.s.speed=Math.max(.25,Math.min(3,v));if(+this.$.speed.value!==this.s.speed)this.$.speed.value=this.s.speed;this.$.speedV.textContent=this.s.speed.toFixed(2)+'×'}
   _setDim(d){
     this.s.dim=Math.max(0,Math.min(5,d));
     if(this.getAttribute('dim')!==String(this.s.dim))this.setAttribute('dim',String(this.s.dim));
     this.$.dims.forEach(b=>b.setAttribute('aria-checked',String(parseInt(b.dataset.d)===this.s.dim)));
-    const props=['3 props','4 props','5 props','6 props','7 props','8 props'];
-    const tiers=['seed','line','Euler','stage','saturation','saturated'];
-    this.$.hud.textContent=`${this.s.dim}D · ${props[this.s.dim]} · ${tiers[this.s.dim]}`;
     this.dispatchEvent(new CustomEvent('dimchange',{detail:{dim:this.s.dim}}));
   }
   _initFromAttributes(){
@@ -468,9 +978,11 @@ canvas{display:block;width:100%;height:auto}
     if(this.hasAttribute('loop'))this.s.loop=true;
     if(this.hasAttribute('firewalls'))this.s.firewalls=true;
     if(this.hasAttribute('oracle'))this.s.oracle=true;
-    if(this.hasAttribute('reduce-motion'))this.s.reduceMotion=true;
+    // Respect the OS-level reduced-motion preference unless the author
+    // explicitly opts out via the absence of the attribute.
+    if(this.hasAttribute('reduce-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches)this.s.reduceMotion=true;
     this._syncTgl('loop');this._syncTgl('firewalls');this._syncTgl('oracle');this._syncTgl('motion');
-    this._setDim(this.hasAttribute('dim')?parseInt(this.getAttribute('dim'))||0:5);
+    this._setDim(this.hasAttribute('dim')?parseInt(this.getAttribute('dim'))||0:3);
     const c=this.getAttribute('chapter');
     if(c!==null)this._goto(Math.max(0,Math.min(CH.length-1,parseInt(c)||0)));
     else this._markActive();
@@ -478,7 +990,9 @@ canvas{display:block;width:100%;height:auto}
     if(t!==null)this._setTime(parseFloat(t)||0);
   }
   _onKey(e){
-    if(e.target!==document.body)return;
+    // Handle keys when focus is on the page body, on the host element, or
+    // still inside the shadow root (e.g. after clicking a caption area).
+    if(e.target!==document.body&&e.target!==this&&!this.shadowRoot.contains(e.target))return;
     if(e.code==='Space'){e.preventDefault();this.$.play.click()}
     else if(e.code==='ArrowRight')this._goto(Math.min(this.s.chap+1,CH.length-1));
     else if(e.code==='ArrowLeft')this._goto(Math.max(this.s.chap-1,0));
@@ -496,16 +1010,22 @@ canvas{display:block;width:100%;height:auto}
     if(!on&&this.hasAttribute('phd'))this.removeAttribute('phd');
     this._syncTgl('phd');
   }
-  _goto(i){
-    if(i<0||i>=CH.length)return;
+  // Single entry point for switching chapters: resets per-chapter state,
+  // flashes the caption, and dispatches chapterchange. _setTime overrides
+  // chapTime afterwards when seeking.
+  _enterChapter(i,flash=true){
     const changed=i!==this.s.chap;
     this.s.chap=i;this.s.chapTime=0;
     this.s.time=CH.slice(0,i).reduce((a,c)=>a+c.dur,0);
-    this.s.curBeat=-1;this.s.lastChap=-1;this.s.beatIdx=0;this.s.ended=false;
+    this.s.curBeat=-1;this.s.lastChap=-1;this.s.beatIdx=0;this.s.ended=false;this.s.chapAnimT=0;
     this.s.last=performance.now();
-    if(changed)this._flashCaption();
+    if(changed&&flash)this._flashCaption();
     this._markActive();this._sync(true);this._updateHash();
-    this.dispatchEvent(new CustomEvent('chapterchange',{detail:{index:i,id:CH[i].id}}));
+    if(changed)this.dispatchEvent(new CustomEvent('chapterchange',{detail:{index:i,id:CH[i].id}}));
+  }
+  _goto(i){
+    if(i<0||i>=CH.length)return;
+    this._enterChapter(i);
   }
   _markActive(){[...this.$.toc.children].forEach((b,k)=>{if(k===this.s.chap)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')})}
   _setTime(t){
@@ -513,14 +1033,22 @@ canvas{display:block;width:100%;height:auto}
     let acc=0,i=0;
     while(i<CH.length-1&&t>acc+CH[i].dur){acc+=CH[i].dur;i++}
     const changed=i!==this.s.chap;
-    this.s.chap=i;this.s.chapTime=t-acc;this.s.time=t;
-    this.s.curBeat=-1;this.s.lastChap=-1;this.s.beatIdx=0;this.s.ended=false;
-    if(changed){this._flashCaption();this._markActive()}
+    if(changed)this._enterChapter(i);
+    this.s.chapTime=t-acc;this.s.time=t;this.s.ended=false;
     this._sync(true);this._updateHash();
-    if(changed)this.dispatchEvent(new CustomEvent('chapterchange',{detail:{index:i,id:CH[i].id}}));
   }
   _seek(clientX){const r=this.$.scrub.getBoundingClientRect();const p=Math.max(0,Math.min(1,(clientX-r.left-16)/(r.width-32)));this._setTime(p*TOTAL)}
-  _flashCaption(){this.$.viewport.classList.add('fading');setTimeout(()=>this.$.viewport.classList.remove('fading'),140)}
+  _flashCaption(){
+    this.$.viewport.classList.add('fading');
+    // Mute live regions during the fade so mid-fade text swaps aren't
+    // announced twice by screen readers; restore right after.
+    this.$.eli5.setAttribute('aria-live','off');this.$.phd.setAttribute('aria-live','off');
+    clearTimeout(this._fadeT);
+    this._fadeT=setTimeout(()=>{
+      this.$.viewport.classList.remove('fading');
+      this.$.eli5.setAttribute('aria-live','polite');this.$.phd.setAttribute('aria-live','polite');
+    },140);
+  }
   _fit(){
     const cv=this.$.canvas;
     const w=cv.parentElement.clientWidth||BASE_W;
@@ -535,11 +1063,33 @@ canvas{display:block;width:100%;height:auto}
   _sync(force){
     const c=CH[this.s.chap];
     if(this.s.chap!==this.s.lastChap){this.s.lastChap=this.s.chap;this.s.curBeat=-1;force=true}
-    if(force||this.$.chapname.textContent!==c.title){
+    // Header (chapter name, grade badge, canvas label) updates exactly once
+    // per chapter, keyed on the chapter index — not on title comparison.
+    if(force||this._lastGradeChap!==this.s.chap){
+      this._lastGradeChap=this.s.chap;
       this.$.chapname.textContent=c.title;
       if(c.gradeTxt){this.$.grade.style.display='block';this.$.grade.className='grade '+c.grade;this.$.grade.textContent=c.gradeTxt;this.$.grade.title=c.gradeTip||''}
       else this.$.grade.style.display='none';
+      this.$.canvas.setAttribute('aria-label',`Animated diagram for: ${c.title}`);
     }
+    // Context-aware control marking: ALWAYS recomputed, every frame, from a
+    // single source of truth. Red = the control still toggles framework
+    // state, but the current chapter's scene never reads it — so flipping
+    // it changes nothing you can see here. Never disables the control.
+    const cid=c.id;
+    const mark=(el,live,applies)=>{
+      if(!el)return;
+      el.classList.toggle('na',!live);
+      const tip=el.dataset.tip||'';
+      el.title=live?tip:(tip?tip+' — ':'')+`no visual effect in this chapter — still toggleable; visible in ${applies}`;
+    };
+    mark(this.$.tglFire,cid==='firewall','ch. 6 (Firewalls)');
+    mark(this.$.tglOracle,cid==='pnp','ch. 7 (P = NP)');
+    mark(this.$.tglLoop,this.s.chap===CH.length-1,'ch. 8 (All Seven)');
+    const dimLive=['intro','seed','euler','pnp'].includes(cid);
+    this.$.dims.forEach(b=>{b.classList.toggle('na',!dimLive);b.title=dimLive?'':'no visual effect in this chapter — still selectable; visible in ch. 1, 2, 3, 7'});
+    mark(this.$.tglMotion,true,'all chapters');
+    mark(this.$.tglPhd,true,'all chapters');
     const bi=this._beatIndex(c,this.s.chapTime);
     if(bi!==this.s.curBeat||force){
       this.s.curBeat=bi;this.s.beatIdx=bi;
@@ -558,14 +1108,19 @@ canvas{display:block;width:100%;height:auto}
         this.$.scrub.setAttribute('aria-valuetext',`Chapter ${this.s.chap+1} of ${CH.length}, ${r} percent`);
       }
     }
-    if(this.s.chap!==this._lastTick){this._lastTick=this.s.chap;[...this.$.ticks.children].forEach((tk,i)=>tk.classList.toggle('done',i<=this.s.chap))}
+    if(this.s.chap!==this._lastTick){this._lastTick=this.s.chap;[...this.$.ticks.children].forEach((tk,i)=>tk.classList.toggle('done',i<this.s.chap))}
+    // Live state readout on the canvas: every control's effect is
+    // immediately observable, even ones whose visual lives in a scene.
+    const hudTxt=`${this.s.dim}D · oracle ${this.s.oracle?'ON':'OFF'} · firewalls ${this.s.firewalls?'ON':'OFF'}${this.s.reduceMotion?' · frozen':''}${this.s.playing?'':' · paused'}`;
+    if(this._hudTxt!==hudTxt){this._hudTxt=hudTxt;this.$.hud.textContent=hudTxt}
   }
   _updateHash(){
     if(this.hasAttribute('no-url-sync'))return;
     clearTimeout(this._hashT);
     this._hashT=setTimeout(()=>{
       const h=`#ch=${this.s.chap}&t=${Math.floor(this.s.chapTime)}`;
-      if(location.hash!==h)history.replaceState(null,'',h);
+      try{if(location.hash!==h)history.replaceState(null,'',h)}
+      catch(err){/* sandboxed iframe / opaque origin — hash sync unavailable */}
     },250);
   }
   _readHash(){
@@ -580,35 +1135,60 @@ canvas{display:block;width:100%;height:auto}
     const now=performance.now();
     const rawDt=Math.min((now-this.s.last)/1000,.06);
     this.s.last=now;
-    const dt=this.s.reduceMotion?0:rawDt*this.s.speed;
-    try{
-      if(this.s.playing&&!this.s.ended){
-        this.s.chapTime+=dt;this.s.time+=dt;
-        if(this.s.chapTime>=CH[this.s.chap].dur){
-          if(this.s.chap===CH.length-1){
-            if(this.s.loop){
-              this.s.chap=0;this.s.chapTime=0;this.s.time=0;this.s.curBeat=-1;this.s.beatIdx=0;
-              this._flashCaption();this._markActive();
-              this.dispatchEvent(new CustomEvent('chapterchange',{detail:{index:0,id:CH[0].id}}));
-            }else{
-              this.s.chapTime=CH[this.s.chap].dur;this.s.time=TOTAL;
-              this.s.playing=false;this.s.ended=true;
-              this.$.play.innerHTML='↻ Replay';this.$.play.setAttribute('aria-label','Replay');
-              this._syncTgl('autoplay');
-              this.dispatchEvent(new CustomEvent('ended'));
-            }
-          }else{
-            this.s.chap++;this.s.chapTime=0;this.s.curBeat=-1;this.s.beatIdx=0;
-            this._flashCaption();this._markActive();
-            this.dispatchEvent(new CustomEvent('chapterchange',{detail:{index:this.s.chap,id:CH[this.s.chap].id}}));
+    // Playback clock: ALWAYS advances (captions, beats, chapter progress).
+    const dt=rawDt*this.s.speed;
+    // Per-chapter ambient clock: each slide's decorative animation is its
+    // own — resets to zero on every chapter entry, then runs even while
+    // paused. Frozen only by reduce-motion.
+    this.s.animT+=this.s.reduceMotion?0:rawDt;
+    this.s.chapAnimT+=this.s.reduceMotion?0:rawDt;
+    if(this.s.playing&&!this.s.ended){
+      this.s.chapTime+=dt;this.s.time+=dt;
+      if(this.s.chapTime>=CH[this.s.chap].dur){
+        if(this.s.chap===CH.length-1){
+          if(this.s.loop)this._enterChapter(0);
+          else{
+            this.s.chapTime=CH[this.s.chap].dur;this.s.time=TOTAL;
+            this.s.playing=false;this.s.ended=true;
+            this.$.play.innerHTML='↻ Replay';this.$.play.setAttribute('aria-label','Replay');
+            this._syncTgl('autoplay');
+            this.dispatchEvent(new CustomEvent('ended'));
           }
-        }
+        }else this._enterChapter(this.s.chap+1);
       }
-      const k=kit(this.$.ctx,BASE_W,BASE_H);
-      const opts={firewalls:this.s.firewalls,oracle:this.s.oracle,motion:!this.s.reduceMotion,dim:this.s.dim};
-      SCENES[CH[this.s.chap].id](k,this.s.chapTime,CH[this.s.chap],this.s.beatIdx,opts);
-      this._sync();
-    }catch(err){console.error(err)}
+    }
+    this._fpsN=(this._fpsN||0)+1;
+    this._fpsT=this._fpsT||now;
+    if(now-this._fpsT>=500){this._fps=Math.round(this._fpsN*1000/(now-this._fpsT));this._fpsN=0;this._fpsT=now}
+    try{this._sync()}
+    catch(err){console.error('sync error:',err)}
+    try{
+      const c=CH[this.s.chap];
+      const opts={firewalls:this.s.firewalls,oracle:this.s.oracle,motion:!this.s.reduceMotion,dim:this.s.dim,animT:this.s.chapAnimT};
+      SCENES[c.id](this._k,this.s.chapTime,c,this.s.beatIdx,opts);
+      this._sceneErr=false;this._errCount=0;this._lastErrMsg='';
+    }catch(err){
+      this._errCount=(this._errCount||0)+1;
+      if(err.message!==this._lastErrMsg){this._lastErrMsg=err.message;console.error('scene error:',err)}
+      if(this._errCount===180){
+        const c2=this.$.ctx;c2.save();c2.setTransform(1,0,0,1,0,0);
+        c2.fillStyle=PAL.bg;c2.fillRect(0,0,this.$.canvas.width,this.$.canvas.height);
+        c2.fillStyle=PAL.bad;c2.font='14px system-ui';c2.fillText('scene error: '+this._lastErrMsg,20,40);
+        c2.restore();
+      }
+    }
+    // Dimension badge drawn on EVERY scene, bottom-left: loud, immediate
+    // feedback for the dimension selector, with an expanding pulse ring
+    // on each change. All math guarded against undefined clocks.
+    try{
+      const D=+this.s.dim||0,R=D*(D-1)/2,k=this._k,at=+this.s.chapAnimT||0;
+      if(this._dimLast!==D){this._dimLast=D;this._dimAt=at}
+      const du=clamp01((at-(this._dimAt??at))/.5);
+      k.label(`${D}D`,24,494,{font:'700 20px ui-monospace,monospace',color:PAL.accent});
+      k.label(`${R} planes · ${3+D} props`,24,468,{font:'10px ui-monospace,monospace',color:PAL.faint});
+      if(du<1)k.ring(30,488,14+du*36,`rgba(255,209,102,${(1-du)*.8})`,2);
+    }catch(e){console.error('badge error:',e)}
+    // The animation loop must survive any failure above; always re-queue.
     this._raf=requestAnimationFrame(()=>this._loop());
   }
 }
