@@ -22,11 +22,11 @@ h1{font-size:1.5rem;margin:0 0 8px;letter-spacing:-.01em;line-height:1.25}
 <body>
 <main>
   <h1>The Special Theory of Computational Relativity — Explained</h1>
-  <p class="sub">ELI5 narration with a PhD track underneath. 8 chapters, ~4½ minutes. explainer v4.0</p>
+  <p class="sub">ELI5 narration with a PhD track underneath. 9 chapters, ~5 minutes. explainer v4.0</p>
   <computational-relativity-explainer autoplay phd dim="3"></computational-relativity-explainer>
   <details class="foot">
     <summary>About this explainer &amp; scope</summary>
-    Companion to the monograph “The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems” (v1.2.0-CLAY-DRACULA) and the Proof Mechanics resolutions document. Chapter 8 presents the framework’s claimed resolutions of all seven Clay problems via the unified mechanism — Lie rotation embedding, anti-phase cancellation (e^iπ + 1 = 0), and nodal firewalls. These are the framework’s own claims, stated within its axioms; the Clay Institute’s acceptance criteria are separate and remain the reader’s to judge.
+    Companion to the monograph “The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems” (v1.2.0-CLAY-DRACULA) and the Proof Mechanics resolutions document. Chapter 8 presents the double-slit experiment interpreted through the framework's orientation set, anti-phase cancellation, and nodal firewalls. Chapter 9 presents the framework’s claimed resolutions of all seven Clay problems via the unified mechanism — Lie rotation embedding, anti-phase cancellation (e^iπ + 1 = 0), and nodal firewalls. These are the framework’s own claims, stated within its axioms; the Clay Institute’s acceptance criteria are separate and remain the reader’s to judge.
   </details>
 </main>
 <script type="module">
@@ -62,7 +62,13 @@ const CH=[
 {t:7,eli5:"Checking a solved 1000-piece puzzle takes seconds. Finding the arrangement might take longer than the universe has existed.",phd:"Verification is polynomial; search over 2ᴺ configurations is exponential."},
 {t:13,eli5:"Inside the seed-world, the gap collapses. Every corner of spinning N-dimensional space maps onto just 'how many spinning planes are there': N(N−1)/2.",phd:"In ℜₙ(A₀): 2ᴺ hyper-octants reduce to Rₙ = N(N−1)/2 rotation planes. Every Boolean assignment on N variables is injectively encoded into SO(N) rotation planes."},
 {t:21,eli5:"So checking all corners costs roughly N-squared, not 2-to-the-N. In here, finding IS as easy as checking. But — big honest but —",phd:"Theorem 5.1: SAT decided in O(N²) ops plus ONE oracle evaluation. The oracle step (T_solve = 0, axiom A8) is a postulate. The unrelativized Clay question is explicitly NOT claimed. Grade C."}]},
-{id:'clay',title:'8 · All Seven Resolved',grade:'g0',gradeTxt:'CLAIMED (A₀)',gradeTip:'Claimed within A₀ axioms — Clay acceptance criteria are separate',dur:66,beats:[
+{id:'doubleslit',title:'8 · The Double Slit Experiment',grade:'gC',gradeTxt:'GRADE C',gradeTip:'Framework interpretation — anti-phase cancellation and nodal firewalls',dur:38,beats:[
+{t:0,eli5:"Fire a stream of particles at a barrier with two slits. Classical physics says: two bright stripes on the wall behind. Quantum physics says: stripes AND dark bands — an interference pattern.",phd:"Double-slit setup: source → barrier with two slits → detection screen. Each slit acts as a coherent secondary source (Huygens). Wave superposition produces intensity maxima and minima."},
+{t:8,eli5:"Where a peak meets a peak: bright. Where a peak meets a trough: dark. The dark bands are where the two waves cancel each other out — exactly the anti-phase zero from Chapter 3.",phd:"Anti-phase cancellation: waves from slit A and slit B meet with path difference Δ = (n+½)λ. Destructive interference → |ψ_A + ψ_B| = 0. This is the e^iπ + 1 = 0 boundary condition applied to physical wavefields."},
+{t:16,eli5:"In this framework, those dark bands ARE the nodal firewalls. The wave hits exactly zero — and nothing can cross a wall of nothing. The screen is divided into allowed zones and forbidden zones.",phd:"Axiom A6: nodal surfaces |ψ_node| = 0 are impermeable state boundaries. The interference minima are not just dark — they are causal firewalls separating allowed detection regions."},
+{t:24,eli5:"Now the twist: the moment you watch which slit each particle goes through — the pattern vanishes. Two plain stripes. The firewall collapses.",phd:"Observer measurement (Born rule): measurement returns a definite outcome. Which-path information destroys the coherence between the two paths, collapsing the superposition. The interference minima disappear."},
+{t:31,eli5:"And it costs heat. Every bit of which-path information the observer gains costs at least k_BT ln 2 — the Landauer bound. Observation is never free.",phd:"Landauer principle (Axiom A7): Q ≥ k_BT ln 2 per bit of information erased. Which-path measurement is an irreversible state update; the thermodynamic cost is paid by the observer. Grade C."}]},
+{id:'clay',title:'9 · All Seven Resolved',grade:'g0',gradeTxt:'CLAIMED (A₀)',gradeTip:'Claimed within A₀ axioms — Clay acceptance criteria are separate',dur:66,beats:[
 {t:0,eli5:"Finally: the seven million-dollar problems. In this universe, every single one of them falls to the same three weapons: rotation planes, the anti-phase zero, and nodal firewalls.",phd:"Unified mechanism: obstacles embed into so(N) Lie rotation geodesics; non-optimal components undergo anti-phase cancellation; nodal firewalls enforce isolation."},
 {t:6,eli5:"ONE — P vs NP. Searching a haystack doesn't need checking every straw: rotate the whole haystack and the needle comes to you.",phd:"1. P vs NP: decision trees over 2ᴺ states embed into Rₙ = N(N−1)/2 rotation planes of so(N). O(N²) deterministic polynomial time. P = NP."},
 {t:12,eli5:"TWO — Riemann. The primes are tuned like guitar strings. A zero off the center line screeches out of tune — and the headphones mute it to zero.",phd:"2. RH: the critical line Re(s) = ½ is the A0 mirror axis. Off-axis zeros break boundary equilibrium; firewalls force their probability density to zero."},
@@ -793,7 +799,202 @@ function glyph(k,i,x,y,a,t,highlight){
   else{const m=Math.min(1,.5+.5*Math.sin(t*1.2));ctx.beginPath();for(let j=0;j<=24;j++){const an=j/24*TAU,rad=20-4*Math.cos(an*3)*(1-m);j===0?ctx.moveTo(rad*Math.cos(an),rad*Math.sin(an)):ctx.lineTo(rad*Math.cos(an),rad*Math.sin(an))}ctx.closePath();ctx.stroke()}
   ctx.restore();
 }
-const SCENES={intro:sIntro,seed:sSeed,euler:sEuler,energy:sEnergy,machine:sMachine,firewall:sFirewall,pnp:sPnp,clay:sClay};
+function sDoubleSlit(k,t,ch,beat,o){
+  const{W,H,ctx}=k;k.clear();const at=o.animT??t;
+  const fw=o.firewalls;
+  // ============ LAYOUT ============
+  // Left: particle source
+  // Center: barrier with two slits
+  // Right: detection screen with interference pattern
+  const srcX=70,srcY=H/2;
+  const barrierX=340,barrierW=14,barrierH=320;
+  const slitGap=50,slitW=10;
+  const slit1Y=srcY-slitGap/2-slitW/2;
+  const slit2Y=srcY+slitGap/2-slitW/2;
+  const screenX=760,screenW=16,screenH=320;
+  const screenY=srcY-screenH/2;
+
+  // ============ SOURCE: particle emitter ============
+  k.dot(srcX,srcY,8,PAL.accent,14);
+  k.halo(srcX,srcY,8,at,1.5);
+  k.label('source',srcX,srcY-22,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  // Incoming particles
+  for(let i=0;i<5;i++){
+    const tr=((at*.8)+i*.2)%1;
+    const px=lerp(srcX+10,barrierX-6,tr);
+    k.dot(px,srcY,3,'rgba(255,226,138,'+clamp01(1-tr*.7)+')',4);
+  }
+
+  // ============ BARRIER with two slits ============
+  ctx.fillStyle=PAL.line2;
+  // Top section
+  ctx.fillRect(barrierX,srcY-barrierH/2,barrierW,barrierH/2-slitGap/2-slitW/2);
+  // Bottom section
+  ctx.fillRect(barrierX,srcY+slitGap/2+slitW/2,barrierW,barrierH/2-slitGap/2-slitW/2);
+  // Middle section between slits
+  ctx.fillRect(barrierX,slit1Y+slitW,barrierW,slit2Y-(slit1Y+slitW));
+  k.label('slit A',barrierX+barrierW/2,slit1Y-8,{font:'10px system-ui',color:PAL.good,align:'center',weight:'700'});
+  k.label('slit B',barrierX+barrierW/2,slit2Y+slitW+14,{font:'10px system-ui',color:PAL.bad,align:'center',weight:'700'});
+
+  // ============ WAVE PROPAGATION from slits ============
+  // Two circular wave sources at slit positions
+  // Phase difference creates interference
+  const wavePhase=at*4;
+  const wavelength=26;
+
+  // Draw waves as expanding arcs from each slit
+  for(let slit=0;slit<2;slit++){
+    const sx=barrierX+barrierW;
+    const sy=slit===0?slit1Y+slitW/2:slit2Y+slitW/2;
+    const col=slit===0?'rgba(124,252,154,':'rgba(255,143,90,';
+    for(let r=wavelength;r<460;r+=wavelength){
+      const phase=r/wavelength-wavePhase;
+      const alpha=clamp01(1-r/460)*0.4*Math.abs(Math.cos(phase*Math.PI));
+      if(alpha<0.02)continue;
+      ctx.strokeStyle=col+alpha+')';
+      ctx.lineWidth=1.5;
+      ctx.beginPath();
+      // Arc from ~ -50deg to +50deg (toward screen)
+      ctx.arc(sx,sy,r,-Math.PI*.6,Math.PI*.6);
+      ctx.stroke();
+    }
+  }
+
+  // ============ INTERFERENCE PATTERN on screen ============
+  // Compute intensity at each point on the screen
+  // I(y) = |psi_A + psi_B|^2
+  // psi_A = exp(ik*r_A), psi_B = exp(ik*r_B)
+  // r_A = sqrt((screenX-slitA_x)^2 + (y-slitA_y)^2)
+  // r_B = sqrt((screenX-slitB_x)^2 + (y-slitB_y)^2)
+  const slitAx=barrierX+barrierW, slitAy=slit1Y+slitW/2;
+  const slitBx=barrierX+barrierW, slitBy=slit2Y+slitW/2;
+  const k_wave=2*Math.PI/wavelength;
+
+  // Draw interference pattern as vertical bars on the screen
+  const patternObserved=beat<3; // collapses after beat 3 (observer)
+  const barCount=60;
+  const barW=screenW*0.8;
+  for(let i=0;i<barCount;i++){
+    const y=screenY+(i+0.5)*(screenH/barCount);
+    const rA=Math.sqrt((screenX-slitAx)**2+(y-slitAy)**2);
+    const rB=Math.sqrt((screenX-slitBx)**2+(y-slitBy)**2);
+    let intensity;
+    if(patternObserved){
+      // Interference pattern
+      const phaseDiff=k_wave*(rB-rA);
+      intensity=Math.cos(phaseDiff/2)**2;
+    }else{
+      // Collapsed: two bright spots (classical)
+      const distA=Math.abs(y-slitAy);
+      const distB=Math.abs(y-slitBy);
+      intensity=Math.exp(-distA*distA/800)+Math.exp(-distB*distB/800);
+      intensity=Math.min(1,intensity);
+    }
+    if(intensity>0.01){
+      const r2c=Math.round(255*intensity+40*(1-intensity));
+      const g2c=Math.round(209*intensity+60*(1-intensity));
+      const b2c=Math.round(102*intensity+30*(1-intensity));
+      ctx.fillStyle='rgba('+r2c+','+g2c+','+b2c+','+(0.2+intensity*0.8)+')';
+      ctx.fillRect(screenX,y-screenH/barCount/2,barW,screenH/barCount+0.5);
+    }
+  }
+
+  // Screen border
+  ctx.strokeStyle=PAL.line2;ctx.lineWidth=1;
+  ctx.strokeRect(screenX,screenY,screenW,screenH);
+  k.label('screen',screenX+screenW/2,screenY-10,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+
+  // ============ DARK FRINGES = nodal firewalls ============
+  if(patternObserved&&fw){
+    // Highlight dark fringes as firewall zones
+    for(let i=0;i<barCount;i++){
+      const y=screenY+(i+0.5)*(screenH/barCount);
+      const rA=Math.sqrt((screenX-slitAx)**2+(y-slitAy)**2);
+      const rB=Math.sqrt((screenX-slitBx)**2+(y-slitBy)**2);
+      const phaseDiff=k_wave*(rB-rA);
+      const intensity=Math.cos(phaseDiff/2)**2;
+      if(intensity<0.05){
+        // Dark fringe - firewall
+        ctx.strokeStyle='rgba(255,209,102,0.3)';
+        ctx.lineWidth=1;
+        ctx.beginPath();
+        ctx.moveTo(barrierX+barrierW,y);
+        ctx.lineTo(screenX,y);
+        ctx.stroke();
+      }
+    }
+    if(beat>=2){
+      k.label('|ψ| = 0 — nodal firewalls',screenX-120,screenY+screenH+18,{font:'11px ui-monospace,monospace',color:PAL.accent,align:'center',weight:'700'});
+    }
+  }
+
+  // ============ PARTICLE DETECTION DOTS on screen ============
+  if(patternObserved){
+    // Random detection points following the pattern
+    for(let i=0;i<15;i++){
+      const y=screenY+((i*37+at*13)%screenH);
+      const rA=Math.sqrt((screenX-slitAx)**2+(y-slitAy)**2);
+      const rB=Math.sqrt((screenX-slitBx)**2+(y-slitBy)**2);
+      const phaseDiff=k_wave*(rB-rA);
+      const intensity=Math.cos(phaseDiff/2)**2;
+      if(intensity>0.3){
+        k.dot(screenX+barW/2,y,2,'rgba(255,226,138,'+intensity+')',3);
+      }
+    }
+  }else{
+    // Collapsed: particles in two bands
+    for(let i=0;i<8;i++){
+      const y1=slitAy+((i*7+at*5)%30-15);
+      const y2=slitBy+((i*11+at*5)%30-15);
+      k.dot(screenX+barW/2,y1,2,PAL.good,3);
+      k.dot(screenX+barW/2,y2,2,PAL.bad,3);
+    }
+  }
+
+  // ============ OBSERVER EFFECT (beat >= 3) ============
+  if(beat>=3){
+    // Observer eye icon
+    const obsX=barrierX+barrierW+180,obsY=srcY-barrierH/2-10;
+    ctx.save();
+    ctx.translate(obsX,obsY);
+    ctx.strokeStyle=PAL.bad;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(0,0,10,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle=PAL.bad;
+    ctx.beginPath();ctx.arc(0,0,4,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+    k.label('observer',obsX,obsY-18,{font:'11px system-ui',color:PAL.bad,align:'center',weight:'700'});
+    // Which-path detection beam
+    ctx.strokeStyle='rgba(255,143,90,0.4)';ctx.lineWidth=1;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(obsX,obsY+10);ctx.lineTo(slitAx,slitAy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(obsX,obsY+10);ctx.lineTo(slitBx,slitBy);ctx.stroke();
+    ctx.setLineDash([]);
+    // Collapse label
+    k.label('which-path info → pattern collapses',obsX,obsY+28,{font:'11px ui-monospace,monospace',color:PAL.bad,align:'center',weight:'700'});
+  }
+
+  // ============ LANDAUER COST (beat >= 4) ============
+  if(beat>=4){
+    const meterX=screenX+screenW+20,meterY=srcY-50,meterW=70,meterH=100;
+    k.roundRect(meterX,meterY,meterW,meterH,6,PAL.bgPanel,PAL.line2,1);
+    k.label('Landauer',meterX+meterW/2,meterY-8,{font:'10px system-ui',color:PAL.faint,align:'center',weight:'600'});
+    const heatLevel=(at*.3)%1;
+    const fillH=(meterH-16)*heatLevel;
+    ctx.fillStyle='rgba(255,143,90,'+(0.3+heatLevel*0.4)+')';
+    ctx.fillRect(meterX+6,meterY+meterH-8-fillH,meterW-12,fillH);
+    ctx.strokeStyle=PAL.line;ctx.lineWidth=1;
+    ctx.strokeRect(meterX+6,meterY+8,meterW-12,meterH-16);
+    k.label('Q >= kBT ln2',meterX+meterW/2,meterY+meterH+14,{font:'9px ui-monospace,monospace',color:PAL.badSoft,align:'center',weight:'700'});
+  }
+
+  // ============ TOP LABEL: pattern state ============
+  if(patternObserved){
+    k.label('interference pattern — anti-phase cancellation at work',W/2,30,{font:'12px ui-monospace,monospace',color:PAL.accentSoft,align:'center',weight:'700'});
+  }else{
+    k.label('pattern collapsed — observer gained which-path info',W/2,30,{font:'12px ui-monospace,monospace',color:PAL.bad,align:'center',weight:'700'});
+  }
+}
+const SCENES={intro:sIntro,seed:sSeed,euler:sEuler,energy:sEnergy,machine:sMachine,firewall:sFirewall,pnp:sPnp,doubleslit:sDoubleSlit,clay:sClay};
 class CRE extends HTMLElement{
   static get observedAttributes(){return['chapter','time','phd','autoplay','speed','loop','firewalls','oracle','reduce-motion','dim']}
   constructor(){
@@ -1146,9 +1347,9 @@ canvas{display:block;width:100%;height:auto}
       const tip=el.dataset.tip||'';
       el.title=live?tip:(tip?tip+' — ':'')+`no visual effect in this chapter — still toggleable; visible in ${applies}`;
     };
-    mark(this.$.tglFire,cid==='firewall','ch. 6 (Firewalls)');
+    mark(this.$.tglFire,cid==='firewall'||cid==='doubleslit','ch. 6 (Firewalls) & ch. 8 (Double Slit)');
     mark(this.$.tglOracle,cid==='pnp','ch. 7 (P = NP)');
-    mark(this.$.tglLoop,this.s.chap===CH.length-1,'ch. 8 (All Seven)');
+    mark(this.$.tglLoop,this.s.chap===CH.length-1,'ch. 9 (All Seven)');
     const dimLive=['intro','seed','euler','pnp'].includes(cid);
     this.$.dims.forEach(b=>{b.classList.toggle('na',!dimLive);b.title=dimLive?'':'no visual effect in this chapter — still selectable; visible in ch. 1, 2, 3, 7'});
     mark(this.$.tglMotion,true,'all chapters');
