@@ -22,7 +22,7 @@ h1{font-size:1.5rem;margin:0 0 8px;letter-spacing:-.01em;line-height:1.25}
 <body>
 <main>
   <h1>The Special Theory of Computational Relativity — Explained</h1>
-  <p class="sub">ELI5 narration with a PhD track underneath. 8 chapters, ~4½ minutes. explainer v2.8</p>
+  <p class="sub">ELI5 narration with a PhD track underneath. 8 chapters, ~4½ minutes. explainer v2.9</p>
   <computational-relativity-explainer autoplay phd dim="5"></computational-relativity-explainer>
   <details class="foot">
     <summary>About this explainer &amp; scope</summary>
@@ -216,25 +216,30 @@ function sPnp(k,t,ch,beat,o){
   ctx.globalAlpha=1;
 }
 function sClay(k,t,ch,beat){
-  const{W,ctx}=k;k.clear();
+  const{ctx}=k;k.clear();
   const rows=[['1','P vs NP','2ᴺ → Rₙ rotation planes'],['2','Riemann','off-axis zero → muted'],['3','Yang–Mills','seed sets floor ΔM > 0'],['4','Navier–Stokes','anti-phase kills blowup'],['5','BSD','rank = ord L at s = 1'],['6','Hodge','Ω_A0 isolates cycles'],['7','Poincaré','neck-pinch → surgery → S³']];
   const rv=Math.min(beat+1,rows.length);
   const beatT=ch.beats[beat]?.t||0;
-  for(let i=0;i<rv;i++){const r=rows[i],y=76+i*40,on=i===rv-1;
+  const ROW_H=44,Y0=72;
+  for(let i=0;i<rv;i++){
+    const r=rows[i],y=Y0+i*ROW_H,on=i===rv-1;
     const u=on?clamp01((t-beatT)/.4):1;
     ctx.globalAlpha=EASE.outCubic(u);
     k.roundRect(70,y-18,28,28,6,on?'#2e7d4f':'#1b5e3f',null);
     k.label(r[0],84,y+2,{font:'bold 14px system-ui',color:'#b8ffd0',align:'center'});
     k.label(r[1],118,y+2,{font:'bold 15px system-ui',color:on?'#fff':PAL.ink});
     k.label(r[2],260,y+2,{font:'12px system-ui',color:on?'#a9bdd0':PAL.faint});
-    glyph(k,i,800,y-4,on?1:.25,t);
+    glyph(k,i,815,y-2,on?1:.25,t);
     ctx.globalAlpha=1;
   }
-  k.label('all seven resolved: rotate · cancel anti-phase · firewall',70,410,{font:'12px ui-monospace,monospace',color:PAL.good,weight:'700'});
+  k.label('all seven resolved: rotate · cancel anti-phase · firewall',70,430,{font:'12px ui-monospace,monospace',color:PAL.good,weight:'700'});
 }
 function glyph(k,i,x,y,a,t){
   const{ctx}=k,c=`rgba(124,252,154,${a})`,cs=`rgba(124,252,154,${a*.5})`;
-  ctx.save();ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=1.6;ctx.translate(x,y);
+  ctx.save();
+  ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=1.6;
+  ctx.translate(x,y);
+  ctx.scale(0.6,0.6);
   if(i===0){k.ring(0,0,20,cs);const a2=t*2.2;k.line(0,0,20*Math.cos(a2),20*Math.sin(a2),c,1.6)}
   else if(i===1){ctx.beginPath();const d=1/(1+t*.6);for(let j=-4;j<=4;j++){const yy=16*Math.sin(j*1.2+t*3)*d;j===-4?ctx.moveTo(j*5,yy):ctx.lineTo(j*5,yy)}ctx.stroke();k.line(-22,0,22,0,c,1.2)}
   else if(i===2){for(let j=0;j<4;j++)ctx.strokeRect(-18+j*12,-14,9,9);const fl=4+3*Math.sin(t*3);ctx.fillRect(-22,fl,44,2)}
@@ -297,7 +302,6 @@ button.sec[aria-current="true"]{background:#ffd166;color:#102}
 .hint{font-size:.7em;color:#5f7288;margin-left:auto;font-family:ui-monospace,monospace}
 .controls{display:flex;flex-direction:column;gap:12px;padding:14px;background:#0b1220;border-bottom:1px solid #233}
 .row{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
-.row.sliders{gap:12px 28px}
 .row.toggles{gap:12px 22px}
 .ctl{display:flex;align-items:center;gap:8px;font-size:.82em;min-width:0}
 .ctl>label{color:#9fb3c8;white-space:nowrap;font-weight:500;flex-shrink:0}
