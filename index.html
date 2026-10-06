@@ -62,12 +62,12 @@ const CH=[
 {t:7,eli5:"Checking a solved 1000-piece puzzle takes seconds. Finding the arrangement might take longer than the universe has existed.",phd:"Verification is polynomial; search over 2ᴺ configurations is exponential."},
 {t:13,eli5:"Inside the seed-world, the gap collapses. Every corner of spinning N-dimensional space maps onto just 'how many spinning planes are there': N(N−1)/2.",phd:"In ℜₙ(A₀): 2ᴺ hyper-octants reduce to Rₙ = N(N−1)/2 rotation planes. Every Boolean assignment on N variables is injectively encoded into SO(N) rotation planes."},
 {t:21,eli5:"So checking all corners costs roughly N-squared, not 2-to-the-N. In here, finding IS as easy as checking. But — big honest but —",phd:"Theorem 5.1: SAT decided in O(N²) ops plus ONE oracle evaluation. The oracle step (T_solve = 0, axiom A8) is a postulate. The unrelativized Clay question is explicitly NOT claimed. Grade C."}]},
-{id:'doubleslit',title:'8 · The Double Slit Experiment',grade:'gC',gradeTxt:'GRADE C',gradeTip:'Framework interpretation — anti-phase cancellation and nodal firewalls',dur:38,beats:[
+{id:'doubleslit',title:'8 · The Double Slit Experiment',grade:'gC',gradeTxt:'GRADE C',gradeTip:'Framework interpretation — anti-phase cancellation and nodal firewalls',dur:56,beats:[
 {t:0,eli5:"Fire a stream of particles at a barrier with two slits. Classical physics says: two bright stripes on the wall behind. Quantum physics says: stripes AND dark bands — an interference pattern.",phd:"Double-slit setup: source → barrier with two slits → detection screen. Each slit acts as a coherent secondary source (Huygens). Wave superposition produces intensity maxima and minima."},
-{t:8,eli5:"Where a peak meets a peak: bright. Where a peak meets a trough: dark. The dark bands are where the two waves cancel each other out — exactly the anti-phase zero from Chapter 3.",phd:"Anti-phase cancellation: waves from slit A and slit B meet with path difference Δ = (n+½)λ. Destructive interference → |ψ_A + ψ_B| = 0. This is the e^iπ + 1 = 0 boundary condition applied to physical wavefields."},
-{t:16,eli5:"In this framework, those dark bands ARE the nodal firewalls. The wave hits exactly zero — and nothing can cross a wall of nothing. The screen is divided into allowed zones and forbidden zones.",phd:"Axiom A6: nodal surfaces |ψ_node| = 0 are impermeable state boundaries. The interference minima are not just dark — they are causal firewalls separating allowed detection regions."},
-{t:24,eli5:"Now the twist: the moment you watch which slit each particle goes through — the pattern vanishes. Two plain stripes. The firewall collapses.",phd:"Observer measurement (Born rule): measurement returns a definite outcome. Which-path information destroys the coherence between the two paths, collapsing the superposition. The interference minima disappear."},
-{t:31,eli5:"And it costs heat. Every bit of which-path information the observer gains costs at least k_BT ln 2 — the Landauer bound. Observation is never free.",phd:"Landauer principle (Axiom A7): Q ≥ k_BT ln 2 per bit of information erased. Which-path measurement is an irreversible state update; the thermodynamic cost is paid by the observer. Grade C."}]},
+{t:12,eli5:"Where a peak meets a peak: bright. Where a peak meets a trough: dark. The dark bands are where the two waves cancel each other out — exactly the anti-phase zero from Chapter 3.",phd:"Anti-phase cancellation: waves from slit A and slit B meet with path difference Δ = (n+½)λ. Destructive interference → |ψ_A + ψ_B| = 0. This is the e^iπ + 1 = 0 boundary condition applied to physical wavefields."},
+{t:24,eli5:"In this framework, those dark bands ARE the nodal firewalls. The wave hits exactly zero — and nothing can cross a wall of nothing. The screen is divided into allowed zones and forbidden zones.",phd:"Axiom A6: nodal surfaces |ψ_node| = 0 are impermeable state boundaries. The interference minima are not just dark — they are causal firewalls separating allowed detection regions."},
+{t:36,eli5:"Now try the Observer toggle. The moment you watch which slit each particle goes through — the pattern vanishes. Two plain stripes. The firewall collapses.",phd:"Observer measurement (Born rule): measurement returns a definite outcome. Which-path information destroys the coherence between the two paths, collapsing the superposition. Toggle the Observer control to see this live."},
+{t:46,eli5:"And it costs heat. Every bit of which-path information the observer gains costs at least k_BT ln 2 — the Landauer bound. Observation is never free.",phd:"Landauer principle (Axiom A7): Q ≥ k_BT ln 2 per bit of information erased. Which-path measurement is an irreversible state update; the thermodynamic cost is paid by the observer. Grade C."}]},
 {id:'clay',title:'9 · All Seven Resolved',grade:'g0',gradeTxt:'CLAIMED (A₀)',gradeTip:'Claimed within A₀ axioms — Clay acceptance criteria are separate',dur:66,beats:[
 {t:0,eli5:"Finally: the seven million-dollar problems. In this universe, every single one of them falls to the same three weapons: rotation planes, the anti-phase zero, and nodal firewalls.",phd:"Unified mechanism: obstacles embed into so(N) Lie rotation geodesics; non-optimal components undergo anti-phase cancellation; nodal firewalls enforce isolation."},
 {t:6,eli5:"ONE — P vs NP. Searching a haystack doesn't need checking every straw: rotate the whole haystack and the needle comes to you.",phd:"1. P vs NP: decision trees over 2ᴺ states embed into Rₙ = N(N−1)/2 rotation planes of so(N). O(N²) deterministic polynomial time. P = NP."},
@@ -802,92 +802,94 @@ function glyph(k,i,x,y,a,t,highlight){
 function sDoubleSlit(k,t,ch,beat,o){
   const{W,H,ctx}=k;k.clear();const at=o.animT??t;
   const fw=o.firewalls;
+  const observed=o.observer;
   // ============ LAYOUT ============
-  // Left: particle source
-  // Center: barrier with two slits
-  // Right: detection screen with interference pattern
-  const srcX=70,srcY=H/2;
-  const barrierX=340,barrierW=14,barrierH=320;
-  const slitGap=50,slitW=10;
+  const srcX=60,srcY=H/2;
+  const barrierX=320,barrierW=14,barrierH=340;
+  const slitGap=60,slitW=12;
   const slit1Y=srcY-slitGap/2-slitW/2;
   const slit2Y=srcY+slitGap/2-slitW/2;
-  const screenX=760,screenW=16,screenH=320;
+  const slitAY=slit1Y+slitW/2, slitBY=slit2Y+slitW/2;
+  const screenX=780,screenW=18,screenH=340;
   const screenY=srcY-screenH/2;
+  const slitAX=barrierX+barrierW, slitBX=barrierX+barrierW;
 
-  // ============ SOURCE: particle emitter ============
-  k.dot(srcX,srcY,8,PAL.accent,14);
-  k.halo(srcX,srcY,8,at,1.5);
-  k.label('source',srcX,srcY-22,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
-  // Incoming particles
-  for(let i=0;i<5;i++){
-    const tr=((at*.8)+i*.2)%1;
-    const px=lerp(srcX+10,barrierX-6,tr);
+  // ============ TOP LABEL ============
+  if(!observed){
+    k.label('interference pattern — anti-phase cancellation at work',W/2,28,{font:'12px ui-monospace,monospace',color:PAL.accentSoft,align:'center',weight:'700'});
+  }else{
+    k.label('pattern collapsed — observer gained which-path info',W/2,28,{font:'12px ui-monospace,monospace',color:PAL.bad,align:'center',weight:'700'});
+  }
+
+  // ============ SOURCE ============
+  k.dot(srcX,srcY,9,PAL.accent,16);
+  k.halo(srcX,srcY,9,at,1.8);
+  k.label('source',srcX,srcY-24,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  // Incoming particles — slower
+  for(let i=0;i<4;i++){
+    const tr=((at*.5)+i*.25)%1;
+    const px=lerp(srcX+12,barrierX-8,tr);
     k.dot(px,srcY,3,'rgba(255,226,138,'+clamp01(1-tr*.7)+')',4);
+  }
+
+  // ============ PATH INDICATORS (two possible paths) ============
+  // Faint dashed lines from source through each slit to screen
+  if(beat>=1&&!observed){
+    ctx.setLineDash([3,6]);
+    ctx.strokeStyle='rgba(124,252,154,0.15)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(srcX+12,srcY);ctx.lineTo(slitAX,slitAY);ctx.lineTo(screenX,slitAY+slitGap/2);ctx.stroke();
+    ctx.strokeStyle='rgba(255,143,90,0.15)';
+    ctx.beginPath();ctx.moveTo(srcX+12,srcY);ctx.lineTo(slitBX,slitBY);ctx.lineTo(screenX,slitBY-slitGap/2);ctx.stroke();
+    ctx.setLineDash([]);
   }
 
   // ============ BARRIER with two slits ============
   ctx.fillStyle=PAL.line2;
-  // Top section
   ctx.fillRect(barrierX,srcY-barrierH/2,barrierW,barrierH/2-slitGap/2-slitW/2);
-  // Bottom section
   ctx.fillRect(barrierX,srcY+slitGap/2+slitW/2,barrierW,barrierH/2-slitGap/2-slitW/2);
-  // Middle section between slits
   ctx.fillRect(barrierX,slit1Y+slitW,barrierW,slit2Y-(slit1Y+slitW));
-  k.label('slit A',barrierX+barrierW/2,slit1Y-8,{font:'10px system-ui',color:PAL.good,align:'center',weight:'700'});
-  k.label('slit B',barrierX+barrierW/2,slit2Y+slitW+14,{font:'10px system-ui',color:PAL.bad,align:'center',weight:'700'});
+  // Slit labels with color coding
+  k.label('slit A',barrierX+barrierW/2,slit1Y-10,{font:'bold 10px system-ui',color:PAL.good,align:'center'});
+  k.label('slit B',barrierX+barrierW/2,slit2Y+slitW+16,{font:'bold 10px system-ui',color:PAL.bad,align:'center'});
 
-  // ============ WAVE PROPAGATION from slits ============
-  // Two circular wave sources at slit positions
-  // Phase difference creates interference
-  const wavePhase=at*4;
-  const wavelength=26;
+  // ============ WAVE PROPAGATION — slower and clearer ============
+  const wavelength=30;
+  const wavePhase=at*1.8; // slower wave animation
+  const k_wave=2*Math.PI/wavelength;
 
-  // Draw waves as expanding arcs from each slit
   for(let slit=0;slit<2;slit++){
-    const sx=barrierX+barrierW;
-    const sy=slit===0?slit1Y+slitW/2:slit2Y+slitW/2;
-    const col=slit===0?'rgba(124,252,154,':'rgba(255,143,90,';
-    for(let r=wavelength;r<460;r+=wavelength){
+    const sx=slitAX, sy=slit===0?slitAY:slitBY;
+    const baseCol=slit===0?'rgba(124,252,154,':'rgba(255,143,90,';
+    for(let r=wavelength;r<480;r+=wavelength){
       const phase=r/wavelength-wavePhase;
-      const alpha=clamp01(1-r/460)*0.4*Math.abs(Math.cos(phase*Math.PI));
+      const alpha=clamp01(1-r/480)*0.5*Math.abs(Math.cos(phase*Math.PI));
       if(alpha<0.02)continue;
-      ctx.strokeStyle=col+alpha+')';
-      ctx.lineWidth=1.5;
+      ctx.strokeStyle=baseCol+alpha+')';
+      ctx.lineWidth=2; // thicker for clarity
       ctx.beginPath();
-      // Arc from ~ -50deg to +50deg (toward screen)
-      ctx.arc(sx,sy,r,-Math.PI*.6,Math.PI*.6);
+      ctx.arc(sx,sy,r,-Math.PI*.55,Math.PI*.55);
       ctx.stroke();
     }
   }
 
   // ============ INTERFERENCE PATTERN on screen ============
-  // Compute intensity at each point on the screen
-  // I(y) = |psi_A + psi_B|^2
-  // psi_A = exp(ik*r_A), psi_B = exp(ik*r_B)
-  // r_A = sqrt((screenX-slitA_x)^2 + (y-slitA_y)^2)
-  // r_B = sqrt((screenX-slitB_x)^2 + (y-slitB_y)^2)
-  const slitAx=barrierX+barrierW, slitAy=slit1Y+slitW/2;
-  const slitBx=barrierX+barrierW, slitBy=slit2Y+slitW/2;
-  const k_wave=2*Math.PI/wavelength;
-
-  // Draw interference pattern as vertical bars on the screen
-  const patternObserved=beat<3; // collapses after beat 3 (observer)
-  const barCount=60;
-  const barW=screenW*0.8;
+  const barCount=80;
+  const barW=screenW*0.85;
+  let brightFringeY=null,darkFringeY=null;
   for(let i=0;i<barCount;i++){
     const y=screenY+(i+0.5)*(screenH/barCount);
-    const rA=Math.sqrt((screenX-slitAx)**2+(y-slitAy)**2);
-    const rB=Math.sqrt((screenX-slitBx)**2+(y-slitBy)**2);
+    const rA=Math.sqrt((screenX-slitAX)**2+(y-slitAY)**2);
+    const rB=Math.sqrt((screenX-slitBX)**2+(y-slitBY)**2);
     let intensity;
-    if(patternObserved){
-      // Interference pattern
+    if(!observed){
       const phaseDiff=k_wave*(rB-rA);
       intensity=Math.cos(phaseDiff/2)**2;
+      if(intensity>0.9&&brightFringeY===null)brightFringeY=y;
+      if(intensity<0.05&&darkFringeY===null&&y>screenY+30)darkFringeY=y;
     }else{
-      // Collapsed: two bright spots (classical)
-      const distA=Math.abs(y-slitAy);
-      const distB=Math.abs(y-slitBy);
-      intensity=Math.exp(-distA*distA/800)+Math.exp(-distB*distB/800);
+      const distA=Math.abs(y-slitAY);
+      const distB=Math.abs(y-slitBY);
+      intensity=Math.exp(-distA*distA/600)+Math.exp(-distB*distB/600);
       intensity=Math.min(1,intensity);
     }
     if(intensity>0.01){
@@ -902,20 +904,33 @@ function sDoubleSlit(k,t,ch,beat,o){
   // Screen border
   ctx.strokeStyle=PAL.line2;ctx.lineWidth=1;
   ctx.strokeRect(screenX,screenY,screenW,screenH);
-  k.label('screen',screenX+screenW/2,screenY-10,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
+  k.label('screen',screenX+screenW/2,screenY-12,{font:'11px system-ui',color:PAL.faint,align:'center',weight:'600'});
 
-  // ============ DARK FRINGES = nodal firewalls ============
-  if(patternObserved&&fw){
-    // Highlight dark fringes as firewall zones
+  // ============ FRINGE LABELS ============
+  if(!observed&&beat>=1){
+    if(brightFringeY!==null){
+      k.label('bright',screenX+screenW+8,brightFringeY+3,{font:'10px system-ui',color:PAL.accentSoft,weight:'700'});
+      // Arrow to the fringe
+      ctx.strokeStyle=PAL.accentSoft;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(screenX+screenW+2,brightFringeY);ctx.lineTo(screenX+screenW+6,brightFringeY);ctx.stroke();
+    }
+    if(darkFringeY!==null){
+      k.label('dark',screenX+screenW+8,darkFringeY+3,{font:'10px system-ui',color:PAL.faint,weight:'700'});
+      ctx.strokeStyle=PAL.faint;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(screenX+screenW+2,darkFringeY);ctx.lineTo(screenX+screenW+6,darkFringeY);ctx.stroke();
+    }
+  }
+
+  // ============ NODAL FIREWALL LINES ============
+  if(!observed&&fw&&beat>=2){
     for(let i=0;i<barCount;i++){
       const y=screenY+(i+0.5)*(screenH/barCount);
-      const rA=Math.sqrt((screenX-slitAx)**2+(y-slitAy)**2);
-      const rB=Math.sqrt((screenX-slitBx)**2+(y-slitBy)**2);
+      const rA=Math.sqrt((screenX-slitAX)**2+(y-slitAY)**2);
+      const rB=Math.sqrt((screenX-slitBX)**2+(y-slitBY)**2);
       const phaseDiff=k_wave*(rB-rA);
       const intensity=Math.cos(phaseDiff/2)**2;
       if(intensity<0.05){
-        // Dark fringe - firewall
-        ctx.strokeStyle='rgba(255,209,102,0.3)';
+        ctx.strokeStyle='rgba(255,209,102,0.25)';
         ctx.lineWidth=1;
         ctx.beginPath();
         ctx.moveTo(barrierX+barrierW,y);
@@ -923,18 +938,15 @@ function sDoubleSlit(k,t,ch,beat,o){
         ctx.stroke();
       }
     }
-    if(beat>=2){
-      k.label('|ψ| = 0 — nodal firewalls',screenX-120,screenY+screenH+18,{font:'11px ui-monospace,monospace',color:PAL.accent,align:'center',weight:'700'});
-    }
+    k.label('|ψ| = 0 — nodal firewalls',screenX-140,screenY+screenH+20,{font:'11px ui-monospace,monospace',color:PAL.accent,align:'center',weight:'700'});
   }
 
-  // ============ PARTICLE DETECTION DOTS on screen ============
-  if(patternObserved){
-    // Random detection points following the pattern
-    for(let i=0;i<15;i++){
-      const y=screenY+((i*37+at*13)%screenH);
-      const rA=Math.sqrt((screenX-slitAx)**2+(y-slitAy)**2);
-      const rB=Math.sqrt((screenX-slitBx)**2+(y-slitBy)**2);
+  // ============ PARTICLE DETECTION DOTS ============
+  if(!observed){
+    for(let i=0;i<12;i++){
+      const y=screenY+((i*41+at*9)%screenH);
+      const rA=Math.sqrt((screenX-slitAX)**2+(y-slitAY)**2);
+      const rB=Math.sqrt((screenX-slitBX)**2+(y-slitBY)**2);
       const phaseDiff=k_wave*(rB-rA);
       const intensity=Math.cos(phaseDiff/2)**2;
       if(intensity>0.3){
@@ -942,65 +954,74 @@ function sDoubleSlit(k,t,ch,beat,o){
       }
     }
   }else{
-    // Collapsed: particles in two bands
+    // Collapsed: particles in two bands at slit positions
     for(let i=0;i<8;i++){
-      const y1=slitAy+((i*7+at*5)%30-15);
-      const y2=slitBy+((i*11+at*5)%30-15);
+      const y1=slitAY+((i*7+at*5)%30-15);
+      const y2=slitBY+((i*11+at*5)%30-15);
       k.dot(screenX+barW/2,y1,2,PAL.good,3);
       k.dot(screenX+barW/2,y2,2,PAL.bad,3);
     }
   }
 
-  // ============ OBSERVER EFFECT (beat >= 3) ============
-  if(beat>=3){
-    // Observer eye icon
-    const obsX=barrierX+barrierW+180,obsY=srcY-barrierH/2-10;
-    ctx.save();
-    ctx.translate(obsX,obsY);
-    ctx.strokeStyle=PAL.bad;ctx.lineWidth=2;
-    ctx.beginPath();ctx.arc(0,0,10,0,Math.PI*2);ctx.stroke();
+  // ============ OBSERVER INDICATOR ============
+  if(observed){
+    // Observer eye icon above the slits
+    const obsX=barrierX+barrierW+200,obsY=srcY-barrierH/2-15;
+    ctx.save();ctx.translate(obsX,obsY);
+    ctx.strokeStyle=PAL.bad;ctx.lineWidth=2.5;
+    ctx.beginPath();ctx.arc(0,0,12,0,Math.PI*2);ctx.stroke();
     ctx.fillStyle=PAL.bad;
-    ctx.beginPath();ctx.arc(0,0,4,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(0,0,5,0,Math.PI*2);ctx.fill();
+    // Pulsing ring around observer
+    const pu=(at*1.5)%1;
+    ctx.strokeStyle='rgba(255,143,90,'+((1-pu)*0.6)+')';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(0,0,12+pu*18,0,Math.PI*2);ctx.stroke();
     ctx.restore();
-    k.label('observer',obsX,obsY-18,{font:'11px system-ui',color:PAL.bad,align:'center',weight:'700'});
-    // Which-path detection beam
+    k.label('observer',obsX,obsY-20,{font:'11px system-ui',color:PAL.bad,align:'center',weight:'700'});
+    // Which-path beams
     ctx.strokeStyle='rgba(255,143,90,0.4)';ctx.lineWidth=1;
     ctx.setLineDash([4,4]);
-    ctx.beginPath();ctx.moveTo(obsX,obsY+10);ctx.lineTo(slitAx,slitAy);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(obsX,obsY+10);ctx.lineTo(slitBx,slitBy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(obsX,obsY+12);ctx.lineTo(slitAX,slitAY);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(obsX,obsY+12);ctx.lineTo(slitBX,slitBY);ctx.stroke();
     ctx.setLineDash([]);
-    // Collapse label
-    k.label('which-path info → pattern collapses',obsX,obsY+28,{font:'11px ui-monospace,monospace',color:PAL.bad,align:'center',weight:'700'});
+    k.label('which-path info -> pattern collapses',obsX,obsY+32,{font:'11px ui-monospace,monospace',color:PAL.bad,align:'center',weight:'700'});
+  }else if(beat>=3){
+    // Hint to toggle observer
+    const obsX=barrierX+barrierW+200,obsY=srcY-barrierH/2-15;
+    k.label('toggle Observer to collapse',obsX,obsY,{font:'11px ui-monospace,monospace',color:PAL.faint,align:'center',weight:'700'});
+    // Faint eye outline
+    ctx.save();ctx.translate(obsX,obsY+20);
+    ctx.strokeStyle='rgba(159,179,200,0.2)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(0,0,12,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
   }
 
-  // ============ LANDAUER COST (beat >= 4) ============
+  // ============ LANDAUER COST METER ============
   if(beat>=4){
-    const meterX=screenX+screenW+20,meterY=srcY-50,meterW=70,meterH=100;
+    const meterX=screenX+screenW+38,meterY=srcY-60,meterW=60,meterH=120;
     k.roundRect(meterX,meterY,meterW,meterH,6,PAL.bgPanel,PAL.line2,1);
-    k.label('Landauer',meterX+meterW/2,meterY-8,{font:'10px system-ui',color:PAL.faint,align:'center',weight:'600'});
-    const heatLevel=(at*.3)%1;
+    k.label('Landauer',meterX+meterW/2,meterY-10,{font:'10px system-ui',color:PAL.faint,align:'center',weight:'600'});
+    const heatLevel=observed?((at*.3)%1):0;
     const fillH=(meterH-16)*heatLevel;
-    ctx.fillStyle='rgba(255,143,90,'+(0.3+heatLevel*0.4)+')';
-    ctx.fillRect(meterX+6,meterY+meterH-8-fillH,meterW-12,fillH);
+    if(fillH>0){
+      ctx.fillStyle='rgba(255,143,90,'+(0.3+heatLevel*0.4)+')';
+      ctx.fillRect(meterX+6,meterY+meterH-8-fillH,meterW-12,fillH);
+    }
     ctx.strokeStyle=PAL.line;ctx.lineWidth=1;
     ctx.strokeRect(meterX+6,meterY+8,meterW-12,meterH-16);
-    k.label('Q >= kBT ln2',meterX+meterW/2,meterY+meterH+14,{font:'9px ui-monospace,monospace',color:PAL.badSoft,align:'center',weight:'700'});
-  }
-
-  // ============ TOP LABEL: pattern state ============
-  if(patternObserved){
-    k.label('interference pattern — anti-phase cancellation at work',W/2,30,{font:'12px ui-monospace,monospace',color:PAL.accentSoft,align:'center',weight:'700'});
-  }else{
-    k.label('pattern collapsed — observer gained which-path info',W/2,30,{font:'12px ui-monospace,monospace',color:PAL.bad,align:'center',weight:'700'});
+    k.label('Q >= kBT ln2',meterX+meterW/2,meterY+meterH+14,{font:'9px ui-monospace,monospace',color:observed?PAL.badSoft:PAL.faint,align:'center',weight:'700'});
+    if(!observed){
+      k.label('(toggle observer)',meterX+meterW/2,meterY+meterH+28,{font:'9px system-ui',color:PAL.faint,align:'center'});
+    }
   }
 }
 const SCENES={intro:sIntro,seed:sSeed,euler:sEuler,energy:sEnergy,machine:sMachine,firewall:sFirewall,pnp:sPnp,doubleslit:sDoubleSlit,clay:sClay};
 class CRE extends HTMLElement{
-  static get observedAttributes(){return['chapter','time','phd','autoplay','speed','loop','firewalls','oracle','reduce-motion','dim']}
+  static get observedAttributes(){return['chapter','time','phd','autoplay','speed','loop','firewalls','oracle','observer','reduce-motion','dim']}
   constructor(){
     super();this.attachShadow({mode:'open'});
     this.s={playing:false,time:0,chap:0,chapTime:0,animT:0,chapAnimT:0,phd:false,curBeat:-1,lastChap:-1,last:performance.now(),beatIdx:0,ended:false,
-      speed:1,loop:true,firewalls:true,oracle:true,reduceMotion:false,dim:3};
+      speed:1,loop:true,firewalls:true,oracle:true,observer:false,reduceMotion:false,dim:3};
     this._raf=0;this._fitT=0;this._hashT=0;this._fadeT=0;this._lastPct=-1;this._lastTick=-1;this._lastGradeChap=-1;this._sceneErr=false;this._errCount=0;this._lastErrMsg='';this._hudTxt='';
     this._onKey=this._onKey.bind(this);
     this._onResize=this._onResize.bind(this);
@@ -1032,6 +1053,7 @@ class CRE extends HTMLElement{
     else if(name==='loop')this.s.loop=newV!==null,this._syncTgl('loop');
     else if(name==='firewalls')this.s.firewalls=newV!==null,this._syncTgl('firewalls');
     else if(name==='oracle')this.s.oracle=newV!==null,this._syncTgl('oracle');
+    else if(name==='observer')this.s.observer=newV!==null,this._syncTgl('observer');
     else if(name==='reduce-motion')this.s.reduceMotion=newV!==null,this._syncTgl('motion');
     else if(name==='dim')this._setDim(parseInt(newV)||0);
     else if(name==='chapter'){const i=Math.max(0,Math.min(CH.length-1,parseInt(newV)||0));this._goto(i)}
@@ -1150,6 +1172,7 @@ canvas{display:block;width:100%;height:auto}
       <div class="ctl"><span>Loop</span><button class="tgl" id="tglLoop" type="button" role="switch" aria-checked="true" aria-label="Loop playback" data-tip="Restart from chapter 1 after chapter 8"></button></div>
       <div class="ctl"><span>Firewalls</span><button class="tgl" id="tglFire" type="button" role="switch" aria-checked="true" aria-label="Nodal firewalls" data-tip="|ψ_node| = 0 impermeable boundaries"></button></div>
       <div class="ctl"><span>A₈ oracle</span><button class="tgl" id="tglOracle" type="button" role="switch" aria-checked="true" aria-label="A8 oracle" data-tip="Conditional P = NP postulate"></button></div>
+      <div class="ctl"><span>Observer</span><button class="tgl" id="tglObserver" type="button" role="switch" aria-checked="false" aria-label="Observer measurement" data-tip="Which-path measurement collapses interference (ch. 8)"></button></div>
       <div class="ctl"><span>Reduce motion</span><button class="tgl" id="tglMotion" type="button" role="switch" aria-checked="false" aria-label="Reduce motion" data-tip="Freeze decorative canvas animation; captions still advance"></button></div>
     </div>
     <div class="naNote">red = no visual effect in this chapter (still toggleable — state always applies)</div>
@@ -1180,7 +1203,7 @@ canvas{display:block;width:100%;height:auto}
       viewport:q('.viewport'),stage:q('.stage'),chapname:q('.chapname'),grade:q('.grade'),eli5:q('.eli5'),phd:q('.phd'),
       scrub:q('.scrub'),fill:q('.fill'),thumb:q('.thumb'),ticks:q('.ticks'),
       speed:q('#speed'),speedV:q('#speedV'),hud:q('#hud'),dims:s.querySelectorAll('.dim'),
-      tglPhd:q('#tglPhd'),tglAuto:q('#tglAuto'),tglLoop:q('#tglLoop'),tglFire:q('#tglFire'),tglOracle:q('#tglOracle'),tglMotion:q('#tglMotion')};
+      tglPhd:q('#tglPhd'),tglAuto:q('#tglAuto'),tglLoop:q('#tglLoop'),tglFire:q('#tglFire'),tglOracle:q('#tglOracle'),tglObserver:q('#tglObserver'),tglMotion:q('#tglMotion')};
     // Hoisted once: scenes draw in BASE coordinates; _fit only updates the
     // canvas transform, so this kit is valid for the element's lifetime.
     this._k=kit(this.$.ctx,BASE_W,BASE_H);
@@ -1200,6 +1223,7 @@ canvas{display:block;width:100%;height:auto}
     wire(this.$.tglLoop,()=>{this.s.loop=!this.s.loop;this._syncTgl('loop')},'loop');
     wire(this.$.tglFire,()=>{this.s.firewalls=!this.s.firewalls;this._syncTgl('firewalls')},'firewalls');
     wire(this.$.tglOracle,()=>{this.s.oracle=!this.s.oracle;this._syncTgl('oracle')},'oracle');
+    wire(this.$.tglObserver,()=>{this.s.observer=!this.s.observer;this._syncTgl('observer')},'observer');
     wire(this.$.tglMotion,()=>{this.s.reduceMotion=!this.s.reduceMotion;this._syncTgl('motion')},'reduce-motion');
     this.$.dims.forEach(b=>wire(b,()=>this._setDim(parseInt(b.dataset.d)),`dim${b.dataset.d}D`));
     this.$.speed.addEventListener('input',()=>{this._clicks=(this._clicks||0)+1;this._action='speed';this._actionAt=performance.now();this._setSpeed(parseFloat(this.$.speed.value))});
@@ -1225,6 +1249,7 @@ canvas{display:block;width:100%;height:auto}
   _syncTgl(which){
     const map={autoplay:[this.$.tglAuto,this.s.playing],loop:[this.$.tglLoop,this.s.loop],
       firewalls:[this.$.tglFire,this.s.firewalls],oracle:[this.$.tglOracle,this.s.oracle],
+      observer:[this.$.tglObserver,this.s.observer],
       motion:[this.$.tglMotion,this.s.reduceMotion],phd:[this.$.tglPhd,this.s.phd]};
     const [el,on]=map[which];if(el)el.setAttribute('aria-checked',String(!!on));
   }
@@ -1242,10 +1267,11 @@ canvas{display:block;width:100%;height:auto}
     if(this.hasAttribute('loop'))this.s.loop=true;
     if(this.hasAttribute('firewalls'))this.s.firewalls=true;
     if(this.hasAttribute('oracle'))this.s.oracle=true;
+    if(this.hasAttribute('observer'))this.s.observer=true;
     // Respect the OS-level reduced-motion preference unless the author
     // explicitly opts out via the absence of the attribute.
     if(this.hasAttribute('reduce-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches)this.s.reduceMotion=true;
-    this._syncTgl('loop');this._syncTgl('firewalls');this._syncTgl('oracle');this._syncTgl('motion');
+    this._syncTgl('loop');this._syncTgl('firewalls');this._syncTgl('oracle');this._syncTgl('observer');this._syncTgl('motion');
     this._setDim(this.hasAttribute('dim')?parseInt(this.getAttribute('dim'))||0:3);
     const c=this.getAttribute('chapter');
     if(c!==null)this._goto(Math.max(0,Math.min(CH.length-1,parseInt(c)||0)));
@@ -1349,6 +1375,7 @@ canvas{display:block;width:100%;height:auto}
     };
     mark(this.$.tglFire,cid==='firewall'||cid==='doubleslit','ch. 6 (Firewalls) & ch. 8 (Double Slit)');
     mark(this.$.tglOracle,cid==='pnp','ch. 7 (P = NP)');
+    mark(this.$.tglObserver,cid==='doubleslit','ch. 8 (Double Slit)');
     mark(this.$.tglLoop,this.s.chap===CH.length-1,'ch. 9 (All Seven)');
     const dimLive=['intro','seed','euler','pnp'].includes(cid);
     this.$.dims.forEach(b=>{b.classList.toggle('na',!dimLive);b.title=dimLive?'':'no visual effect in this chapter — still selectable; visible in ch. 1, 2, 3, 7'});
@@ -1375,7 +1402,7 @@ canvas{display:block;width:100%;height:auto}
     if(this.s.chap!==this._lastTick){this._lastTick=this.s.chap;[...this.$.ticks.children].forEach((tk,i)=>tk.classList.toggle('done',i<this.s.chap))}
     // Live state readout on the canvas: every control's effect is
     // immediately observable, even ones whose visual lives in a scene.
-    const hudTxt=`${this.s.dim}D · oracle ${this.s.oracle?'ON':'OFF'} · firewalls ${this.s.firewalls?'ON':'OFF'}${this.s.reduceMotion?' · frozen':''}${this.s.playing?'':' · paused'}`;
+    const hudTxt=`${this.s.dim}D · oracle ${this.s.oracle?'ON':'OFF'} · firewalls ${this.s.firewalls?'ON':'OFF'} · observer ${this.s.observer?'ON':'OFF'}${this.s.reduceMotion?' · frozen':''}${this.s.playing?'':' · paused'}`;
     if(this._hudTxt!==hudTxt){this._hudTxt=hudTxt;this.$.hud.textContent=hudTxt}
   }
   _updateHash(){
@@ -1428,7 +1455,7 @@ canvas{display:block;width:100%;height:auto}
     catch(err){console.error('sync error:',err)}
     try{
       const c=CH[this.s.chap];
-      const opts={firewalls:this.s.firewalls,oracle:this.s.oracle,motion:!this.s.reduceMotion,dim:this.s.dim,animT:this.s.chapAnimT};
+      const opts={firewalls:this.s.firewalls,oracle:this.s.oracle,observer:this.s.observer,motion:!this.s.reduceMotion,dim:this.s.dim,animT:this.s.chapAnimT};
       SCENES[c.id](this._k,this.s.chapTime,c,this.s.beatIdx,opts);
       this._sceneErr=false;this._errCount=0;this._lastErrMsg='';
     }catch(err){
