@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="dark"/>
+<title>Computational Relativity — Explainer</title>
+<style>
+html,body{margin:0;background:#050a12;color:#e8e4d8;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:960px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:1.5rem;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:#ffd166;font-size:.85rem;margin:0 0 20px}
+.foot{margin-top:24px;font-size:.75rem;color:#8fa3b8;line-height:1.6;border-top:1px solid #233;padding-top:12px}
+.foot summary{cursor:pointer;color:#ffd166;font-weight:600;margin-bottom:6px}
+</style>
+</head>
+<body>
+<main>
+  <h1>The Special Theory of Computational Relativity — Explained</h1>
+  <p class="sub">ELI5 narration with a PhD track underneath. 8 chapters, ~4½ minutes. explainer v2.0</p>
+  <computational-relativity-explainer autoplay phd></computational-relativity-explainer>
+  <details class="foot">
+    <summary>About this explainer &amp; scope</summary>
+    Companion to the monograph “The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems” (v1.2.0-CLAY-DRACULA) and the Proof Mechanics resolutions document. Chapter 8 presents the framework’s claimed resolutions of all seven Clay problems via the unified mechanism — Lie rotation embedding, anti-phase cancellation (e^iπ + 1 = 0), and nodal firewalls. These are the framework’s own claims, stated within its axioms; the Clay Institute’s acceptance criteria (refereed publication and community consensus over time) are separate and remain the reader’s to judge.
+  </details>
+</main>
+<script type="module">
+/* ============ DATA ============ */
+const CH=[
+{id:'intro',title:'1 · The Big Idea',grade:'g0',gradeTxt:'CORE',dur:22,beats:[
+{t:0,eli5:"Everything starts with ZERO. Not empty zero — a very special, super-charged zero.",phd:"Axiom A0: A[0] = A0, 0 = 0, lim(x→0)(0/x) = λ. The indeterminate ratio 0/0 at the origin evaluates to an unconstrained scalar seed λ, generating spatial scale without pre-existing background geometry."},
+{t:7,eli5:"Think of it as the dot in the middle of everything. All of space, physics, and even math grows outward from this one dot.",phd:"Position 0 of the axiom array is the fixed origin of the manifold ℜₙ(A₀). All coordinate projections and SO(N) rotation planes are symmetric around A0."},
+{t:14,eli5:"One seed. One rule. Physics, geometry, and the hardest math problems all grow from it like a tree from a root.",phd:"The program: derive Euler's identity, E = mc², a chrono-structural time machine, and a conditional P = NP theorem from A0 alone. Each result carries an explicit epistemic grade."}]},
+{id:'seed',title:'2 · The Seed of Everything',grade:'g0',gradeTxt:'CORE',dur:32,beats:[
+{t:0,eli5:"Here's the seed. It has no width, no height, no depth — just existence, identity, and scale.",phd:"0D sector: 3 active properties (identity, scale, existence). Property scaling law Pₙ = 3 + N."},
+{t:7,eli5:"Grow one dimension: you get one more property. Grow again: another. Dimensions and properties walk together.",phd:"1D → 4 properties; 2D → 5; 3D → 6; 4D → 7; 5D → 8 — the saturation threshold. Beyond 5D no further properties activate."},
+{t:14,eli5:"Now shine the dimensions THROUGH the seed, like a mirror. On the other side you don't get normal dimensions — you get fractions.",phd:"Negative dimensions reflect across A0 into fractional anti-properties: −1D → ¼, −3D → 1/6, −5D → 1/8."},
+{t:22,eli5:"When a normal property meets its mirror fraction — CRASH — the collision crystallizes a constant.",phd:"Constant crystallization ⊗: colliding a positive integer property with its negative fractional inverse across A0 crystallizes δc, φc, O₈."}]},
+{id:'euler',title:'3 · Zero Makes Euler Famous',grade:'gC',gradeTxt:'GRADE C',dur:26,beats:[
+{t:0,eli5:"Take the seed and spin something around it. Any spin can be written as one magic number e raised to an angle.",phd:"In any SO(2) rotation plane centered at A0, complex phase transformation is R(θ) = e^iθ = cosθ + i sinθ."},
+{t:8,eli5:"Spin halfway around — exactly half a turn — and your arrow flips to point the OPPOSITE way.",phd:"Half-period rotation θ = π: e^iπ = −1 + 0i. Exact sign reversal of the oriented vector."},
+{t:15,eli5:"Now add the seed back — add 1 — and you get exactly zero. The most beautiful equation in math is just: 'flip, then return home'.",phd:"e^iπ + 1 = 0: the anti-phase boundary condition across the A0 mirror axis. Grade C."}]},
+{id:'energy',title:'4 · E = mc² Without the Drama',grade:'gC',gradeTxt:'GRADE C',dur:22,beats:[
+{t:0,eli5:"What is matter, really? In this theory: no tiny balls. Only rippling field — like wind on water, everywhere.",phd:"Field ontology: matter is continuous electromagnetic field density u(r,t) = ½(ε₀|E|² + μ₀⁻¹|B|²)."},
+{t:7,eli5:"Mass is just how tightly that rippling energy is packed. Divide by c² — and you're holding the mass.",phd:"Local mass density ρₘ = u/c². Mass is defined as scaled field energy density."},
+{t:13,eli5:"Squeeze all the ripples into a box and add them up: energy = mass times c².",phd:"E_total = ∫∫∫ u d³r = c² ∫∫∫ ρₘ d³r = mc² ■ — Grade C."}]},
+{id:'machine',title:'5 · The Time Machine',grade:'g0',gradeTxt:'CORE',dur:38,beats:[
+{t:0,eli5:"Now the main event: a time machine. Forget the movies. This one just flips the direction you travel through time.",phd:"Dracula Edition: temporal direction may invert while rest-energy remains invariant. L_mesh → −L_mesh while m → m, E_rest = mc² → mc²."},
+{t:7,eli5:"Picture a conveyor belt carrying a clock. The machine doesn't stop the clock or make its energy negative. It just runs the belt backwards.",phd:"The reversal acts on trajectory orientation only. Strict separation: trajectory orientation ≠ energy sign ≠ information dissipation."},
+{t:15,eli5:"The blueprint is a chain of eight axioms, A0 to A8, and the ORDER is the point. First the seed grows space. Then things can spin. Spinning needs a stage: 5 dimensions.",phd:"A0 origin → A1 Eulerian rotation → A2 5D geometry (ℜ₅: 32 hyper-octants, SO(5) 10 planes) → A3 energy invariant → A4 orbital-gear carrier → A5 shearing → A6 nodal firewalls → A7 Landauer → A8 conditional P = NP, deliberately last."},
+{t:25,eli5:"And the discipline: the 'solve anything instantly' axiom goes LAST. It only picks where to go — it doesn't build the machine.",phd:"Architectural rule: A8 is a state-resolution layer (T_solve = 0) that selects an already-defined state. Six-stage operation: generate → resolve → orient → invert → firewall → close."}]},
+{id:'firewall',title:'6 · Firewalls & No Free Paradoxes',grade:'g0',gradeTxt:'CORE',dur:30,beats:[
+{t:0,eli5:"Run time backwards and what stops you shaking hands with your past self and breaking the universe?",phd:"Paradox control is recast as a boundary problem, not an energy problem."},
+{t:7,eli5:"The answer: walls made of NOTHING. In the wave-machinery there are surfaces where the wave is exactly zero. Nothing can cross a wall of nothing.",phd:"Axiom A6: nodal surfaces |psi_node| = 0 are impermeable state boundaries. Past and future sectors are causally isolated during inversion."},
+{t:18,eli5:"And even information isn't free. Every bit the machine erases or writes costs a tiny minimum of heat.",phd:"Axiom A7: ΔE_Landauer ≥ k_BT ln 2 for information-bearing state updates."}]},
+{id:'pnp',title:'7 · The Famous One: P = NP',grade:'gC',gradeTxt:'GRADE C',dur:34,beats:[
+{t:0,eli5:"The most famous unsolved problem in computer science: is finding an answer really harder than checking one?",phd:"Clay Problem I: P versus NP. The framework's Complexity Collapse (Theorem 5.1) is its only head-on application."},
+{t:7,eli5:"Checking a solved 1000-piece puzzle takes seconds. Finding the arrangement might take longer than the universe has existed.",phd:"Verification is polynomial; search over 2ᴺ configurations is exponential."},
+{t:13,eli5:"Inside the seed-world, the gap collapses. Every corner of spinning N-dimensional space maps onto just 'how many spinning planes are there': N(N−1)/2.",phd:"In ℜₙ(A₀): 2ᴺ hyper-octants reduce to Rₙ = N(N−1)/2 rotation planes. Every Boolean assignment on N variables is injectively encoded into SO(N) rotation planes."},
+{t:21,eli5:"So checking all corners costs roughly N-squared, not 2-to-the-N. In here, finding IS as easy as checking. But — big honest but —",phd:"Theorem 5.1: SAT decided in O(N²) ops plus ONE oracle evaluation. The oracle step (T_solve = 0, axiom A8) is a postulate. The unrelativized Clay question is explicitly NOT claimed. Grade C."}]},
+{id:'clay',title:'8 · All Seven Resolved',grade:'g0',gradeTxt:'RESOLVED (A₀)',dur:66,beats:[
+{t:0,eli5:"Finally: the seven million-dollar problems. In this universe, every single one of them falls to the same three weapons: rotation planes, the anti-phase zero, and nodal firewalls.",phd:"Unified mechanism: obstacles embed into so(N) Lie rotation geodesics; non-optimal components undergo anti-phase cancellation; nodal firewalls enforce isolation."},
+{t:6,eli5:"ONE — P vs NP. Searching a haystack doesn't need checking every straw: rotate the whole haystack and the needle comes to you.",phd:"1. P vs NP: decision trees over 2ᴺ states embed into Rₙ = N(N−1)/2 rotation planes of so(N). O(N²) deterministic polynomial time. P = NP."},
+{t:12,eli5:"TWO — Riemann. The primes are tuned like guitar strings. A zero off the center line screeches out of tune — and the headphones mute it to zero.",phd:"2. RH: the critical line Re(s) = ½ is the A0 mirror axis. Off-axis zeros break boundary equilibrium; firewalls force their probability density to zero."},
+{t:18,eli5:"THREE — Yang–Mills. The quantum vacuum is never empty or infinite: it has a floor set by the seed pixel, so particles keep a stable positive mass.",phd:"3. Yang–Mills: A0 seed sets vacuum floor E₀ > 0 and UV cutoff; nodal firewalls eliminate infinite loop divergences, giving strictly positive mass gap ΔM > 0."},
+{t:24,eli5:"FOUR — Navier–Stokes. A whirlpool can never spin up an infinitely sharp shockwave: nature's friction absorbs the peak.",phd:"4. Navier–Stokes: extreme gradients trigger anti-phase cancellation, dissipating energy into nodal firewalls. Global C^∞ smoothness for all t ≥ 0."},
+{t:30,eli5:"FIVE — Birch and Swinnerton-Dyer. Counting infinite rational points on a curved loop is identical to counting the independent ways the loop can spin.",phd:"5. BSD: E(Q) is a 1D slice of SO(N) manifold. Each of the r = rank generators maps to an orthogonal rotation plane. rank(E(Q)) = ord_{s=1} L(E,s)."},
+{t:36,eli5:"SIX — Hodge. Complex high-dimensional shapes can always be cut into simple flat building blocks — no leftover phantom pieces.",phd:"6. Hodge: in the Grand Unified Topos, rational classes are invariant subobjects under the scale classifier Ω_A0."},
+{t:42,eli5:"SEVEN — Poincaré. Any 3D shape without a hole, however crumpled, can be blown up like a balloon into a perfectly round ball.",phd:"7. Poincaré: Ricci flow develops neck-pinch spikes; firewall cancellation lets surgery smooth all necks and collapse M³ into S³."}]}
+];
+
+/* ============ PALETTE + EASING ============ */
+const PAL={bg:'#050a12',bgPanel:'#0b1522',line:'#233',line2:'#3b4d63',ink:'#e8e4d8',dim:'#9fb3c8',faint:'#8fa3b8',accent:'#ffd166',accentSoft:'#ffe29a',good:'#7CFC9A',bad:'#ff8f5a',grid:'rgba(159,179,200,0.06)',halo:'rgba(255,209,102,0.35)',goodSoft:'rgba(124,252,154,0.55)',badSoft:'rgba(255,143,90,0.55)',goodDim:'rgba(124,252,154,0.06)',badDim:'rgba(255,143,90,0.06)'};
+const EASE={outCubic:t=>1-Math.pow(1-t,3),inOutCubic:t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2,outBack:t=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)}};
+const clamp01=x=>x<0?0:x>1?1:x;
+const lerp=(a,b,u)=>a+(b-a)*u;
+const TAU=Math.PI*2;
+const pulse=(t,p=1.6)=>EASE.outCubic(1-((t%p)/p));
+const TOTAL=CH.reduce((a,c)=>a+c.dur,0);
+
+/* ============ CANVAS KIT ============ */
+function kit(ctx,W,H){
+  const label=(text,x,y,o={})=>{const{font='12px system-ui',color=PAL.dim,align='left',weight='400'}=o;
+    ctx.fillStyle=color;ctx.font=`${weight} ${font}`;ctx.textAlign=align;ctx.textBaseline='alphabetic';ctx.fillText(text,x,y)};
+  return {W,H,ctx,
+    clear(){ctx.fillStyle=PAL.bg;ctx.fillRect(0,0,W,H);ctx.fillStyle=PAL.grid;
+      for(let x=20;x<W;x+=40)for(let y=20;y<H;y+=40)ctx.fillRect(x,y,1.2,1.2)},
+    line(x1,y1,x2,y2,c=PAL.dim,w=1.5){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()},
+    ring(x,y,r,c,w=1.5){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.stroke()},
+    dot(x,y,r,c,g=0){ctx.save();if(g){ctx.shadowColor=c;ctx.shadowBlur=g}ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();ctx.restore()},
+    halo(x,y,r,t,p=1.6,c=PAL.halo){const u=pulse(t,p);ctx.strokeStyle=c;ctx.lineWidth=1.5+2*(1-u);ctx.beginPath();ctx.arc(x,y,r+6*(1-u),0,TAU);ctx.stroke()},
+    label,
+    roundRect(x,y,w,h,r,fill,stroke,lw=1){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke()}}
+  };
+}
+
+/* ============ SCENES ============ */
+function sIntro(k,t){
+  const{W,H}=k;k.clear();const cx=W/2,cy=H/2-30;
+  for(let i=0;i<3;i++){const r=90+i*60+26*Math.sin(t*(.55-i*.15));k.ring(cx,cy,r,`rgba(255,209,102,${.3-i*.08})`,1.4)}
+  const b=1+.12*Math.sin(t*2.2);
+  k.halo(cx,cy,16*b,t,2.2);k.dot(cx,cy,14*b,PAL.accent,24);
+  for(let i=0;i<3;i++){const a=t*.6+i*TAU/3,r=120+10*Math.sin(t+i);k.dot(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,PAL.accentSoft,10)}
+  k.label('A0',cx+22,cy-24,{font:'13px Georgia',color:PAL.accent,weight:'italic'});
+}
+
+function sSeed(k,t){
+  const{W,H,ctx}=k;k.clear();const cx=W/2,cy=H/2-20;
+  k.line(cx,cy-130,cx,cy+110,PAL.accent,2);k.dot(cx,cy,6,PAL.accent,20);
+  k.label('A0',cx+8,cy-118,{font:'12px Georgia',color:PAL.accent,weight:'italic'});
+  const active=Math.floor(t/2)%6;
+  for(let n=0;n<=5;n++){
+    const y=cy+80-n*32,on=n===active,u=clamp01(t-n*.35),x=cx+40+EASE.outCubic(u)*30;
+    k.line(cx+10,y+4,x-6,y+4,on?PAL.good:PAL.line2,on?2:1);
+    k.label(n===0?'0D → 3 props':`${n}D → ${3+n} props`,x,y+8,{font:'12px ui-monospace,monospace',color:on?PAL.good:PAL.dim,weight:on?'700':'400'});
+    if(on)k.halo(x-6,y+4,5,t,1.4,PAL.goodSoft);
+  }
+  [{d:'−1D → ¼',y:cy+48},{d:'−3D → ⅙',y:cy+16},{d:'−5D → ⅛',y:cy-16}].forEach((m,i)=>{
+    const on=Math.floor(t/2)%3===i,u=clamp01(t*.6-i*.4),x=cx-60-EASE.outCubic(u)*90;
+    k.line(cx-10,m.y,x+4,m.y,on?PAL.bad:PAL.line2,on?2:1);
+    k.label(m.d,x,m.y+4,{font:'12px ui-monospace,monospace',color:on?PAL.bad:PAL.faint,weight:on?'700':'400'});
+  });
+  const f=(t%2.4)/2.4;
+  if(f<.4){const u=EASE.outCubic(f/.4);ctx.strokeStyle=`rgba(255,226,138,${1-u})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy+32,6+u*34,0,TAU);ctx.stroke()}
+}
+
+function sEuler(k,t){
+  const{W,H,ctx}=k;k.clear();const cx=W*.38,cy=H/2-10,R=110;
+  k.ring(cx,cy,R,PAL.line2,1.5);
+  k.line(cx-R-16,cy,cx+R+16,cy,'rgba(59,77,99,0.6)',1);
+  k.line(cx,cy-R-16,cx,cy+R+16,'rgba(59,77,99,0.6)',1);
+  const a=(t*.9)%TAU,x=cx+Math.cos(a)*R,y=cy-Math.sin(a)*R;
+  k.line(cx,cy,x,y,PAL.good,2.5);k.halo(x,y,6,t,1.4,PAL.goodSoft);k.dot(x,y,6,PAL.good,14);
+  const mx=cx-Math.cos(a)*R,my=cy+Math.sin(a)*R;
+  ctx.save();ctx.setLineDash([5,5]);k.line(cx,cy,mx,my,PAL.badSoft,1.5);ctx.restore();
+  const tx=W*.62;
+  [{txt:'e^iπ = −1',color:PAL.accent,delay:0},{txt:'+1  (the seed)',color:PAL.accent,delay:.4},{txt:'= 0',color:PAL.good,delay:.8}].forEach((r,i)=>{
+    const u=clamp01((t-r.delay)/.5),dy=(1-EASE.outCubic(u))*12;
+    k.label(r.txt,tx,cy-30+i*34+dy,{font:'16px Georgia',color:r.color,weight:'700'});
+  });
+  k.label('half-turn about A0',tx,cy+84,{font:'12px Georgia',color:PAL.faint});
+  const piU=Math.abs(((a+Math.PI)%TAU)-Math.PI);
+  if(piU<.15){ctx.fillStyle=`rgba(255,209,102,${(1-piU/.15)*.14})`;ctx.fillRect(0,0,W,H)}
+}
+
+function sEnergy(k,t){
+  const{W,H,ctx}=k;k.clear();
+  const bT=60,bH=130;
+  ctx.save();ctx.beginPath();ctx.rect(40,bT,W-80,bH);ctx.clip();
+  [['rgba(124,252,154,0.7)',14,1],['rgba(90,160,255,0.7)',11,1.3],['rgba(255,209,102,0.7)',8,1.6]].forEach((w,idx)=>{
+    ctx.strokeStyle=w[0];ctx.lineWidth=2;ctx.beginPath();
+    for(let x=40;x<W-40;x+=6){const y=bT+bH/2+Math.sin(x*.02+t*w[2]+idx*2)*w[1]+(idx-1)*22;x===40?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+    ctx.stroke();
+  });
+  ctx.restore();
+  const bx=W-200,by=100,bs=120;
+  k.roundRect(bx,by,bs,bs,12,PAL.bgPanel,PAL.accent,2);
+  k.halo(bx+bs/2,by+bs/2,10,t,2);
+  for(let i=0;i<4;i++){
+    const phase=((t*.5)+i*.25)%1,u=EASE.inOutCubic(phase);
+    const px=lerp(120,bx+bs/2,u),py=lerp(bT+bH/2+(i-1.5)*12,by+bs/2,u);
+    k.dot(px,py,4,`rgba(255,226,138,${clamp01(1-Math.abs(u-.5)*1.2)})`,10);
+  }
+  const u=clamp01(t/1.2),sc=lerp(.9,1,EASE.outBack(u));
+  ctx.save();ctx.translate(bx+bs/2,by+bs+40);ctx.scale(sc,sc);
+  k.label('E = mc²',0,0,{font:'22px Georgia',color:PAL.accent,align:'center',weight:'700'});
+  ctx.restore();
+  k.label('mass = packed field',bx+bs/2,by+bs+66,{font:'12px system-ui',color:PAL.faint,align:'center'});
+}
+
+function sMachine(k,t){
+  const{W}=k;k.clear();
+  const stages=[['A0','generate'],['A1','orient'],['A2','stage'],['A3','invariant'],['A5','isolate'],['A8','resolve']];
+  const x0=60,bw=W-120,by=70,bh=64,act=Math.floor((t*.18)%stages.length);
+  stages.forEach((s,i)=>{
+    const cx=x0+(i+.5)*bw/6,x=cx-56,on=i===act;
+    k.roundRect(x,by,112,bh,8,on?'rgba(255,209,102,0.1)':PAL.bgPanel,on?PAL.accent:PAL.line,on?2:1);
+    k.label(s[0],x+10,by+22,{font:'bold 12px system-ui',color:on?PAL.accent:PAL.dim});
+    k.label(s[1],x+10,by+42,{font:'11px system-ui',color:on?PAL.accentSoft:PAL.faint});
+    if(on)k.halo(cx,by+bh/2,40,t,1.2);
+  });
+  const ty=by+bh+120;
+  k.line(x0,ty,x0+bw,ty,PAL.line,3);
+  for(let i=0;i<16;i++){const px=x0+((i/16)*bw+(t*30)%(bw/16));if(px<x0+bw)k.line(px,ty,px+5,ty+8,PAL.line2,1)}
+  const rev=Math.floor(t/7)%2===1;
+  const tk=rev?x0+bw-((t*60)%bw):x0+((t*60)%bw);
+  k.dot(tk,ty-16,12,PAL.accent,16);
+  k.line(tk,ty-16,tk+Math.cos(t*2)*6,ty-16+Math.sin(t*2)*6,'#102',2);
+  k.label(rev?'−L_mesh (belt runs back)':'L_mesh (belt runs forward)',x0,ty+42,{font:'13px Georgia',color:rev?PAL.bad:PAL.good,weight:'700'});
+  k.label('E_rest = mc² — carried unchanged',W/2,by+bh+26,{font:'13px Georgia',color:PAL.accentSoft,align:'center'});
+}
+
+function sFirewall(k,t){
+  const{W,H,ctx}=k;k.clear();const cx=W/2,cy=H*.32;
+  ctx.fillStyle=PAL.goodDim;ctx.fillRect(60,cy-100,cx-120,200);
+  ctx.fillStyle=PAL.badDim;ctx.fillRect(cx+60,cy-100,W-60-(cx+60),200);
+  k.label('FUTURE states',90,cy-82,{font:'12px system-ui',color:PAL.good,weight:'700'});
+  k.label('PAST states',W-170,cy-82,{font:'12px system-ui',color:PAL.bad,weight:'700'});
+  ctx.strokeStyle=PAL.accent;ctx.lineWidth=2.5;ctx.beginPath();
+  for(let y=cy-100;y<cy+100;y+=4){const x=cx+Math.sin(y*.25+t*3)*1.5;y===cy-100?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+  ctx.stroke();
+  k.label('|ψ| = 0 — nothing crosses',cx,cy+118,{font:'12px system-ui',color:PAL.accent,align:'center',weight:'700'});
+  const tr=(t*.5)%1,py=cy-60+((t*13)%120),px=60+tr*(cx-90);
+  k.dot(px,py,5,PAL.good,10);
+  if(px>cx-105){const b=cx-105-(px-(cx-105));k.dot(Math.max(60,b),py,5,PAL.bad,10)}
+  k.label('ΔE ≥ k_BT ln 2 — every bit costs heat',cx,cy-116,{font:'12px ui-monospace,monospace',color:PAL.accentSoft,align:'center',weight:'700'});
+}
+
+function sPnp(k,t){
+  const{W,H,ctx}=k;k.clear();const N=5,oct=32,R=10;
+  const gx=60,gy=90,cw=16,sw=Math.floor((t*3)%(oct+1));
+  k.label(`brute force: up to 2^${N} = ${oct} checks`,gx,gy-16,{font:'12px ui-monospace,monospace',color:PAL.bad,weight:'700'});
+  for(let i=0;i<oct;i++){const x=gx+(i%8)*cw,y=gy+Math.floor(i/8)*cw;ctx.fillStyle=i<=sw?PAL.bad:PAL.line;ctx.fillRect(x,y,cw-2,cw-2)}
+  const cxr=W*.68,cyr=H/2-10,rad=100;
+  k.label(`A0 engine: ½(N²−N) = ${R} ops`,cxr,gy-16,{font:'12px ui-monospace,monospace',color:PAL.good,align:'center',weight:'700'});
+  for(let p=0;p<R;p++){const a=(p/R)*Math.PI+t*.5;k.line(cxr+Math.cos(a)*rad,cyr+Math.sin(a)*rad,cxr-Math.cos(a)*rad,cyr-Math.sin(a)*rad,PAL.goodSoft,1.4)}
+  k.halo(cxr,cyr,5,t,1.2);
+  const u=clamp01(t/1.4);
+  ctx.globalAlpha=EASE.outCubic(u);
+  k.label(`2^${N} = ${oct}`,gx,gy+120,{font:'bold 22px Georgia',color:PAL.bad});
+  k.label('→',gx+130,gy+120,{font:'bold 22px Georgia',color:PAL.dim});
+  k.label(`N(N−1)/2 = ${R}`,gx+170,gy+120,{font:'bold 22px Georgia',color:PAL.good});
+  k.label('same answer — polynomial steps — INSIDE the manifold',gx,gy+146,{font:'12px system-ui',color:PAL.faint});
+  ctx.globalAlpha=1;
+}
+
+function sClay(k,t,beat){
+  const{W,ctx}=k;k.clear();
+  const rows=[['1','P vs NP','2ᴺ → Rₙ rotation planes'],['2','Riemann','off-axis zero → muted'],['3','Yang–Mills','seed sets floor ΔM > 0'],['4','Navier–Stokes','anti-phase kills blowup'],['5','BSD','rank = ord L at s = 1'],['6','Hodge','Ω_A0 isolates cycles'],['7','Poincaré','neck-pinch → surgery → S³']];
+  const rv=Math.min(beat+1,rows.length);
+  for(let i=0;i<rv;i++){
+    const r=rows[i],y=56+i*36,on=i===rv-1,u=on?clamp01((t-(CH[7].beats[beat]?.t||0))/.4):1;
+    ctx.globalAlpha=EASE.outCubic(u);
+    k.roundRect(70,y-16,26,26,6,on?'#2e7d4f':'#1b5e3f',null);
+    k.label(r[0],83,y+2,{font:'bold 13px system-ui',color:'#b8ffd0',align:'center'});
+    k.label(r[1],115,y+2,{font:'bold 14px system-ui',color:on?'#fff':PAL.ink});
+    k.label(r[2],255,y+2,{font:'12px system-ui',color:on?'#a9bdd0':PAL.faint});
+    glyph(k,i,800,y-4,on?1:.25,t);
+    ctx.globalAlpha=1;
+  }
+  k.label('all seven resolved: rotate · cancel anti-phase · firewall',70,310,{font:'12px ui-monospace,monospace',color:PAL.good,weight:'700'});
+}
+function glyph(k,i,x,y,a,t){
+  const{ctx}=k,c=`rgba(124,252,154,${a})`,cs=`rgba(124,252,154,${a*.5})`;
+  ctx.save();ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=1.6;ctx.translate(x,y);
+  if(i===0){k.ring(0,0,20,cs);const a2=t*2.2;k.line(0,0,20*Math.cos(a2),20*Math.sin(a2),c,1.6)}
+  else if(i===1){ctx.beginPath();const d=1/(1+t*.6);for(let j=-4;j<=4;j++){const yy=16*Math.sin(j*1.2+t*3)*d;j===-4?ctx.moveTo(j*5,yy):ctx.lineTo(j*5,yy)}ctx.stroke();k.line(-22,0,22,0,c,1.2)}
+  else if(i===2){for(let j=0;j<4;j++)ctx.strokeRect(-18+j*12,-14,9,9);const fl=4+3*Math.sin(t*3);ctx.fillRect(-22,fl,44,2)}
+  else if(i===3){ctx.beginPath();for(let th=0;th<5;th+=.15){const rr=2.5*th/(1+.05*th),an=th+t*1.8;ctx.lineTo(rr*Math.cos(an),rr*Math.sin(an))}ctx.stroke()}
+  else if(i===4){k.ring(0,0,18,c);for(let j=0;j<3;j++){const an=t*1.5+j*2.094;k.dot(18*Math.cos(an),18*Math.sin(an),2.5,PAL.good,4)}}
+  else if(i===5){for(let gx=0;gx<3;gx++)for(let gy=0;gy<3;gy++){const sn=Math.min(1,Math.max(0,t-gx-gy)),s2=8*sn;ctx.strokeRect(-14+gx*12+(8-s2)/2,-14+gy*12+(8-s2)/2,s2,s2)}}
+  else{const m=Math.min(1,.5+.5*Math.sin(t*1.2));ctx.beginPath();for(let j=0;j<=24;j++){const an=j/24*TAU,rad=20-4*Math.cos(an*3)*(1-m);j===0?ctx.moveTo(rad*Math.cos(an),rad*Math.sin(an)):ctx.lineTo(rad*Math.cos(an),rad*Math.sin(an))}ctx.closePath();ctx.stroke()}
+  ctx.restore();
+}
+
+const SCENES=[sIntro,sSeed,sEuler,sEnergy,sMachine,sFirewall,sPnp,sClay];
+
+/* ============ WEB COMPONENT ============ */
+class CRE extends HTMLElement{
+  constructor(){
+    super();this.attachShadow({mode:'open'});
+    this.state={playing:true,time:0,chap:0,chapTime:0,phd:false,curBeat:-1,lastChap:-1,last:performance.now(),beatIdx:0};
+  }
+
+  connectedCallback(){
+    this._build();
+    this._fit();
+    this._readHash();
+    this._initPlay();
+    this._loop();
+    addEventListener('resize',()=>this._fit());
+    addEventListener('hashchange',()=>this._readHash());
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)this.state.last=performance.now()});
+  }
+
+  _build(){
+    const s=this.shadowRoot;
+    s.innerHTML=`
+<style>
+*{box-sizing:border-box}
+:host{display:block;color:#e8e4d8;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+:focus-visible{outline:2px solid #ffd166;outline-offset:2px;border-radius:4px}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#101826;border:1px solid #233;border-bottom:none;border-radius:10px 10px 0 0;flex-wrap:wrap}
+button{background:#ffd166;color:#102;border:none;padding:10px 14px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.82em;font-family:inherit;touch-action:manipulation}
+button:hover{background:#ffe29a}
+button.sec{background:#1d2c40;color:#9fb3c8;font-weight:600;font-size:.76em;padding:8px 12px}
+button.sec:hover{background:#2a3f5c;color:#fff}
+button.sec[aria-current="true"]{background:#ffd166;color:#102}
+.tgl{font-size:.76em;color:#9fb3c8;display:flex;align-items:center;gap:8px;background:none;border:none;padding:4px 6px;cursor:pointer;font-family:inherit}
+.sw{position:relative;width:46px;height:26px;background:#2a3a4f;border-radius:13px;transition:.2s;border:1px solid #3b4d63;flex:none}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;background:#7c8da3;border-radius:50%;transition:.2s}
+.tgl[aria-checked="true"] .sw{background:#1b5e3f;border-color:#2e8b57}
+.tgl[aria-checked="true"] .sw:after{left:23px;background:#7CFC9A}
+.toc{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px;background:#101826;border-left:1px solid #233;border-right:1px solid #233}
+.toc.closed{display:none}
+.stage{position:relative;background:#050a12;border:1px solid #233;overflow:hidden}
+canvas{display:block;width:100%;height:auto;touch-action:pan-y}
+.chapname{position:absolute;top:10px;left:14px;font-size:.68em;color:#8fa3b8;letter-spacing:.5px;background:rgba(5,10,18,.55);padding:3px 8px;border-radius:6px}
+.grade{position:absolute;top:10px;right:12px;font-size:.65em;padding:3px 9px;border-radius:10px;font-weight:700;letter-spacing:.4px}
+.gC{background:#5e4a1b;color:#ffe29a}.gS{background:#3a3a5e;color:#c3c3ff}.gH{background:#4a1b5e;color:#e0b0ff}.g0{background:#1b5e3f;color:#b8ffd0}
+.caption{position:absolute;left:0;right:0;bottom:0;padding:14px 18px 12px;background:linear-gradient(transparent,rgba(5,10,18,.92) 40%)}
+.eli5{font-size:1.05em;line-height:1.45;color:#fff;font-weight:600}
+.phd{display:none;margin-top:8px;padding:8px 12px;border-left:3px solid #ffd166;background:rgba(255,209,102,.07);border-radius:0 6px 6px 0;font-size:.8em;line-height:1.5;color:#ffe29a;font-family:Georgia,serif}
+:host([phd-on]) .phd{display:block}
+.scrub{position:relative;height:22px;background:#101826;border:1px solid #233;border-top:none;border-radius:0 0 10px 10px;cursor:pointer;touch-action:none;padding:0 12px;display:flex;align-items:center}
+.scrub .track{position:absolute;left:12px;right:12px;height:4px;background:#1d2c40;border-radius:2px}
+.scrub .fill{position:absolute;left:0;height:100%;background:#ffd166;border-radius:2px;width:0}
+.scrub .thumb{position:absolute;width:12px;height:12px;border-radius:50%;background:#ffd166;box-shadow:0 0 8px rgba(255,209,102,.5);transform:translate(-50%,0);top:5px;pointer-events:none}
+.scrub .tick{position:absolute;top:2px;width:1px;height:18px;background:#3b4d63;pointer-events:none}
+.scrub .tick.done{background:#ffd166}
+@media (max-width:600px){
+  .caption{position:static;background:none;padding:10px 14px 0}
+  .stage{overflow:visible;border-radius:0}
+  .chapname,.grade{position:static;display:inline-block;margin:8px 4px 0}
+  .eli5{font-size:.95em}
+  .phd{font-size:.74em}
+}
+</style>
+<div class="bar">
+  <button class="play" aria-label="Pause">❚❚ Pause</button>
+  <button class="toc-btn sec" aria-expanded="false" aria-controls="toc">Chapters</button>
+  <button class="tgl" role="switch" aria-checked="false" aria-label="Show PhD track"><span>PhD track</span><span class="sw" aria-hidden="true"></span></button>
+</div>
+<nav class="toc closed" id="toc" aria-label="Chapters"></nav>
+<div class="stage">
+  <canvas></canvas>
+  <div class="chapname" aria-hidden="true"></div>
+  <div class="grade" style="display:none" aria-hidden="true"></div>
+  <div class="caption">
+    <div class="eli5" aria-live="polite"></div>
+    <div class="phd" aria-live="polite"></div>
+  </div>
+</div>
+<div class="scrub" role="slider" tabindex="0" aria-label="Seek through chapters" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="track"><div class="fill"></div></div>
+  <div class="ticks"></div>
+  <div class="thumb"></div>
+</div>`;
+    this.$={
+      canvas:s.querySelector('canvas'),ctx:s.querySelector('canvas').getContext('2d'),
+      play:s.querySelector('.play'),tocBtn:s.querySelector('.toc-btn'),toc:s.querySelector('.toc'),
+      tgl:s.querySelector('.tgl'),chapname:s.querySelector('.chapname'),grade:s.querySelector('.grade'),
+      eli5:s.querySelector('.eli5'),phd:s.querySelector('.phd'),
+      scrub:s.querySelector('.scrub'),fill:s.querySelector('.scrub .fill'),
+      thumb:s.querySelector('.scrub .thumb'),ticks:s.querySelector('.scrub .ticks')
+    };
+    // Build TOC
+    CH.forEach((c,i)=>{const b=document.createElement('button');b.className='sec';b.type='button';b.textContent=c.title;b.onclick=()=>this._goto(i);this.$.toc.appendChild(b)});
+    // Ticks
+    let acc=0;
+    CH.forEach((c,i)=>{const tk=document.createElement('div');tk.className='tick';tk.style.left=`calc(12px + ${(acc/TOTAL)*100}% * (100% - 24px) / 100%)`;tk.style.left=`calc(12px + ${(acc/TOTAL)} * (100% - 24px))`;this.$.ticks.appendChild(tk);acc+=c.dur});
+    // Wire controls
+    this.$.play.onclick=()=>this._togglePlay();
+    this.$.tocBtn.onclick=()=>{const open=!this.$.toc.classList.toggle('closed');this.$.tocBtn.setAttribute('aria-expanded',String(open))};
+    this.$.tgl.onclick=()=>{this.state.phd=!this.state.phd;this.$.tgl.setAttribute('aria-checked',String(this.state.phd));this.toggleAttribute('phd-on',this.state.phd);if(this.state.phd&&!this.hasAttribute('phd'))this.setAttribute('phd','')};
+    this.$.scrub.addEventListener('pointerdown',e=>{this.$.scrub.setPointerCapture(e.pointerId);this._seek(e.clientX);const move=ev=>this._seek(ev.clientX);const up=()=>{this.$.scrub.removeEventListener('pointermove',move);this.$.scrub.removeEventListener('pointerup',up)};this.$.scrub.addEventListener('pointermove',move);this.$.scrub.addEventListener('pointerup',up)});
+    this.$.scrub.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();
+        const dir=e.key==='ArrowRight'?1:-1;
+        this._setTime(Math.max(0,Math.min(TOTAL,this.state.time+dir*5)))}
+      else if(e.key==='Home'){this._setTime(0)}
+      else if(e.key==='End'){this._setTime(TOTAL)}
+    });
+    document.addEventListener('keydown',e=>{
+      if(e.target!==document.body)return;
+      if(e.code==='Space'){e.preventDefault();this._togglePlay()}
+      if(e.code==='ArrowRight')this._goto(Math.min(this.state.chap+1,CH.length-1));
+      if(e.code==='ArrowLeft')this._goto(Math.max(this.state.chap-1,0));
+    });
+  }
+
+  _initPlay(){
+    if(!this.hasAttribute('autoplay'))this.state.playing=false,this.$.play.innerHTML='▶ Play';
+    if(this.hasAttribute('phd')){this.state.phd=true;this.$.tgl.setAttribute('aria-checked','true');this.toggleAttribute('phd-on',true)}
+    const c=this.getAttribute('chapter');if(c!==null)this._goto(parseInt(c)||0);
+    const t=this.getAttribute('time');if(t!==null)this._setTime(parseFloat(t)||0);
+  }
+
+  _togglePlay(){this.state.playing=!this.state.playing;this.$.play.innerHTML=this.state.playing?'❚❚ Pause':'▶ Play';this.$.play.setAttribute('aria-label',this.state.playing?'Pause':'Play');this.state.last=performance.now()}
+
+  _goto(i){
+    this.state.chap=i;this.state.chapTime=0;
+    this.state.time=CH.slice(0,i).reduce((a,c)=>a+c.dur,0);
+    this.state.curBeat=-1;this.state.lastChap=-1;this.state.last=performance.now();
+    this._sync(true);this._updateHash();
+    [...this.$.toc.children].forEach((b,k)=>b.setAttribute('aria-current',String(k===i)));
+    this.dispatchEvent(new CustomEvent('chapterchange',{detail:{index:i,id:CH[i].id}}));
+  }
+
+  _setTime(t){
+    t=Math.max(0,Math.min(TOTAL,t));
+    let acc=0,i=0;
+    while(i<CH.length-1&&t>acc+CH[i].dur){acc+=CH[i].dur;i++}
+    this.state.chap=i;this.state.chapTime=t-acc;this.state.time=t;
+    this.state.curBeat=-1;this.state.lastChap=-1;
+    this._sync(true);this._updateHash();
+  }
+
+  _seek(clientX){
+    const r=this.$.scrub.getBoundingClientRect();
+    const x=clientX-r.left-12;
+    const w=r.width-24;
+    const p=Math.max(0,Math.min(1,x/w));
+    this._setTime(p*TOTAL);
+  }
+
+  _fit(){
+    const cv=this.$.canvas;
+    const w=cv.parentElement.clientWidth||900;
+    const cw=Math.max(320,Math.min(900,w));
+    const dpr=Math.min(devicePixelRatio||1,2);
+    cv.width=Math.round(cw*dpr);
+    cv.height=Math.round(cw*(506/900)*dpr);
+    cv.style.width='100%';cv.style.height='auto';
+    this.$.ctx.setTransform(cv.width/900,0,0,cv.height/506,0,0);
+  }
+
+  _beatIndex(c,ct){let idx=0;for(let i=0;i<c.beats.length;i++)if(ct>=c.beats[i].t)idx=i;return idx}
+
+  _sync(force){
+    const c=CH[this.state.chap];
+    if(this.state.chap!==this.state.lastChap){this.state.lastChap=this.state.chap;this.state.curBeat=-1;force=true}
+    this.$.chapname.textContent=c.title;
+    if(c.gradeTxt){this.$.grade.style.display='block';this.$.grade.className='grade '+c.grade;this.$.grade.textContent=c.gradeTxt}
+    else this.$.grade.style.display='none';
+    const bi=this._beatIndex(c,this.state.chapTime);
+    if(bi!==this.state.curBeat||force){
+      this.state.curBeat=bi;this.state.beatIdx=bi;
+      this.$.eli5.textContent=c.beats[bi].eli5;
+      this.$.phd.textContent=c.beats[bi].phd||'';
+      this.dispatchEvent(new CustomEvent('beatchange',{detail:{chapter:this.state.chap,beat:bi}}));
+    }
+    const p=(this.state.time/TOTAL)*100;
+    this.$.fill.style.width=p+'%';
+    this.$.thumb.style.left=`calc(12px + ${p/100} * (100% - 24px))`;
+    this.$.scrub.setAttribute('aria-valuenow',String(Math.round(p)));
+    [...this.$.ticks.children].forEach((tk,i)=>{
+      const start=CH.slice(0,i).reduce((a,x)=>a+x.dur,0);
+      tk.classList.toggle('done',this.state.time>=start);
+    });
+  }
+
+  _updateHash(){
+    if(this.hasAttribute('no-url-sync'))return;
+    clearTimeout(this._hashT);
+    this._hashT=setTimeout(()=>{
+      const t=Math.floor(this.state.chapTime);
+      const h=`#ch=${this.state.chap}&t=${t}`;
+      if(location.hash!==h)history.replaceState(null,'',h);
+    },250);
+  }
+
+  _readHash(){
+    if(this.hasAttribute('no-url-sync'))return;
+    const m=location.hash.match(/ch=(\d+)(?:&t=(\d+))?/);
+    if(!m)return;
+    const ci=Math.max(0,Math.min(CH.length-1,parseInt(m[1])||0));
+    const tt=parseFloat(m[2])||0;
+    const start=CH.slice(0,ci).reduce((a,c)=>a+c.dur,0);
+    this._setTime(start+tt);
+  }
+
+  _loop(){
+    const now=performance.now();
+    const dt=Math.min((now-this.state.last)/1000,.06);
+    this.state.last=now;
+    try{
+      if(this.state.playing){
+        this.state.chapTime+=dt;this.state.time+=dt;
+        if(this.state.chapTime>=CH[this.state.chap].dur){
+          if(this.state.chap===CH.length-1){
+            this.state.chapTime=CH[this.state.chap].dur;this.state.time=TOTAL;
+            this.state.playing=false;this.$.play.innerHTML='▶ Play';
+            this.dispatchEvent(new CustomEvent('ended'));
+          }else{this.state.chap++;this.state.chapTime=0;this.state.curBeat=-1}
+        }
+      }
+      const k=kit(this.$.ctx,900,506);
+      SCENES[this.state.chap](k,this.state.chapTime,this.state.beatIdx);
+      this._sync();
+    }catch(err){console.error(err)}
+    requestAnimationFrame(()=>this._loop());
+  }
+}
+customElements.define('computational-relativity-explainer',CRE);
+</script>
+</body>
+</html>
