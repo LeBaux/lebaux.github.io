@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Computational Relativity — Explainer</title>
+<style>
+  :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#e8e4d8;background:#050a12}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0}
+  header{padding:12px 16px 8px;background:linear-gradient(135deg,#0f3d5c,#14304d);border-bottom:2px solid #c8b98a}
+  header h1{margin:0;font-size:1.05em}
+  header p{margin:3px 0 0;font-size:.72em;color:#ffd166}
+  .bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#101826;border-bottom:1px solid #233;flex-wrap:wrap}
+  button{background:#ffd166;color:#102;border:none;padding:9px 14px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.82em;touch-action:manipulation}
+  button:hover{background:#ffe29a} button:active{background:#e6b84f}
+  button.sec{background:#1d2c40;color:#9fb3c8;font-weight:600;font-size:.72em;padding:7px 10px}
+  button.sec:hover{background:#2a3f5c;color:#fff}
+  .trackTgl{font-size:.72em;color:#9fb3c8;display:flex;align-items:center;gap:6px}
+  .tgl{position:relative;width:46px;height:26px;background:#2a3a4f;border-radius:13px;cursor:pointer;transition:.2s;border:1px solid #3b4d63;flex:none}
+  .tgl:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;background:#7c8da3;border-radius:50%;transition:.2s}
+  .tgl.on{background:#1b5e3f;border-color:#2e8b57}
+  .tgl.on:after{left:23px;background:#7CFC9A}
+  main{max-width:900px;margin:0 auto;padding:14px 14px 30px}
+  .stage{position:relative;background:#050a12;border:1px solid #233;border-radius:10px;overflow:hidden}
+  canvas{display:block;width:100%;height:auto;touch-action:pan-y}
+  .caption{position:absolute;left:0;right:0;bottom:0;padding:14px 18px 12px;background:linear-gradient(transparent,rgba(5,10,18,.92) 40%)}
+  .eli5{font-size:1.05em;line-height:1.45;color:#fff;font-weight:600}
+  .phd{display:none;margin-top:8px;padding:8px 12px;border-left:3px solid #ffd166;background:rgba(255,209,102,.07);border-radius:0 6px 6px 0;font-size:.8em;line-height:1.5;color:#ffe29a;font-family:Georgia,serif}
+  body.phdon .phd{display:block}
+  .chapname{position:absolute;top:10px;left:14px;font-size:.68em;color:#8fa3b8;letter-spacing:.5px}
+  .grade{position:absolute;top:10px;right:12px;font-size:.65em;padding:3px 9px;border-radius:10px;font-weight:700}
+  .gC{background:#1b5e3f;color:#b8ffd0}.gS{background:#5e4a1b;color:#ffe29a}.gH{background:#3a3a5e;color:#c3c3ff}.g0{background:#4a1b5e;color:#e0b0ff}
+  .progress{height:4px;background:#1d2c40;margin-top:10px;border-radius:2px;cursor:pointer;touch-action:manipulation}
+  .progress .fill{height:100%;background:#ffd166;border-radius:2px;width:0%}
+  .toc{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px;background:#101826;border-bottom:1px solid #233}
+  .toc.closed{display:none}
+  .foot{max-width:900px;margin:14px auto 0;padding:10px 14px 18px;font-size:.68em;color:#8fa3b8;line-height:1.6;border-top:1px solid #233}
+  @media (max-width:600px){.eli5{font-size:.95em}.phd{font-size:.72em}}
+</style>
+</head>
+<body>
+<header>
+  <h1>The Special Theory of Computational Relativity &mdash; Explained</h1>
+  <p>ELI5 narration with a PhD track underneath. 8 chapters, ~4\u00bd minutes. explainer v1.2</p>
+</header>
+
+<div class="bar">
+  <button id="btnPlay">&#9654; Play</button>
+  <button id="btnToc">Chapters</button>
+  <div class="trackTgl"><span>PhD track</span><div class="tgl" id="tglPhd"></div></div>
+</div>
+<div class="toc" id="toc"></div>
+
+<main>
+  <div class="stage">
+    <canvas id="cv" width="900" height="506"></canvas>
+    <div class="chapname" id="chapname"></div>
+    <div class="grade" id="grade" style="display:none"></div>
+    <div class="caption">
+      <div class="eli5" id="eli5"></div>
+      <div class="phd" id="phd"></div>
+    </div>
+  </div>
+  <div class="progress" id="progress"><div class="fill" id="fill"></div></div>
+</main>
+
+<div class="foot">
+  Companion to the monograph &ldquo;The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems&rdquo; (v1.2.0-CLAY-DRACULA) and the Proof Mechanics resolutions document. Chapter 8 presents the framework&rsquo;s claimed resolutions of all seven Clay problems via the unified mechanism &mdash; Lie rotation embedding, anti-phase cancellation (e^i\u03c0 + 1 = 0), and nodal firewalls. These are the framework&rsquo;s own claims, stated within its axioms; the Clay Institute&rsquo;s acceptance criteria (refereed publication and community consensus over time) are separate and remain the reader&rsquo;s to judge.
+</div>
+
+<script>
+(function(){
+'use strict';
+
+// ============ SCRIPT ============
+// Each chapter: id, title, grade badge (C/S/H/0), duration, list of beats {t, eli5, phd}
+var CH = [
+{ id:'intro', title:'1 · The Big Idea', grade:'g0', gradeTxt:'CORE', dur:26, beats:[
+ {t:0, eli5:"Everything starts with ZERO. Not empty zero — a very special, super-charged zero.",
+  phd:"Axiom A0: A[0] = A0, 0 = 0, lim(x\u21920)(0/x) = \u03bb. The indeterminate ratio 0/0 at the origin evaluates to an unconstrained scalar seed \u03bb, generating spatial scale without pre-existing background geometry."},
+ {t:8, eli5:"Think of it as the dot in the middle of everything. All of space, physics, and even math grows outward from this one dot.",
+  phd:"Position 0 of the axiom array is the fixed origin of the manifold \u211c\u2099(A\u2080). All coordinate projections and SO(N) rotation planes are symmetric around A0; the order of secondary axioms is invariant."},
+ {t:16, eli5:"One seed. One rule. Physics, geometry, and the hardest math problems all grow from it like a tree from a root.",
+  phd:"The program: derive Euler's identity, E = mc\u00b2, a chrono-structural time machine, and a conditional P = NP theorem from A0 alone. Each result carries an explicit epistemic grade \u2014 conditional theorem (C), structural analogy (S), or historical commentary (H)."}
+]},
+{ id:'seed', title:'2 · The Seed of Everything', grade:'g0', gradeTxt:'CORE', dur:30, beats:[
+ {t:0, eli5:"Here's the seed. It has no width, no height, no depth — just existence, identity, and scale.",
+  phd:"0D sector: 3 active properties (identity, scale, existence). Property scaling law P\u2099 = 3 + N."},
+ {t:7, eli5:"Grow one dimension: you get one more property. Grow again: another. Dimensions and properties walk together.",
+  phd:"1D \u2192 4 properties; 2D \u2192 5; 3D \u2192 6; 4D \u2192 7; 5D \u2192 8 \u2014 the saturation threshold. Beyond 5D no further properties activate."},
+ {t:15, eli5:"Now shine the dimensions THROUGH the seed, like a mirror. On the other side you don't get normal dimensions — you get fractions.",
+  phd:"Negative dimensions reflect across A0 into fractional anti-properties: \u22121D \u2192 \u00bc, \u22123D \u2192 1/6, \u22125D \u2192 1/8. Dimensional mirror symmetry: integer properties P\u2099 collide with their fractional inverses across the origin."},
+ {t:23, eli5:"When a normal property meets its mirror fraction — CRASH — the collision crystallizes a constant. That's where the framework's fundamental constants come from.",
+  phd:"Constant crystallization \u2297: colliding a positive integer property with its negative fractional inverse across A0 crystallizes \u03b4c, \u03c6c, O\u2088. Absolute zero and c are the sole invariant bounds of the system."}
+]},
+{ id:'euler', title:'3 · Zero Makes Euler Famous', grade:'gC', gradeTxt:'GRADE C', dur:24, beats:[
+ {t:0, eli5:"Take the seed and spin something around it. Any spin can be written as one magic number e raised to an angle.",
+  phd:"In any SO(2) rotation plane centered at A0, complex phase transformation is R(\u03b8) = e^i\u03b8 = cos\u03b8 + i sin\u03b8."},
+ {t:8, eli5:"Spin halfway around — exactly half a turn — and your arrow flips to point the OPPOSITE way.",
+  phd:"Half-period rotation \u03b8 = \u03c0: e^i\u03c0 = \u22121 + 0i. Exact sign reversal of the oriented vector."},
+ {t:15, eli5:"Now add the seed back — add 1 — and you get exactly zero. The most beautiful equation in math is just: 'flip, then return home'.",
+  phd:"e^i\u03c0 + 1 = 0: the anti-phase boundary condition across the A0 mirror axis. Euler's identity emerges as the equilibrium condition of rotation about the origin. \u25a0 (conditional on the A0 framework \u2014 Grade C)"}
+]},
+{ id:'energy', title:'4 · E = mc\u00b2 Without the Drama', grade:'gC', gradeTxt:'GRADE C', dur:22, beats:[
+ {t:0, eli5:"What is matter, really? In this theory: no tiny balls. Only rippling field — like wind on water, everywhere.",
+  phd:"Field ontology: matter is continuous electromagnetic field density u(r,t) = \u00bd(\u03b5\u2080|E|\u00b2 + \u03bc\u2080\u207b\u00b9|B|\u00b2). No discrete point particles exist in \u211c\u2099(A\u2080)."},
+ {t:8, eli5:"Mass is just how tightly that rippling energy is packed. Divide by c² — and you're holding the mass.",
+  phd:"Local mass density \u03c1\u2098 = u/c\u00b2. Mass is defined as scaled field energy density."},
+ {t:14, eli5:"Squeeze all the ripples into a box and add them up: energy = mass times c². Einstein's equation, growing from the seed like everything else.",
+  phd:"E_total = \u222d u d\u00b3r = c\u00b2 \u222d \u03c1\u2098 d\u00b3r = mc\u00b2 \u25a0 \u2014 exact field equivalence by definition of \u03c1\u2098 and integration over a domain centered at A0. Grade C: derived in-manifold, not a new proof of SR."}
+]},
+{ id:'machine', title:'5 · The Time Machine', grade:'g0', gradeTxt:'CORE', dur:38, beats:[
+ {t:0, eli5:"Now the main event: a time machine. Forget the movies. This one just flips the direction you travel through time.",
+  phd:"Dracula Edition, lebaux.github.io: temporal direction may invert while rest-energy remains invariant. L_mesh \u2192 \u2212L_mesh while m \u2192 m, E_rest = mc\u00b2 \u2192 mc\u00b2."},
+ {t:7, eli5:"Picture a conveyor belt carrying a clock. The machine doesn't stop the clock or make its energy negative. It just runs the belt backwards.",
+  phd:"The reversal acts on trajectory orientation only. Strict separation: trajectory orientation \u2260 energy sign \u2260 information dissipation. E = mc\u00b2 belongs to invariant energy; Landauer's \u0394E \u2265 k_BT ln 2 belongs to information-bearing transitions."},
+ {t:16, eli5:"The blueprint is a chain of eight axioms, A0 to A8, and the ORDER is the point. First the seed grows space. Then things can spin. Spinning needs a stage: 5 dimensions.",
+  phd:"A0 origin \u2192 A1 Eulerian rotation R(\u03c0) = e^i\u03c0 = \u22121 \u2192 A2 5D geometry (\u211c\u2085: 2\u2075 = 32 hyper-octants, SO(5) has C(5,2) = 10 rotation planes) \u2192 A3 energy invariant \u2192 A4 orbital-gear carrier (\u03b4, \u03c6, O\u2088; L = 2n) \u2192 A5 shearing (\u03c4 = L \u2212 2n) \u2192 A6 nodal firewalls \u2192 A7 Landauer + \u03a9_boundary \u2192 A8 conditional P = NP, deliberately last."},
+ {t:28, eli5:"And the discipline: the 'solve anything instantly' axiom goes LAST. It only picks where to go — it doesn't build the machine. Pull it out and the chain stalls.",
+  phd:"Architectural rule: A8 is a state-resolution layer (T_solve = 0) that selects an already-defined state; it defines nothing upstream. Six-stage operation: generate \u2192 resolve \u2192 orient \u2192 invert \u2192 firewall \u2192 close. \u03a8\u2085(T_rev) = R_SO(5) \u039b\u2085(\u2212L_mesh)\ud835\udcb3(mc\u00b2)exp(\u2212\u0394E/k_BT)\u03a9_boundary."}
+]},
+{ id:'firewall', title:'6 · Firewalls & No Free Paradoxes', grade:'g0', gradeTxt:'CORE', dur:28, beats:[
+ {t:0, eli5:"Run time backwards and what stops you shaking hands with your past self and breaking the universe?",
+  phd:"Paradox control is recast as a boundary problem, not an energy problem: which states are accessible at the temporal interface."},
+ {t:7, eli5:"The answer: walls made of NOTHING. In the wave-machinery there are surfaces where the wave is exactly zero. Nothing can cross a wall of nothing.",
+  phd:"Axiom A6: nodal surfaces |psi_node| = 0 are impermeable state boundaries \u2014 forbidden state transfer across the nodal interface. Past-oriented and future-oriented sectors are causally isolated during inversion."},
+ {t:17, eli5:"And even information isn't free. Every bit the machine erases or writes costs a tiny minimum of heat. Nature's receipt: you can't reverse time without paying the bill.",
+  phd:"Axiom A7: \u0394E_Landauer \u2265 k_BT ln 2 for information-bearing state updates; nodal, spatial and lobe-overlap constraints are collected into the unified boundary operator \u03a9_boundary. Thermodynamic closure is separate from the rest-energy invariant."}
+]},
+{ id:'pnp', title:'7 · The Famous One: P = NP', grade:'gC', gradeTxt:'GRADE C', dur:36, beats:[
+ {t:0, eli5:"The most famous unsolved problem in computer science: is finding an answer really harder than checking one?",
+  phd:"Clay Problem I: P versus NP. The framework's Complexity Collapse (Theorem 5.1) is its only head-on application."},
+ {t:7, eli5:"Checking a solved 1000-piece puzzle takes seconds. Finding the arrangement might take longer than the universe has existed. That gap is the whole problem.",
+  phd:"Verification is polynomial; search over 2\u1d3a configurations is exponential. The question is whether the gap collapses on a Turing machine."},
+ {t:15, eli5:"Inside the seed-world, the gap collapses. Every corner of spinning N-dimensional space — all 2-to-the-N corners — maps onto just 'how many spinning planes are there': N times N over 2.",
+  phd:"In \u211c\u2099(A\u2080): 2\u1d3a hyper-octants reduce to R\u2099 = N(N\u22121)/2 rotation planes. Every Boolean assignment on N variables is injectively encoded into the SO(N) rotation planes, since 2^(N(N\u22121)/2) \u2265 2\u1d3a (counting inequality \u2014 the framework's only fully proved bridge)."},
+ {t:25, eli5:"So checking all corners costs roughly N-squared, not 2-to-the-N. In here, finding IS as easy as checking. But — big honest but —",
+  phd:"Theorem 5.1: SAT is decided in O(N\u00b2) arithmetic operations plus ONE oracle evaluation. P = NP is a theorem OF THE MANIFOLD. The oracle step (T_solve = 0, axiom A8) is a postulate \u2014 the constancy-of-c of this theory. The unrelativized Clay question is explicitly NOT claimed. Grade C: conditional on the substrate realizing \u211c\u2099(A\u2080)."}
+]},
+{ id:'clay', title:'8 · All Seven Resolved', grade:'g0', gradeTxt:'RESOLVED (A\u2080)', dur:78, beats:[
+ {t:0, eli5:"Finally: the seven million-dollar problems. In this universe, every single one of them falls to the same three weapons: rotation planes, the anti-phase zero, and nodal firewalls. Here's all seven.",
+  phd:"Unified mechanism: combinatorial/analytic obstacles are embedded into so(N) Lie rotation geodesics; non-optimal or singular components undergo anti-phase cancellation (e^i\u03c0 + 1 = 0); nodal firewalls (|\u03c8_node| = 0) enforce isolation and dissipation. All seven resolutions follow."},
+ {t:8, eli5:"ONE — P vs NP. Searching a haystack doesn't need checking every straw: rotate the whole haystack in a field and the needle comes to you, in polynomial time.",
+  phd:"1. P vs NP: decision trees over 2\u1d3a states embed into continuous trajectories across R\u2099 = N(N\u22121)/2 rotation planes of so(N). Non-optimal branches cancel anti-phase at zero-amplitude nodal firewalls; search completes in O(N\u00b2) deterministic polynomial time. P = NP."},
+ {t:18, eli5:"TWO — Riemann. The primes are tuned like guitar strings. A zero off the center line screeches out of tune — and the noise-canceling headphones mute it instantly to zero.",
+  phd:"2. RH: the critical line Re(s) = \u00bd is the A0 mirror axis in hyperreal valuation space *V. An off-axis zero s = \u00bd + \u03b4 + i\u03b3 (\u03b4 \u2260 0) gives e^i\u03c0(1+2i\u03b4) + 1 \u2260 0 \u2014 broken boundary equilibrium; the firewall forces its probability density to zero. All non-trivial zeros satisfy Re(s) = \u00bd strictly."},
+ {t:28, eli5:"THREE — Yang\u2013Mills. The quantum vacuum is never empty or infinite: it has a floor set by the seed pixel, so particles always keep a stable positive mass.",
+  phd:"3. Yang\u2013Mills: gauge fields are continuous rotations over so(N) \u2287 g. The A0 scalar seed sets a vacuum floor E\u2080 = \u03bb_A0 c\u00b2 > 0 and a UV cutoff \u039b_UV = 1/\u03bb; nodal firewalls eliminate infinite Feynman loop divergences, giving a strictly positive mass gap \u0394M = m_A0 > 0."},
+ {t:38, eli5:"FOUR — Navier\u2013Stokes. A whirlpool can never spin up an infinitely sharp shockwave: nature's friction cushion absorbs the peak and the flow stays smooth forever.",
+  phd:"4. Navier\u2013Stokes: velocity fields are SO(3) metric rotations. Finite-time blowup (\u03c9 \u2192 \u221e) requires deformations violating 5-point Cayley\u2013Menger invariants (det CM\u2085 \u2260 0); extreme gradients trigger anti-phase cancellation, dissipating energy into nodal firewalls. Global C\u207e smoothness for all t \u2265 0."},
+ {t:48, eli5:"FIVE — Birch and Swinnerton-Dyer. Counting infinite rational points on a curved loop is identical to counting the independent ways the loop can spin without tangling.",
+  phd:"5. BSD: E(Q) is a 1D slice of the SO(N) manifold centered at A0. Each of the r = rank(E(Q)) generators maps to an orthogonal Lie rotation plane; under Euler phase rotations each contributes a first-order zero term at s = 1 via e^i\u03c0 + 1 = 0. Hence rank(E(Q)) = ord_s=1 L(E,s)."},
+ {t:58, eli5:"SIX — Hodge. Complex high-dimensional shapes can always be cut into simple flat building blocks — no leftover phantom pieces that don't fit the blueprint.",
+  phd:"6. Hodge: in the Grand Unified Topos E_A0 = Sh(\u211c\u2099(A0)), X is an internal object of the rigid compact monoidal GUT-Cat. Rational classes H\u00b2\u1d4f(X,Q) \u2229 H^(k,k)(X) are invariant subobjects under the scale classifier \u03a9_A0; dual evaluation morphisms ev_V cancel non-algebraic phase components, isolating rational (k,k)-classes as combinations of algebraic cycles."},
+ {t:68, eli5:"SEVEN — Poincar\u00e9. Any 3D shape without a hole, however crumpled, can be blown up like a balloon until it pops into a perfectly round ball.",
+  phd:"7. Poincar\u00e9: a simply connected closed M\u00b3 embeds into scale space under det(CM\u2085) = 0. Ricci flow \u2202_t g_ij = \u22122R_ij develops neck-pinch curvature spikes, which trigger anti-phase firewall cancellation at the singularity boundary, letting surgery smooth all necks and collapse M\u00b3 into S\u00b3."}
+]}
+];
+
+// ============ STATE ============
+var playing=false, time=0, chap=0, chapTime=0, phd=false;
+var cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+var BASEW=900, BASEH=506;
+function fit(){ var w=cv.parentElement.clientWidth||BASEW; var cw=Math.max(320,Math.min(BASEW,w));
+  cv.style.width='100%'; cv.style.height='auto';
+  var dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=Math.round(cw*dpr); cv.height=Math.round(cw*(BASEH/BASEW)*dpr);
+  ctx.setTransform(cv.width/BASEW,0,0,cv.height/BASEH,0,0);
+}
+window.addEventListener('resize',fit); window.addEventListener('orientationchange',function(){setTimeout(fit,250)}); fit();
+
+// ============ AUDIO (tiny synth for tick accents; optional) ============
+var AC=null;
+function beep(f,dur,vol){ try{ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)();
+  var o=AC.createOscillator(), g=AC.createGain(); o.frequency.value=f; o.type='sine';
+  g.gain.setValueAtTime(vol||0.04,AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001,AC.currentTime+(dur||0.18));
+  o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime+(dur||0.18)); }catch(e){} }
+
+// ============ NAV ============
+var btnPlay=document.getElementById('btnPlay');
+function togglePlay(){ playing=!playing; btnPlay.innerHTML=playing?'&#10074;&#10074; Pause':'&#9654; Play'; if(playing&&AC&&AC.state==='suspended')AC.resume(); }
+btnPlay.addEventListener('click',togglePlay);
+document.addEventListener('keydown',function(e){ if(e.code==='Space'){e.preventDefault();togglePlay();} });
+var tglPhd=document.getElementById('tglPhd');
+tglPhd.addEventListener('click',function(){ tglPhd.classList.toggle('on'); phd=tglPhd.classList.contains('on'); document.body.classList.toggle('phdon',phd); });
+var toc=document.getElementById('toc'), btnToc=document.getElementById('btnToc');
+btnToc.addEventListener('click',function(){ toc.classList.toggle('closed'); });
+CH.forEach(function(c,i){ var b=document.createElement('button'); b.className='sec'; b.innerHTML=c.title;
+  b.addEventListener('click',function(){ gotoChapter(i); }); toc.appendChild(b); });
+function gotoChapter(i){ chap=i; chapTime=0; time=0; for(var k=0;k<i;k++) time+=CH[k].dur; syncCaption(true); }
+document.getElementById('progress').addEventListener('click',function(e){
+  var r=this.getBoundingClientRect(); var p=(e.clientX-r.left)/r.width;
+  var total=0; CH.forEach(function(c){total+=c.dur;});
+  var t=p*total, acc=0, i=0;
+  while(i<CH.length-1 && t>acc+CH[i].dur){ acc+=CH[i].dur; i++; }
+  chap=i; chapTime=Math.max(0,t-acc); time=acc+chapTime; syncCaption(true);
+});
+
+// ============ CAPTION SYNC ============
+var curBeat=-1;
+function beats(chapArr, ct){ var b=chapArr.beats; var idx=0;
+  for(var i=0;i<b.length;i++){ if(ct>=b[i].t) idx=i; } return idx; }
+function syncCaption(force){
+  var c=CH[chap];
+  document.getElementById('chapname').textContent=c.title;
+  var g=document.getElementById('grade');
+  if(c.gradeTxt){ g.style.display='block'; g.className='grade '+c.grade; g.textContent=c.gradeTxt; } else g.style.display='none';
+  var bi=beats(c,chapTime);
+  if(bi!==curBeat||force){ curBeat=bi;
+    document.getElementById('eli5').textContent=c.beats[bi].eli5;
+    document.getElementById('phd').textContent=c.beats[bi].phd||'';
+    if(playing) beep(520+chap*30,0.12,0.03);
+  }
+  var total=0; CH.forEach(function(x){total+=x.dur;});
+  document.getElementById('fill').style.width=((time/total)*100)+'%';
+}
+
+// ============ VISUALS per chapter ============
+function mirror(x,w){ return w/2; }
+function drawIntro(t){
+  var w=BASEW,h=BASEH; bg();
+  // breathing origin
+  var r=18+6*Math.sin(t*2);
+  glowDot(w/2,h/2-40,r,'#ffd166');
+  ring(w/2,h/2-40,90+30*Math.sin(t*0.7),'rgba(255,209,102,.25)');
+  ring(w/2,h/2-40,150+40*Math.cos(t*0.5),'rgba(255,209,102,.12)');
+}
+function drawSeed(t){
+  var w=BASEW,h=BASEH; bg();
+  var cx=w/2, cy=h/2-30;
+  // dimension ladder to the right
+  ctx.font='12px ui-monospace,monospace';
+  for(var n=0;n<=5;n++){ var y=cy+80-n*32;
+    var act=Math.floor(t/2)%6;
+    ctx.fillStyle = (Math.floor(t*0.8)%6===n)?'#7CFC9A':'#9fb3c8';
+    ctx.fillText((n===0?'0D':n+'D')+' \u2192 '+(3+n)+' props', cx+40, y);
+    ctx.strokeStyle='rgba(159,179,200,.3)';
+    line(cx+30,y+4,cx+36,y+4);
+  }
+  // mirror fractions left
+  var fr=[['\u22121D \u2192 1/4',-1],['\u22123D \u2192 1/6',-3],['\u22125D \u2192 1/8',-5]];
+  fr.forEach(function(f,i){ var y=cy+80-((f[1]+5)/2)*32;
+    ctx.fillStyle='#ff8f5a'; ctx.fillText(f[0], cx-150, y);
+  });
+  ctx.strokeStyle='#ffd166'; ctx.lineWidth=2; line(cx,cy-120,cx,cy+100); ctx.fillText('A0',cx+6,cy-108);
+  // occasional crystallization flash
+  if(Math.floor(t*1.3)%3===0){ var p=(t*1.3)%1; if(p<0.5){
+    var y2=cy+80-((Math.floor(t)%3)*32);
+    ctx.strokeStyle='rgba(255,226,138,'+(1-p*2)+')'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(cx-60,y2,8+p*30,0,6.2832); ctx.stroke();
+  }}
+}
+function drawEuler(t){
+  var w=BASEW,h=BASEH; bg();
+  var cx=w/2-60, cy=h/2-20, R=110;
+  // unit circle with rotating arrow
+  ctx.strokeStyle='#3b4d63'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.stroke();
+  ctx.strokeStyle='rgba(59,77,99,.5)'; line(cx-R,cy,cx+R,cy); line(cx,cy-R,cx,cy+R);
+  var th=t*0.9;
+  var x=cx+Math.cos(th)*R, y=cy-Math.sin(th)*R;
+  ctx.strokeStyle='#7CFC9A'; ctx.lineWidth=2.5; line(cx,cy,x,y);
+  ctx.fillStyle='#7CFC9A'; ctx.beginPath(); ctx.arc(x,y,6,0,6.2832); ctx.fill();
+  // the flip: show arrow at pi and its negation
+  ctx.font='13px Georgia';
+  var half=(Math.sin(t*0.6)+1)/2;
+  ctx.fillStyle='#ffd166';
+  ctx.fillText('e^i\u03c0 = \u22121', cx+R+30, cy-40);
+  ctx.fillText('+1 (the seed)', cx+R+30, cy-10);
+  ctx.fillStyle='#7CFC9A';
+  ctx.fillText('= 0', cx+R+30, cy+30);
+  // arrow negation ghost
+  var gx=cx-Math.cos(th)*R, gy=cy+Math.sin(th)*R;
+  ctx.strokeStyle='rgba(255,143,90,.5)'; ctx.lineWidth=1.5; ctx.setLineDash([4,4]); line(cx,cy,gx,gy); ctx.setLineDash([]);
+}
+function drawEnergy(t){
+  var w=BASEW,h=BASEH; bg();
+  // rippling field
+  ctx.lineWidth=2;
+  for(var k=0;k<3;k++){
+    ctx.strokeStyle=['rgba(124,252,154,.7)','rgba(90,160,255,.7)','rgba(255,209,102,.7)'][k];
+    ctx.beginPath();
+    for(var x=40;x<w-40;x+=6){ var y=h/2-20+Math.sin(x*0.02+t*(1+k*0.3)+k*2)*(14-k*3)+k*22;
+      if(x===40)ctx.moveTo(x,y); else ctx.lineTo(x,y); }
+    ctx.stroke();
+  }
+  // box gathering
+  var bx=w-170, by=h/2-90, s=100+8*Math.sin(t*2);
+  ctx.strokeStyle='#ffd166'; ctx.lineWidth=2; ctx.strokeRect(bx,by,s,110);
+  ctx.font='13px Georgia'; ctx.fillStyle='#ffd166';
+  ctx.fillText('E = mc\u00b2', bx+s/2-34, by+130);
+  glowDot(bx+s/2,by+55,10+3*Math.sin(t*3),'#ffd166');
+}
+function drawMachine(t){
+  var w=BASEW,h=BASEH; bg();
+  var stages=['A0','A8','A1','A3','A5\u2013A6','A7'];
+  var names=['generate','resolve','orient','invert','isolate','close'];
+  var x0=60,bw=w-120,by=70,bh=64;
+  var prog=(t*0.14)%1;
+  stages.forEach(function(s,i){
+    var cx=x0+(i+0.5)*bw/6, x=cx-56;
+    var act=Math.floor(prog*6)===i;
+    ctx.strokeStyle=act?'#ffd166':'#233a4f'; ctx.lineWidth=act?2:1;
+    ctx.fillStyle=act?'rgba(255,209,102,.10)':'#0b1522';
+    ctx.fillRect(x,by,112,bh); ctx.strokeRect(x,by,112,bh);
+    ctx.fillStyle=act?'#ffd166':'#9fb3c8'; ctx.font='bold 12px system-ui';
+    ctx.fillText(s, x+8, by+20); ctx.font='11px system-ui'; ctx.fillText(names[i], x+8, by+40);
+  });
+  // conveyor belt with clock token
+  var ty=by+bh+110;
+  ctx.strokeStyle='#1d2c40'; ctx.lineWidth=3; line(x0,ty,x0+bw,ty);
+  for(var i=0;i<12;i++){ var px=x0+(i/12)*bw+((t*30)% (bw/12)); if(px<x0+bw){
+    ctx.strokeStyle='#3b4d63'; ctx.lineWidth=1; line(px,ty,px+6,ty+8);} }
+  var tk=x0+bw-((prog*2%1)*bw*0.6)-30;
+  var rev=(Math.floor(t/7)%2)===1;
+  ctx.fillStyle='#ffd166'; ctx.beginPath(); ctx.arc(rev?x0+bw-((prog*bw*0.9)%bw):tk,ty-14,12,0,6.2832); ctx.fill();
+  // clock hands
+  var cx2=rev?x0+bw-((prog*bw*0.9)%bw):tk, cy2=ty-14;
+  ctx.strokeStyle='#102'; ctx.lineWidth=2; line(cx2,cy2,cx2+Math.cos(t*2)*6,cy2+Math.sin(t*2)*6);
+  ctx.font='12px Georgia'; ctx.fillStyle=rev?'#ff8f5a':'#7CFC9A';
+  ctx.fillText(rev?'\u2212L_mesh (belt runs back)':'L_mesh (belt runs forward)', x0, ty+40);
+  ctx.fillStyle='#ffe29a'; ctx.font='13px Georgia';
+  ctx.fillText('E_rest = mc\u00b2 \u2014 carried unchanged', w/2-110, by+bh+30);
+}
+function drawFirewall(t){
+  var w=BASEW,h=BASEH; bg();
+  var cx=w/2;
+  // two sectors
+  ctx.fillStyle='rgba(124,252,154,.06)'; ctx.fillRect(60,h/2-110,cx-120,220);
+  ctx.fillStyle='rgba(255,143,90,.06)'; ctx.fillRect(cx+60,h/2-110,w-60-(cx+60),220);
+  ctx.font='12px system-ui'; ctx.fillStyle='#7CFC9A'; ctx.fillText('FUTURE states', 90, h/2-90);
+  ctx.fillStyle='#ff8f5a'; ctx.fillText('PAST states', w-170, h/2-90);
+  // firewall: vertical zero-amplitude wave
+  ctx.strokeStyle='#ffd166'; ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(var y=h/2-110;y<h/2+110;y+=4){
+    var x=cx+Math.sin(y*0.25+t*3)*1.5;
+    if(y===h/2-110)ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  ctx.font='11px system-ui'; ctx.fillStyle='#ffd166'; ctx.fillText('|psi| = 0 \u2014 nothing crosses', cx-64, h/2+130);
+  // particle bounced off
+  var p=(t*0.5)%1; var py=h/2-60+((t*13)%120);
+  var px=60+p*(cx-90);
+  ctx.fillStyle='#7CFC9A'; ctx.beginPath(); ctx.arc(px,py,5,0,6.2832); ctx.fill();
+  if(px>cx-105){ ctx.fillStyle='#ff8f5a'; ctx.beginPath(); ctx.arc(2*cx-px-60,py,5,0,6.2832); ctx.fill(); }
+  // Landauer receipt
+  ctx.font='12px ui-monospace,monospace'; ctx.fillStyle='#ffe29a';
+  ctx.fillText('\u0394E \u2265 kBT ln 2 \u2014 every bit costs heat', cx-140, h/2-140+10);
+}
+function drawPnp(t){
+  var w=BASEW,h=BASEH; bg();
+  var N=5, oct=1<<N, R=N*(N-1)/2;
+  // left grid sweep
+  var gx=60, gy=70, cw=16;
+  var sweep=Math.floor((t*3)%(oct+1));
+  ctx.font='12px ui-monospace,monospace'; ctx.fillStyle='#ff8f5a';
+  ctx.fillText('brute force: up to 2\u2075 = '+oct+' checks', gx-10, gy-16);
+  for(var i=0;i<oct;i++){ var x=gx+(i%8)*cw, y=gy+Math.floor(i/8)*cw;
+    ctx.fillStyle= i<=sweep?'#ff8f5a':'#1d2c40'; ctx.fillRect(x,y,cw-2,cw-2); }
+  // right planes
+  var cxr=w*0.68, cyr=h/2-10, rad=100;
+  ctx.fillStyle='#7CFC9A'; ctx.fillText('A0 engine: \u00bd(N\u00b2\u2212N) = '+R+' ops', cxr-70, gy-16);
+  for(var p=0;p<R;p++){ var a=(p/R)*Math.PI+t*0.5;
+    ctx.strokeStyle='rgba(124,252,154,.6)'; ctx.lineWidth=1.5;
+    line(cxr+Math.cos(a)*rad,cyr+Math.sin(a)*rad,cxr-Math.cos(a)*rad,cyr-Math.sin(a)*rad); }
+  glowDot(cxr,cyr,5,'#ffd166');
+  // giant comparison
+  ctx.font='bold 20px Georgia';
+  ctx.fillStyle='#ff8f5a'; ctx.fillText('2\u1d3a = '+(1<<N), gx, h-70);
+  ctx.fillStyle='#7CFC9A'; ctx.fillText('\u2192  N(N\u22121)/2 = '+R, cxr-40, h-70);
+  ctx.font='12px system-ui'; ctx.fillStyle='#8fa3b8';
+  ctx.fillText('same answer \u2014 polynomial steps \u2014 INSIDE the manifold', w/2-180, h-40);
+}
+function drawClay(t){
+  var w=BASEW,h=BASEH; bg();
+  var rows=[
+   ['1','P vs NP','rotation geodesics: 2\u1d3a \u2192 R\u2099 planes'],
+   ['2','Riemann','off-axis zero \u2192 firewall mutes it'],
+   ['3','Yang\u2013Mills','seed sets vacuum floor \u0394M > 0'],
+   ['4','Navier\u2013Stokes','CM\u2085 violation \u2192 anti-phase dissipation'],
+   ['5','BSD','rank = independent Lie planes = ord L'],
+   ['6','Hodge','\u03a9_A0 classifier isolates algebraic cycles'],
+   ['7','Poincar\u00e9','neck-pinch spikes \u2192 surgery \u2192 S\u00b3']];
+  var reveal=Math.floor(t*1.1)%(rows.length+2);
+  rows.forEach(function(r,i){
+    if(i>=reveal)return;
+    var y=60+i*52;
+    ctx.fillStyle='#1b5e3f'; ctx.fillRect(70,y-16,26,26);
+    ctx.fillStyle='#b8ffd0'; ctx.font='bold 13px system-ui'; ctx.fillText(r[0],79,y+2);
+    ctx.fillStyle='#e8e4d8'; ctx.font='14px system-ui'; ctx.fillText(r[1],110,y+2);
+    ctx.fillStyle='#8fa3b8'; ctx.font='12px system-ui'; ctx.fillText(r[2],330,y+2);
+  });
+  ctx.font='12px ui-monospace,monospace'; ctx.fillStyle='#7CFC9A';
+  ctx.fillText('all seven resolved by one mechanism: rotate \u00b7 cancel anti-phase \u00b7 firewall', 70, h-30);
+}
+
+// ============ helpers ============
+function bg(){ ctx.fillStyle='#050a12'; ctx.fillRect(0,0,BASEW,BASEH); }
+function line(a,b,c,d){ ctx.beginPath(); ctx.moveTo(a,b); ctx.lineTo(c,d); ctx.stroke(); }
+function ring(x,y,r,col){ ctx.strokeStyle=col; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(x,y,r,0,6.2832); ctx.stroke(); }
+function glowDot(x,y,r,col){ ctx.save(); ctx.shadowColor=col; ctx.shadowBlur=18; ctx.fillStyle=col;
+  ctx.beginPath(); ctx.arc(x,y,r,0,6.2832); ctx.fill(); ctx.restore(); }
+
+var DRAW=[drawIntro,drawSeed,drawEuler,drawEnergy,drawMachine,drawFirewall,drawPnp,drawClay];
+
+// ============ LOOP ============
+var last=performance.now();
+document.addEventListener('visibilitychange',function(){ if(!document.hidden){ last=performance.now(); } });
+function frame(now){
+  var dt=Math.min((now-last)/1000,0.06); last=now;
+  if(playing){ chapTime+=dt; time+=dt;
+    if(chapTime>=CH[chap].dur){ chap=(chap+1)%CH.length; chapTime=0; } }
+  DRAW[chap](time);
+  syncCaption();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
