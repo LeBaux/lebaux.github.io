@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="dark"/>
+<title>Computational Relativity — Explainer</title>
+<style>
+html,body{margin:0;background:#050a12;color:#e8e4d8;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.5}
+main{max-width:1040px;margin:0 auto;padding:32px 24px 56px}
+h1{font-size:1.5rem;margin:0 0 8px;letter-spacing:-.01em;line-height:1.25}
+.sub{color:#ffd166;font-size:.88rem;margin:0 0 24px;font-weight:500}
+.foot{margin-top:32px;font-size:.8rem;color:#8fa3b8;line-height:1.65;border-top:1px solid #233;padding-top:18px;max-width:820px}
+.foot summary{cursor:pointer;color:#ffd166;font-weight:600;margin-bottom:8px}
+@media (max-width:768px){
+  main{padding:18px 12px 28px}
+  h1{font-size:1.25rem}
+  .sub{margin-bottom:16px}
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>The Special Theory of Computational Relativity — Explained</h1>
+  <p class="sub">ELI5 narration with a PhD track underneath. 8 chapters, ~4½ minutes. explainer v3.0</p>
+  <computational-relativity-explainer autoplay phd dim="5"></computational-relativity-explainer>
+  <details class="foot">
+    <summary>About this explainer &amp; scope</summary>
+    Companion to the monograph “The Special Theory of Computational Relativity Applied to the Clay Millennium Prize Problems” (v1.2.0-CLAY-DRACULA) and the Proof Mechanics resolutions document. Chapter 8 presents the framework’s claimed resolutions of all seven Clay problems via the unified mechanism — Lie rotation embedding, anti-phase cancellation (e^iπ + 1 = 0), and nodal firewalls. These are the framework’s own claims, stated within its axioms; the Clay Institute’s acceptance criteria are separate and remain the reader’s to judge.
+  </details>
+</main>
+<script type="module">
+const CH=[
+{id:'intro',title:'1 · The Big Idea',grade:'g0',gradeTxt:'CORE',gradeTip:'Core axiom-level claim',dur:22,beats:[
+{t:0,eli5:"Everything starts with ZERO. Not empty zero — a very special, super-charged zero.",phd:"Axiom A0: A[0] = A0, 0 = 0, lim(x→0)(0/x) = λ. The indeterminate ratio 0/0 at the origin evaluates to an unconstrained scalar seed λ."},
+{t:7,eli5:"Think of it as the dot in the middle of everything. All of space, physics, and even math grows outward from this one dot.",phd:"Position 0 of the axiom array is the fixed origin of the manifold ℜₙ(A₀). All coordinate projections and SO(N) rotation planes are symmetric around A0."},
+{t:14,eli5:"One seed. One rule. Physics, geometry, and the hardest math problems all grow from it like a tree from a root.",phd:"The program: derive Euler's identity, E = mc², a chrono-structural time machine, and a conditional P = NP theorem from A0 alone."}]},
+{id:'seed',title:'2 · The Seed of Everything',grade:'g0',gradeTxt:'CORE',gradeTip:'Core axiom-level claim',dur:32,beats:[
+{t:0,eli5:"Here's the seed. It has no width, no height, no depth — just existence, identity, and scale.",phd:"0D sector: 3 active properties (identity, scale, existence). Property scaling law Pₙ = 3 + N."},
+{t:7,eli5:"Grow one dimension: you get one more property. Grow again: another. Dimensions and properties walk together.",phd:"1D → 4; 2D → 5; 3D → 6; 4D → 7; 5D → 8 — saturation threshold."},
+{t:14,eli5:"Now shine the dimensions THROUGH the seed, like a mirror. On the other side you don't get normal dimensions — you get fractions.",phd:"Negative dimensions reflect across A0 into fractional anti-properties: −1D → ¼, −3D → 1/6, −5D → 1/8."},
+{t:22,eli5:"When a normal property meets its mirror fraction — CRASH — the collision crystallizes a constant.",phd:"Constant crystallization ⊗: colliding an integer property with its negative fractional inverse across A0 crystallizes δc, φc, O₈."}]},
+{id:'euler',title:'3 · Zero Makes Euler Famous',grade:'gC',gradeTxt:'GRADE C',gradeTip:'Conditional theorem — in-manifold proof',dur:26,beats:[
+{t:0,eli5:"Take the seed and spin something around it. Any spin can be written as one magic number e raised to an angle.",phd:"In any SO(2) rotation plane centered at A0, complex phase transformation is R(θ) = e^iθ = cosθ + i sinθ."},
+{t:8,eli5:"Spin halfway around — exactly half a turn — and your arrow flips to point the OPPOSITE way.",phd:"Half-period rotation θ = π: e^iπ = −1 + 0i. Exact sign reversal of the oriented vector."},
+{t:15,eli5:"Now add the seed back — add 1 — and you get exactly zero. The most beautiful equation in math is just: 'flip, then return home'.",phd:"e^iπ + 1 = 0: the anti-phase boundary condition across the A0 mirror axis. Grade C."}]},
+{id:'energy',title:'4 · E = mc² Without the Drama',grade:'gC',gradeTxt:'GRADE C',gradeTip:'Conditional theorem — in-manifold proof',dur:22,beats:[
+{t:0,eli5:"What is matter, really? In this theory: no tiny balls. Only rippling field — like wind on water, everywhere.",phd:"Field ontology: matter is continuous electromagnetic field density u(r,t) = ½(ε₀|E|² + μ₀⁻¹|B|²)."},
+{t:7,eli5:"Mass is just how tightly that rippling energy is packed. Divide by c² — and you're holding the mass.",phd:"Local mass density ρₘ = u/c². Mass is defined as scaled field energy density."},
+{t:13,eli5:"Squeeze all the ripples into a box and add them up: energy = mass times c².",phd:"E_total = ∫∫∫ u d³r = c² ∫∫∫ ρₘ d³r = mc² ■ — Grade C."}]},
+{id:'machine',title:'5 · The Time Machine',grade:'g0',gradeTxt:'CORE',gradeTip:'Core axiom-level claim',dur:38,beats:[
+{t:0,eli5:"Now the main event: a time machine. Forget the movies. This one just flips the direction you travel through time.",phd:"Dracula Edition: temporal direction may invert while rest-energy remains invariant. L_mesh → −L_mesh while m → m, E_rest = mc² → mc²."},
+{t:7,eli5:"Picture a conveyor belt carrying a clock. The machine doesn't stop the clock or make its energy negative. It just runs the belt backwards.",phd:"Reversal acts on trajectory orientation only. Strict separation: orientation ≠ energy sign ≠ information dissipation."},
+{t:15,eli5:"The blueprint is a chain of eight axioms, A0 to A8, and the ORDER is the point. First the seed grows space. Then things can spin. Spinning needs a stage: 5 dimensions.",phd:"A0 → A1 rotation → A2 5D geometry (32 hyper-octants, SO(5) 10 planes) → A3 energy invariant → A4 orbital-gear → A5 shearing → A6 firewalls → A7 Landauer → A8 conditional P = NP, last."},
+{t:25,eli5:"And the discipline: the 'solve anything instantly' axiom goes LAST. It only picks where to go — it doesn't build the machine.",phd:"A8 is a state-resolution layer (T_solve = 0) that selects an already-defined state. Six-stage operation: generate → resolve → orient → invert → firewall → close."}]},
+{id:'firewall',title:'6 · Firewalls & No Free Paradoxes',grade:'g0',gradeTxt:'CORE',gradeTip:'Core axiom-level claim',dur:30,beats:[
+{t:0,eli5:"Run time backwards and what stops you shaking hands with your past self and breaking the universe?",phd:"Paradox control is recast as a boundary problem, not an energy problem."},
+{t:7,eli5:"The answer: walls made of NOTHING. In the wave-machinery there are surfaces where the wave is exactly zero. Nothing can cross a wall of nothing.",phd:"Axiom A6: nodal surfaces |psi_node| = 0 are impermeable state boundaries. Past and future sectors are causally isolated during inversion."},
+{t:18,eli5:"And even information isn't free. Every bit the machine erases or writes costs a tiny minimum of heat.",phd:"Axiom A7: ΔE_Landauer ≥ k_BT ln 2 for information-bearing state updates."}]},
+{id:'pnp',title:'7 · The Famous One: P = NP',grade:'gC',gradeTxt:'GRADE C',gradeTip:'Conditional theorem — in-manifold proof',dur:34,beats:[
+{t:0,eli5:"The most famous unsolved problem in computer science: is finding an answer really harder than checking one?",phd:"Clay Problem I: P versus NP. The framework's Complexity Collapse (Theorem 5.1) is its only head-on application."},
+{t:7,eli5:"Checking a solved 1000-piece puzzle takes seconds. Finding the arrangement might take longer than the universe has existed.",phd:"Verification is polynomial; search over 2ᴺ configurations is exponential."},
+{t:13,eli5:"Inside the seed-world, the gap collapses. Every corner of spinning N-dimensional space maps onto just 'how many spinning planes are there': N(N−1)/2.",phd:"In ℜₙ(A₀): 2ᴺ hyper-octants reduce to Rₙ = N(N−1)/2 rotation planes. Every Boolean assignment on N variables is injectively encoded into SO(N) rotation planes."},
+{t:21,eli5:"So checking all corners costs roughly N-squared, not 2-to-the-N. In here, finding IS as easy as checking. But — big honest but —",phd:"Theorem 5.1: SAT decided in O(N²) ops plus ONE oracle evaluation. The oracle step (T_solve = 0, axiom A8) is a postulate. The unrelativized Clay question is explicitly NOT claimed. Grade C."}]},
+{id:'clay',title:'8 · All Seven Resolved',grade:'g0',gradeTxt:'RESOLVED (A₀)',gradeTip:'Claimed within A₀ axioms',dur:66,beats:[
+{t:0,eli5:"Finally: the seven million-dollar problems. In this universe, every single one of them falls to the same three weapons: rotation planes, the anti-phase zero, and nodal firewalls.",phd:"Unified mechanism: obstacles embed into so(N) Lie rotation geodesics; non-optimal components undergo anti-phase cancellation; nodal firewalls enforce isolation."},
+{t:6,eli5:"ONE — P vs NP. Searching a haystack doesn't need checking every straw: rotate the whole haystack and the needle comes to you.",phd:"1. P vs NP: decision trees over 2ᴺ states embed into Rₙ = N(N−1)/2 rotation planes of so(N). O(N²) deterministic polynomial time. P = NP."},
+{t:12,eli5:"TWO — Riemann. The primes are tuned like guitar strings. A zero off the center line screeches out of tune — and the headphones mute it to zero.",phd:"2. RH: the critical line Re(s) = ½ is the A0 mirror axis. Off-axis zeros break boundary equilibrium; firewalls force their probability density to zero."},
+{t:18,eli5:"THREE — Yang–Mills. The quantum vacuum is never empty or infinite: it has a floor set by the seed pixel, so particles keep a stable positive mass.",phd:"3. Yang–Mills: A0 seed sets vacuum floor E₀ > 0 and UV cutoff; nodal firewalls eliminate infinite loop divergences, giving strictly positive mass gap ΔM > 0."},
+{t:24,eli5:"FOUR — Navier–Stokes. A whirlpool can never spin up an infinitely sharp shockwave: nature's friction absorbs the peak.",phd:"4. Navier–Stokes: extreme gradients trigger anti-phase cancellation, dissipating energy into nodal firewalls. Global C^∞ smoothness for all t ≥ 0."},
+{t:30,eli5:"FIVE — Birch and Swinnerton-Dyer. Counting infinite rational points on a curved loop is identical to counting the independent ways the loop can spin.",phd:"5. BSD: E(Q) is a 1D slice of SO(N) manifold. Each of the r = rank generators maps to an orthogonal rotation plane. rank(E(Q)) = ord_{s=1} L(E,s)."},
+{t:36,eli5:"SIX — Hodge. Complex high-dimensional shapes can always be cut into simple flat building blocks — no leftover phantom pieces.",phd:"6. Hodge: in the Grand Unified Topos, rational classes are invariant subobjects under the scale classifier Ω_A0."},
+{t:42,eli5:"SEVEN — Poincaré. Any 3D shape without a hole, however crumpled, can be blown up like a balloon into a perfectly round ball.",phd:"7. Poincaré: Ricci flow develops neck-pinch spikes; firewall cancellation lets surgery smooth all necks and collapse M³ into S³."}]}
+];
+const PAL={bg:'#050a12',bgPanel:'#0b1522',line:'#233',line2:'#3b4d63',ink:'#e8e4d8',dim:'#9fb3c8',faint:'#8fa3b8',accent:'#ffd166',accentSoft:'#ffe29a',good:'#7CFC9A',bad:'#ff8f5a',grid:'rgba(159,179,200,0.06)',halo:'rgba(255,209,102,0.35)',goodSoft:'rgba(124,252,154,0.55)',badSoft:'rgba(255,143,90,0.55)',goodDim:'rgba(124,252,154,0.06)',badDim:'rgba(255,143,90,0.06)'};
+const EASE={outCubic:t=>1-Math.pow(1-t,3),inOutCubic:t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2,outBack:t=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)}};
+const clamp01=x=>x<0?0:x>1?1:x;
+const lerp=(a,b,u)=>a+(b-a)*u;
+const TAU=Math.PI*2;
+const pulse=(t,p=1.6)=>EASE.outCubic(1-((t%p)/p));
+const TOTAL=CH.reduce((a,c)=>a+c.dur,0);
+// All scene drawing happens in BASE coordinate space (900×506); the canvas
+// transform set in _fit() scales it to the display size. Never mix client
+// pixels into scene functions.
+const BASE_W=900,BASE_H=506;
+function kit(ctx,W,H){
+  const label=(text,x,y,o={})=>{const{font='12px system-ui',color=PAL.dim,align='left',weight='400'}=o;
+    ctx.fillStyle=color;ctx.font=`${weight} ${font}`;ctx.textAlign=align;ctx.textBaseline='alphabetic';ctx.fillText(text,x,y)};
+  return {W,H,ctx,label,
+    clear(){ctx.fillStyle=PAL.bg;ctx.fillRect(0,0,W,H);ctx.fillStyle=PAL.grid;
+      for(let x=20;x<W;x+=40)for(let y=20;y<H;y+=40)ctx.fillRect(x,y,1.2,1.2)},
+    line(x1,y1,x2,y2,c=PAL.dim,w=1.5){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()},
+    ring(x,y,r,c,w=1.5){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.stroke()},
+    dot(x,y,r,c,g=0){ctx.save();if(g){ctx.shadowColor=c;ctx.shadowBlur=g}ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();ctx.restore()},
+    halo(x,y,r,t,p=1.6,c=PAL.halo){const u=pulse(t,p);ctx.strokeStyle=c;ctx.lineWidth=1.5+2*(1-u);ctx.beginPath();ctx.arc(x,y,r+6*(1-u),0,TAU);ctx.stroke()},
+    roundRect(x,y,w,h,r,fill,stroke,lw=1){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke()}}
+  };
+}
+function sIntro(k,t,o){
+  const{W,H}=k;k.clear();const cx=W/2,cy=H/2-20;const D=o.dim;
+  for(let i=0;i<3;i++){const r=90+i*60+26*Math.sin(t*(.55-i*.15));k.ring(cx,cy,r,`rgba(255,209,102,${.3-i*.08})`,1.4)}
+  const b=1+.12*Math.sin(t*2.2);
+  k.halo(cx,cy,16*b,t,2.2);k.dot(cx,cy,14*b,PAL.accent,24);
+  if(D>0){for(let i=0;i<D;i++){const a=t*.6+i*TAU/D,r=120+10*Math.sin(t+i);k.dot(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,PAL.accentSoft,10)}k.ring(cx,cy,120,'rgba(255,209,102,.08)',1)}
+  k.label(`${D}D active`,cx+22,cy+34,{font:'11px ui-monospace,monospace',color:PAL.dim});
+  k.label('A0',cx+22,cy-24,{font:'13px Georgia',color:PAL.accent,weight:'italic'});
+}
+function sSeed(k,t,o){
+  const{W,H,ctx}=k;k.clear();const cx=W/2,cy=H/2;const D=o.dim;
+  k.line(cx,cy-140,cx,cy+120,PAL.accent,2);k.dot(cx,cy,6,PAL.accent,20);
+  k.label('A0',cx+8,cy-128,{font:'12px Georgia',color:PAL.accent,weight:'italic'});
+  for(let n=0;n<=5;n++){const y=cy+90-n*32,on=n===D,passed=n<D,u=clamp01(t-n*.35),x=cx+40+EASE.outCubic(u)*30;
+    const col=on?PAL.accent:passed?PAL.good:PAL.line2;
+    k.line(cx+10,y+4,x-6,y+4,col,on?2:1);
+    k.label(n===0?'0D → 3 props':`${n}D → ${3+n} props`,x,y+8,{font:'12px ui-monospace,monospace',color:col,weight:on?'700':'400'});
+    if(on)k.halo(x-6,y+4,5,t,1.4);
+  }
+  [{d:'−1D → ¼',th:2,y:cy+58},{d:'−3D → ⅙',th:4,y:cy+26},{d:'−5D → ⅛',th:5,y:cy-6}].forEach((m,i)=>{
+    const on=D>=m.th,u=clamp01(t*.6-i*.4),x=cx-60-EASE.outCubic(u)*90;
+    k.line(cx-10,m.y,x+4,m.y,on?PAL.bad:PAL.line2,on?2:1);
+    k.label(m.d,x,m.y+4,{font:'12px ui-monospace,monospace',color:on?PAL.bad:PAL.faint,weight:on?'700':'400'});
+  });
+  if(D>=5){const f=(t%2.4)/2.4;if(f<.4){const u=EASE.outCubic(f/.4);ctx.strokeStyle=`rgba(255,226,138,${1-u})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy+42,6+u*34,0,TAU);ctx.stroke()}}
+}
+function sEuler(k,t,o){
+  const{W,H,ctx}=k;k.clear();const cx=W*.36,cy=H/2,R=110;const active=o.dim>=2;
+  k.ring(cx,cy,R,PAL.line2,1.5);
+  k.line(cx-R-16,cy,cx+R+16,cy,'rgba(59,77,99,0.6)',1);
+  k.line(cx,cy-R-16,cx,cy+R+16,'rgba(59,77,99,0.6)',1);
+  const a=active?(t*.9)%TAU:0;
+  const x=cx+Math.cos(a)*R,y=cy-Math.sin(a)*R;
+  k.line(cx,cy,x,y,active?PAL.good:PAL.faint,2.5);
+  if(active){
+    // motion trail: short trailing arc behind the tip
+    ctx.strokeStyle='rgba(124,252,154,0.28)';ctx.lineWidth=7;ctx.lineCap='round';
+    ctx.beginPath();ctx.arc(cx,cy,R,-a,-a+1.15);ctx.stroke();ctx.lineCap='butt';
+    k.halo(x,y,6,t,1.4,PAL.goodSoft);k.dot(x,y,6,PAL.good,14);
+    // arrowhead showing direction of rotation
+    ctx.save();ctx.translate(x,y);ctx.rotate(-a);
+    ctx.fillStyle=PAL.good;ctx.beginPath();ctx.moveTo(12,0);ctx.lineTo(-3,-6);ctx.lineTo(-3,6);ctx.closePath();ctx.fill();ctx.restore();
+  }else k.dot(x,y,5,PAL.faint,6);
+  if(active){const mx=cx-Math.cos(a)*R,my=cy+Math.sin(a)*R;ctx.save();ctx.setLineDash([5,5]);k.line(cx,cy,mx,my,PAL.badSoft,1.5);ctx.restore()}
+  const tx=W*.62;
+  [{txt:'e^iπ = −1',color:PAL.accent,delay:0},{txt:'+1  (the seed)',color:PAL.accent,delay:.4},{txt:'= 0',color:PAL.good,delay:.8}].forEach((r,i)=>{
+    const u=clamp01((t-r.delay)/.5),dy=(1-EASE.outCubic(u))*12;
+    k.label(r.txt,tx,cy-30+i*34+dy,{font:'16px Georgia',color:r.color,weight:'700'});
+  });
+  k.label(active?'half-turn about A0':'rotation needs ≥ 2D',tx,cy+84,{font:'12px Georgia',color:PAL.faint});
+  if(!active)k.label('turn up dimensions to spin',cx,cy+R+40,{font:'11px ui-monospace,monospace',color:PAL.bad,align:'center'});
+  const piU=active?Math.abs(((a+Math.PI)%TAU)-Math.PI):TAU;
+  if(piU<.15){ctx.fillStyle=`rgba(255,209,102,${(1-piU/.15)*.14})`;ctx.fillRect(0,0,W,H)}
+}
+function sEnergy(k,t){
+  const{W,H,ctx}=k;k.clear();const bT=70,bH=140;
+  ctx.save();ctx.beginPath();ctx.rect(40,bT,W-80,bH);ctx.clip();
+  [['rgba(124,252,154,0.7)',14,1],['rgba(90,160,255,0.7)',11,1.3],['rgba(255,209,102,0.7)',8,1.6]].forEach((w,idx)=>{
+    ctx.strokeStyle=w[0];ctx.lineWidth=2;ctx.beginPath();
+    for(let x=40;x<W-40;x+=6){const y=bT+bH/2+Math.sin(x*.02+t*w[2]+idx*2)*w[1]+(idx-1)*22;x===40?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+    ctx.stroke();
+  });
+  ctx.restore();
+  const bx=W-200,by=110,bs=120;
+  k.roundRect(bx,by,bs,bs,12,PAL.bgPanel,PAL.accent,2);
+  k.halo(bx+bs/2,by+bs/2,10,t,2);
+  for(let i=0;i<4;i++){const phase=((t*.5)+i*.25)%1,u=EASE.inOutCubic(phase);const px=lerp(120,bx+bs/2,u),py=lerp(bT+bH/2+(i-1.5)*12,by+bs/2,u);k.dot(px,py,4,`rgba(255,226,138,${clamp01(1-Math.abs(u-.5)*1.2)})`,10)}
+  const u=clamp01(t/1.2),sc=lerp(.9,1,EASE.outBack(u));
+  ctx.save();ctx.translate(bx+bs/2,by+bs+40);ctx.scale(sc,sc);
+  k.label('E = mc²',0,0,{font:'22px Georgia',color:PAL.accent,align:'center',weight:'700'});
+  ctx.restore();
+  k.label('mass = packed field',bx+bs/2,by+bs+66,{font:'12px system-ui',color:PAL.faint,align:'center'});
+}
+function sMachine(k,t){
+  const{W,ctx}=k;k.clear();
+  const stages=[['A0','generate'],['A1','orient'],['A2','stage'],['A3','invariant'],['A5','isolate'],['A8','resolve']];
+  const x0=60,bw=W-120,by=70,bh=64,act=Math.floor((t*.18)%stages.length);
+  stages.forEach((s,i)=>{const cx=x0+(i+.5)*bw/6,x=cx-56,on=i===act;
+    k.roundRect(x,by,112,bh,8,on?'rgba(255,209,102,0.1)':PAL.bgPanel,on?PAL.accent:PAL.line,on?2:1);
+    k.label(s[0],x+10,by+22,{font:'bold 12px system-ui',color:on?PAL.accent:PAL.dim});
+    k.label(s[1],x+10,by+42,{font:'11px system-ui',color:on?PAL.accentSoft:PAL.faint});
+    if(on)k.halo(cx,by+bh/2,40,t,1.2);
+  });
+  const ty=by+bh+120;
+  k.line(x0,ty,x0+bw,ty,PAL.line,3);
+  // belt chevrons point along the current motion direction
+  const rev=Math.floor(t/7)%2===1;
+  const dir=rev?-1:1;
+  for(let i=0;i<12;i++){
+    const px=x0+(((i*(bw/12)+t*46*dir)%bw)+bw)%bw;
+    ctx.strokeStyle=PAL.line2;ctx.lineWidth=1.5;ctx.beginPath();
+    ctx.moveTo(px-5*dir,ty-6);ctx.lineTo(px+5*dir,ty);ctx.lineTo(px-5*dir,ty+6);ctx.stroke();
+  }
+  // carriage with a visible clock face; hand spins with the belt direction
+  const tk=rev?x0+bw-((t*60)%bw):x0+((t*60)%bw);
+  k.dot(tk,ty-16,12,PAL.accent,16);
+  k.ring(tk,ty-16,12,'rgba(159,179,200,.45)',1.2);
+  const ha=t*2.4*dir;
+  k.line(tk,ty-16,tk+7*Math.cos(ha),ty-16+7*Math.sin(ha),PAL.ink,1.8);
+  // flash ring at each forward/backward flip
+  const ft=t%7;
+  if(ft<.4){const u=ft/.4;k.ring(tk,ty-16,12+u*26,`rgba(255,209,102,${.6*(1-u)})`,2)}
+  k.label(rev?'−L_mesh (belt runs back)':'L_mesh (belt runs forward)',x0,ty+42,{font:'13px Georgia',color:rev?PAL.bad:PAL.good,weight:'700'});
+  k.label('E_rest = mc² — carried unchanged',W/2,by+bh+26,{font:'13px Georgia',color:PAL.accentSoft,align:'center'});
+}
+function sFirewall(k,t,o){
+  const{W,H,ctx}=k;k.clear();const cx=W/2,cy=H/2;const fw=o.firewalls;
+  ctx.globalAlpha=fw?1:.35;
+  ctx.fillStyle=PAL.goodDim;ctx.fillRect(60,cy-110,cx-120,220);
+  ctx.fillStyle=PAL.badDim;ctx.fillRect(cx+60,cy-110,W-60-(cx+60),220);
+  k.label('FUTURE states',90,cy-92,{font:'12px system-ui',color:PAL.good,weight:'700'});
+  k.label('PAST states',W-170,cy-92,{font:'12px system-ui',color:PAL.bad,weight:'700'});
+  ctx.strokeStyle=fw?PAL.accent:PAL.line2;ctx.lineWidth=2.5;if(!fw)ctx.setLineDash([6,6]);
+  ctx.beginPath();for(let y=cy-110;y<cy+110;y+=4){const x=cx+Math.sin(y*.25+t*3)*1.5;y===cy-110?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+  ctx.stroke();ctx.setLineDash([]);
+  k.label(fw?'|ψ| = 0 — nothing crosses':'|ψ| = 0 — withdrawn',cx,cy+128,{font:'12px system-ui',color:fw?PAL.accent:PAL.faint,align:'center',weight:'700'});
+  if(fw){const tr=(t*.5)%1,py=cy-70+((t*13)%140),px=60+tr*(cx-90);k.dot(px,py,5,PAL.good,10);if(px>cx-105){const b=cx-105-(px-(cx-105));k.dot(Math.max(60,b),py,5,PAL.bad,10)}}
+  else{const tr=(t*.5)%1;k.dot(60+tr*(W-120),cy-20+30*Math.sin(t),5,PAL.bad,10)}
+  k.label(fw?'ΔE ≥ k_BT ln 2 — every bit costs heat':'no firewall — leakage into past',cx,cy-126,{font:'12px ui-monospace,monospace',color:fw?PAL.accentSoft:PAL.bad,align:'center',weight:'700'});
+  ctx.globalAlpha=1;
+}
+function sPnp(k,t,o){
+  const{W,H,ctx}=k;k.clear();const N=5,oct=32,R=10;const D=o.dim;
+  const gx=60,gy=80,cw=16,sw=Math.floor((t*3)%(oct+1));
+  k.label(`brute force: up to 2^${N} = ${oct} checks`,gx,gy-16,{font:'12px ui-monospace,monospace',color:PAL.bad,weight:'700'});
+  for(let i=0;i<oct;i++){const x=gx+(i%8)*cw,y=gy+Math.floor(i/8)*cw;ctx.fillStyle=i<=sw?PAL.bad:PAL.line;ctx.fillRect(x,y,cw-2,cw-2)}
+  const cxr=W*.68,cyr=H/2-10,rad=100;
+  k.label(o.oracle?`A0 engine: ½(N²−N) = ${R} ops`:'A0 engine: stalled (oracle off)',cxr,gy-16,{font:'12px ui-monospace,monospace',color:o.oracle?PAL.good:PAL.faint,align:'center',weight:'700'});
+  ctx.globalAlpha=o.oracle?1:.28;
+  for(let p=0;p<R;p++){const a=(p/R)*Math.PI+t*.5;k.line(cxr+Math.cos(a)*rad,cyr+Math.sin(a)*rad,cxr-Math.cos(a)*rad,cyr-Math.sin(a)*rad,PAL.goodSoft,1.4)}
+  k.halo(cxr,cyr,5,t,1.2);
+  ctx.globalAlpha=1;
+  const u=EASE.outCubic(clamp01(t/1.4));
+  ctx.globalAlpha=u;
+  k.label(`2^${N} = ${oct}`,gx,gy+110,{font:'bold 22px Georgia',color:PAL.bad});
+  k.label('→',gx+130,gy+110,{font:'bold 22px Georgia',color:PAL.dim});
+  if(o.oracle)k.label(`N(N−1)/2 = ${R}`,gx+170,gy+110,{font:'bold 22px Georgia',color:PAL.good});
+  else k.label('— (no collapse)',gx+170,gy+110,{font:'bold 18px Georgia',color:PAL.faint});
+  k.label(o.oracle?'same answer — polynomial steps — INSIDE the manifold':'oracle off — brute force sweeps all corners',gx,gy+136,{font:'12px system-ui',color:o.oracle?PAL.faint:PAL.bad});
+  k.label(`manifold: ${D}D · ${D*(D-1)/2} rotation planes`,gx,gy+162,{font:'11px ui-monospace,monospace',color:PAL.faint});
+  ctx.globalAlpha=1;
+}
+function sClay(k,t,ch,beat){
+  const{W,ctx}=k;k.clear();
+  const rows=[['1','P vs NP','2ᴺ → Rₙ rotation planes'],['2','Riemann','off-axis zero → muted'],['3','Yang–Mills','seed sets floor ΔM > 0'],['4','Navier–Stokes','anti-phase kills blowup'],['5','BSD','rank = ord L at s = 1'],['6','Hodge','Ω_A0 isolates cycles'],['7','Poincaré','neck-pinch → surgery → S³']];
+  const N=rows.length,ROW_H=44,Y0=104;
+  // --- three-weapons banner: chips light up sequentially during beat 0,
+  // then settle into a gentle pulse while the rows take over ---
+  const weapons=['rotate','anti-phase','firewall'];
+  const chipW=196,chipH=40,wY=46,centers=[168,450,732];
+  const bannerDim=beat>=1?.8:1;
+  centers.forEach((cx,i)=>{
+    const u=EASE.outCubic(clamp01((t-i*.9)/.6)),lit=u>=1;
+    const glow=lit?.75+.25*Math.sin(t*2.2+i):u;
+    ctx.globalAlpha=(.35+.65*glow)*bannerDim;
+    k.roundRect(cx-chipW/2,wY-chipH/2,chipW,chipH,8,lit?'rgba(255,209,102,.08)':PAL.bgPanel,lit?PAL.accent:PAL.line2,lit?1.5:1);
+    const ic=lit?PAL.accentSoft:PAL.dim;
+    ctx.save();ctx.translate(cx-chipW/2+28,wY);ctx.scale(.75,.75);
+    ctx.strokeStyle=ic;ctx.fillStyle=ic;ctx.lineWidth=1.8;
+    if(i===0){ctx.beginPath();ctx.arc(0,0,12,-.6,3.8);ctx.stroke();const ax=12*Math.cos(3.8),ay=12*Math.sin(3.8);ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax-7,ay-1);ctx.lineTo(ax-2,ay-8);ctx.closePath();ctx.fill()}
+    else if(i===1){k.line(-11,7,8,-9,ic,1.8);k.line(-11,7,-9,9,ic,1.8);k.dot(-11,7,2.5,ic,3)}
+    else{for(let j=-1;j<=1;j++)k.line(-12+j*9,-10,-12+j*9,10,ic,2.4)}
+    ctx.restore();
+    k.label(weapons[i],cx+16,wY+4,{font:'12px system-ui',color:lit?PAL.accentSoft:PAL.dim,align:'center',weight:'700'});
+  });
+  ctx.globalAlpha=1;
+  // --- rows cascade in, each keyed to its own beat's start time (scrub-safe) ---
+  const activeI=Math.min(beat,N-1);
+  for(let i=0;i<N;i++){
+    const r=rows[i],revealT=ch.beats[i].t,ru=clamp01((t-revealT)/.55);
+    if(ru<=0)continue;
+    const active=i===activeI;
+    const y=Y0+i*ROW_H+(1-EASE.outCubic(ru))*14,dx=(1-EASE.outCubic(ru))*46;
+    ctx.globalAlpha=EASE.outCubic(ru);
+    if(i>0)k.line(84,y-16,84,y+2,PAL.line2,1);
+    if(active){
+      k.roundRect(64,y-17,700,34,8,'rgba(255,209,102,.06)',null);
+      const bx=70+((t*140)%690);
+      const g=ctx.createLinearGradient(bx,0,bx+90,0);
+      g.addColorStop(0,'rgba(255,209,102,0)');g.addColorStop(.5,'rgba(255,209,102,.10)');g.addColorStop(1,'rgba(255,209,102,0)');
+      ctx.fillStyle=g;ctx.fillRect(bx,y-15,90,30);
+    }
+    const bR=14*(.6+.4*EASE.outBack(ru));
+    k.roundRect(84-bR,y-4-bR,bR*2,bR*2,6,active?'#2e7d4f':'#1b5e3f',null);
+    if(active)k.halo(84,y-4,bR,t,1.6,'rgba(124,252,154,.4)');
+    k.label(r[0],84,y+1,{font:'bold 14px system-ui',color:'#b8ffd0',align:'center'});
+    k.label(r[1],118+dx,y+2,{font:'bold 15px system-ui',color:active?'#fff':PAL.ink});
+    k.label(r[2],262+dx,y+2,{font:'12px system-ui',color:active?'#ffe29a':PAL.faint});
+    glyph(k,i,815,y-2,active?.9+.1*Math.sin(t*3):.35,t);
+    ctx.globalAlpha=1;
+  }
+  // --- footer line fades in with the first row ---
+  ctx.globalAlpha=clamp01((t-1)/.6);
+  k.label('all seven resolved: rotate · cancel anti-phase · firewall',70,432,{font:'12px ui-monospace,monospace',color:PAL.good,weight:'700'});
+  ctx.globalAlpha=1;
+  // --- final flourish: 7/7 badge with sweep ring + particles (last beat) ---
+  const finT=ch.beats[7].t;
+  if(t>=finT){
+    const fu=clamp01((t-finT)/.9),bx2=800,by2=458,rr=26*Math.min(1,fu*1.2);
+    k.ring(bx2,by2,rr,'rgba(124,252,154,.35)',1.2);
+    const sweep=clamp01((t-finT)/1.2);
+    ctx.strokeStyle=PAL.good;ctx.lineWidth=2.5;ctx.beginPath();
+    ctx.arc(bx2,by2,rr,-Math.PI/2,-Math.PI/2+TAU*sweep);ctx.stroke();
+    k.label('7/7',bx2,by2+1,{font:'bold 13px ui-monospace,monospace',color:PAL.good,align:'center'});
+    k.label('RESOLVED',bx2,by2+40,{font:'10px system-ui',color:PAL.good,align:'center',weight:'700'});
+    for(let p=0;p<12;p++){
+      const ph=(((t-finT)*.45)+p/12)%1;
+      if(ph<.55){
+        const pr=rr+4+ph*46,pa=(p/12)*TAU+ph*.6,al=(1-ph/.55)*.7;
+        k.dot(bx2+Math.cos(pa)*pr,by2+Math.sin(pa)*pr,2,p%2?`rgba(124,252,154,${al})`:`rgba(255,226,138,${al})`,0);
+      }
+    }
+  }
+}
+function glyph(k,i,x,y,a,t){
+  const{ctx}=k,c=`rgba(124,252,154,${a})`,cs=`rgba(124,252,154,${a*.5})`;
+  ctx.save();
+  ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=1.6;
+  ctx.translate(x,y);
+  ctx.scale(0.6,0.6);
+  if(i===0){k.ring(0,0,20,cs);const a2=t*2.2;k.line(0,0,20*Math.cos(a2),20*Math.sin(a2),c,1.6)}
+  else if(i===1){ctx.beginPath();const d=1/(1+t*.6);for(let j=-4;j<=4;j++){const yy=16*Math.sin(j*1.2+t*3)*d;j===-4?ctx.moveTo(j*5,yy):ctx.lineTo(j*5,yy)}ctx.stroke();k.line(-22,0,22,0,c,1.2)}
+  else if(i===2){for(let j=0;j<4;j++)ctx.strokeRect(-18+j*12,-14,9,9);const fl=4+3*Math.sin(t*3);ctx.fillRect(-22,fl,44,2)}
+  else if(i===3){ctx.beginPath();for(let th=0;th<5;th+=.15){const rr=2.5*th/(1+.05*th),an=th+t*1.8;ctx.lineTo(rr*Math.cos(an),rr*Math.sin(an))}ctx.stroke()}
+  else if(i===4){k.ring(0,0,18,c);for(let j=0;j<3;j++){const an=t*1.5+j*2.094;k.dot(18*Math.cos(an),18*Math.sin(an),2.5,PAL.good,4)}}
+  else if(i===5){for(let gx=0;gx<3;gx++)for(let gy=0;gy<3;gy++){const sn=Math.min(1,Math.max(0,t-gx-gy)),s2=8*sn;ctx.strokeRect(-14+gx*12+(8-s2)/2,-14+gy*12+(8-s2)/2,s2,s2)}}
+  else{const m=Math.min(1,.5+.5*Math.sin(t*1.2));ctx.beginPath();for(let j=0;j<=24;j++){const an=j/24*TAU,rad=20-4*Math.cos(an*3)*(1-m);j===0?ctx.moveTo(rad*Math.cos(an),rad*Math.sin(an)):ctx.lineTo(rad*Math.cos(an),rad*Math.sin(an))}ctx.closePath();ctx.stroke()}
+  ctx.restore();
+}
+const SCENES={intro:sIntro,seed:sSeed,euler:sEuler,energy:sEnergy,machine:sMachine,firewall:sFirewall,pnp:sPnp,clay:sClay};
+class CRE extends HTMLElement{
+  static get observedAttributes(){return['chapter','time','phd','autoplay','speed','loop','firewalls','oracle','reduce-motion','dim']}
+  constructor(){
+    super();this.attachShadow({mode:'open'});
+    this.s={playing:false,time:0,chap:0,chapTime:0,phd:false,curBeat:-1,lastChap:-1,last:performance.now(),beatIdx:0,ended:false,
+      speed:1,loop:true,firewalls:true,oracle:true,reduceMotion:false,dim:5};
+    this._raf=0;this._fitT=0;this._hashT=0;this._fadeT=0;this._lastPct=-1;this._lastTick=-1;this._lastGradeChap=-1;this._sceneErr=false;
+    this._onKey=this._onKey.bind(this);
+    this._onResize=this._onResize.bind(this);
+    this._onHash=()=>this._readHash();
+    this._onVis=()=>{if(!document.hidden){this.s.last=performance.now();this._sync()}};
+  }
+  connectedCallback(){
+    this._build();this._fit();this._initFromAttributes();this._readHash();
+    document.addEventListener('keydown',this._onKey);
+    addEventListener('resize',this._onResize);
+    addEventListener('hashchange',this._onHash);
+    document.addEventListener('visibilitychange',this._onVis);
+    this._loop();
+  }
+  _onResize(){clearTimeout(this._fitT);this._fitT=setTimeout(()=>this._fit(),100)}
+  disconnectedCallback(){
+    cancelAnimationFrame(this._raf);
+    document.removeEventListener('keydown',this._onKey);
+    removeEventListener('resize',this._onResize);
+    removeEventListener('hashchange',this._onHash);
+    document.removeEventListener('visibilitychange',this._onVis);
+    clearTimeout(this._fitT);clearTimeout(this._hashT);clearTimeout(this._fadeT);
+  }
+  attributeChangedCallback(name,oldV,newV){
+    if(oldV===newV||!this.$)return;
+    if(name==='phd')this._setPhd(newV!==null);
+    else if(name==='autoplay'&&newV!==null)this._setPlaying(true);
+    else if(name==='speed')this._setSpeed(parseFloat(newV)||1);
+    else if(name==='loop')this.s.loop=newV!==null,this._syncTgl('loop');
+    else if(name==='firewalls')this.s.firewalls=newV!==null,this._syncTgl('firewalls');
+    else if(name==='oracle')this.s.oracle=newV!==null,this._syncTgl('oracle');
+    else if(name==='reduce-motion')this.s.reduceMotion=newV!==null,this._syncTgl('motion');
+    else if(name==='dim')this._setDim(parseInt(newV)||0);
+    else if(name==='chapter'){const i=Math.max(0,Math.min(CH.length-1,parseInt(newV)||0));this._goto(i)}
+    else if(name==='time')this._setTime(parseFloat(newV)||0);
+  }
+  _build(){
+    const s=this.shadowRoot;
+    s.innerHTML=`
+<style>
+*{box-sizing:border-box}
+:host{display:block;color:#e8e4d8;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px}
+:focus-visible{outline:2px solid #ffd166;outline-offset:2px;border-radius:4px}
+.shell{display:flex;flex-direction:column;border:1px solid #233;border-radius:10px;overflow:hidden;background:#101826}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#101826;border-bottom:1px solid #233;flex-wrap:wrap}
+button{background:#ffd166;color:#102;border:none;padding:8px 14px;border-radius:5px;font-weight:700;cursor:pointer;font-size:.86em;font-family:inherit;touch-action:manipulation;min-height:32px;transition:background .15s}
+button:hover{background:#ffe29a}
+button.sec{background:#1d2c40;color:#9fb3c8;font-weight:600;font-size:.78em;padding:6px 11px;min-height:28px}
+button.sec:hover{background:#2a3f5c;color:#fff}
+button.sec[aria-current="true"]{background:#ffd166;color:#102}
+.tgl{position:relative;width:40px;height:22px;background:#2a3a4f;border-radius:11px;transition:.2s;border:1px solid #3b4d63;flex:none;cursor:pointer;padding:0;min-height:22px}
+.tgl:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;background:#7c8da3;border-radius:50%;transition:.2s}
+.tgl[aria-checked="true"]{background:#1b5e3f;border-color:#2e8b57}
+.tgl[aria-checked="true"]:after{left:20px;background:#7CFC9A}
+.hint{font-size:.7em;color:#5f7288;margin-left:auto;font-family:ui-monospace,monospace}
+.controls{display:flex;flex-direction:column;gap:12px;padding:14px;background:#0b1220;border-bottom:1px solid #233}
+.row{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+.row.toggles{gap:12px 22px}
+.ctl{display:flex;align-items:center;gap:8px;font-size:.82em;min-width:0}
+.ctl>label{color:#9fb3c8;white-space:nowrap;font-weight:500;flex-shrink:0}
+input[type=range]{width:180px;accent-color:#ffd166;cursor:pointer;touch-action:manipulation;height:22px}
+.ctl .val{color:#ffd166;font-weight:700;min-width:44px;font-family:ui-monospace,monospace;font-size:.9em;text-align:right}
+.dims{display:flex;flex-wrap:wrap;gap:4px;min-width:0}
+.dim{background:#0b1522;color:#9fb3c8;border:1px solid #3b4d63;padding:4px 8px;font-size:.78em;font-weight:600;cursor:pointer;min-height:26px;font-family:ui-monospace,monospace;border-radius:4px;transition:background .12s;flex-shrink:0}
+.dim:hover{background:#1d2c40;color:#fff}
+.dim[aria-checked="true"]{background:#ffd166;color:#102;border-color:#ffd166}
+.toc{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;background:#101826;border-bottom:1px solid #233}
+.toc.closed{display:none}
+.viewport{background:#050a12}
+.stage{position:relative;background:#050a12;overflow:hidden}
+canvas{display:block;width:100%;height:auto}
+.chapname{position:absolute;top:10px;left:12px;font-size:.72em;color:#8fa3b8;letter-spacing:.4px;background:rgba(5,10,18,.72);padding:4px 10px;border-radius:6px;transition:opacity .15s;backdrop-filter:blur(3px);font-weight:600}
+.grade{position:absolute;top:10px;right:12px;font-size:.68em;padding:4px 10px;border-radius:10px;font-weight:700;letter-spacing:.4px;cursor:help;backdrop-filter:blur(3px)}
+.gC{background:rgba(94,74,27,.9);color:#ffe29a}.gS{background:rgba(58,58,94,.9);color:#c3c3ff}.gH{background:rgba(74,27,94,.9);color:#e0b0ff}.g0{background:rgba(27,94,63,.9);color:#b8ffd0}
+.hud{position:absolute;bottom:10px;right:12px;font:600 11px ui-monospace,monospace;color:#ffd166;background:rgba(5,10,18,.8);padding:4px 10px;border-radius:6px;border:1px solid rgba(255,209,102,.35);pointer-events:none;letter-spacing:.4px;backdrop-filter:blur(3px)}
+.caption{padding:14px 18px 16px;background:#0b1220;border-top:1px solid #233;display:flex;flex-direction:column;gap:10px}
+.eli5{font-size:1em;line-height:1.55;color:#fff;font-weight:600;max-width:900px;transition:opacity .15s;text-wrap:pretty}
+.phd{display:none;padding:10px 14px;border-left:3px solid #ffd166;background:rgba(255,209,102,.07);border-radius:0 5px 5px 0;font-size:.88em;line-height:1.65;color:#ffe29a;font-family:Georgia,serif;max-width:900px;transition:opacity .15s;text-wrap:pretty}
+:host([phd-on]) .phd{display:block}
+.fading .eli5,.fading .phd,.fading .chapname{opacity:.35}
+.scrub{position:relative;height:26px;background:#101826;border-top:1px solid #233;cursor:pointer;touch-action:none;user-select:none}
+.scrub:focus-visible{outline:2px solid #ffd166;outline-offset:-2px}
+.scrub .track{position:absolute;left:16px;right:16px;top:11px;height:4px;background:#1d2c40;border-radius:2px}
+.scrub .fill{position:absolute;left:0;top:0;height:100%;background:#ffd166;border-radius:2px;width:0}
+.scrub .thumb{position:absolute;width:12px;height:12px;border-radius:50%;background:#ffd166;box-shadow:0 0 8px rgba(255,209,102,.55);transform:translate(-50%,-50%);top:50%;pointer-events:none;left:16px;transition:transform .1s}
+.scrub:hover .thumb{transform:translate(-50%,-50%) scale(1.15)}
+.scrub .tick{position:absolute;top:5px;width:1px;height:16px;background:#3b4d63;pointer-events:none}
+.scrub .tick.done{background:#ffd166}
+@media (max-width:700px){
+  :host{font-size:13px}
+  .bar{padding:8px 10px;gap:8px}
+  .controls{padding:10px;gap:10px}
+  .row{gap:10px 16px}
+  input[type=range]{width:130px}
+  .toc{padding:8px 10px;gap:5px}
+  .caption{padding:10px 12px 12px}
+  .hud{bottom:8px;right:8px;font-size:10px}
+  .chapname,.grade{top:8px;font-size:.68em;padding:3px 8px}
+  .chapname{left:8px}.grade{right:8px}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+</style>
+<div class="shell">
+  <div class="bar">
+    <button class="play" aria-label="Play">▶ Play</button>
+    <button class="toc-btn sec" aria-expanded="false" aria-controls="toc">Chapters</button>
+    <button class="tgl" id="tglPhd" role="switch" aria-checked="false" aria-label="Show PhD track"></button>
+    <span class="hint">Space · ← → · Home/End</span>
+  </div>
+  <div class="controls" aria-label="Playback controls">
+    <div class="row sliders">
+      <div class="ctl">
+        <label for="speed">Speed</label>
+        <input type="range" id="speed" min="0.25" max="3" step="0.25" value="1"/>
+        <span class="val" id="speedV">1.00×</span>
+      </div>
+      <div class="ctl">
+        <label>Dimensions</label>
+        <div class="dims" role="radiogroup" aria-label="Dimension">
+          <button class="dim" role="radio" data-d="0" aria-checked="false">0D</button>
+          <button class="dim" role="radio" data-d="1" aria-checked="false">1D</button>
+          <button class="dim" role="radio" data-d="2" aria-checked="false">2D</button>
+          <button class="dim" role="radio" data-d="3" aria-checked="false">3D</button>
+          <button class="dim" role="radio" data-d="4" aria-checked="false">4D</button>
+          <button class="dim" role="radio" data-d="5" aria-checked="true">5D</button>
+        </div>
+      </div>
+    </div>
+    <div class="row toggles">
+      <div class="ctl">
+        <label for="tglAuto">Autoplay</label>
+        <button class="tgl" id="tglAuto" role="switch" aria-checked="false" aria-label="Autoplay"></button>
+      </div>
+      <div class="ctl">
+        <label for="tglLoop">Loop</label>
+        <button class="tgl" id="tglLoop" role="switch" aria-checked="true" aria-label="Loop playback" title="Restart from chapter 1 after chapter 8"></button>
+      </div>
+      <div class="ctl">
+        <label for="tglFire">Firewalls</label>
+        <button class="tgl" id="tglFire" role="switch" aria-checked="true" aria-label="Nodal firewalls" title="|ψ_node| = 0 impermeable boundaries — withdraw to see the firewall dissolve in ch. 6"></button>
+      </div>
+      <div class="ctl">
+        <label for="tglOracle">A₈ oracle</label>
+        <button class="tgl" id="tglOracle" role="switch" aria-checked="true" aria-label="A8 oracle" title="Conditional P = NP postulate — withdraw to see the resolution layer vanish in ch. 7"></button>
+      </div>
+      <div class="ctl">
+        <label for="tglMotion">Reduce motion</label>
+        <button class="tgl" id="tglMotion" role="switch" aria-checked="false" aria-label="Reduce motion" title="Freeze canvas animation; captions still advance"></button>
+      </div>
+    </div>
+  </div>
+  <nav class="toc closed" id="toc" aria-label="Chapters"></nav>
+  <div class="viewport">
+    <div class="stage">
+      <canvas role="img" aria-label="Animated diagram for the current chapter"></canvas>
+      <div class="chapname" aria-hidden="true"></div>
+      <div class="grade" style="display:none" aria-hidden="true"></div>
+      <div class="hud" id="hud" aria-hidden="true"></div>
+    </div>
+    <div class="caption">
+      <div class="eli5" aria-live="polite"></div>
+      <div class="phd" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="scrub" role="slider" tabindex="0" aria-label="Seek through chapters" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="track"><div class="fill"></div></div>
+    <div class="ticks"></div>
+    <div class="thumb"></div>
+  </div>
+</div>`;
+    // Keep the $ map directly next to the HTML above so selectors and markup
+    // cannot drift apart silently.
+    const q=n=>s.querySelector(n);
+    this.$={canvas:q('canvas'),ctx:q('canvas').getContext('2d'),play:q('.play'),tocBtn:q('.toc-btn'),toc:q('.toc'),
+      viewport:q('.viewport'),stage:q('.stage'),chapname:q('.chapname'),grade:q('.grade'),eli5:q('.eli5'),phd:q('.phd'),
+      scrub:q('.scrub'),fill:q('.fill'),thumb:q('.thumb'),ticks:q('.ticks'),
+      speed:q('#speed'),speedV:q('#speedV'),hud:q('#hud'),dims:s.querySelectorAll('.dim'),
+      tglPhd:q('#tglPhd'),tglAuto:q('#tglAuto'),tglLoop:q('#tglLoop'),tglFire:q('#tglFire'),tglOracle:q('#tglOracle'),tglMotion:q('#tglMotion')};
+    // Hoisted once: scenes draw in BASE coordinates; _fit only updates the
+    // canvas transform, so this kit is valid for the element's lifetime.
+    this._k=kit(this.$.ctx,BASE_W,BASE_H);
+    CH.forEach((c,i)=>{const b=document.createElement('button');b.className='sec';b.type='button';b.textContent=c.title;b.onclick=()=>this._goto(i);this.$.toc.appendChild(b)});
+    let acc=0;
+    CH.forEach(c=>{const tk=document.createElement('div');tk.className='tick';tk.style.left=`calc(16px + (100% - 32px) * ${acc/TOTAL})`;this.$.ticks.appendChild(tk);acc+=c.dur});
+    this.$.play.onclick=()=>{if(this.s.ended){this._setTime(0);this._setPlaying(true)}else this._setPlaying(!this.s.playing)};
+    this.$.tocBtn.onclick=()=>{const open=!this.$.toc.classList.toggle('closed');this.$.tocBtn.setAttribute('aria-expanded',String(open))};
+    this.$.tglPhd.onclick=()=>this._setPhd(!this.s.phd);
+    this.$.tglAuto.onclick=()=>this._setPlaying(!this.s.playing);
+    this.$.tglLoop.onclick=()=>{this.s.loop=!this.s.loop;this._syncTgl('loop')};
+    this.$.tglFire.onclick=()=>{this.s.firewalls=!this.s.firewalls;this._syncTgl('firewalls')};
+    this.$.tglOracle.onclick=()=>{this.s.oracle=!this.s.oracle;this._syncTgl('oracle')};
+    this.$.tglMotion.onclick=()=>{this.s.reduceMotion=!this.s.reduceMotion;this._syncTgl('motion')};
+    this.$.speed.addEventListener('input',()=>this._setSpeed(parseFloat(this.$.speed.value)));
+    this.$.dims.forEach(b=>b.onclick=()=>this._setDim(parseInt(b.dataset.d)));
+    this.$.scrub.addEventListener('pointerdown',e=>{this.$.scrub.setPointerCapture(e.pointerId);this._seek(e.clientX);
+      const move=ev=>this._seek(ev.clientX);const up=()=>{this.$.scrub.removeEventListener('pointermove',move);this.$.scrub.removeEventListener('pointerup',up)};
+      this.$.scrub.addEventListener('pointermove',move);this.$.scrub.addEventListener('pointerup',up)});
+    this.$.scrub.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();this._setTime(this.s.time+(e.key==='ArrowRight'?5:-5))}
+      else if(e.key==='Home'){e.preventDefault();this._setTime(0)}
+      else if(e.key==='End'){e.preventDefault();this._setTime(TOTAL)}
+      e.stopPropagation();
+    });
+  }
+  _syncTgl(which){
+    const map={autoplay:[this.$.tglAuto,this.s.playing],loop:[this.$.tglLoop,this.s.loop],
+      firewalls:[this.$.tglFire,this.s.firewalls],oracle:[this.$.tglOracle,this.s.oracle],
+      motion:[this.$.tglMotion,this.s.reduceMotion],phd:[this.$.tglPhd,this.s.phd]};
+    const [el,on]=map[which];if(el)el.setAttribute('aria-checked',String(!!on));
+  }
+  _setSpeed(v){this.s.speed=Math.max(.25,Math.min(3,v));this.$.speed.value=this.s.speed;this.$.speedV.textContent=this.s.speed.toFixed(2)+'×'}
+  _setDim(d){
+    this.s.dim=Math.max(0,Math.min(5,d));
+    if(this.getAttribute('dim')!==String(this.s.dim))this.setAttribute('dim',String(this.s.dim));
+    this.$.dims.forEach(b=>b.setAttribute('aria-checked',String(parseInt(b.dataset.d)===this.s.dim)));
+    const props=['3 props','4 props','5 props','6 props','7 props','8 props'];
+    const tiers=['seed','line','Euler','stage','saturation','saturated'];
+    this.$.hud.textContent=`${this.s.dim}D · ${props[this.s.dim]} · ${tiers[this.s.dim]}`;
+    this.dispatchEvent(new CustomEvent('dimchange',{detail:{dim:this.s.dim}}));
+  }
+  _initFromAttributes(){
+    if(this.hasAttribute('phd'))this._setPhd(true);
+    if(this.hasAttribute('autoplay'))this._setPlaying(true);
+    if(this.hasAttribute('speed'))this._setSpeed(parseFloat(this.getAttribute('speed'))||1);
+    if(this.hasAttribute('loop'))this.s.loop=true;
+    if(this.hasAttribute('firewalls'))this.s.firewalls=true;
+    if(this.hasAttribute('oracle'))this.s.oracle=true;
+    // Respect the OS-level reduced-motion preference unless the author
+    // explicitly opts out via the absence of the attribute.
+    if(this.hasAttribute('reduce-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches)this.s.reduceMotion=true;
+    this._syncTgl('loop');this._syncTgl('firewalls');this._syncTgl('oracle');this._syncTgl('motion');
+    this._setDim(this.hasAttribute('dim')?parseInt(this.getAttribute('dim'))||0:5);
+    const c=this.getAttribute('chapter');
+    if(c!==null)this._goto(Math.max(0,Math.min(CH.length-1,parseInt(c)||0)));
+    else this._markActive();
+    const t=this.getAttribute('time');
+    if(t!==null)this._setTime(parseFloat(t)||0);
+  }
+  _onKey(e){
+    // Handle keys when focus is on the page body, on the host element, or
+    // still inside the shadow root (e.g. after clicking a caption area).
+    if(e.target!==document.body&&e.target!==this&&!this.shadowRoot.contains(e.target))return;
+    if(e.code==='Space'){e.preventDefault();this.$.play.click()}
+    else if(e.code==='ArrowRight')this._goto(Math.min(this.s.chap+1,CH.length-1));
+    else if(e.code==='ArrowLeft')this._goto(Math.max(this.s.chap-1,0));
+  }
+  _setPlaying(p){
+    this.s.playing=p;this.s.ended=false;
+    this.$.play.innerHTML=p?'❚❚ Pause':'▶ Play';
+    this.$.play.setAttribute('aria-label',p?'Pause':'Play');
+    this.s.last=performance.now();this._syncTgl('autoplay');
+    if(p)this.dispatchEvent(new CustomEvent('play'));else this.dispatchEvent(new CustomEvent('pause'));
+  }
+  _setPhd(on){
+    this.s.phd=on;this.toggleAttribute('phd-on',on);
+    if(on&&!this.hasAttribute('phd'))this.setAttribute('phd','');
+    if(!on&&this.hasAttribute('phd'))this.removeAttribute('phd');
+    this._syncTgl('phd');
+  }
+  // Single entry point for switching chapters: resets per-chapter state,
+  // flashes the caption, and dispatches chapterchange. _setTime overrides
+  // chapTime afterwards when seeking.
+  _enterChapter(i,flash=true){
+    const changed=i!==this.s.chap;
+    this.s.chap=i;this.s.chapTime=0;
+    this.s.time=CH.slice(0,i).reduce((a,c)=>a+c.dur,0);
+    this.s.curBeat=-1;this.s.lastChap=-1;this.s.beatIdx=0;this.s.ended=false;
+    this.s.last=performance.now();
+    if(changed&&flash)this._flashCaption();
+    this._markActive();this._sync(true);this._updateHash();
+    if(changed)this.dispatchEvent(new CustomEvent('chapterchange',{detail:{index:i,id:CH[i].id}}));
+  }
+  _goto(i){
+    if(i<0||i>=CH.length)return;
+    this._enterChapter(i);
+  }
+  _markActive(){[...this.$.toc.children].forEach((b,k)=>{if(k===this.s.chap)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')})}
+  _setTime(t){
+    t=Math.max(0,Math.min(TOTAL,t));
+    let acc=0,i=0;
+    while(i<CH.length-1&&t>acc+CH[i].dur){acc+=CH[i].dur;i++}
+    const changed=i!==this.s.chap;
+    if(changed)this._enterChapter(i);
+    this.s.chapTime=t-acc;this.s.time=t;this.s.ended=false;
+    this._sync(true);this._updateHash();
+  }
+  _seek(clientX){const r=this.$.scrub.getBoundingClientRect();const p=Math.max(0,Math.min(1,(clientX-r.left-16)/(r.width-32)));this._setTime(p*TOTAL)}
+  _flashCaption(){
+    this.$.viewport.classList.add('fading');
+    // Mute live regions during the fade so mid-fade text swaps aren't
+    // announced twice by screen readers; restore right after.
+    this.$.eli5.setAttribute('aria-live','off');this.$.phd.setAttribute('aria-live','off');
+    clearTimeout(this._fadeT);
+    this._fadeT=setTimeout(()=>{
+      this.$.viewport.classList.remove('fading');
+      this.$.eli5.setAttribute('aria-live','polite');this.$.phd.setAttribute('aria-live','polite');
+    },140);
+  }
+  _fit(){
+    const cv=this.$.canvas;
+    const w=cv.parentElement.clientWidth||BASE_W;
+    const cw=Math.max(280,Math.min(1100,w));
+    const dpr=Math.min(devicePixelRatio||1,2);
+    cv.width=Math.round(cw*dpr);
+    cv.height=Math.round(cw*(BASE_H/BASE_W)*dpr);
+    cv.style.width='100%';cv.style.height='auto';
+    this.$.ctx.setTransform(cv.width/BASE_W,0,0,cv.height/BASE_H,0,0);
+  }
+  _beatIndex(c,ct){let idx=0;for(let i=0;i<c.beats.length;i++)if(ct>=c.beats[i].t)idx=i;return idx}
+  _sync(force){
+    const c=CH[this.s.chap];
+    if(this.s.chap!==this.s.lastChap){this.s.lastChap=this.s.chap;this.s.curBeat=-1;force=true}
+    // Header (chapter name, grade badge, canvas label) updates exactly once
+    // per chapter, keyed on the chapter index — not on title comparison.
+    if(force||this._lastGradeChap!==this.s.chap){
+      this._lastGradeChap=this.s.chap;
+      this.$.chapname.textContent=c.title;
+      if(c.gradeTxt){this.$.grade.style.display='block';this.$.grade.className='grade '+c.grade;this.$.grade.textContent=c.gradeTxt;this.$.grade.title=c.gradeTip||''}
+      else this.$.grade.style.display='none';
+      this.$.canvas.setAttribute('aria-label',`Animated diagram for: ${c.title}`);
+    }
+    const bi=this._beatIndex(c,this.s.chapTime);
+    if(bi!==this.s.curBeat||force){
+      this.s.curBeat=bi;this.s.beatIdx=bi;
+      this.$.eli5.textContent=c.beats[bi].eli5;
+      this.$.phd.textContent=c.beats[bi].phd||'';
+      this.dispatchEvent(new CustomEvent('beatchange',{detail:{chapter:this.s.chap,beat:bi}}));
+    }
+    const pct=(this.s.time/TOTAL)*100;
+    if(Math.abs(pct-this._lastPct)>.05){
+      this._lastPct=pct;
+      this.$.fill.style.width=pct+'%';
+      this.$.thumb.style.left=`calc(16px + (100% - 32px) * ${pct/100})`;
+      const r=Math.round(pct);
+      if(this.$.scrub.getAttribute('aria-valuenow')!==String(r)){
+        this.$.scrub.setAttribute('aria-valuenow',String(r));
+        this.$.scrub.setAttribute('aria-valuetext',`Chapter ${this.s.chap+1} of ${CH.length}, ${r} percent`);
+      }
+    }
+    if(this.s.chap!==this._lastTick){this._lastTick=this.s.chap;[...this.$.ticks.children].forEach((tk,i)=>tk.classList.toggle('done',i<this.s.chap))}
+  }
+  _updateHash(){
+    if(this.hasAttribute('no-url-sync'))return;
+    clearTimeout(this._hashT);
+    this._hashT=setTimeout(()=>{
+      const h=`#ch=${this.s.chap}&t=${Math.floor(this.s.chapTime)}`;
+      if(location.hash!==h)history.replaceState(null,'',h);
+    },250);
+  }
+  _readHash(){
+    if(this.hasAttribute('no-url-sync'))return;
+    const m=location.hash.match(/ch=(\d+)(?:&t=(\d+))?/);
+    if(!m)return;
+    const ci=Math.max(0,Math.min(CH.length-1,parseInt(m[1])||0));
+    const tt=parseFloat(m[2])||0;
+    this._setTime(CH.slice(0,ci).reduce((a,c)=>a+c.dur,0)+tt);
+  }
+  _loop(){
+    const now=performance.now();
+    const rawDt=Math.min((now-this.s.last)/1000,.06);
+    this.s.last=now;
+    const dt=this.s.reduceMotion?0:rawDt*this.s.speed;
+    if(this.s.playing&&!this.s.ended){
+      this.s.chapTime+=dt;this.s.time+=dt;
+      if(this.s.chapTime>=CH[this.s.chap].dur){
+        if(this.s.chap===CH.length-1){
+          if(this.s.loop)this._enterChapter(0);
+          else{
+            this.s.chapTime=CH[this.s.chap].dur;this.s.time=TOTAL;
+            this.s.playing=false;this.s.ended=true;
+            this.$.play.innerHTML='↻ Replay';this.$.play.setAttribute('aria-label','Replay');
+            this._syncTgl('autoplay');
+            this.dispatchEvent(new CustomEvent('ended'));
+          }
+        }else this._enterChapter(this.s.chap+1);
+      }
+    }
+    // Caption/UI sync runs unconditionally, independent of scene rendering.
+    this._sync();
+    try{
+      const c=CH[this.s.chap];
+      const opts={firewalls:this.s.firewalls,oracle:this.s.oracle,motion:!this.s.reduceMotion,dim:this.s.dim};
+      SCENES[c.id](this._k,this.s.chapTime,c,this.s.beatIdx,opts);
+      this._sceneErr=false;
+    }catch(err){
+      // Log a broken scene once instead of spamming every frame; captions
+      // and playback continue on the last successfully drawn frame.
+      if(!this._sceneErr){this._sceneErr=true;console.error(err)}
+    }
+    this._raf=requestAnimationFrame(()=>this._loop());
+  }
+}
+customElements.define('computational-relativity-explainer',CRE);
+</script>
+</body>
+</html>
