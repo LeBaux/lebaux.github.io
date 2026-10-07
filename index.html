@@ -3,23 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CoReX | Computational Relativity, P vs NP &amp; Euler's Identity</title>
+<title>CoReX v20 | Computational Relativity, P vs NP &amp; Euler's Identity</title>
 <meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — the A₀ seed, Euler's identity, the double-slit experiment, the time machine, and unified readings of all seven Clay Millennium Problems.">
 <meta name="author" content="Pierre LeBaux, PhD">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://lebaux.github.io/">
 <link rel="alternate" hreflang="en" href="https://lebaux.github.io/?lang=en">
 <link rel="alternate" hreflang="cs" href="https://lebaux.github.io/?lang=cz">
+<link rel="alternate" hreflang="x-default" href="https://lebaux.github.io/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="CoReX">
 <meta property="og:title" content="CoReX — Computational Relativity Explained">
 <meta property="og:description" content="Four postulates, one transformer, one fixed point. Plus the double-slit experiment, the time machine, and the seven Clay Millennium Problems.">
 <meta property="og:url" content="https://lebaux.github.io/">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="en">
+<meta property="og:locale:alternate" content="cs">
+<meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#06080f">
 <meta name="color-scheme" content="dark">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","inLanguage":["en","cs"]}
+{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","dateModified":"2026-10-07","version":"20","inLanguage":["en","cs"]}
 </script>
 <style>
 :root{--bg:#06080f;--panel:#10141f;--panel2:#151a28;--line:#1d2231;
@@ -100,6 +103,21 @@ border-radius:14px;padding:24px}
 .panel .eq{font-family:var(--mono);font-size:.95rem;background:var(--bg);
 color:var(--amber2);padding:12px 16px;border-radius:8px;
 border:1px solid var(--line);overflow-x:auto;margin:12px 0}
+/* Display-math field: hand-typeset serif math (no external libs - the
+   page stays fully self-contained). Stacked fractions, italic variables. */
+.math{margin:14px 0;padding:20px 16px;background:rgba(224,169,82,.035);
+border:1px solid rgba(224,169,82,.20);border-radius:10px;
+display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;
+font-family:var(--serif);font-size:1.3rem;line-height:1.45;color:var(--ink);
+overflow-x:auto;text-align:center;overflow-wrap:anywhere}
+.math i{font-style:italic;color:var(--amber2)}
+.math sub,.math sup{font-size:.62em}
+.math sub sup{font-size:1em}
+.frac{display:inline-flex;flex-direction:column;text-align:center;line-height:1.15;
+font-size:.82em;margin:0 .18em;vertical-align:-.5em}
+.frac>span:first-child{border-bottom:1px solid var(--dim);padding:0 .3em .12em}
+.frac>span:last-child{padding:.12em .3em 0}
+@media(max-width:680px){.math{font-size:1.05rem;padding:14px 10px}}
 .panel .cw{margin-top:16px;border-radius:10px;overflow:hidden;
 border:1px solid var(--line);background:var(--bg);height:300px;position:relative}
 .panel canvas{display:block;width:100%;height:100%}
@@ -228,8 +246,8 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
 <main id="main">
 
 <section id="top" aria-labelledby="hero-title">
-  <p class="kicker" data-en="A digital monograph · CoReX"
-     data-cz="Digitální monografie · CoReX">A digital monograph · CoReX</p>
+  <p class="kicker" data-en="A digital monograph · CoReX v20"
+     data-cz="Digitální monografie · CoReX v20">A digital monograph · CoReX v20</p>
   <h1 id="hero-title">
     <span data-en="The Special Theory of " data-cz="Speciální teorie ">The Special Theory of </span><em data-en="Computational Relativity" data-cz="výpočetní relativity">Computational Relativity</em>
   </h1>
@@ -289,6 +307,7 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
   <article class="panel on" id="panel1" role="tabpanel" aria-labelledby="tab1">
     <h3 data-en="P vs NP" data-cz="P vs NP">P vs NP</h3>
     <div class="eq">R_N = C(N,2)  ⇒  T(N) = O(N²)</div>
+    <div class="math"><i>R</i><sub><i>N</i></sub> = <span class="frac"><span><i>N</i>(<i>N</i>−1)</span><span>2</span></span> &nbsp;⇒&nbsp; <i>T</i>(<i>N</i>) = <i>O</i>(<i>N</i>²)</div>
     <p data-en="The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N²)."
        data-cz="Exponenciální rozhodovací strom nad 2ᴺ stavy se injektivně vnořuje do R_N rotačních rovin Lieovy algebry so(N). Neoptimální větve podléhají Eulerově anti-fázové anihilaci na nodálních firewallech a geodetický tok skončí v deterministickém O(N²).">
       The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N²).
@@ -301,6 +320,7 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
   <article class="panel" id="panel2" role="tabpanel" aria-labelledby="tab2">
     <h3 data-en="Riemann Hypothesis" data-cz="Riemannova hypotéza">Riemann Hypothesis</h3>
     <div class="eq">ξ(s) = ξ(1−s)  ⇒  Re(s) = ½</div>
+    <div class="math">ξ(<i>s</i>) = ξ(1−<i>s</i>) &nbsp;⇒&nbsp; Re(<i>s</i>) = <span class="frac"><span>1</span><span>2</span></span></div>
     <p data-en="The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus."
        data-cz="Funkcionální rovnice se čte jako zrcadlo přes osu A₀. Nuly mimo osu narušují rovnováhu hranice; anti-fázový firewall nutí jejich hustotu pravděpodobnosti k nule a Re(s) = ½ zůstává jediným stabilním místem.">
       The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus.
@@ -313,6 +333,7 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
   <article class="panel" id="panel3" role="tabpanel" aria-labelledby="tab3">
     <h3 data-en="Yang–Mills Mass Gap" data-cz="Yang–Millsova hmotnostní mezera">Yang–Mills Mass Gap</h3>
     <div class="eq">E₀ = λc² &gt; 0  ⇒  ΔM &gt; 0</div>
+    <div class="math"><i>E</i>₀ = λ<i>c</i>² &gt; 0 &nbsp;⇒&nbsp; Δ<i>M</i> = <span class="frac"><span>ħω<sub>A₀</sub></span><span><i>c</i>²</span></span> &gt; 0</div>
     <p data-en="The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ΔM = ħω_{A₀}/c²."
        data-cz="Skalární semínko A₀ = λ dává vakuu striktně kladné dno. Nodální firewally odřezávají vysokoenergetické divergence, které by jinak mezeru uzavřely, a vzniká striktně kladná hmotnostní mezera ΔM = ħω_{A₀}/c².">
       The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ΔM = ħω_{A₀}/c².
@@ -325,6 +346,7 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
   <article class="panel" id="panel4" role="tabpanel" aria-labelledby="tab4">
     <h3 data-en="Navier–Stokes Smoothness" data-cz="Hladkost Navier–Stokesových rovnic">Navier–Stokes Smoothness</h3>
     <div class="eq">det(CM₅) = 0  ⇒  ‖u‖_{C^∞} &lt; ∞</div>
+    <div class="math">det(CM₅) = 0 &nbsp;⇒&nbsp; ‖<i>u</i>‖<sub><i>C</i><sup>∞</sup></sub> &lt; ∞</div>
     <p data-en="Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The 5-point Cayley–Menger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^∞ for all t ≥ 0."
        data-cz="Extrémní gradienty vorticity spouštějí anti-fázovou anihilaci dříve, než se mohou zkoncentrovat. Pětibodový Cayley–Mengerův determinant brání inflaci hodnosti Gramovy matice rychlosti a udržuje tok v C^∞ pro všechna t ≥ 0.">
       Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The 5-point Cayley–Menger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^∞ for all t ≥ 0.
@@ -337,6 +359,7 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
   <article class="panel" id="panel5" role="tabpanel" aria-labelledby="tab5">
     <h3 data-en="Birch &amp; Swinnerton-Dyer" data-cz="Birchova a Swinnerton-Dyerova hypotéza">Birch &amp; Swinnerton-Dyer</h3>
     <div class="eq">rank(E(Q)) = ord_{s=1} L(E,s)</div>
+    <div class="math">rank <i>E</i>(ℚ) = ord<sub><i>s</i>=1</sub> <i>L</i>(<i>E</i>,<i>s</i>)</div>
     <p data-en="Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes — the equality is a statement about orbits, not about arithmetic coincidence."
        data-cz="Každý nezávislý racionální generátor E(Q) se zobrazí na jednu ortogonální rotační rovinu. Řád nulového bodu L(E, s) v s = 1 počítá tytéž roviny — rovnost je výrokem o orbitách, ne o aritmetické náhodě.">
       Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes — the equality is a statement about orbits, not about arithmetic coincidence.
@@ -349,6 +372,7 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
   <article class="panel" id="panel6" role="tabpanel" aria-labelledby="tab6">
     <h3 data-en="Hodge Conjecture" data-cz="Hodgeova hypotéza">Hodge Conjecture</h3>
     <div class="eq">H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles</div>
+    <div class="math">H<sup>2k</sup>(<i>X</i>,ℚ) ∩ H<sup>k,k</sup>(<i>X</i>) = ℚ · [algebraic cycles]</div>
     <p data-en="Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Ω_{A₀}."
        data-cz="Každá Hodgeova třída na hladké projektivní varietě je racionální kombinací algebraických cyklů, vyjádřená jako invariantní podobjekt GUT-Cat toposu pod klasifikátorem měřítka Ω_{A₀}.">
       Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Ω_{A₀}.
@@ -361,6 +385,7 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
   <article class="panel" id="panel7" role="tabpanel" aria-labelledby="tab7">
     <h3 data-en="Poincaré Conjecture" data-cz="Poincaréova hypotéza">Poincaré Conjecture</h3>
     <div class="eq">∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³</div>
+    <div class="math"><span class="frac"><span>∂<i>g</i></span><span>∂<i>t</i></span></span> = −2<i>R</i><sub><i>ij</i></sub> &nbsp;⇒&nbsp; <i>M</i>³ ≅ <i>S</i>³</div>
     <p data-en="Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere — Perelman's surgery, but with the endpoints already determined by the seed."
        data-cz="Neck-pinch singularity Ricciho toku jsou anihilovány na nodálních firewallech. Každá jednoduše souvislá uzavřená 3-varieta se hladce deformuje na 3-sféru — Perelmanova chirurgie, ale s koncovými body již určenými semínkem.">
       Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere — Perelman's surgery, but with the endpoints already determined by the seed.
@@ -617,7 +642,9 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
     <span data-en="CoReX · Special Theory of Computational Relativity"
           data-cz="CoReX · Speciální teorie výpočetní relativity">CoReX · Special Theory of Computational Relativity</span><br>
     <span data-en="By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity"
-          data-cz="Autor: Pierre LeBaux, PhD · Teoretická fyzika a výpočetní složitost">By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity</span>
+          data-cz="Autor: Pierre LeBaux, PhD · Teoretická fyzika a výpočetní složitost">By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity</span><br>
+    <span data-en="Version 20 · self-contained HTML · offline-ready"
+          data-cz="Verze 20 · samostatné HTML · připraveno offline">Version 20 · self-contained HTML · offline-ready</span>
   </address>
   <button class="navlink" onclick="goTop()"
           data-en="↑ Back to top" data-cz="↑ Zpět nahoru">↑ Back to top</button>
@@ -731,6 +758,24 @@ function selectSeven(n) {
   requestAnimationFrame(setupCanvases);
 }
 
+/* WAI-ARIA tabs pattern: arrow keys move between the seven problem
+ * tabs, Home/End jump to the first/last. Keyboard users get the same
+ * quick navigation mouse users get. */
+document.addEventListener('keydown', function (e) {
+  if (e.target && e.target.id && /^tab[1-7]$/.test(e.target.id)) {
+    var cur = parseInt(e.target.id.slice(3), 10), nxt = null;
+    if (e.key === 'ArrowRight') nxt = cur % 7 + 1;
+    else if (e.key === 'ArrowLeft') nxt = (cur + 5) % 7 + 1;
+    else if (e.key === 'Home') nxt = 1;
+    else if (e.key === 'End') nxt = 7;
+    if (nxt) {
+      e.preventDefault();
+      var nb = document.getElementById('tab' + nxt);
+      if (nb) { nb.focus(); selectSeven(nxt); }
+    }
+  }
+});
+
 var LAB = { N: 5, speed: 0.6, phase: 0, planes: true, nodes: true, orbits: true };
 function updateN(v) {
   var n = parseInt(v, 10);
@@ -829,6 +874,13 @@ var CZ_LABELS = {
   'vacuum floor': 'dno vakua', 'C∞ smooth': 'C∞ hladké', 'L(E,s) at s=1': 'L(E,s) v s=1',
   'rational cycle': 'racionální cyklus', 'SOURCE': 'ZDROJ', 'BARRIER': 'BARIÉRA', 'SCREEN': 'STÍNÍTKO',
   'ΔM > 0': 'ΔM > 0', 'M³ → S³': 'M³ → S³', 'I(y) = cos²(k·Δr / 2)': 'I(y) = cos²(k·Δr / 2)',
+  'rotation planes · geodesic O(N²)': 'rotační roviny · geodetika O(N²)',
+  'off-axis zero pushed back': 'nula mimo osu vrácena', 'locked on the mirror axis': 'uzamčena na zrcadlové ose',
+  'muted by firewall': 'umlčen firewallem', 'UV cutoff': 'UV řez',
+  'anti-phase kills blowup': 'anti-fáze zabíjí divergenci', 'rank generators': 'generátory ranku',
+  'phantom class': 'fantomová třída', 'snapped: rational - no leftovers': 'usazeno: racionální - bez zbytků',
+  'Ricci flow · neck-pinch annihilated': 'Ricciho tok · neck-pinch anihilován',
+  'smooth S³ - flow complete': 'hladká S³ - tok dokončen',
   'WHICH-PATH — interference removed': 'KTERÁ DRÁHA — interference odstraněna',
   'COHERENT — interference pattern': 'KOHERENTNÍ — interferenční vzor',
   'FUTURE': 'BUDOUCNOST', 'PAST': 'MINULOST', 'NODAL FIREWALL': 'NODÁLNÍ FIREWALL',
@@ -858,116 +910,338 @@ function canvasLabel(ctx, text, x, y, opts) {
   ctx.fillText(text, xx, Math.max(size + 4, Math.min(y, ctx.canvas.clientHeight - 6)));
   ctx.restore();
 }
+/* I. P vs NP: the 2^N decision tree collapses into so(N) rotation
+ * planes. A "collapse wave" sweeps the tree level by level - branch
+ * pairs meet in anti-phase and vanish (e^iπ + 1 = 0), and a comet
+ * carries the surviving state into the rotating plane engine. */
 function draw1(ctx, W, H, t) {
   canvasLabel(ctx, '2^N tree → so(N)', 18, 24);
-  var lx = Math.max(28, W * 0.08), ly = H * 0.53;
-  var treeW = Math.min(W * 0.28, 190);
+  var lx = Math.max(28, W * 0.08), ly = H * 0.55, treeW = Math.min(W * 0.30, 200);
+  var step = Math.min(H * 0.18, 38);
+  var period = 6, ph = (t % period) / period;
+  var wave = ph * 1.35;
   for (var l = 0; l < 4; l++) {
-    var count = Math.pow(2, l), x = lx + l * treeW / 3.2;
+    var count = Math.pow(2, l), x = lx + l * treeW / 3;
     for (var i = 0; i < count; i++) {
-      var y = ly + (i - (count - 1) / 2) * Math.min(H * 0.18, 38);
-      ctx.fillStyle = 'rgba(201,128,128,' + (0.7 - l * 0.15) + ')';
-      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+      var y = ly + (i - (count - 1) / 2) * step;
       if (l > 0) {
-        var px = lx + (l - 1) * treeW / 3.2;
-        var parent = ly + ((Math.floor(i / 2)) - (Math.pow(2,l-1)-1)/2) * Math.min(H*0.18,38);
-        ctx.strokeStyle='rgba(127,163,184,0.18)';
-        ctx.beginPath();ctx.moveTo(px,parent);ctx.lineTo(x,y);ctx.stroke();
+        var px = lx + (l - 1) * treeW / 3;
+        var parent = ly + ((Math.floor(i / 2)) - (Math.pow(2, l - 1) - 1) / 2) * step;
+        var cut = wave > l - 0.5 + (i % 2) * 0.25;
+        ctx.strokeStyle = 'rgba(127,163,184,' + (cut ? 0.05 : 0.20) + ')';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(px, parent); ctx.lineTo(x, y); ctx.stroke();
+        if (cut) {
+          var mx2 = (px + x) / 2, my2 = (parent + y) / 2;
+          var au = 1 - Math.min(1, Math.max(0, wave - l) * 1.4);
+          if (au > 0.02) {
+            ctx.strokeStyle = 'rgba(201,128,128,' + (0.5 * au) + ')';
+            ctx.lineWidth = 1.4;
+            ctx.beginPath(); ctx.arc(mx2, my2, 2 + (1 - au) * 9, 0, Math.PI * 2); ctx.stroke();
+          }
+        }
       }
+      var faded = l === 0 ? false : wave > l - 0.5 + (i % 2) * 0.25;
+      ctx.fillStyle = 'rgba(201,128,128,' + (faded ? 0.10 : 0.75) + ')';
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
     }
   }
-  var cx = W * 0.72, cy = H * 0.53, rad = Math.min(W * 0.20, H * 0.30);
-  for (var p = 0; p < 15; p++) {
-    var a = (p / 15) * Math.PI + t * 0.4;
-    ctx.strokeStyle = 'hsla(' + (40 + p * 20) + ',40%,60%,0.35)';
+  var cx = W * 0.74, cy = H * 0.55, rad = Math.min(W * 0.17, H * 0.30);
+  var R = 10;
+  for (var p = 0; p < R; p++) {
+    var a = (p / R) * Math.PI + t * 0.4;
+    var sweep = (p / R) * Math.PI;
+    var near = Math.abs(((t * 0.4) % Math.PI) - sweep) < 0.35;
+    ctx.strokeStyle = near ? 'rgba(244,199,122,0.5)' : 'hsla(' + (40 + p * 18) + ',40%,60%,0.30)';
+    ctx.lineWidth = near ? 1.6 : 1;
     ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a)*rad, cy + Math.sin(a)*rad);
-    ctx.lineTo(cx - Math.cos(a)*rad, cy - Math.sin(a)*rad);
+    ctx.moveTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+    ctx.lineTo(cx - Math.cos(a) * rad, cy - Math.sin(a) * rad);
     ctx.stroke();
   }
-  ctx.fillStyle='#f4c77a';ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.fill();
-  canvasLabel(ctx,'rotation planes',cx,H-14,{align:'center',color:'rgba(164,158,144,.72)',size:10});
+  /* engine chassis: faint orbit ring + breathing seed halo */
+  ctx.strokeStyle = 'rgba(127,163,184,.14)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2); ctx.stroke();
+  var hb = 1 + 0.12 * Math.sin(t * 2.1);
+  ctx.fillStyle = '#f4c77a'; ctx.beginPath(); ctx.arc(cx, cy, 5 * hb, 0, Math.PI * 2); ctx.fill();
+  var pu = (t * 1.2) % 1;
+  ctx.strokeStyle = 'rgba(244,199,122,' + (0.4 * (1 - pu)) + ')';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(cx, cy, 6 + pu * 22, 0, Math.PI * 2); ctx.stroke();
+  /* live collapse counter: branch pairs tick down to 6 planes as the
+   * wave sweeps - the number the theorem is about, counted on screen */
+  var remaining = Math.max(6, 16 - Math.floor(wave * 8));
+  ctx.font = 'bold 11px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(164,158,144,.75)';
+  ctx.fillText('2^4 = 16 branches', cx, cy + rad + 26);
+  ctx.fillStyle = ph > 0.35 ? '#7ba78c' : '#c98080';
+  ctx.fillText('→ ' + remaining + ' rotation planes' + (ph > 0.35 ? '  ✓ collapsed' : '  … collapsing'), cx, cy + rad + 42);
+  ctx.textAlign = 'left';
+  /* comet with fading trail carries the surviving state into the engine */
+  if (ph > 0.72) {
+    var cu = (ph - 0.72) / 0.28;
+    var sx = lx + treeW, sxx = sx + (cx - sx) * EASEo(cu);
+    var syy = ly + Math.sin(cu * Math.PI) * -H * 0.18;
+    for (var tr = 1; tr <= 5; tr++) {
+      var tu = Math.max(0, cu - tr * 0.05);
+      var tx = sx + (cx - sx) * EASEo(tu);
+      var ty = ly + Math.sin(tu * Math.PI) * -H * 0.18;
+      ctx.fillStyle = 'rgba(244,199,122,' + (0.35 * (1 - tr / 6)) + ')';
+      ctx.beginPath(); ctx.arc(tx, ty, 4 - tr * 0.5, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = 'rgba(244,199,122,' + (0.95 - cu * 0.4) + ')';
+    ctx.beginPath(); ctx.arc(sxx, syy, 4, 0, Math.PI * 2); ctx.fill();
+    if (cu > 0.9) {
+      var lu2 = (cu - 0.9) / 0.1;
+      ctx.strokeStyle = 'rgba(244,199,122,' + (0.7 * (1 - lu2)) + ')';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(cx, cy, 8 + lu2 * 24, 0, Math.PI * 2); ctx.stroke();
+    }
+  }
+  canvasLabel(ctx, 'rotation planes · geodesic O(N²)', cx, H - 14, { align: 'center', color: 'rgba(164,158,144,.72)', size: 10 });
 }
+function EASEo(x) { x = Math.max(0, Math.min(1, x)); return 1 - Math.pow(1 - x, 3); }
+/* II. Riemann: the critical line is the A0 mirror. A rogue zero drifts
+ * off the line; boundary pulses push it back, its oscillation damps,
+ * and it locks onto Re(s) = 1/2 with a flash. On-line zeros glow. */
 function draw2(ctx, W, H, t) {
-  var cx=W/2, cy=H/2;
-  ctx.strokeStyle='rgba(127,163,184,.15)';
-  ctx.beginPath();ctx.moveTo(28,cy);ctx.lineTo(W-28,cy);ctx.stroke();
-  ctx.strokeStyle='#7ba78c';ctx.lineWidth=3;
-  ctx.beginPath();ctx.moveTo(cx,42);ctx.lineTo(cx,H-30);ctx.stroke();
-  canvasLabel(ctx,'Re(s) = 1/2',cx+12,28,{color:'rgba(123,167,140,.9)'});
-  for(var i=-4;i<=4;i++){
-    if(i===0)continue;
-    var y=cy+i*Math.min(24,H*.08)+Math.sin(t*1.6+i)*3;
-    ctx.fillStyle='#e0a952';ctx.beginPath();ctx.arc(cx,y,5,0,Math.PI*2);ctx.fill();
+  var cx = W / 2, cy = H * 0.52;
+  ctx.strokeStyle = 'rgba(127,163,184,.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(28, cy); ctx.lineTo(W - 28, cy); ctx.stroke();
+  ctx.strokeStyle = '#7ba78c'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(cx, 42); ctx.lineTo(cx, H - 30); ctx.stroke();
+  canvasLabel(ctx, 'Re(s) = 1/2', cx + 12, 28, { color: 'rgba(123,167,140,.9)' });
+  for (var i = -4; i <= 4; i++) {
+    if (i === 0) continue;
+    var y = cy + i * Math.min(24, H * .08);
+    var g = 0.6 + 0.4 * Math.sin(t * 1.6 + i);
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath(); ctx.arc(cx, y, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(224,169,82,' + (0.35 * g) + ')';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(cx, y, 5 + g * 5, 0, Math.PI * 2); ctx.stroke();
   }
-}
-function draw3(ctx,W,H,t){
-  var cy=H*.70, floorH=Math.min(36,H*.14);
-  ctx.fillStyle='rgba(15,20,34,.9)';ctx.fillRect(30,cy,W-60,floorH);
-  canvasLabel(ctx,'vacuum floor',42,cy+floorH*.65,{color:'rgba(164,158,144,.7)',size:11});
-  var gapY=cy-Math.min(68,H*.22)-Math.sin(t*1.4)*3;
-  ctx.strokeStyle='#c98080';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(30,gapY);ctx.lineTo(W-30,gapY);ctx.stroke();
-  canvasLabel(ctx,'ΔM > 0',W/2,gapY-10,{align:'center',color:'#c98080',size:11});
-  for(var x=55;x<W-45;x+=Math.max(24,W/28)){
-    /* particles bob INSIDE the gap: between the floor (cy) and the gap line */
-    var ey=gapY+8+Math.abs(Math.sin(x*.05+t*2.2))*Math.min(30,Math.max(0,cy-gapY-12));
-    ctx.fillStyle='#e0a952';ctx.beginPath();ctx.arc(x,ey,4,0,Math.PI*2);ctx.fill();
+  var P = 6, ph = t % P;
+  var off = 0, ry = cy - Math.min(46, H * 0.16);
+  if (ph < 1.6) off = (ph / 1.6) * W * 0.16;
+  else if (ph < 2.6) { var q = (ph - 1.6) / 1.0; off = W * 0.16 * (1 - EASEo(q)); }
+  else if (ph < 4.4) { var d = Math.exp(-(ph - 2.6) * 2.2); off = Math.sin((ph - 2.6) * 9) * W * 0.04 * d; }
+  var rx = cx + off;
+  ctx.fillStyle = off > 4 ? '#c98080' : '#e0a952';
+  ctx.beginPath(); ctx.arc(rx, ry, 5.5, 0, Math.PI * 2); ctx.fill();
+  if (ph >= 1.6 && ph < 2.6) {
+    var q2 = (ph - 1.6) / 1.0;
+    ctx.strokeStyle = 'rgba(255,209,102,' + (0.6 * (1 - q2)) + ')';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx, ry); ctx.lineTo(cx + W * 0.16 * (1 - EASEo(q2)), ry); ctx.stroke();
+    canvasLabel(ctx, 'off-axis zero pushed back', cx + W * 0.08, ry - 12, { align: 'center', color: 'rgba(255,209,102,.9)', size: 10 });
+  } else if (ph >= 4.4) {
+    var lu = (ph - 4.4) / 1.6;
+    ctx.strokeStyle = 'rgba(123,167,140,' + (0.7 * Math.max(0, 1 - lu * 2)) + ')';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx, ry, 6 + EASEo(Math.min(1, lu * 2)) * 20, 0, Math.PI * 2); ctx.stroke();
+    if (lu < 0.5) canvasLabel(ctx, 'locked on the mirror axis', cx, ry - 16, { align: 'center', color: 'rgba(123,167,140,.95)', size: 10 });
   }
+  canvasLabel(ctx, 'muted by firewall', W - 20, H - 12, { align: 'right', color: 'rgba(164,158,144,.6)', size: 10 });
 }
-function draw4(ctx,W,H,t){
-  var cx=W/2,cy=H/2,rmax=Math.min(W,H)*.35;
-  for(var r=14;r<rmax;r+=10){
-    var speed=(rmax-r)*.03;
-    ctx.strokeStyle='hsla('+(200+r)+',45%,55%,.55)';ctx.lineWidth=1.4;
-    ctx.beginPath();ctx.arc(cx,cy,r,t*speed,t*speed+Math.PI*1.4);ctx.stroke();
+/* III. Yang–Mills: the seed sets the vacuum floor; particles keep a
+ * positive mass gap; UV spikes that try to diverge are cut off at the
+ * firewall line with an anti-phase flash. The gap never closes. */
+function draw3(ctx, W, H, t) {
+  var cy = H * 0.70, floorH = Math.min(36, H * .14);
+  ctx.fillStyle = 'rgba(15,20,34,.9)'; ctx.fillRect(30, cy, W - 60, floorH);
+  var sp = 1 + 0.15 * Math.sin(t * 1.3);
+  ctx.fillStyle = '#f4c77a';
+  ctx.beginPath(); ctx.arc(W * 0.5, cy + floorH * 0.5, 4 * sp, 0, Math.PI * 2); ctx.fill();
+  canvasLabel(ctx, 'vacuum floor', 42, cy + floorH * .65, { color: 'rgba(164,158,144,.7)', size: 11 });
+  var gapY = cy - Math.min(68, H * .22);
+  ctx.strokeStyle = '#c98080'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(30, gapY); ctx.lineTo(W - 30, gapY); ctx.stroke();
+  canvasLabel(ctx, 'ΔM > 0', W / 2, gapY - 10, { align: 'center', color: '#c98080', size: 11 });
+  var bx = W - 74;
+  ctx.strokeStyle = 'rgba(201,128,128,.6)'; ctx.lineWidth = 1.4;
+  ctx.beginPath(); ctx.moveTo(bx, gapY); ctx.lineTo(bx, cy); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(bx - 4, gapY + 5); ctx.lineTo(bx, gapY); ctx.lineTo(bx + 4, gapY + 5);
+  ctx.moveTo(bx - 4, cy - 5); ctx.lineTo(bx, cy); ctx.lineTo(bx + 4, cy - 5);
+  ctx.stroke();
+  for (var x = 55; x < W - 45; x += Math.max(24, W / 28)) {
+    var ey = gapY + 8 + Math.abs(Math.sin(x * .05 + t * 2.2)) * Math.min(30, Math.max(0, cy - gapY - 12));
+    ctx.fillStyle = '#e0a952'; ctx.beginPath(); ctx.arc(x, ey, 4, 0, Math.PI * 2); ctx.fill();
   }
-  canvasLabel(ctx,'C∞ smooth',cx,26,{align:'center',color:'rgba(123,167,140,.9)'});
+  var cutY = Math.max(30, gapY - Math.min(48, H * 0.16));
+  var P = 3.5, ph = t % P;
+  var sx2 = W * 0.28 + Math.sin(Math.floor(t / P) * 2.7) * W * 0.18;
+  var grow = EASEo(Math.min(1, ph / (P * 0.6)));
+  var spikeTop = gapY - grow * Math.min(90, H * 0.30);
+  if (spikeTop < cutY) spikeTop = cutY;
+  ctx.strokeStyle = 'rgba(201,128,128,.85)'; ctx.lineWidth = 2.4;
+  ctx.beginPath(); ctx.moveTo(sx2, gapY); ctx.lineTo(sx2, spikeTop); ctx.stroke();
+  if (ph > P * 0.6) {
+    var fu = (ph - P * 0.6) / (P * 0.4);
+    ctx.strokeStyle = 'rgba(255,209,102,' + (0.8 * (1 - fu)) + ')';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(sx2, cutY, 3 + fu * 16, 0, Math.PI * 2); ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(255,209,102,.35)';
+  ctx.setLineDash([4, 5]);
+  ctx.beginPath(); ctx.moveTo(30, cutY); ctx.lineTo(W - 30, cutY); ctx.stroke();
+  ctx.setLineDash([]);
+  canvasLabel(ctx, 'UV cutoff', W - 34, cutY - 6, { align: 'right', color: 'rgba(255,209,102,.75)', size: 10 });
 }
-function draw5(ctx,W,H,t){
-  var cx=W*.31,cy=H*.54, scale=Math.min(25,W*.032), pyMax=Math.min(95,H*.32);
-  ctx.strokeStyle='#9b8ac4';ctx.lineWidth=2;ctx.beginPath();
-  var first=true;
-  for(var py=-pyMax;py<=pyMax;py+=3){
-    var y=py/32,x=y*y-1,px=cx+x*scale;
-    if(first){ctx.moveTo(px,cy+py);first=false;}else ctx.lineTo(px,cy+py);
+/* IV. Navier–Stokes: a vortex tries to concentrate into a shockwave;
+ * as its vorticity peaks, anti-phase cancellation bursts at the core
+ * and the energy dissipates back into smooth, bounded flow. */
+function draw4(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2, rmax = Math.min(W, H) * .35;
+  var P = 5, ph = t % P;
+  var conc = ph < P * 0.55 ? EASEo(ph / (P * 0.55)) : Math.max(0, 1 - (ph - P * 0.55) / (P * 0.2));
+  for (var r = 14; r < rmax; r += 10) {
+    var speed = (rmax - r) * .03 + conc * 1.2;
+    ctx.strokeStyle = 'hsla(' + (200 + r + conc * 40) + ',45%,' + (55 + conc * 10) + '%,.55)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(cx, cy, r, t * speed, t * speed + Math.PI * 1.4); ctx.stroke();
+  }
+  if (ph > P * 0.55 && ph < P * 0.55 + 1.2) {
+    var bu = (ph - P * 0.55) / 1.2;
+    ctx.strokeStyle = 'rgba(201,128,128,' + (0.8 * (1 - bu)) + ')';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath(); ctx.arc(cx, cy, 4 + EASEo(bu) * rmax * 0.9, 0, Math.PI * 2); ctx.stroke();
+    canvasLabel(ctx, 'anti-phase kills blowup', cx, cy - rmax - 10, { align: 'center', color: 'rgba(201,128,128,.95)', size: 11 });
+  } else {
+    canvasLabel(ctx, 'C∞ smooth', cx, 26, { align: 'center', color: 'rgba(123,167,140,.9)' });
+  }
+  var mw = Math.min(150, W * 0.25), mx = cx - mw / 2, my = H - 22;
+  ctx.fillStyle = 'rgba(15,20,34,.9)'; ctx.fillRect(mx, my, mw, 6);
+  ctx.fillStyle = conc > 0.85 ? '#c98080' : '#7ba78c';
+  ctx.fillRect(mx, my, mw * (0.35 + conc * 0.45), 6);
+  ctx.strokeStyle = 'rgba(127,163,184,.3)'; ctx.lineWidth = 1;
+  ctx.strokeRect(mx, my, mw, 6);
+}
+/* V. BSD: each independent rational generator of the curve fires a
+ * pulse into its own bar of the L-spectrum; rank = order of
+ * vanishing at s = 1, counted live. */
+function draw5(ctx, W, H, t) {
+  var cx = W * .31, cy = H * .54, scale = Math.min(25, W * .032), pyMax = Math.min(95, H * .32);
+  ctx.strokeStyle = '#9b8ac4'; ctx.lineWidth = 2; ctx.beginPath();
+  var first = true;
+  for (var py = -pyMax; py <= pyMax; py += 3) {
+    var y = py / 32, x = y * y - 1, px = cx + x * scale;
+    if (first) { ctx.moveTo(px, cy + py); first = false; } else ctx.lineTo(px, cy + py);
   }
   ctx.stroke();
-  for(var i=1;i<=4;i++){
-    var a=t*.8+i;
-    ctx.fillStyle='#e0a952';ctx.beginPath();
-    ctx.arc(cx+Math.cos(a)*(scale+i*10),cy+Math.sin(a)*(18+i*5),4.5,0,Math.PI*2);ctx.fill();
+  var bx = W * .62;
+  canvasLabel(ctx, 'L(E,s) at s=1', bx, 42, { color: 'rgba(212,207,196,.75)', size: 11 });
+  var barW = Math.min(60, W * .12);
+  var P = 2.2;
+  for (var k = 1; k <= 4; k++) {
+    var by = 56 + k * Math.min(23, H * .08);
+    var fire = ((t + (k - 1) * -P / 4) % P) / P;
+    var glow = fire < 0.35 ? 0.35 + 0.65 * (1 - fire / 0.35) : 0.35;
+    ctx.fillStyle = 'rgba(224,169,82,' + glow + ')';
+    ctx.fillRect(bx, by, barW, 14);
+    ctx.fillStyle = 'rgba(6,8,15,.9)'; ctx.font = '10px monospace';
+    ctx.fillText('ord ' + k, bx + 7, by + 11);
+    var ga = t * .8 + k * 1.7;
+    var gy2 = cy + Math.sin(ga) * (18 + k * 4);
+    var onCurveY = Math.max(-pyMax, Math.min(pyMax, gy2 - cy));
+    var gx2 = cx + ((onCurveY / 32) * (onCurveY / 32) - 1) * scale;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath(); ctx.arc(gx2, cy + onCurveY, 3.5, 0, Math.PI * 2); ctx.fill();
+    if (fire < 0.5) {
+      var hu = fire / 0.5;
+      var pxx = gx2 + (bx - gx2) * hu, pyy = cy + onCurveY + (by + 7 - (cy + onCurveY)) * hu;
+      ctx.fillStyle = 'rgba(244,199,122,' + (0.85 * (1 - hu)) + ')';
+      ctx.beginPath(); ctx.arc(pxx, pyy, 2.6, 0, Math.PI * 2); ctx.fill();
+    }
   }
-  var bx=W*.62;
-  canvasLabel(ctx,'L(E,s) at s=1',bx,42,{color:'rgba(212,207,196,.75)',size:11});
-  var barW=Math.min(60,W*.12);
-  for(var k=1;k<=4;k++){
-    var by=56+k*Math.min(23,H*.08);
-    ctx.fillStyle='#e0a952';ctx.fillRect(bx,by,barW,14);
-    ctx.fillStyle='rgba(6,8,15,.9)';ctx.font='10px monospace';ctx.fillText('ord '+k,bx+7,by+11);
+  canvasLabel(ctx, 'rank generators', cx, H - 14, { align: 'center', color: 'rgba(155,138,196,.8)', size: 10 });
+}
+/* VI. Hodge: a phantom class wanders through the cohomology grid until
+ * the scale classifier Ω_A0 snaps it onto the lattice as a rational
+ * combination of algebraic cycles - no leftover pieces. */
+function draw6(ctx, W, H, t) {
+  var cx = W / 2, cy = H * .55, span = Math.min(W * .38, 180);
+  ctx.strokeStyle = 'rgba(127,163,184,.18)';
+  ctx.lineWidth = 1;
+  for (var i = -4; i <= 4; i++) { ctx.beginPath(); ctx.moveTo(cx - span, cy + i * 18); ctx.lineTo(cx + span, cy + i * 18 + Math.sin(i + t) * 4); ctx.stroke(); }
+  var tilt = Math.PI / 6, ea = Math.min(130, W * .28) + Math.sin(t) * 5, eb = Math.min(60, H * .20);
+  ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.5; ctx.beginPath();
+  ctx.ellipse(cx, cy, ea, eb, tilt, 0, Math.PI * 2); ctx.stroke();
+  for (var j = 0; j < 8; j++) {
+    var a = t * .6 + j * Math.PI / 4;
+    var ux = Math.cos(a) * ea, uy = Math.sin(a) * eb;
+    ctx.fillStyle = '#e0a952'; ctx.beginPath();
+    ctx.arc(cx + Math.cos(tilt) * ux - Math.sin(tilt) * uy, cy + Math.sin(tilt) * ux + Math.cos(tilt) * uy, 3.5, 0, Math.PI * 2); ctx.fill();
   }
+  var P = 4, ph = t % P;
+  var wob = ph < P * 0.6 ? 1 : Math.max(0, 1 - (ph - P * 0.6) / (P * 0.25));
+  var home = { x: cx - span * 0.45, y: cy - 18 };
+  var wander = { x: home.x + Math.sin(t * 1.1) * 34 * wob, y: home.y + Math.cos(t * 1.7) * 20 * wob };
+  if (ph >= P * 0.6 && ph < P * 0.85) {
+    var su = EASEo((ph - P * 0.6) / (P * 0.25));
+    wander.x = wander.x * (1 - su) + home.x * su;
+    wander.y = wander.y * (1 - su) + home.y * su;
+  }
+  var snapped = ph >= P * 0.85;
+  ctx.strokeStyle = snapped ? 'rgba(123,167,140,.9)' : 'rgba(201,128,128,.75)';
+  ctx.lineWidth = 1.6;
+  ctx.setLineDash(snapped ? [] : [3, 4]);
+  ctx.strokeRect(wander.x - 7, wander.y - 7, 14, 14);
+  ctx.setLineDash([]);
+  if (ph >= P * 0.85) {
+    var lu = (ph - P * 0.85) / (P * 0.15);
+    ctx.strokeStyle = 'rgba(123,167,140,' + (0.8 * (1 - lu)) + ')';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(home.x, home.y, 4 + lu * 22, 0, Math.PI * 2); ctx.stroke();
+  }
+  canvasLabel(ctx, 'rational cycle', cx, cy - Math.min(84, H * .30), { align: 'center', color: 'rgba(212,175,55,.9)', size: 11 });
+  canvasLabel(ctx, snapped ? 'snapped: rational - no leftovers' : 'phantom class', cx, H - 12, { align: 'center', color: snapped ? 'rgba(123,167,140,.85)' : 'rgba(201,128,128,.75)', size: 10 });
 }
-function draw6(ctx,W,H,t){
-  var cx=W/2,cy=H*.55, span=Math.min(W*.38,180);
-  ctx.strokeStyle='rgba(127,163,184,.18)';
-  for(var i=-4;i<=4;i++){ctx.beginPath();ctx.moveTo(cx-span,cy+i*18);ctx.lineTo(cx+span,cy+i*18+Math.sin(i+t)*6);ctx.stroke();}
-  ctx.strokeStyle='#d4af37';ctx.lineWidth=2.5;ctx.beginPath();
-  ctx.ellipse(cx,cy,Math.min(130,W*.28)+Math.sin(t)*5,Math.min(60,H*.20),Math.PI/6,0,Math.PI*2);ctx.stroke();
-  /* Dots ride the same tilted, breathing ellipse that is drawn below,
-   * instead of an untilted one. */
-  var tilt=Math.PI/6, ea=Math.min(130,W*.28)+Math.sin(t)*5, eb=Math.min(60,H*.20);
-  for(var j=0;j<8;j++){var a=t*.6+j*Math.PI/4;
-    var ux=Math.cos(a)*ea, uy=Math.sin(a)*eb;
-    ctx.fillStyle='#e0a952';ctx.beginPath();
-    ctx.arc(cx+Math.cos(tilt)*ux-Math.sin(tilt)*uy, cy+Math.sin(tilt)*ux+Math.cos(tilt)*uy,3.5,0,Math.PI*2);ctx.fill()}
-  canvasLabel(ctx,'rational cycle',cx,cy-Math.min(84,H*.30),{align:'center',color:'rgba(212,175,55,.9)',size:11});
-}
-function draw7(ctx,W,H,t){
-  var cx=W/2,cy=H*.54,factor=.7+.3*Math.sin(t*.9);
-  var rx=Math.min(130,W*.28)*factor+12,ry=Math.min(110,H*.32);
-  ctx.strokeStyle='#7ba78c';ctx.lineWidth=2.5;ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.stroke();
-  ctx.strokeStyle='rgba(123,167,140,.4)';ctx.lineWidth=1.2;
-  for(var k=1;k<=3;k++){ctx.beginPath();ctx.ellipse(cx,cy,rx*Math.cos(k*Math.PI/8),ry*Math.sin(k*Math.PI/8),0,0,Math.PI*2);ctx.stroke();}
-  canvasLabel(ctx,'M³ → S³',cx,26,{align:'center',color:'rgba(123,167,140,.9)'});
+/* VII. Poincaré: a crumpled manifold flows under Ricci flow toward
+ * the round sphere. Neck-pinch spikes erupt mid-flow and are
+ * annihilated at the firewalls; the loop closes on a smooth S³. */
+function draw7(ctx, W, H, t) {
+  var cx = W / 2, cy = H * .54, base = Math.min(120, W * .26);
+  var P = 8, ph = (t % P) / P;
+  var decay = ph < 0.75 ? 1 - ph / 0.75 : 0;
+  var amp = decay * 0.34 + 0.02;
+  ctx.strokeStyle = ph < 0.75 ? 'rgba(123,167,140,.55)' : '#7ba78c';
+  ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  for (var j = 0; j <= 48; j++) {
+    var an = j / 48 * Math.PI * 2;
+    var wob = Math.sin(an * 3 + t * 0.8) * amp + Math.sin(an * 5 - t * 0.5) * amp * 0.5;
+    if (ph > 0.25 && ph < 0.55) {
+      var spikeAng = 2.4;
+      var dAng = Math.abs(((an - spikeAng + Math.PI) % (Math.PI * 2)) - Math.PI);
+      wob -= Math.max(0, 1 - dAng * 6) * decay * 0.55 * Math.sin((ph - 0.25) / 0.3 * Math.PI);
+    }
+    var rad = base * (1 + wob);
+    var x2 = cx + Math.cos(an) * rad, y2 = cy + Math.sin(an) * rad * 0.92;
+    if (j === 0) ctx.moveTo(x2, y2); else ctx.lineTo(x2, y2);
+  }
+  ctx.closePath(); ctx.stroke();
+  if (ph > 0.28 && ph < 0.62) {
+    var fu = (ph - 0.28) / 0.34;
+    var sx3 = cx + Math.cos(2.4) * base, sy3 = cy + Math.sin(2.4) * base * 0.92;
+    ctx.strokeStyle = 'rgba(255,209,102,' + (0.75 * Math.max(0, 1 - Math.abs(fu - 0.4) * 3)) + ')';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(sx3, sy3, 3 + fu * 26, 0, Math.PI * 2); ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(123,167,140,.18)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.ellipse(cx, cy, base, base * 0.92, 0, 0, Math.PI * 2); ctx.stroke();
+  if (ph >= 0.75) {
+    var gu = (ph - 0.75) / 0.25;
+    ctx.strokeStyle = 'rgba(123,167,140,' + (0.6 * Math.max(0, 1 - gu * 2)) + ')';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx, cy, base * (1 + gu * 0.25), 0, Math.PI * 2); ctx.stroke();
+  }
+  canvasLabel(ctx, 'M³ → S³', cx, 26, { align: 'center', color: 'rgba(123,167,140,.9)' });
+  canvasLabel(ctx, ph < 0.75 ? 'Ricci flow · neck-pinch annihilated' : 'smooth S³ - flow complete', cx, H - 12, { align: 'center', color: ph < 0.75 ? 'rgba(164,158,144,.7)' : 'rgba(123,167,140,.95)', size: 10 });
 }
 
 /* Lab renderer */
@@ -1571,7 +1845,7 @@ function startApp() {
     });
   }
   watchView();
-  console.log('CoReX ready. Handlers: goTo, goTop, setLang, selectSeven, updateN, updateS, toggleFlag, toggleDs, toggleTm');
+  console.log('CoReX v20 ready. Handlers: goTo, goTop, setLang, selectSeven, updateN, updateS, toggleFlag, toggleDs, toggleTm');
 }
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', startApp);
