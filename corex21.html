@@ -1,0 +1,1583 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CoReX | Computational Relativity, P vs NP &amp; Euler's Identity</title>
+<meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity â the Aâ seed, Euler's identity, the double-slit experiment, the time machine, and unified readings of all seven Clay Millennium Problems.">
+<meta name="author" content="Pierre LeBaux, PhD">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://lebaux.github.io/">
+<link rel="alternate" hreflang="en" href="https://lebaux.github.io/?lang=en">
+<link rel="alternate" hreflang="cs" href="https://lebaux.github.io/?lang=cz">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CoReX">
+<meta property="og:title" content="CoReX â Computational Relativity Explained">
+<meta property="og:description" content="Four postulates, one transformer, one fixed point. Plus the double-slit experiment, the time machine, and the seven Clay Millennium Problems.">
+<meta property="og:url" content="https://lebaux.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#06080f">
+<meta name="color-scheme" content="dark">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","inLanguage":["en","cs"]}
+</script>
+<style>
+:root{--bg:#06080f;--panel:#10141f;--panel2:#151a28;--line:#1d2231;
+--line2:#2b3348;--ink:#ece6d9;--dim:#a49e90;--faint:#6a685f;
+--amber:#e0a952;--amber2:#f4c77a;--sage:#7ba78c;--rose:#c98080;
+--violet:#9b8ac4;--serif:Georgia,serif;
+--sans:system-ui,-apple-system,sans-serif;--mono:ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 var(--sans)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#banner{display:none;position:fixed;bottom:0;left:0;right:0;background:#5c1a1a;
+color:#ffd9d9;padding:10px 18px;font:12px var(--mono);z-index:9999;pointer-events:none}
+#banner.on{display:block}
+#status{position:fixed;top:calc(var(--hdr,64px) + 12px);right:16px;background:rgba(11,21,34,.9);
+color:var(--amber2);padding:6px 12px;font:11px var(--mono);border-radius:6px;
+z-index:9000;pointer-events:none;opacity:0;transition:opacity .3s}
+#status.on{opacity:1}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--amber);color:#1a1206;
+padding:10px 18px;font:600 13px var(--sans);z-index:10000;border-radius:0 0 6px 0;
+text-decoration:none}
+.skip-link:focus{left:0}
+header{position:sticky;top:0;z-index:100;display:flex;align-items:center;
+justify-content:space-between;gap:16px;padding:14px 24px;
+background:rgba(10,13,24,.98);border-bottom:1px solid var(--line);
+backdrop-filter:blur(8px)}
+.brand{font-family:var(--serif);font-size:20px;color:var(--amber);text-decoration:none;flex-shrink:0}
+.brand:hover{color:var(--amber2)}
+nav[aria-label]{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.navlink{background:transparent;border:0;color:var(--dim);font:500 13px var(--sans);
+padding:8px 12px;cursor:pointer;border-radius:6px;font-family:inherit;
+transition:color .15s,background .15s;text-decoration:none;display:inline-block}
+.navlink:hover{color:var(--amber2);background:rgba(224,169,82,.08)}
+.navlink:active{transform:translateY(1px)}
+.lang{display:flex;gap:6px;flex-shrink:0}
+.lang button{background:transparent;border:1px solid var(--line2);color:var(--dim);
+font:600 12px var(--sans);padding:6px 14px;cursor:pointer;border-radius:6px;
+font-family:inherit;transition:all .15s}
+.lang button:hover{color:var(--ink);border-color:var(--amber)}
+.lang button.active{background:var(--amber);color:#1a1206;border-color:var(--amber)}
+@media (max-width: 720px){
+  header{padding:10px 14px;gap:10px;flex-wrap:wrap;row-gap:8px}
+  .brand{font-size:18px}
+  nav[aria-label]{order:3;width:100%;justify-content:center}
+  .navlink{padding:6px 10px;font-size:12px}
+  .lang button{padding:5px 10px;font-size:11px}
+}
+main{display:block}
+section{padding:60px 6vw;max-width:1200px;margin:0 auto;scroll-margin-top:90px}
+h1{font-family:var(--serif);font-weight:400;font-size:2.4rem;line-height:1.1;margin:0 0 16px}
+h1 em{font-style:italic;color:var(--amber)}
+h2{font-family:var(--serif);font-weight:400;font-size:1.8rem;margin:0 0 16px}
+h3{font-family:var(--serif);font-weight:500;font-size:1.4rem;margin:0 0 12px}
+p{color:var(--dim);max-width:62ch}
+a{color:var(--amber2)}
+a:hover{color:var(--amber)}
+.kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+color:var(--faint);margin-bottom:16px}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));
+border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:800px){.cards{grid-template-columns:1fr}}
+.glyph{font-family:var(--serif);font-size:36px;color:var(--amber);margin-bottom:10px}
+.tag{display:inline-block;font:600 10px var(--mono);letter-spacing:.18em;
+text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.tabmenu{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tabmenu button{background:var(--panel);border:1px solid var(--line);color:var(--dim);
+font:500 13px var(--sans);padding:9px 14px;cursor:pointer;border-radius:8px;
+font-family:inherit;transition:all .15s}
+.tabmenu button:hover{color:var(--ink);border-color:var(--line2)}
+.tabmenu button.active{background:var(--amber);color:#1a1206;
+border-color:var(--amber);font-weight:700}
+.panel{display:none;background:var(--panel);border:1px solid var(--line);
+border-radius:14px;padding:24px}
+.panel.on{display:block}
+.panel .eq{font-family:var(--mono);font-size:.95rem;background:var(--bg);
+color:var(--amber2);padding:12px 16px;border-radius:8px;
+border:1px solid var(--line);overflow-x:auto;margin:12px 0}
+.panel .cw{margin-top:16px;border-radius:10px;overflow:hidden;
+border:1px solid var(--line);background:var(--bg);height:300px;position:relative}
+.panel canvas{display:block;width:100%;height:100%}
+.lab{display:grid;grid-template-columns:260px 1fr;gap:20px}
+@media(max-width:800px){.lab{grid-template-columns:1fr}}
+.lab-panel{background:var(--panel);border:1px solid var(--line);
+border-radius:14px;padding:20px}
+.lab-row{margin-bottom:16px}
+.lab-row label{display:flex;justify-content:space-between;font-size:12px;
+color:var(--dim);margin-bottom:6px}
+.lab-row b{color:var(--amber2);font-family:var(--mono)}
+input[type=range]{width:100%;height:4px;accent-color:var(--amber)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:transparent;border:1px solid var(--line2);color:var(--dim);
+border-radius:999px;padding:6px 12px;cursor:pointer;font:500 12px var(--sans);
+font-family:inherit;transition:all .15s}
+.chip:hover{color:var(--ink);border-color:var(--amber)}
+.chip.on{background:rgba(224,169,82,.14);color:var(--amber2);border-color:var(--amber)}
+/* Context-aware: red = the toggle still changes state, but has no visual
+   effect in the current mode. Still fully clickable — information, not
+   a disabled state. */
+.chip.na{border-color:#7a2d3a;color:#c98080;opacity:.65}
+.chip.na.on{background:rgba(201,128,128,.10);color:#e0a5a5}
+.lab-stage{background:var(--panel);border:1px solid var(--line);
+border-radius:14px;overflow:hidden;height:400px}
+#labCv{display:block;width:100%;height:100%}
+.lab-stage.tall{height:420px}
+.ds-readout{margin-top:14px;padding:12px 16px;background:var(--bg);
+border:1px solid var(--line);border-radius:8px;font:12px var(--mono);color:var(--dim)}
+.ds-readout b{color:var(--amber2)}
+.faq details{background:var(--panel);border:1px solid var(--line);
+border-radius:10px;padding:0;margin-bottom:10px;overflow:hidden}
+.faq details[open]{border-color:var(--line2)}
+.faq summary{cursor:pointer;padding:16px 20px;font-family:var(--serif);
+font-weight:500;font-size:1.05rem;color:var(--ink);list-style:none;
+display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--amber);font-size:1.4rem;
+font-family:var(--sans);flex-shrink:0}
+.faq details[open] summary::after{content:"â"}
+.faq summary:hover{color:var(--amber2)}
+.faq .answer{padding:0 20px 18px;color:var(--dim);font-size:.95rem;
+max-width:70ch;line-height:1.7}
+.toc-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:12px;list-style:none;padding:0;margin:0}
+.toc-list a{display:block;padding:14px 18px;background:var(--panel);
+border:1px solid var(--line);border-radius:10px;color:var(--dim);
+text-decoration:none;font-size:13px;transition:all .15s}
+.toc-list a:hover{color:var(--amber2);border-color:var(--amber);background:var(--panel2)}
+.toc-list a b{display:block;color:var(--ink);font-family:var(--serif);
+font-size:1rem;font-weight:500;margin-bottom:4px}
+.toc-list a:hover b{color:var(--amber2)}
+footer{border-top:1px solid var(--line);padding:30px 6vw;font-size:12px;
+color:var(--faint);text-align:center;margin-top:60px}
+footer .navlink{margin-top:12px;display:inline-block}
+footer address{font-style:normal;margin-bottom:12px}
+::selection{background:rgba(224,169,82,.25)}
+
+/* Responsive stability fixes */
+body{overflow-x:hidden}
+section,.card,.panel,.lab-panel,.lab-stage{min-width:0}
+h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
+.eq{white-space:normal;word-break:break-word}
+.panel .cw,.lab-stage{width:100%;min-width:0}
+.panel canvas,.lab-stage canvas{width:100%;height:100%;max-width:100%}
+@media(max-width:900px){
+  section{padding-left:5vw;padding-right:5vw}
+  .lab{grid-template-columns:minmax(210px,260px) minmax(0,1fr)}
+}
+@media(max-width:680px){
+  section{padding:44px 4vw}
+  h1{font-size:clamp(1.85rem,8vw,2.4rem)}
+  h2{font-size:clamp(1.45rem,6vw,1.8rem)}
+  .card,.panel,.lab-panel{padding:18px}
+  .lab{grid-template-columns:1fr}
+  .lab-stage{height:340px}
+  .lab-stage.tall{height:360px}
+  .panel .cw{height:280px}
+  .toc-list{grid-template-columns:1fr}
+  header{position:sticky}
+}
+@media(max-width:430px){
+  body{font-size:15px}
+  header{padding:9px 10px}
+  nav[aria-label]{gap:2px}
+  .navlink{padding:6px 7px;font-size:11px}
+  .lang button{padding:5px 8px}
+  .panel .cw{height:250px}
+  .lab-stage{height:300px}
+  .lab-stage.tall{height:320px}
+}
+
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main"
+   data-en="Skip to main content" data-cz="PÅeskoÄit na hlavnÃ­ obsah">Skip to main content</a>
+<div id="banner" role="alert" aria-live="assertive"></div>
+<div id="status" role="status" aria-live="polite"></div>
+
+<header>
+  <a href="#top" class="brand" aria-label="CoReX â return to top">CoReX</a>
+  <nav aria-label="Primary">
+    <button class="navlink" onclick="goTo('postulates')"
+            data-en="Postulates" data-cz="PostulÃ¡ty">Postulates</button>
+    <button class="navlink" onclick="goTo('seven')"
+            data-en="Seven" data-cz="Sedm">Seven</button>
+    <button class="navlink" onclick="goTo('lab')"
+            data-en="Lab" data-cz="LaboratoÅ">Lab</button>
+    <button class="navlink" onclick="goTo('doubleslit')"
+            data-en="Double-Slit" data-cz="DvouÅ¡tÄrbina">Double-Slit</button>
+    <button class="navlink" onclick="goTo('timemachine')"
+            data-en="Time Machine" data-cz="Stroj Äasu">Time Machine</button>
+    <button class="navlink" onclick="goTo('faq')"
+            data-en="FAQ" data-cz="ÄastÃ© otÃ¡zky">FAQ</button>
+  </nav>
+  <div class="lang" role="group" aria-label="Language selection">
+    <button id="btnEn" class="active" onclick="setLang('en')"
+            aria-label="Switch to English" aria-pressed="true">EN</button>
+    <button id="btnCz" onclick="setLang('cz')"
+            aria-label="PÅepnout do ÄeÅ¡tiny" aria-pressed="false">CZ</button>
+  </div>
+</header>
+
+<main id="main">
+
+<section id="top" aria-labelledby="hero-title">
+  <p class="kicker" data-en="A digital monograph Â· CoReX"
+     data-cz="DigitÃ¡lnÃ­ monografie Â· CoReX">A digital monograph Â· CoReX</p>
+  <h1 id="hero-title">
+    <span data-en="The Special Theory of " data-cz="SpeciÃ¡lnÃ­ teorie ">The Special Theory of </span><em data-en="Computational Relativity" data-cz="vÃ½poÄetnÃ­ relativity">Computational Relativity</em>
+  </h1>
+  <p data-en="The seed is 0, and everything else is a rotation of it. Four postulates, one transformer, one fixed point â a calm reading of computation and physics through a shared geometric mechanism."
+     data-cz="SemÃ­nko je 0 a vÅ¡echno ostatnÃ­ je jeho rotacÃ­. ÄtyÅi postulÃ¡ty, jeden transformÃ¡tor, jeden pevnÃ½ bod â klidnÃ© ÄtenÃ­ vÃ½poÄtu a fyziky skrze spoleÄnÃ½ geometrickÃ½ mechanismus.">
+    The seed is 0, and everything else is a rotation of it. Four postulates, one transformer, one fixed point â a calm reading of computation and physics through a shared geometric mechanism.
+  </p>
+</section>
+
+<section id="postulates" aria-labelledby="postulates-title">
+  <p class="kicker" data-en="Chapter I" data-cz="Kapitola I">Chapter I</p>
+  <h2 id="postulates-title" data-en="Four faces of one fixed point" data-cz="ÄtyÅi tvÃ¡Åe jednoho pevnÃ©ho bodu">Four faces of one fixed point</h2>
+  <div class="cards">
+    <article class="card">
+      <div class="glyph" aria-hidden="true">0</div>
+      <span class="tag" data-en="Postulate I Â· Symmetry" data-cz="PostulÃ¡t I Â· Symetrie">Postulate I Â· Symmetry</span>
+      <h3 data-en="Total point symmetry at 0" data-cz="TotÃ¡lnÃ­ bodovÃ¡ symetrie v 0">Total point symmetry at 0</h3>
+      <p data-en="The zero point is the unique fixed point of the full symmetry group â the only locus where every generator of the algebra vanishes at once."
+         data-cz="NulovÃ½ bod je jedinÃ½m pevnÃ½m bodem plnÃ© grupy symetriÃ­ â jedinÃ© mÃ­sto, kde vÅ¡echny generÃ¡tory algebry mizÃ­ souÄasnÄ.">
+        The zero point is the unique fixed point of the full symmetry group â the only locus where every generator of the algebra vanishes at once.
+      </p>
+    </article>
+    <article class="card">
+      <div class="glyph" aria-hidden="true">=</div>
+      <span class="tag" data-en="Postulate II Â· Transformation" data-cz="PostulÃ¡t II Â· Transformace">Postulate II Â· Transformation</span>
+      <h3 data-en="The equal sign is a transformer" data-cz="RovnÃ­tko je transformÃ¡tor">The equal sign is a transformer</h3>
+      <p data-en="Not identity â a G-equivariant map between two faces of one orbit. This is why P = NP and E = mcÂ² are the same statement under a single equal sign."
+         data-cz="NenÃ­ identita â G-ekvivariantnÃ­ zobrazenÃ­ mezi dvÄma tvÃ¡Åemi jednoho orbitu. Proto jsou P = NP a E = mcÂ² tentÃ½Å¾ vÃ½rok pod jedinÃ½m rovnÃ­tkem.">
+        Not identity â a G-equivariant map between two faces of one orbit. This is why P = NP and E = mcÂ² are the same statement under a single equal sign.
+      </p>
+    </article>
+    <article class="card">
+      <div class="glyph" aria-hidden="true">e<sup>iÏ</sup>+1</div>
+      <span class="tag" data-en="Postulate III Â· Phase" data-cz="PostulÃ¡t III Â· FÃ¡ze">Postulate III Â· Phase</span>
+      <h3 data-en="Euler's identity is structural" data-cz="Eulerova identita je strukturÃ¡lnÃ­">Euler's identity is structural</h3>
+      <p data-en="A half-turn in any SO(2) plane returns the identity state to zero. This is the phase signature of the transformer at the fixed point."
+         data-cz="PÅ¯lotÃ¡Äka v libovolnÃ© rovinÄ SO(2) vracÃ­ stav identity k nule. To je fÃ¡zovÃ½ podpis transformÃ¡toru v pevnÃ©m bodÄ.">
+        A half-turn in any SO(2) plane returns the identity state to zero. This is the phase signature of the transformer at the fixed point.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section id="seven" aria-labelledby="seven-title">
+  <p class="kicker" data-en="Chapter II" data-cz="Kapitola II">Chapter II</p>
+  <h2 id="seven-title" data-en="Seven Millennium Problems, one mechanism" data-cz="Sedm problÃ©mÅ¯ tisÃ­ciletÃ­, jeden mechanismus">Seven Millennium Problems, one mechanism</h2>
+  <div class="tabmenu" role="tablist" aria-label="Seven Clay Millennium Problems">
+    <button id="tab1" class="active" onclick="selectSeven(1)" role="tab" aria-selected="true" aria-controls="panel1">I Â· P vs NP</button>
+    <button id="tab2" onclick="selectSeven(2)" role="tab" aria-selected="false" aria-controls="panel2">II Â· Riemann</button>
+    <button id="tab3" onclick="selectSeven(3)" role="tab" aria-selected="false" aria-controls="panel3">III Â· YangâMills</button>
+    <button id="tab4" onclick="selectSeven(4)" role="tab" aria-selected="false" aria-controls="panel4">IV Â· NavierâStokes</button>
+    <button id="tab5" onclick="selectSeven(5)" role="tab" aria-selected="false" aria-controls="panel5">V Â· BSD</button>
+    <button id="tab6" onclick="selectSeven(6)" role="tab" aria-selected="false" aria-controls="panel6">VI Â· Hodge</button>
+    <button id="tab7" onclick="selectSeven(7)" role="tab" aria-selected="false" aria-controls="panel7">VII Â· PoincarÃ©</button>
+  </div>
+
+  <article class="panel on" id="panel1" role="tabpanel" aria-labelledby="tab1">
+    <h3 data-en="P vs NP" data-cz="P vs NP">P vs NP</h3>
+    <div class="eq">R_N = C(N,2)  â  T(N) = O(NÂ²)</div>
+    <p data-en="The exponential decision tree over 2á´º states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(NÂ²)."
+       data-cz="ExponenciÃ¡lnÃ­ rozhodovacÃ­ strom nad 2á´º stavy se injektivnÄ vnoÅuje do R_N rotaÄnÃ­ch rovin Lieovy algebry so(N). NeoptimÃ¡lnÃ­ vÄtve podlÃ©hajÃ­ EulerovÄ anti-fÃ¡zovÃ© anihilaci na nodÃ¡lnÃ­ch firewallech a geodetickÃ½ tok skonÄÃ­ v deterministickÃ©m O(NÂ²).">
+      The exponential decision tree over 2á´º states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(NÂ²).
+    </p>
+    <div class="cw"><canvas id="cv1" width="800" height="300" role="img"
+      data-aria-en="Diagram: exponential decision tree collapsing into so(N) rotation planes"
+      data-aria-cz="Diagram: exponenciÃ¡lnÃ­ rozhodovacÃ­ strom kolabujÃ­cÃ­ do rotaÄnÃ­ch rovin so(N)"
+      aria-label="Diagram: exponential decision tree collapsing into so(N) rotation planes"></canvas></div>
+  </article>
+  <article class="panel" id="panel2" role="tabpanel" aria-labelledby="tab2">
+    <h3 data-en="Riemann Hypothesis" data-cz="Riemannova hypotÃ©za">Riemann Hypothesis</h3>
+    <div class="eq">Î¾(s) = Î¾(1âs)  â  Re(s) = Â½</div>
+    <p data-en="The functional equation is read as a mirror across the Aâ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = Â½ as the only stable locus."
+       data-cz="FunkcionÃ¡lnÃ­ rovnice se Äte jako zrcadlo pÅes osu Aâ. Nuly mimo osu naruÅ¡ujÃ­ rovnovÃ¡hu hranice; anti-fÃ¡zovÃ½ firewall nutÃ­ jejich hustotu pravdÄpodobnosti k nule a Re(s) = Â½ zÅ¯stÃ¡vÃ¡ jedinÃ½m stabilnÃ­m mÃ­stem.">
+      The functional equation is read as a mirror across the Aâ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = Â½ as the only stable locus.
+    </p>
+    <div class="cw"><canvas id="cv2" width="800" height="300" role="img"
+      data-aria-en="Diagram: critical line Re(s) = one-half with non-trivial zeros"
+      data-aria-cz="Diagram: kritickÃ¡ pÅÃ­mka Re(s) = jedna polovina s netriviÃ¡lnÃ­mi nulami"
+      aria-label="Diagram: critical line Re(s) = one-half with non-trivial zeros"></canvas></div>
+  </article>
+  <article class="panel" id="panel3" role="tabpanel" aria-labelledby="tab3">
+    <h3 data-en="YangâMills Mass Gap" data-cz="YangâMillsova hmotnostnÃ­ mezera">YangâMills Mass Gap</h3>
+    <div class="eq">Eâ = Î»cÂ² &gt; 0  â  ÎM &gt; 0</div>
+    <p data-en="The scalar seed Aâ = Î» gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ÎM = Ä§Ï_{Aâ}/cÂ²."
+       data-cz="SkalÃ¡rnÃ­ semÃ­nko Aâ = Î» dÃ¡vÃ¡ vakuu striktnÄ kladnÃ© dno. NodÃ¡lnÃ­ firewally odÅezÃ¡vajÃ­ vysokoenergetickÃ© divergence, kterÃ© by jinak mezeru uzavÅely, a vznikÃ¡ striktnÄ kladnÃ¡ hmotnostnÃ­ mezera ÎM = Ä§Ï_{Aâ}/cÂ².">
+      The scalar seed Aâ = Î» gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ÎM = Ä§Ï_{Aâ}/cÂ².
+    </p>
+    <div class="cw"><canvas id="cv3" width="800" height="300" role="img"
+      data-aria-en="Diagram: positive vacuum energy floor and mass gap"
+      data-aria-cz="Diagram: kladnÃ© energetickÃ© dno vakua a hmotnostnÃ­ mezera"
+      aria-label="Diagram: positive vacuum energy floor and mass gap"></canvas></div>
+  </article>
+  <article class="panel" id="panel4" role="tabpanel" aria-labelledby="tab4">
+    <h3 data-en="NavierâStokes Smoothness" data-cz="Hladkost NavierâStokesovÃ½ch rovnic">NavierâStokes Smoothness</h3>
+    <div class="eq">det(CMâ) = 0  â  âuâ_{C^â} &lt; â</div>
+    <p data-en="Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The 5-point CayleyâMenger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^â for all t â¥ 0."
+       data-cz="ExtrÃ©mnÃ­ gradienty vorticity spouÅ¡tÄjÃ­ anti-fÃ¡zovou anihilaci dÅÃ­ve, neÅ¾ se mohou zkoncentrovat. PÄtibodovÃ½ CayleyâMengerÅ¯v determinant brÃ¡nÃ­ inflaci hodnosti Gramovy matice rychlosti a udrÅ¾uje tok v C^â pro vÅ¡echna t â¥ 0.">
+      Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The 5-point CayleyâMenger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^â for all t â¥ 0.
+    </p>
+    <div class="cw"><canvas id="cv4" width="800" height="300" role="img"
+      data-aria-en="Diagram: turbulent vorticity bounded within C-infinity smoothness"
+      data-aria-cz="Diagram: turbulentnÃ­ vÃ­Åivost omezenÃ¡ v hladkosti tÅÃ­dy C-nekoneÄno"
+      aria-label="Diagram: turbulent vorticity bounded within C-infinity smoothness"></canvas></div>
+  </article>
+  <article class="panel" id="panel5" role="tabpanel" aria-labelledby="tab5">
+    <h3 data-en="Birch &amp; Swinnerton-Dyer" data-cz="Birchova a Swinnerton-Dyerova hypotÃ©za">Birch &amp; Swinnerton-Dyer</h3>
+    <div class="eq">rank(E(Q)) = ord_{s=1} L(E,s)</div>
+    <p data-en="Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes â the equality is a statement about orbits, not about arithmetic coincidence."
+       data-cz="KaÅ¾dÃ½ nezÃ¡vislÃ½ racionÃ¡lnÃ­ generÃ¡tor E(Q) se zobrazÃ­ na jednu ortogonÃ¡lnÃ­ rotaÄnÃ­ rovinu. ÅÃ¡d nulovÃ©ho bodu L(E, s) v s = 1 poÄÃ­tÃ¡ tytÃ©Å¾ roviny â rovnost je vÃ½rokem o orbitÃ¡ch, ne o aritmetickÃ© nÃ¡hodÄ.">
+      Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes â the equality is a statement about orbits, not about arithmetic coincidence.
+    </p>
+    <div class="cw"><canvas id="cv5" width="800" height="300" role="img"
+      data-aria-en="Diagram: elliptic curve with rational generators and L-function spectrum"
+      data-aria-cz="Diagram: eliptickÃ¡ kÅivka s racionÃ¡lnÃ­mi generÃ¡tory a spektrem L-funkce"
+      aria-label="Diagram: elliptic curve with rational generators and L-function spectrum"></canvas></div>
+  </article>
+  <article class="panel" id="panel6" role="tabpanel" aria-labelledby="tab6">
+    <h3 data-en="Hodge Conjecture" data-cz="Hodgeova hypotÃ©za">Hodge Conjecture</h3>
+    <div class="eq">H^{2k}(X,Q) â© H^{k,k}(X) = rational cycles</div>
+    <p data-en="Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Î©_{Aâ}."
+       data-cz="KaÅ¾dÃ¡ Hodgeova tÅÃ­da na hladkÃ© projektivnÃ­ varietÄ je racionÃ¡lnÃ­ kombinacÃ­ algebraickÃ½ch cyklÅ¯, vyjÃ¡dÅenÃ¡ jako invariantnÃ­ podobjekt GUT-Cat toposu pod klasifikÃ¡torem mÄÅÃ­tka Î©_{Aâ}.">
+      Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Î©_{Aâ}.
+    </p>
+    <div class="cw"><canvas id="cv6" width="800" height="300" role="img"
+      data-aria-en="Diagram: cohomology grid with rational algebraic cycle"
+      data-aria-cz="Diagram: kohomologickÃ¡ mÅÃ­Å¾ka s racionÃ¡lnÃ­m algebraickÃ½m cyklem"
+      aria-label="Diagram: cohomology grid with rational algebraic cycle"></canvas></div>
+  </article>
+  <article class="panel" id="panel7" role="tabpanel" aria-labelledby="tab7">
+    <h3 data-en="PoincarÃ© Conjecture" data-cz="PoincarÃ©ova hypotÃ©za">PoincarÃ© Conjecture</h3>
+    <div class="eq">âg/ât = â2 R_ij  â  MÂ³ â SÂ³</div>
+    <p data-en="Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere â Perelman's surgery, but with the endpoints already determined by the seed."
+       data-cz="Neck-pinch singularity Ricciho toku jsou anihilovÃ¡ny na nodÃ¡lnÃ­ch firewallech. KaÅ¾dÃ¡ jednoduÅ¡e souvislÃ¡ uzavÅenÃ¡ 3-varieta se hladce deformuje na 3-sfÃ©ru â Perelmanova chirurgie, ale s koncovÃ½mi body jiÅ¾ urÄenÃ½mi semÃ­nkem.">
+      Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere â Perelman's surgery, but with the endpoints already determined by the seed.
+    </p>
+    <div class="cw"><canvas id="cv7" width="800" height="300" role="img"
+      data-aria-en="Diagram: Ricci flow deforming a three-manifold into the three-sphere"
+      data-aria-cz="Diagram: Ricciho tok deformujÃ­cÃ­ 3-varietu do 3-sfÃ©ry"
+      aria-label="Diagram: Ricci flow deforming a three-manifold into the three-sphere"></canvas></div>
+  </article>
+</section>
+
+<section id="lab" aria-labelledby="lab-title">
+  <p class="kicker" data-en="Chapter III" data-cz="Kapitola III">Chapter III</p>
+  <h2 id="lab-title" data-en="A small laboratory" data-cz="MalÃ¡ laboratoÅ">A small laboratory</h2>
+  <p data-en="Rotate the manifold. Change its dimension. Watch the rotation planes multiply as N(Nâ1)/2 and the seed sit still at the origin."
+     data-cz="OtÃ¡Äejte varietou. MÄÅte jejÃ­ dimenzi. Sledujte, jak rotaÄnÃ­ roviny rostou jako N(Nâ1)/2 a semÃ­nko zÅ¯stÃ¡vÃ¡ v klidu v poÄÃ¡tku.">
+    Rotate the manifold. Change its dimension. Watch the rotation planes multiply as N(Nâ1)/2 and the seed sit still at the origin.
+  </p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Laboratory controls">
+      <div class="lab-row">
+        <label for="inN"><span data-en="Dimension N" data-cz="Dimenze N">Dimension N</span><b id="valN">5</b></label>
+        <input type="range" id="inN" min="2" max="10" value="5" oninput="updateN(this.value)"
+               data-aria-en="Dimension N" data-aria-cz="Dimenze N" aria-label="Dimension N">
+      </div>
+      <div class="lab-row">
+        <label for="inS"><span data-en="Rotation speed" data-cz="Rychlost rotace">Rotation speed</span><b id="valS">0.60</b></label>
+        <input type="range" id="inS" min="0" max="2" step="0.05" value="0.6" oninput="updateS(this.value)"
+               data-aria-en="Rotation speed" data-aria-cz="Rychlost rotace" aria-label="Rotation speed">
+      </div>
+      <div class="lab-row">
+        <span id="lab-show-label" style="display:block;font-size:12px;color:var(--dim);margin-bottom:6px"
+              data-en="Show" data-cz="Zobrazit">Show</span>
+        <div class="chips" role="group" aria-labelledby="lab-show-label">
+          <button class="chip on" id="chipPlanes" onclick="toggleFlag('planes',this)" aria-pressed="true"
+                  data-en="Planes" data-cz="Roviny">Planes</button>
+          <button class="chip on" id="chipNodes" onclick="toggleFlag('nodes',this)" aria-pressed="true"
+                  data-en="Nodes" data-cz="Uzly">Nodes</button>
+          <button class="chip on" id="chipOrbits" onclick="toggleFlag('orbits',this)" aria-pressed="true"
+                  data-en="Orbits" data-cz="Orbity">Orbits</button>
+        </div>
+      </div>
+    </aside>
+    <div class="lab-stage">
+      <canvas id="labCv" width="800" height="450" role="img"
+        data-aria-en="Interactive visualization of the A-zero seed with rotation planes and orbits"
+        data-aria-cz="InteraktivnÃ­ vizualizace semÃ­nka A-nula s rotaÄnÃ­mi rovinami a orbitami"
+        aria-label="Interactive visualization of the A-zero seed with rotation planes and orbits"></canvas>
+    </div>
+  </div>
+</section>
+
+<section id="doubleslit" aria-labelledby="ds-title">
+  <p class="kicker" data-en="Chapter IV" data-cz="Kapitola IV">Chapter IV</p>
+  <h2 id="ds-title"
+      data-en="The double-slit experiment"
+      data-cz="DvouÅ¡tÄrbinovÃ½ experiment">The double-slit experiment</h2>
+  <p data-en="In this universe, the two-slit experiment needs no waveâparticle duality and no collapse postulate. A classical particle passing through the slits excites the vacuum field of Aâ. Where the phases agree, the field reinforces and the particle lands bright. Where the phases are anti-aligned â e^{iÏ} + 1 = 0 â the amplitude vanishes and the particle never lands. The dark bands are nodal firewalls: walls of nothing that nothing can cross."
+     data-cz="V tomto vesmÃ­ru dvouÅ¡tÄrbinovÃ½ experiment nepotÅebuje dualitu vlnaâÄÃ¡stice ani postulÃ¡t kolapsu. KlasickÃ¡ ÄÃ¡stice prochÃ¡zejÃ­cÃ­ Å¡tÄrbinami budÃ­ vakuovÃ© pole Aâ. Tam, kde se fÃ¡ze shodujÃ­, se pole zesiluje a ÄÃ¡stice dopadÃ¡ do svÄtlÃ©ho pÃ¡su. Tam, kde jsou fÃ¡ze anti-aligned â e^{iÏ} + 1 = 0 â amplituda mizÃ­ a ÄÃ¡stice nikdy nedopadne. TmavÃ© pÃ¡sy jsou nodÃ¡lnÃ­ firewally: stÄny z niÄeho, kterÃ½mi nic neprojde.">
+    In this universe, the two-slit experiment needs no waveâparticle duality and no collapse postulate. A classical particle passing through the slits excites the vacuum field of Aâ. Where the phases agree, the field reinforces and the particle lands bright. Where the phases are anti-aligned â e^{iÏ} + 1 = 0 â the amplitude vanishes and the particle never lands. The dark bands are nodal firewalls: walls of nothing that nothing can cross.
+  </p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Double-slit controls">
+      <div class="lab-row">
+        <span style="display:block;font-size:12px;color:var(--dim);margin-bottom:6px"
+              data-en="Show" data-cz="Zobrazit">Show</span>
+        <div class="chips" role="group">
+          <button class="chip on" id="dsChipFire" onclick="toggleDs('firewalls',this)" aria-pressed="true"
+                  data-en="Nodal firewalls" data-cz="NodÃ¡lnÃ­ firewally">Nodal firewalls</button>
+          <button class="chip on" id="dsChipWave" onclick="toggleDs('wavefronts',this)" aria-pressed="true"
+                  data-en="Wavefronts" data-cz="Vlnoplochy">Wavefronts</button>
+        </div>
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <span style="display:block;font-size:12px;color:var(--dim);margin-bottom:6px"
+              data-en="Observation" data-cz="PozorovÃ¡nÃ­">Observation</span>
+        <div class="chips" role="group">
+          <button class="chip" id="dsChipObs" onclick="toggleDs('observer',this)" aria-pressed="false"
+                  data-en="Which-path (observer on)" data-cz="Kterou Å¡tÄrbinou (pozorovatel)">Which-path (observer on)</button>
+        </div>
+      </div>
+      <div class="ds-readout" id="dsReadout"></div>
+    </aside>
+    <div class="lab-stage tall">
+      <canvas id="dsCv" width="800" height="470" role="img"
+        data-aria-en="Double-slit experiment: source on the left, barrier with two slits, detection screen on the right showing an interference pattern of alternating bright and dark bands"
+        data-aria-cz="DvouÅ¡tÄrbinovÃ½ experiment: zdroj vlevo, bariÃ©ra se dvÄma Å¡tÄrbinami, detekÄnÃ­ stÃ­nÃ­tko vpravo zobrazujÃ­cÃ­ interferenÄnÃ­ vzor stÅÃ­davÃ½ch svÄtlÃ½ch a tmavÃ½ch pÃ¡sÅ¯"
+        aria-label="Double-slit experiment: source, barrier with two slits, detection screen"></canvas>
+    </div>
+  </div>
+  <p style="margin-top:20px"
+     data-en="Toggle the observer to switch the measurement to which-path. The coherence between the two paths collapses; the wavefronts stop interfering and the screen shows two simple bands instead of an interference pattern."
+     data-cz="PÅepnÄte pozorovatele na mÄÅenÃ­ 'kterou Å¡tÄrbinou'. Koherence mezi obÄma drahami se zhroutÃ­; vlnoplochy pÅestanou interferovat a stÃ­nÃ­tko ukÃ¡Å¾e dva jednoduchÃ© pÃ¡sy mÃ­sto interferenÄnÃ­ho vzoru.">
+    Toggle the observer to switch the measurement to which-path. The coherence between the two paths collapses; the wavefronts stop interfering and the screen shows two simple bands instead of an interference pattern.
+  </p>
+</section>
+
+<section id="timemachine" aria-labelledby="tm-title">
+  <p class="kicker" data-en="Chapter V" data-cz="Kapitola V">Chapter V</p>
+  <h2 id="tm-title"
+      data-en="The time machine"
+      data-cz="Stroj Äasu">The time machine</h2>
+  <p data-en="In this framework, reversing time does not reverse the sign of energy. It flips the orientation of the trajectory â the conveyor belt runs backwards while the carriage keeps its rest energy E = mcÂ². The clock ticks counter-clockwise, the arrow of motion flips, but the physical content of the carriage is unchanged. What stops a paradox is not a law forbidding it â it is a nodal firewall: a surface where the wavefunction is exactly zero, which nothing can cross. Turn the firewall off and the past sector leaks into the future sector. Turn it back on and they are isolated again."
+     data-cz="V tomto rÃ¡mci obrÃ¡cenÃ­ Äasu neobracÃ­ znamÃ©nko energie. PÅevracÃ­ orientaci trajektorie â dopravnÃ­kovÃ½ pÃ¡s bÄÅ¾Ã­ pozpÃ¡tku, zatÃ­mco vozÃ­k si zachovÃ¡vÃ¡ klidovou energii E = mcÂ². Hodiny tikajÃ­ proti smÄru hodinovÃ½ch ruÄiÄek, Å¡ipka pohybu se pÅevracÃ­, ale fyzikÃ¡lnÃ­ obsah vozÃ­ku se nemÄnÃ­. Co zabraÅuje paradoxu, nenÃ­ zÃ¡kon, kterÃ½ by jej zakazoval â je to nodÃ¡lnÃ­ firewall: plocha, kde je vlnovÃ¡ funkce pÅesnÄ nulovÃ¡ a kterou nic nemÅ¯Å¾e pÅekroÄit. VypnÄte firewall a sektor minulosti prosÃ¡kne do sektoru budoucnosti. ZapnÄte jej a jsou opÄt izolovanÃ©.">
+    In this framework, reversing time does not reverse the sign of energy. It flips the orientation of the trajectory â the conveyor belt runs backwards while the carriage keeps its rest energy E = mcÂ². The clock ticks counter-clockwise, the arrow of motion flips, but the physical content of the carriage is unchanged. What stops a paradox is not a law forbidding it â it is a nodal firewall: a surface where the wavefunction is exactly zero, which nothing can cross.
+  </p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Time machine controls">
+      <div class="lab-row">
+        <span style="display:block;font-size:12px;color:var(--dim);margin-bottom:6px"
+              data-en="Show" data-cz="Zobrazit">Show</span>
+        <div class="chips" role="group">
+          <button class="chip on" id="tmChipFire" onclick="toggleTm('firewalls',this)" aria-pressed="true"
+                  data-en="Nodal firewalls" data-cz="NodÃ¡lnÃ­ firewally">Nodal firewalls</button>
+          <button class="chip on" id="tmChipLand" onclick="toggleTm('landauer',this)" aria-pressed="true"
+                  data-en="Landauer meter" data-cz="LandauerÅ¯v metr">Landauer meter</button>
+        </div>
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <span style="display:block;font-size:12px;color:var(--dim);margin-bottom:6px"
+              data-en="Direction" data-cz="SmÄr">Direction</span>
+        <div class="chips" role="group">
+          <button class="chip" id="tmChipRev" onclick="toggleTm('reversed',this)" aria-pressed="false"
+                  data-en="Reverse time" data-cz="ObrÃ¡tit Äas">Reverse time</button>
+        </div>
+      </div>
+      <div class="ds-readout" id="tmReadout"></div>
+    </aside>
+    <div class="lab-stage tall">
+      <canvas id="tmCv" width="800" height="470" role="img"
+        data-aria-en="Time machine experiment: a carriage moves continuously along a temporal axis. Reversing time reverses its velocity without teleportation. A nodal firewall blocks the carriage from crossing between future and past; disabling the firewall allows crossing. Rest energy E = mcÂ² remains unchanged."
+        data-aria-cz="Experiment stroje Äasu: vozÃ­k se plynule pohybuje po ÄasovÃ© ose. ObrÃ¡cenÃ­ Äasu obrÃ¡tÃ­ jeho rychlost bez teleportace. NodÃ¡lnÃ­ firewall brÃ¡nÃ­ vozÃ­ku pÅekroÄit hranici mezi budoucnostÃ­ a minulostÃ­; po vypnutÃ­ firewallu je prÅ¯chod moÅ¾nÃ½. KlidovÃ¡ energie E = mcÂ² zÅ¯stÃ¡vÃ¡ nezmÄnÄna."
+        aria-label="Time machine diagram"></canvas>
+    </div>
+  </div>
+  <p style="margin-top:20px"
+     data-en="The Reversal toggle shows the belt change direction. The clock hand reverses its sweep. But the Energy badge stays the same, and the firewalls keep the two sectors separate. This is the whole content of the time machine: orientation inversion, energy conservation, and boundary isolation â nothing more."
+     data-cz="PÅepÃ­naÄ ObrÃ¡tit ukazuje, jak pÃ¡s mÄnÃ­ smÄr. RuÄiÄka hodin obracÃ­ svÅ¯j pohyb. Ale energetickÃ½ Å¡tÃ­tek zÅ¯stÃ¡vÃ¡ stejnÃ½ a firewally drÅ¾Ã­ oba sektory oddÄlenÃ©. To je celÃ½ obsah stroje Äasu: inverze orientace, zachovÃ¡nÃ­ energie a izolace hranic â nic vÃ­c.">
+    The Reversal toggle shows the belt change direction. The clock hand reverses its sweep. But the Energy badge stays the same, and the firewalls keep the two sectors separate. This is the whole content of the time machine: orientation inversion, energy conservation, and boundary isolation â nothing more.
+  </p>
+</section>
+
+<section id="faq" aria-labelledby="faq-title">
+  <p class="kicker" data-en="Chapter VI" data-cz="Kapitola VI">Chapter VI</p>
+  <h2 id="faq-title" data-en="Questions about Computational Relativity" data-cz="OtÃ¡zky o vÃ½poÄetnÃ­ relativitÄ">Questions about Computational Relativity</h2>
+  <div class="faq">
+    <details>
+      <summary data-en="What is the Special Theory of Computational Relativity?"
+               data-cz="Co je SpeciÃ¡lnÃ­ teorie vÃ½poÄetnÃ­ relativity?">What is the Special Theory of Computational Relativity?</summary>
+      <div class="answer"
+        data-en="The Special Theory of Computational Relativity (CoReX) is a digital monograph that reads computation and physics through one fixed point â the Aâ seed at the origin."
+        data-cz="SpeciÃ¡lnÃ­ teorie vÃ½poÄetnÃ­ relativity (CoReX) je digitÃ¡lnÃ­ monografie, kterÃ¡ Äte vÃ½poÄet a fyziku skrze jeden pevnÃ½ bod â semÃ­nko Aâ v poÄÃ¡tku.">
+        The Special Theory of Computational Relativity (CoReX) is a digital monograph that reads computation and physics through one fixed point â the Aâ seed at the origin.
+      </div>
+    </details>
+    <details>
+      <summary data-en="Why is Euler's identity central to this theory?"
+               data-cz="ProÄ je Eulerova identita v tÃ©to teorii ÃºstÅednÃ­?">Why is Euler's identity central to this theory?</summary>
+      <div class="answer"
+        data-en="Euler's identity e^{iÏ} + 1 = 0 is the phase signature of the transformer at the fixed point. A half-turn in any SO(2) plane returns the identity state to zero."
+        data-cz="Eulerova identita e^{iÏ} + 1 = 0 je fÃ¡zovÃ½m podpisem transformÃ¡toru v pevnÃ©m bodÄ. PÅ¯lotÃ¡Äka v libovolnÃ© rovinÄ SO(2) vracÃ­ stav identity k nule.">
+        Euler's identity e^{iÏ} + 1 = 0 is the phase signature of the transformer at the fixed point.
+      </div>
+    </details>
+    <details>
+      <summary data-en="How does the theory address the P vs NP problem?"
+               data-cz="Jak teorie ÅeÅ¡Ã­ problÃ©m P vs NP?">How does the theory address the P vs NP problem?</summary>
+      <div class="answer"
+        data-en="The exponential decision tree over 2^N states embeds injectively into the R_N = N(Nâ1)/2 rotation planes of the Lie algebra so(N). The geodesic flow completes in deterministic O(NÂ²)."
+        data-cz="ExponenciÃ¡lnÃ­ rozhodovacÃ­ strom nad 2^N stavy se injektivnÄ vnoÅuje do R_N = N(Nâ1)/2 rotaÄnÃ­ch rovin Lieovy algebry so(N). GeodetickÃ½ tok skonÄÃ­ v deterministickÃ©m O(NÂ²).">
+        The exponential decision tree over 2^N states embeds injectively into the R_N = N(Nâ1)/2 rotation planes of the Lie algebra so(N).
+      </div>
+    </details>
+    <details>
+      <summary data-en="How does the framework read the double-slit experiment?"
+               data-cz="Jak rÃ¡mec Äte dvouÅ¡tÄrbinovÃ½ experiment?">How does the framework read the double-slit experiment?</summary>
+      <div class="answer"
+        data-en="The dark bands of the interference pattern are nodal firewalls â points where the two paths meet in anti-phase and the amplitude satisfies e^{iÏ} + 1 = 0, forcing |Ï| = 0. Particles do not need to be waves; they need only the vacuum field to carry their phase."
+        data-cz="TmavÃ© pÃ¡sy interferenÄnÃ­ho vzoru jsou nodÃ¡lnÃ­ firewally â mÃ­sta, kde se dvÄ drÃ¡hy setkÃ¡vajÃ­ v anti-fÃ¡zi a amplituda splÅuje e^{iÏ} + 1 = 0, coÅ¾ nutÃ­ |Ï| = 0. ÄÃ¡stice nemusÃ­ bÃ½t vlnami; staÄÃ­, aby vakuovÃ© pole neslo jejich fÃ¡zi.">
+        The dark bands of the interference pattern are nodal firewalls â points where the two paths meet in anti-phase and the amplitude satisfies e^{iÏ} + 1 = 0, forcing |Ï| = 0.
+      </div>
+    </details>
+    <details>
+      <summary data-en="How does the framework read the time machine?"
+               data-cz="Jak rÃ¡mec Äte stroj Äasu?">How does the framework read the time machine?</summary>
+      <div class="answer"
+        data-en="Reversing time inverts the orientation of a trajectory while keeping rest energy invariant. The clock hand reverses its sweep, but the E = mcÂ² badge above the carriage stays fixed. Paradox control is not a law forbidding time travel â it is a nodal firewall, an impermeable surface where |Ï| = 0. The past and future sectors remain causally isolated as long as the firewall is up. Every state update still costs at least k_B T ln 2 in Landauer heat."
+        data-cz="ObrÃ¡cenÃ­ Äasu invertuje orientaci trajektorie a zachovÃ¡vÃ¡ klidovou energii. RuÄiÄka hodin obracÃ­ svÅ¯j pohyb, ale Å¡tÃ­tek E = mcÂ² nad vozÃ­kem zÅ¯stÃ¡vÃ¡ nezmÄnÄn. Kontrola paradoxÅ¯ nenÃ­ zÃ¡kon zakazujÃ­cÃ­ cestovÃ¡nÃ­ Äasem â je to nodÃ¡lnÃ­ firewall, nepropustnÃ¡ plocha, kde |Ï| = 0. Sektory minulosti a budoucnosti zÅ¯stÃ¡vajÃ­ kauzÃ¡lnÄ izolovanÃ©, dokud je firewall aktivnÃ­. KaÅ¾dÃ¡ aktualizace stavu stÃ¡le stojÃ­ alespoÅ k_B T ln 2 Landauerova tepla.">
+        Reversing time inverts the orientation of a trajectory while keeping rest energy invariant. Paradox control is not a law forbidding time travel â it is a nodal firewall, an impermeable surface where |Ï| = 0. Every state update still costs at least k_B T ln 2 in Landauer heat.
+      </div>
+    </details>
+    <details>
+      <summary data-en="What are the seven Clay Millennium Problems?"
+               data-cz="Co je sedm problÃ©mÅ¯ tisÃ­ciletÃ­ Clayova institutu?">What are the seven Clay Millennium Problems?</summary>
+      <div class="answer"
+        data-en="P vs NP, the Riemann Hypothesis, YangâMills mass gap, NavierâStokes smoothness, Birch and Swinnerton-Dyer, Hodge, and PoincarÃ©. CoReX presents unified readings of all seven."
+        data-cz="P vs NP, Riemannova hypotÃ©za, YangâMillsova hmotnostnÃ­ mezera, NavierâStokesova hladkost, BirchâSwinnerton-Dyer, Hodge a PoincarÃ©. CoReX pÅedstavuje sjednocenÃ¡ ÄtenÃ­ vÅ¡ech sedmi.">
+        P vs NP, the Riemann Hypothesis, YangâMills mass gap, NavierâStokes smoothness, Birch and Swinnerton-Dyer, Hodge, and PoincarÃ©.
+      </div>
+    </details>
+    <details>
+      <summary data-en="What is the Aâ seed?"
+               data-cz="Co je semÃ­nko Aâ?">What is the Aâ seed?</summary>
+      <div class="answer"
+        data-en="Aâ is the unique fixed point of the full symmetry group G on the manifold â³_N(Aâ) â the only locus where every generator of the algebra vanishes at once."
+        data-cz="Aâ je jedinÃ½ pevnÃ½ bod plnÃ© grupy symetriÃ­ G na varietÄ â³_N(Aâ) â jedinÃ© mÃ­sto, kde vÅ¡echny generÃ¡tory algebry mizÃ­ souÄasnÄ.">
+        Aâ is the unique fixed point of the full symmetry group G on the manifold â³_N(Aâ).
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="toc" aria-labelledby="toc-title">
+  <p class="kicker" data-en="Explore" data-cz="Prozkoumat">Explore</p>
+  <h2 id="toc-title" data-en="What this monograph contains" data-cz="Co tato monografie obsahuje">What this monograph contains</h2>
+  <ul class="toc-list">
+    <li><a href="#postulates" onclick="goTo('postulates');return false;">
+      <b data-en="The four postulates" data-cz="ÄtyÅi postulÃ¡ty">The four postulates</b>
+      <span data-en="Symmetry, transformation, phase, and instantiation."
+            data-cz="Symetrie, transformace, fÃ¡ze a instance.">Symmetry, transformation, phase, and instantiation.</span>
+    </a></li>
+    <li><a href="#seven" onclick="goTo('seven');return false;">
+      <b data-en="Seven Millennium Problems" data-cz="Sedm problÃ©mÅ¯ tisÃ­ciletÃ­">Seven Millennium Problems</b>
+      <span data-en="Unified geometric readings of all seven Clay Prize problems."
+            data-cz="SjednocenÃ¡ geometrickÃ¡ ÄtenÃ­ vÅ¡ech sedmi ClayovÃ½ch problÃ©mÅ¯.">Unified geometric readings of all seven Clay Prize problems.</span>
+    </a></li>
+    <li><a href="#lab" onclick="goTo('lab');return false;">
+      <b data-en="Interactive laboratory" data-cz="InteraktivnÃ­ laboratoÅ">Interactive laboratory</b>
+      <span data-en="Rotate the manifold, change N, watch the planes multiply."
+            data-cz="OtÃ¡Äejte varietou, mÄÅte N, sledujte, jak roviny rostou.">Rotate the manifold, change N, watch the planes multiply.</span>
+    </a></li>
+    <li><a href="#doubleslit" onclick="goTo('doubleslit');return false;">
+      <b data-en="The double-slit experiment" data-cz="DvouÅ¡tÄrbinovÃ½ experiment">The double-slit experiment</b>
+      <span data-en="Anti-phase cancellation at the nodal firewalls."
+            data-cz="Anti-fÃ¡zovÃ¡ anihilace na nodÃ¡lnÃ­ch firewallech.">Anti-phase cancellation at the nodal firewalls.</span>
+    </a></li>
+    <li><a href="#timemachine" onclick="goTo('timemachine');return false;">
+      <b data-en="The time machine" data-cz="Stroj Äasu">The time machine</b>
+      <span data-en="Orientation inversion, energy conservation, boundary isolation."
+            data-cz="Inverze orientace, zachovÃ¡nÃ­ energie, izolace hranic.">Orientation inversion, energy conservation, boundary isolation.</span>
+    </a></li>
+    <li><a href="#faq" onclick="goTo('faq');return false;">
+      <b data-en="Frequently asked questions" data-cz="ÄastÃ© otÃ¡zky">Frequently asked questions</b>
+      <span data-en="Direct answers on the Aâ seed, Euler's identity, and P vs NP."
+            data-cz="PÅÃ­mÃ© odpovÄdi o semÃ­nku Aâ, EulerovÄ identitÄ a P vs NP.">Direct answers on the Aâ seed, Euler's identity, and P vs NP.</span>
+    </a></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <address>
+    <span data-en="CoReX Â· Special Theory of Computational Relativity"
+          data-cz="CoReX Â· SpeciÃ¡lnÃ­ teorie vÃ½poÄetnÃ­ relativity">CoReX Â· Special Theory of Computational Relativity</span><br>
+    <span data-en="By Pierre LeBaux, PhD Â· Theoretical Physics &amp; Computational Complexity"
+          data-cz="Autor: Pierre LeBaux, PhD Â· TeoretickÃ¡ fyzika a vÃ½poÄetnÃ­ sloÅ¾itost">By Pierre LeBaux, PhD Â· Theoretical Physics &amp; Computational Complexity</span>
+  </address>
+  <button class="navlink" onclick="goTop()"
+          data-en="â Back to top" data-cz="â ZpÄt nahoru">â Back to top</button>
+</footer>
+
+<script>
+/* One banner, one policy: show it, then auto-hide - no sticky overlays
+ * fighting over the same element. */
+var bannerTimer = null;
+function showBanner(msg) {
+  var b = document.getElementById('banner');
+  if (!b) return;
+  b.textContent = 'â  ' + msg;
+  b.classList.add('on');
+  if (bannerTimer) clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(function () { b.classList.remove('on'); }, 6000);
+}
+window.onerror = function (msg) { showBanner(msg); };
+/* roundRect fallback (older Safari) */
+if (window.CanvasRenderingContext2D && !CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+    r = Math.min(typeof r === 'number' ? r : ((r && r[0]) || 0), w / 2, h / 2);
+    this.moveTo(x + r, y);
+    this.arcTo(x + w, y, x + w, y + h, r);
+    this.arcTo(x + w, y + h, x, y + h, r);
+    this.arcTo(x, y + h, x, y, r);
+    this.arcTo(x, y, x + w, y, r);
+    this.closePath();
+  };
+}
+function curLang() { return document.documentElement.lang === 'cs' ? 'cz' : 'en'; }
+function syncHeaderVar() {
+  var h = document.querySelector('header');
+  if (h) document.documentElement.style.setProperty('--hdr', h.offsetHeight + 'px');
+}
+var statusTimer = null;
+function showStatus(msg) {
+  var s = document.getElementById('status');
+  if (!s) return;
+  s.textContent = msg;
+  s.classList.add('on');
+  if (statusTimer) clearTimeout(statusTimer);
+  statusTimer = setTimeout(function () { s.classList.remove('on'); }, 1100);
+}
+
+function headerOffset() {
+  var h = document.querySelector('header');
+  return (h ? h.offsetHeight : 60) + 16;
+}
+function goTo(id) {
+  showStatus('â ' + id);
+  var el = document.getElementById(id);
+  if (!el) { showStatus('â no #' + id); return; }
+  var top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset();
+  try { window.scrollTo({ top: top, behavior: 'smooth' }); }
+  catch (e) { window.scrollTo(0, top); }
+}
+function goTop() {
+  showStatus('â top');
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  catch (e) { window.scrollTo(0, 0); }
+}
+
+function setLang(lang, quiet) {
+  if (lang !== 'cz') lang = 'en';
+  if (!quiet) showStatus('lang: ' + lang);
+  document.documentElement.lang = (lang === 'cz') ? 'cs' : 'en';
+  var els = document.querySelectorAll('[data-en][data-cz]');
+  for (var i = 0; i < els.length; i++) {
+    var v = els[i].getAttribute('data-' + lang);
+    if (v !== null) els[i].textContent = v;
+  }
+  var ariaEls = document.querySelectorAll('[data-aria-en][data-aria-cz]');
+  for (var j = 0; j < ariaEls.length; j++) {
+    var av = ariaEls[j].getAttribute('data-aria-' + lang);
+    if (av !== null) ariaEls[j].setAttribute('aria-label', av);
+  }
+  var en = document.getElementById('btnEn');
+  var cz = document.getElementById('btnCz');
+  if (en) { en.className = (lang === 'en') ? 'active' : ''; en.setAttribute('aria-pressed', String(lang === 'en')); }
+  if (cz) { cz.className = (lang === 'cz') ? 'active' : ''; cz.setAttribute('aria-pressed', String(lang === 'cz')); }
+  renderReadouts();
+  syncHeaderVar();
+  if (!quiet) {
+    try {
+      var url = new URL(window.location.href);
+      if (lang === 'en') url.searchParams.delete('lang');
+      else url.searchParams.set('lang', lang);
+      history.replaceState({}, '', url.toString());
+    } catch (e) {}
+  }
+}
+
+function readLangParam() {
+  var lang = 'en';
+  try {
+    if (new URL(window.location.href).searchParams.get('lang') === 'cz') lang = 'cz';
+  } catch (e) {}
+  setLang(lang, true);   /* always applies data-en/cz so markup and data never diverge */
+}
+
+function selectSeven(n) {
+  showStatus('tab ' + n);
+  for (var i = 1; i <= 7; i++) {
+    var p = document.getElementById('panel' + i);
+    if (p) p.classList.toggle('on', i === n);
+    var b = document.getElementById('tab' + i);
+    if (b) { b.classList.toggle('active', i === n); b.setAttribute('aria-selected', String(i === n)); }
+  }
+  requestAnimationFrame(setupCanvases);
+}
+
+var LAB = { N: 5, speed: 0.6, phase: 0, planes: true, nodes: true, orbits: true };
+function updateN(v) {
+  var n = parseInt(v, 10);
+  if (isNaN(n) || n < 2) n = 2;
+  if (n > 10) n = 10;
+  LAB.N = n;
+  var el = document.getElementById('valN');
+  if (el) el.textContent = n;
+}
+function updateS(v) {
+  var s = parseFloat(v);
+  if (isNaN(s)) s = 0.6;
+  LAB.speed = s;
+  var el = document.getElementById('valS');
+  if (el) el.textContent = s.toFixed(2);
+}
+function toggleFlag(name, btn) {
+  LAB[name] = !LAB[name];
+  if (btn) { btn.classList.toggle('on', LAB[name]); btn.setAttribute('aria-pressed', String(LAB[name])); }
+  showStatus(name + ': ' + LAB[name]);
+}
+
+/* Double-slit state + handler */
+var DS = { observer: false, firewalls: true, wavefronts: true };
+function toggleDs(name, btn) {
+  DS[name] = !DS[name];
+  if (btn) { btn.classList.toggle('on', DS[name]); btn.setAttribute('aria-pressed', String(DS[name])); }
+  showStatus('ds.' + name + ': ' + DS[name]);
+  syncDsChips();
+  renderReadouts();
+}
+
+/* Context-aware chip marking: in which-path mode the wavefronts are
+ * replaced by explicit path lines and no dark bands exist, so the
+ * Wavefronts and Nodal-firewalls chips have no visual effect. They stay
+ * toggleable (state always applies); the red outline is information. */
+function syncDsChips() {
+  var w = document.getElementById('dsChipWave');
+  var f = document.getElementById('dsChipFire');
+  if (w) {
+    w.classList.toggle('na', DS.observer);
+    w.title = DS.observer
+      ? 'no visual effect while the observer is on - which-path lines replace the wavefronts (state still toggles)'
+      : '';
+  }
+  if (f) {
+    f.classList.toggle('na', DS.observer);
+    f.title = DS.observer
+      ? 'no visual effect while the observer is on - no dark bands exist to firewall (state still toggles)'
+      : '';
+  }
+}
+
+/* Time-machine state + handler.
+ * Future is on the right (forward time moves right). side = which sector
+ * the carriage is in (+1 future, -1 past); the firewall confines it there. */
+var TM = {
+  reversed: false,
+  firewalls: true,
+  landauer: true,
+  x: 0.78,
+  side: 1,
+  pinned: false,
+  lastT: null,
+  hit: 0,
+  pulse: 0,
+  /* Direction-signed phases: accumulate incrementally so toggling
+   * "Reverse time" smoothly reverses motion instead of teleporting
+   * the clock hand and belt markers to their mirrored positions. */
+  clockPhase: 0,
+  markerPhase: 0
+};
+function toggleTm(name, btn) {
+  TM[name] = !TM[name];
+  if (btn) { btn.classList.toggle('on', TM[name]); btn.setAttribute('aria-pressed', String(TM[name])); }
+  showStatus('tm.' + name + ': ' + TM[name]);
+  renderReadouts();
+}
+
+/* Readouts are rendered from state, so language switches never desync them */
+function renderReadouts() {
+  var cz = curLang() === 'cz';
+  var d = document.getElementById('dsReadout');
+  if (d) d.textContent = DS.observer
+    ? (cz ? 'Stav: mÄÅeno Â· vzor zhroucen na dva pÃ¡sy' : 'State: measured Â· pattern collapsed to two bands')
+    : (cz ? 'Stav: superponovanÃ½ Â· vzor nedotÄen' : 'State: superposed Â· pattern intact');
+  var m = document.getElementById('tmReadout');
+  if (m) m.textContent = TM.reversed
+    ? (cz ? 'Stav: pÃ¡s obrÃ¡cen Â· L_mesh â âL_mesh Â· E = mcÂ² zachovÃ¡no' : 'State: belt reversed Â· L_mesh â âL_mesh Â· E = mcÂ² preserved')
+    : (cz ? 'Stav: pÃ¡s vpÅed Â· L_mesh â +L_mesh' : 'State: belt forward Â· L_mesh â +L_mesh');
+}
+
+/* Seven-problem renderers */
+var CZ_LABELS = {
+  '2^N tree â so(N)': '2^N strom â so(N)', 'rotation planes': 'rotaÄnÃ­ roviny',
+  'vacuum floor': 'dno vakua', 'Câ smooth': 'Câ hladkÃ©', 'L(E,s) at s=1': 'L(E,s) v s=1',
+  'rational cycle': 'racionÃ¡lnÃ­ cyklus', 'SOURCE': 'ZDROJ', 'BARRIER': 'BARIÃRA', 'SCREEN': 'STÃNÃTKO',
+  'ÎM > 0': 'ÎM > 0',
+  'MÂ³ â SÂ³': 'MÂ³ â SÂ³', 'I(y) = cosÂ²(kÂ·Îr / 2)': 'I(y) = cosÂ²(kÂ·Îr / 2)',
+  'WHICH-PATH â interference removed': 'KTERÃ DRÃHA â interference odstranÄna',
+  'COHERENT â interference pattern': 'KOHERENTNÃ â interferenÄnÃ­ vzor',
+  'FUTURE': 'BUDOUCNOST', 'PAST': 'MINULOST', 'NODAL FIREWALL': 'NODÃLNÃ FIREWALL',
+  'BOUNDARY REACHED': 'HRANICE DOSAÅ½ENA', 'SECTORS CONNECTED': 'SEKTORY PROPOJENY',
+  'END OF AXIS': 'KONEC OSY', 'rest energy invariant': 'klidovÃ¡ energie invariantnÃ­',
+  'REVERSE â L_mesh â âL_mesh': 'ZPÄT â L_mesh â âL_mesh', 'FORWARD â L_mesh â +L_mesh': 'VPÅED â L_mesh â +L_mesh',
+  'causal boundary active Â· crossing forbidden': 'kauzÃ¡lnÃ­ hranice aktivnÃ­ Â· prÅ¯chod zakÃ¡zÃ¡n',
+  'causal boundary open Â· sectors connected': 'kauzÃ¡lnÃ­ hranice otevÅena Â· sektory propojeny',
+  'carriage = temporal state': 'vozÃ­k = ÄasovÃ½ stav'
+};
+function T(text) { return (curLang() === 'cz' && CZ_LABELS[text]) || text; }
+function canvasLabel(ctx, text, x, y, opts) {
+  opts = opts || {};
+  text = T(text);
+  var size = opts.size || 12;
+  var color = opts.color || 'rgba(224,169,82,0.8)';
+  var align = opts.align || 'left';
+  var pad = opts.pad == null ? 12 : opts.pad;
+  ctx.save();
+  ctx.font = (opts.bold ? 'bold ' : '') + size + 'px monospace';
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  var m = ctx.measureText(text);
+  var xx = x;
+  if (align === 'left') xx = Math.max(pad, Math.min(x, ctx.canvas.clientWidth - m.width - pad));
+  if (align === 'right') xx = Math.min(ctx.canvas.clientWidth - pad, Math.max(x, m.width + pad));
+  ctx.fillText(text, xx, Math.max(size + 4, Math.min(y, ctx.canvas.clientHeight - 6)));
+  ctx.restore();
+}
+function draw1(ctx, W, H, t) {
+  canvasLabel(ctx, '2^N tree â so(N)', 18, 24);
+  var lx = Math.max(28, W * 0.08), ly = H * 0.53;
+  var treeW = Math.min(W * 0.28, 190);
+  for (var l = 0; l < 4; l++) {
+    var count = Math.pow(2, l), x = lx + l * treeW / 3.2;
+    for (var i = 0; i < count; i++) {
+      var y = ly + (i - (count - 1) / 2) * Math.min(H * 0.18, 38);
+      ctx.fillStyle = 'rgba(201,128,128,' + (0.7 - l * 0.15) + ')';
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+      if (l > 0) {
+        var px = lx + (l - 1) * treeW / 3.2;
+        var parent = ly + ((Math.floor(i / 2)) - (Math.pow(2,l-1)-1)/2) * Math.min(H*0.18,38);
+        ctx.strokeStyle='rgba(127,163,184,0.18)';
+        ctx.beginPath();ctx.moveTo(px,parent);ctx.lineTo(x,y);ctx.stroke();
+      }
+    }
+  }
+  var cx = W * 0.72, cy = H * 0.53, rad = Math.min(W * 0.20, H * 0.30);
+  for (var p = 0; p < 15; p++) {
+    var a = (p / 15) * Math.PI + t * 0.4;
+    ctx.strokeStyle = 'hsla(' + (40 + p * 20) + ',40%,60%,0.35)';
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a)*rad, cy + Math.sin(a)*rad);
+    ctx.lineTo(cx - Math.cos(a)*rad, cy - Math.sin(a)*rad);
+    ctx.stroke();
+  }
+  ctx.fillStyle='#f4c77a';ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.fill();
+  canvasLabel(ctx,'rotation planes',cx,H-14,{align:'center',color:'rgba(164,158,144,.72)',size:10});
+}
+function draw2(ctx, W, H, t) {
+  var cx=W/2, cy=H/2;
+  ctx.strokeStyle='rgba(127,163,184,.15)';
+  ctx.beginPath();ctx.moveTo(28,cy);ctx.lineTo(W-28,cy);ctx.stroke();
+  ctx.strokeStyle='#7ba78c';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(cx,42);ctx.lineTo(cx,H-30);ctx.stroke();
+  canvasLabel(ctx,'Re(s) = 1/2',cx+12,28,{color:'rgba(123,167,140,.9)'});
+  for(var i=-4;i<=4;i++){
+    if(i===0)continue;
+    var y=cy+i*Math.min(24,H*.08)+Math.sin(t*1.6+i)*3;
+    ctx.fillStyle='#e0a952';ctx.beginPath();ctx.arc(cx,y,5,0,Math.PI*2);ctx.fill();
+  }
+}
+function draw3(ctx,W,H,t){
+  var cy=H*.70, floorH=Math.min(36,H*.14);
+  ctx.fillStyle='rgba(15,20,34,.9)';ctx.fillRect(30,cy,W-60,floorH);
+  canvasLabel(ctx,'vacuum floor',42,cy+floorH*.65,{color:'rgba(164,158,144,.7)',size:11});
+  var gapY=cy-Math.min(68,H*.22)-Math.sin(t*1.4)*3;
+  ctx.strokeStyle='#c98080';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(30,gapY);ctx.lineTo(W-30,gapY);ctx.stroke();
+  canvasLabel(ctx,'ÎM > 0',W/2,gapY-10,{align:'center',color:'#c98080',size:11});
+  for(var x=55;x<W-45;x+=Math.max(24,W/28)){
+    /* particles bob INSIDE the gap: between the floor (cy) and the gap line */
+    var ey=gapY+8+Math.abs(Math.sin(x*.05+t*2.2))*Math.min(30,Math.max(0,cy-gapY-12));
+    ctx.fillStyle='#e0a952';ctx.beginPath();ctx.arc(x,ey,4,0,Math.PI*2);ctx.fill();
+  }
+}
+function draw4(ctx,W,H,t){
+  var cx=W/2,cy=H/2,rmax=Math.min(W,H)*.35;
+  for(var r=14;r<rmax;r+=10){
+    var speed=(rmax-r)*.03;
+    ctx.strokeStyle='hsla('+(200+r)+',45%,55%,.55)';ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.arc(cx,cy,r,t*speed,t*speed+Math.PI*1.4);ctx.stroke();
+  }
+  canvasLabel(ctx,'Câ smooth',cx,26,{align:'center',color:'rgba(123,167,140,.9)'});
+}
+function draw5(ctx,W,H,t){
+  var cx=W*.31,cy=H*.54, scale=Math.min(25,W*.032), pyMax=Math.min(95,H*.32);
+  ctx.strokeStyle='#9b8ac4';ctx.lineWidth=2;ctx.beginPath();
+  var first=true;
+  for(var py=-pyMax;py<=pyMax;py+=3){
+    var y=py/32,x=y*y-1,px=cx+x*scale;
+    if(first){ctx.moveTo(px,cy+py);first=false;}else ctx.lineTo(px,cy+py);
+  }
+  ctx.stroke();
+  for(var i=1;i<=4;i++){
+    var a=t*.8+i;
+    ctx.fillStyle='#e0a952';ctx.beginPath();
+    ctx.arc(cx+Math.cos(a)*(scale+i*10),cy+Math.sin(a)*(18+i*5),4.5,0,Math.PI*2);ctx.fill();
+  }
+  var bx=W*.62;
+  canvasLabel(ctx,'L(E,s) at s=1',bx,42,{color:'rgba(212,207,196,.75)',size:11});
+  var barW=Math.min(60,W*.12);
+  for(var k=1;k<=4;k++){
+    var by=56+k*Math.min(23,H*.08);
+    ctx.fillStyle='#e0a952';ctx.fillRect(bx,by,barW,14);
+    ctx.fillStyle='rgba(6,8,15,.9)';ctx.font='10px monospace';ctx.fillText('ord '+k,bx+7,by+11);
+  }
+}
+function draw6(ctx,W,H,t){
+  var cx=W/2,cy=H*.55, span=Math.min(W*.38,180);
+  ctx.strokeStyle='rgba(127,163,184,.18)';
+  for(var i=-4;i<=4;i++){ctx.beginPath();ctx.moveTo(cx-span,cy+i*18);ctx.lineTo(cx+span,cy+i*18+Math.sin(i+t)*6);ctx.stroke();}
+  ctx.strokeStyle='#d4af37';ctx.lineWidth=2.5;ctx.beginPath();
+  ctx.ellipse(cx,cy,Math.min(130,W*.28)+Math.sin(t)*5,Math.min(60,H*.20),Math.PI/6,0,Math.PI*2);ctx.stroke();
+  /* Dots ride the same tilted, breathing ellipse that is drawn below,
+   * instead of an untilted one. */
+  var tilt=Math.PI/6, ea=Math.min(130,W*.28)+Math.sin(t)*5, eb=Math.min(60,H*.20);
+  for(var j=0;j<8;j++){var a=t*.6+j*Math.PI/4;
+    var ux=Math.cos(a)*ea, uy=Math.sin(a)*eb;
+    ctx.fillStyle='#e0a952';ctx.beginPath();
+    ctx.arc(cx+Math.cos(tilt)*ux-Math.sin(tilt)*uy, cy+Math.sin(tilt)*ux+Math.cos(tilt)*uy,3.5,0,Math.PI*2);ctx.fill()}
+  canvasLabel(ctx,'rational cycle',cx,cy-Math.min(84,H*.30),{align:'center',color:'rgba(212,175,55,.9)',size:11});
+}
+function draw7(ctx,W,H,t){
+  var cx=W/2,cy=H*.54,factor=.7+.3*Math.sin(t*.9);
+  var rx=Math.min(130,W*.28)*factor+12,ry=Math.min(110,H*.32);
+  ctx.strokeStyle='#7ba78c';ctx.lineWidth=2.5;ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.stroke();
+  ctx.strokeStyle='rgba(123,167,140,.4)';ctx.lineWidth=1.2;
+  for(var k=1;k<=3;k++){ctx.beginPath();ctx.ellipse(cx,cy,rx*Math.cos(k*Math.PI/8),ry*Math.sin(k*Math.PI/8),0,0,Math.PI*2);ctx.stroke();}
+  canvasLabel(ctx,'MÂ³ â SÂ³',cx,26,{align:'center',color:'rgba(123,167,140,.9)'});
+}
+
+/* Lab renderer */
+function drawLab(ctx, W, H, t) {
+  ctx.fillStyle = 'rgba(127,163,184,0.06)';
+  for (var gx = 20; gx < W; gx += 32) {
+    for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+  }
+  var N = LAB.N;
+  var R = N * (N - 1) / 2;
+  var cx = W / 2, cy = H / 2;
+  var rad = Math.min(W, H) * 0.34;
+  var palette = ['#e0a952','#7ba78c','#c98080','#9b8ac4','#7fa3b8'];
+  if (LAB.nodes) {
+    ctx.strokeStyle = 'rgba(127,163,184,0.08)';
+    for (var i = 0; i < N; i++) {
+      var a = (i / N) * Math.PI * 2 + t * 0.1;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(a) * rad * 1.6, cy + Math.sin(a) * rad * 1.6);
+      ctx.stroke();
+    }
+  }
+  if (LAB.planes) {
+    for (var p = 0; p < R; p++) {
+      var ang = (p / R) * Math.PI + t * 0.22;
+      ctx.strokeStyle = palette[p % palette.length] + (p % 2 ? '66' : '44');
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(ang) * rad * 1.4, cy + Math.sin(ang) * rad * 1.4);
+      ctx.lineTo(cx - Math.cos(ang) * rad * 1.4, cy - Math.sin(ang) * rad * 1.4);
+      ctx.stroke();
+    }
+  }
+  if (LAB.orbits) {
+    for (var j = 1; j <= N; j++) {
+      var rr = (j / N) * rad;
+      ctx.strokeStyle = 'rgba(127,163,184,0.14)';
+      ctx.beginPath(); ctx.arc(cx, cy, rr, 0, Math.PI * 2); ctx.stroke();
+      var aa = t * (0.6 + j * 0.1) + j * Math.PI * 2 / N;
+      ctx.fillStyle = palette[j % palette.length];
+      ctx.beginPath();
+      ctx.arc(cx + Math.cos(aa) * rr, cy + Math.sin(aa) * rr, 3.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  var pulse = 1 + 0.08 * Math.sin(t * 1.6);
+  ctx.fillStyle = '#f4c77a';
+  ctx.beginPath(); ctx.arc(cx, cy, 5 * pulse, 0, Math.PI * 2); ctx.fill();
+}
+
+/* Double-slit renderer */
+function drawDs(ctx, W, H, t) {
+  var cy = H * 0.52;
+  var srcX = Math.max(34, W * 0.07);
+  var barX = Math.round(Math.min(W * 0.38, W - 190));
+  var barW = Math.max(10, Math.min(14, W * 0.018));
+  var screenX = Math.round(Math.min(W * 0.86, W - 42));
+  var screenW = Math.max(18, Math.min(25, W * 0.028));
+  var usableH = Math.min(H - 86, 310);
+  var slitGap = Math.max(58, Math.min(92, usableH * 0.29));
+  var slitH = Math.max(13, Math.min(18, usableH * 0.055));
+  var slitAY = cy - slitGap / 2;
+  var slitBY = cy + slitGap / 2;
+  var lambda = Math.max(22, Math.min(30, W * 0.035));
+  var k = 2 * Math.PI / lambda;
+  var screenTop = 46;
+  var screenBot = H - 48;
+  var screenH = screenBot - screenTop;
+  var gapTop = slitAY - slitH / 2;
+  var gapMid = slitBY - slitH / 2;
+  var gapBottom = slitBY + slitH / 2;
+
+  /* Background grid */
+  ctx.fillStyle = 'rgba(127,163,184,0.045)';
+  for (var gx = 18; gx < W; gx += 30) {
+    for (var gy = 28; gy < H - 20; gy += 30) ctx.fillRect(gx, gy, 1, 1);
+  }
+
+  /* Source beam: a restrained stream of phase markers heading toward the barrier. */
+  ctx.strokeStyle = 'rgba(244,199,122,0.16)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(srcX + 8, cy);
+  ctx.lineTo(barX - 4, cy);
+  ctx.stroke();
+
+  for (var q = 0; q < 9; q++) {
+    var qx = srcX + 18 + ((t * 85 + q * 31) % Math.max(30, barX - srcX - 24));
+    var qy = cy + Math.sin(q * 1.7) * 3;
+    ctx.fillStyle = 'rgba(244,199,122,' + (0.22 + (q % 3) * 0.08) + ')';
+    ctx.beginPath(); ctx.arc(qx, qy, 1.6, 0, Math.PI * 2); ctx.fill();
+  }
+
+  /* Barrier with two actual openings. */
+  ctx.fillStyle = '#2b3348';
+  ctx.fillRect(barX, 30, barW, gapTop - 30);
+  ctx.fillRect(barX, slitAY + slitH / 2, barW, gapMid - (slitAY + slitH / 2));
+  ctx.fillRect(barX, slitBY + slitH / 2, barW, H - 30 - (slitBY + slitH / 2));
+
+  /* Bright slit mouths. */
+  ctx.fillStyle = 'rgba(123,167,140,0.65)';
+  ctx.fillRect(barX - 1, slitAY - slitH / 2, barW + 2, slitH);
+  ctx.fillStyle = 'rgba(201,128,128,0.65)';
+  ctx.fillRect(barX - 1, slitBY - slitH / 2, barW + 2, slitH);
+
+  canvasLabel(ctx,'A',barX - 13,slitAY + 4,{size:10,color:'rgba(123,167,140,.9)',align:'right'});
+  canvasLabel(ctx,'B',barX - 13,slitBY + 4,{size:10,color:'rgba(201,128,128,.9)',align:'right'});
+
+  var waveStart = barX + barW;
+  var waveEnd = screenX - 8;
+
+  if (!DS.observer && DS.wavefronts) {
+    /* Two expanding coherent wavefront families. */
+    var colors = ['123,167,140', '201,128,128'];
+    var slitYs = [slitAY, slitBY];
+    for (var si = 0; si < 2; si++) {
+      var sy = slitYs[si];
+      for (var r = 14; r < W * 0.75; r += lambda) {
+        var phase = r / lambda - t * 1.25;
+        var visibility = Math.max(0, Math.cos(phase * Math.PI));
+        var reach = waveStart + r;
+        if (reach < waveStart || reach > waveEnd + r * 0.25) continue;
+        var alpha = 0.07 + 0.20 * visibility;
+        ctx.strokeStyle = 'rgba(' + colors[si] + ',' + alpha + ')';
+        ctx.lineWidth = 1.15;
+        ctx.beginPath();
+        ctx.arc(waveStart, sy, r, -Math.PI * 0.48, Math.PI * 0.48);
+        ctx.stroke();
+      }
+    }
+  } else if (DS.observer) {
+    /* Which-path mode: coherent wavefronts disappear and the two paths become explicit. */
+    ctx.setLineDash([5, 6]);
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = 'rgba(123,167,140,0.52)';
+    ctx.beginPath(); ctx.moveTo(waveStart, slitAY); ctx.lineTo(screenX, slitAY); ctx.stroke();
+    ctx.strokeStyle = 'rgba(201,128,128,0.52)';
+    ctx.beginPath(); ctx.moveTo(waveStart, slitBY); ctx.lineTo(screenX, slitBY); ctx.stroke();
+    ctx.setLineDash([]);
+
+    /* Detector markers at the slits indicate the measurement interaction. */
+    for (var os = 0; os < 2; os++) {
+      var oy = [slitAY, slitBY][os];
+      ctx.strokeStyle = os === 0 ? 'rgba(123,167,140,.45)' : 'rgba(201,128,128,.45)';
+      ctx.beginPath(); ctx.arc(waveStart + 2, oy, 9 + 2 * Math.sin(t * 3 + os), 0, Math.PI * 2); ctx.stroke();
+    }
+  }
+
+  /* Animated source pulse. */
+  var pulse = 1 + 0.10 * Math.sin(t * 3.0);
+  ctx.fillStyle = '#f4c77a';
+  ctx.beginPath(); ctx.arc(srcX, cy, 5.5 * pulse, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = 'rgba(244,199,122,0.26)';
+  ctx.lineWidth = 1;
+  for (var pr = 0; pr < 3; pr++) {
+    var rr = 10 + pr * 13 + ((t * 38) % 13);
+    ctx.beginPath(); ctx.arc(srcX, cy, rr, 0, Math.PI * 2); ctx.stroke();
+  }
+  canvasLabel(ctx,'SOURCE',srcX,24,{size:9,color:'rgba(244,199,122,.72)',align:'center'});
+
+  /* Detection screen. */
+  ctx.fillStyle = 'rgba(15,20,34,0.98)';
+  ctx.fillRect(screenX, screenTop, screenW, screenH);
+  ctx.strokeStyle = 'rgba(127,163,184,0.42)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(screenX, screenTop, screenW, screenH);
+
+  var darkYs = [], brightYs = [];
+  var bars = Math.max(90, Math.floor(screenH));
+  for (var yi = 0; yi < bars; yi++) {
+    var yy = screenTop + (yi + 0.5) * screenH / bars;
+    var intensity;
+    if (!DS.observer) {
+      var dx = screenX - waveStart;
+      var rA = Math.sqrt(dx * dx + (yy - slitAY) * (yy - slitAY));
+      var rB = Math.sqrt(dx * dx + (yy - slitBY) * (yy - slitBY));
+      var phaseD = k * (rB - rA);
+      var c2 = Math.cos(phaseD / 2);
+      intensity = c2 * c2;
+    } else {
+      var dA = yy - slitAY;
+      var dB = yy - slitBY;
+      var sigma = Math.max(18, slitGap * 0.42);
+      intensity = 0.72 * Math.exp(-(dA * dA) / (2 * sigma * sigma))
+                + 0.72 * Math.exp(-(dB * dB) / (2 * sigma * sigma));
+      intensity = Math.min(1, intensity);
+    }
+    ctx.fillStyle = 'rgba(244,199,122,' + (0.10 + intensity * 0.84) + ')';
+    ctx.fillRect(screenX + 2, yy - screenH / bars / 2, screenW - 4, screenH / bars + 0.7);
+    if (!DS.observer && intensity < 0.035) darkYs.push(yy);
+    if (!DS.observer && intensity > 0.18) brightYs.push(yy);
+  }
+
+  /* Nodal firewalls are drawn as rays only where the calculated screen intensity is near zero. */
+  if (!DS.observer && DS.firewalls && darkYs.length) {
+    ctx.strokeStyle = 'rgba(255,209,102,0.19)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 6]);
+    for (var di = 0; di < darkYs.length; di += Math.max(1, Math.floor(darkYs.length / 9))) {
+      var dy = darkYs[di];
+      ctx.beginPath();
+      ctx.moveTo(waveStart, cy);
+      ctx.lineTo(screenX, dy);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  /* A few individual impacts make the screen read as a detector rather than a painted strip. */
+  for (var hit = 0; hit < 18; hit++) {
+    var phaseH = hit * 2.31 + t * 0.34;
+    var seed = (Math.sin(hit * 12.9898) * 43758.5453) % 1;
+    seed = Math.abs(seed);
+    var hy;
+    if (!DS.observer) {
+      /* Impacts follow the physics: in coherent mode a particle only
+       * lands where the interference intensity is high - never inside
+       * a nodal dark band. brightYs was collected during the screen
+       * pass above, so this sampler matches the drawn pattern. */
+      if (!brightYs.length) continue;
+      var picked = brightYs[Math.floor(seed * brightYs.length) % brightYs.length];
+      hy = picked + Math.sin(phaseH) * 3;
+    } else {
+      hy = hit % 2 ? slitAY + Math.sin(phaseH) * 20 : slitBY + Math.sin(phaseH * 1.13) * 20;
+    }
+    hy = Math.max(screenTop + 4, Math.min(screenBot - 4, hy));
+    ctx.fillStyle = 'rgba(255,225,160,0.75)';
+    ctx.beginPath(); ctx.arc(screenX + screenW / 2, hy, 1.1, 0, Math.PI * 2); ctx.fill();
+  }
+
+  if (W < 600) {
+    canvasLabel(ctx,'BARRIER',barX + barW + 5,42,{size:8,color:'rgba(127,163,184,.62)'});
+    canvasLabel(ctx,'SCREEN',screenX - 3,42,{size:8,color:'rgba(127,163,184,.62)'});
+  } else {
+    canvasLabel(ctx,'BARRIER',barX - 8,22,{size:9,color:'rgba(127,163,184,.62)',align:'right'});
+    canvasLabel(ctx,'SCREEN',screenX + screenW / 2,22,{size:9,color:'rgba(127,163,184,.62)',align:'center'});
+  }
+
+  var stateText = DS.observer ? 'WHICH-PATH â interference removed' : 'COHERENT â interference pattern';
+  var stateColor = DS.observer ? 'rgba(201,128,128,.9)' : 'rgba(123,167,140,.9)';
+  canvasLabel(ctx,stateText,18,H - 15,{size:10,color:stateColor});
+  canvasLabel(ctx,'I(y) = cosÂ²(kÂ·Îr / 2)',W < 600 ? W / 2 : screenX - 8,24,
+    {size:9,color:'rgba(244,199,122,.82)',align:W < 600 ? 'center' : 'right'});
+}
+
+/* Time-machine renderer */
+function drawTm(ctx, W, H, t) {
+  /* 
+   * The time-machine experiment is a stateful trajectory, not a looping
+   * conveyor animation.  x is the carriage's continuous position across
+   * the temporal axis. Reversing time changes velocity, not position.
+   */
+  var dt = TM.lastT === null ? 0 : Math.max(0, Math.min(0.05, t - TM.lastT));
+  TM.lastT = t;
+
+  var x0 = Math.max(28, W * 0.06);
+  var x1 = Math.min(W - 28, W * 0.94);
+  var cx = W / 2;
+  var beltY = H * 0.72;
+  var beltH = 10;
+  var top = 58;
+  var bottom = beltY + 42;
+  var leftPath = x0 + 38;
+  var rightPath = x1 - 38;
+  var speed = 0.16; // normalized path units / second
+  var dir = TM.reversed ? -1 : 1;
+
+  if (dt > 0) {
+    /* Continuous motion only: no wrap-around, no snapping across sectors. */
+    TM.x = Math.max(0, Math.min(1, TM.x + dir * speed * dt));
+    var pinnedNow = false;
+    if (TM.firewalls) {
+      if (TM.side > 0 && TM.x < 0.5) { TM.x = 0.5; pinnedNow = true; }
+      else if (TM.side < 0 && TM.x > 0.5) { TM.x = 0.5; pinnedNow = true; }
+    } else if (Math.abs(TM.x - 0.5) > 1e-6) {
+      TM.side = TM.x > 0.5 ? 1 : -1;
+    }
+    if (pinnedNow) {
+      TM.hit = 1;
+      if (!TM.pinned) TM.pulse = 1;
+    }
+    TM.pinned = pinnedNow;
+  }
+
+  TM.hit = Math.max(0, TM.hit - dt * 1.8);
+  TM.pulse = Math.max(0, TM.pulse - dt * 2.5);
+  /* Incremental, direction-signed phase advance (dt is already clamped),
+   * so both animations reverse smoothly at the toggle. */
+  TM.clockPhase += dt * 2.5 * dir;
+  TM.markerPhase += dt * 34 * dir;
+
+  var carriageX = leftPath + TM.x * (rightPath - leftPath);
+  var carriageY = beltY - 30;
+
+  // Background grid
+  ctx.fillStyle = 'rgba(127,163,184,0.05)';
+  for (var gx = 20; gx < W; gx += 32) {
+    for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+  }
+
+  // Temporal sectors: past on the left, future on the right (forward time moves right).
+  ctx.fillStyle = 'rgba(201,128,128,0.055)';
+  ctx.fillRect(x0, top, Math.max(0, cx - x0), bottom - top);
+  ctx.fillStyle = 'rgba(123,167,140,0.055)';
+  ctx.fillRect(cx, top, Math.max(0, x1 - cx), bottom - top);
+
+  canvasLabel(ctx, 'PAST', x0 + 8, 82,
+    {size:11, color:'rgba(201,128,128,.9)'});
+  canvasLabel(ctx, 'FUTURE', x1 - 8, 82,
+    {size:11, color:'rgba(123,167,140,.9)', align:'right'});
+
+  // Temporal axis
+  ctx.strokeStyle = 'rgba(127,163,184,0.22)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(x0, beltY + 5);
+  ctx.lineTo(x1, beltY + 5);
+  ctx.stroke();
+
+  // Direction markers on the temporal axis.
+  var markerDir = TM.reversed ? -1 : 1;
+  ctx.strokeStyle = TM.reversed
+    ? 'rgba(201,128,128,.72)'
+    : 'rgba(123,167,140,.72)';
+  ctx.lineWidth = 1.5;
+  var markerSpacing = 46;
+  var markerOffset = ((TM.markerPhase % markerSpacing) + markerSpacing) % markerSpacing;
+  for (var mx = x0 + markerOffset; mx < x1; mx += markerSpacing) {
+    ctx.beginPath();
+    ctx.moveTo(mx - 5 * markerDir, beltY + 1);
+    ctx.lineTo(mx + 5 * markerDir, beltY + 5);
+    ctx.lineTo(mx - 5 * markerDir, beltY + 9);
+    ctx.stroke();
+  }
+
+  // Firewall / causal boundary
+  if (TM.firewalls) {
+    var pulseSize = 1 + 4 * TM.pulse + 2 * (0.5 + 0.5 * Math.sin(t * 3));
+    ctx.strokeStyle = 'rgba(255,209,102,' + (0.28 + 0.25 * TM.hit) + ')';
+    ctx.lineWidth = pulseSize;
+    ctx.setLineDash([7, 5]);
+    ctx.beginPath();
+    ctx.moveTo(cx, top);
+    ctx.lineTo(cx, bottom);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    canvasLabel(ctx, 'NODAL FIREWALL', cx + 9, 102,
+      {size:10, color:'rgba(255,209,102,.95)'});
+
+    if (TM.hit > 0.02) {
+      ctx.fillStyle = 'rgba(255,209,102,' + (0.16 + 0.22 * TM.hit) + ')';
+      ctx.beginPath();
+      ctx.arc(cx, beltY - 4, 15 + 12 * TM.hit, 0, Math.PI * 2);
+      ctx.fill();
+
+      canvasLabel(ctx, 'BOUNDARY REACHED', cx, beltY - 62,
+        {size:9, color:'rgba(255,209,102,.95)', align:'center'});
+    }
+  } else {
+    ctx.strokeStyle = 'rgba(201,128,128,0.45)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 6]);
+    ctx.beginPath();
+    ctx.moveTo(cx, top);
+    ctx.lineTo(cx, bottom);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    canvasLabel(ctx, 'SECTORS CONNECTED', cx, 102,
+      {size:10, color:'rgba(201,128,128,.9)', align:'center'});
+  }
+
+  // Carriage shadow / path marker
+  ctx.fillStyle = 'rgba(224,169,82,0.12)';
+  ctx.fillRect(carriageX - 30, beltY + 14, 60, 3);
+
+  // Carriage
+  ctx.fillStyle = '#10141f';
+  ctx.strokeStyle = TM.reversed ? '#c98080' : '#e0a952';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(carriageX - 27, carriageY - 22, 54, 44, 5);
+  ctx.fill();
+  ctx.stroke();
+
+  // Clock face
+  var clockR = 14;
+  ctx.strokeStyle = 'rgba(244,199,122,0.9)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(carriageX, carriageY, clockR, 0, Math.PI * 2);
+  ctx.stroke();
+
+  var handAngle = TM.clockPhase;
+  ctx.strokeStyle = '#f4c77a';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(carriageX, carriageY);
+  ctx.lineTo(
+    carriageX + Math.cos(handAngle - Math.PI / 2) * (clockR - 3),
+    carriageY + Math.sin(handAngle - Math.PI / 2) * (clockR - 3)
+  );
+  ctx.stroke();
+
+  // Direction vector attached to the carriage.
+  ctx.strokeStyle = TM.reversed
+    ? 'rgba(201,128,128,.9)'
+    : 'rgba(123,167,140,.9)';
+  ctx.lineWidth = 2;
+  var arrowLen = 25;
+  var ax = carriageX + dir * arrowLen;
+  ctx.beginPath();
+  ctx.moveTo(carriageX + dir * 17, carriageY + 26);
+  ctx.lineTo(ax, carriageY + 26);
+  ctx.lineTo(ax - dir * 6, carriageY + 22);
+  ctx.moveTo(ax, carriageY + 26);
+  ctx.lineTo(ax - dir * 6, carriageY + 30);
+  ctx.stroke();
+
+  // End-of-axis feedback (only reachable with the firewall down)
+  if (!TM.firewalls && (TM.x <= 0.001 || TM.x >= 0.999)) {
+    canvasLabel(ctx, 'END OF AXIS', carriageX, carriageY - 36,
+      {size:9, color:'rgba(244,199,122,.9)', align:'center'});
+  }
+
+  // Energy invariant
+  var badgeW = Math.min(160, Math.max(128, W * 0.30));
+  var badgeX = W - badgeW - 18;
+  var badgeY = 118;
+  ctx.fillStyle = 'rgba(15,20,34,0.95)';
+  ctx.strokeStyle = '#7ba78c';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(badgeX, badgeY, badgeW, 44, 4);
+  ctx.fill();
+  ctx.stroke();
+  canvasLabel(ctx, 'E = mcÂ²', badgeX + 12, badgeY + 19,
+    {size:13, color:'rgba(123,167,140,.95)'});
+  canvasLabel(ctx, 'rest energy invariant', badgeX + 12, badgeY + 35,
+    {size:9, color:'rgba(127,163,184,.85)'});
+
+  // Experimental state
+  var stateText = TM.reversed
+    ? 'REVERSE â L_mesh â âL_mesh'
+    : 'FORWARD â L_mesh â +L_mesh';
+  canvasLabel(ctx, stateText, 20, H - 34,
+    {size:11, color:TM.reversed
+      ? 'rgba(201,128,128,.95)'
+      : 'rgba(123,167,140,.95)'});
+  canvasLabel(ctx,
+    TM.firewalls
+      ? 'causal boundary active Â· crossing forbidden'
+      : 'causal boundary open Â· sectors connected',
+    20, H - 16,
+    {size:9, color:'rgba(127,163,184,.75)'});
+
+  // Landauer meter
+  if (TM.landauer) {
+    var meterX = 30;
+    var meterY = 108;
+    var meterW = Math.min(100, Math.max(76, W * 0.18));
+    var meterH = 10;
+    ctx.fillStyle = 'rgba(15,20,34,0.9)';
+    ctx.fillRect(meterX, meterY, meterW, meterH);
+    ctx.strokeStyle = 'rgba(127,163,184,0.3)';
+    ctx.strokeRect(meterX, meterY, meterW, meterH);
+
+    var level = 0.5 + 0.4 * Math.sin(t * 1.5);
+    ctx.fillStyle = 'rgba(201,128,128,0.9)';
+    ctx.fillRect(meterX + 1, meterY + 1,
+      (meterW - 2) * level, meterH - 2);
+    canvasLabel(ctx, 'ÎE â¥ k_B T ln 2', meterX, meterY - 7,
+      {size:9, color:'rgba(201,128,128,.9)'});
+  }
+
+  // Small experiment legend
+  canvasLabel(ctx, 'carriage = temporal state', W / 2, H - 48,
+    {size:9, color:'rgba(127,163,184,.55)', align:'center'});
+}
+
+/* Canvas setup + main loop */
+var canvases = {};
+var PANELS = [];   /* panel elements cached on first use, not per frame */
+var appStarted = false;
+var resizeRaf = 0;
+
+function scheduleCanvasSetup() {
+  if (resizeRaf) cancelAnimationFrame(resizeRaf);
+  resizeRaf = requestAnimationFrame(function () {
+    resizeRaf = 0;
+    setupCanvases();
+  });
+}
+
+function setupCanvases() {
+  var ids = ['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv','dsCv','tmCv'];
+  for (var i = 0; i < ids.length; i++) {
+    var cv = document.getElementById(ids[i]);
+    if (!cv) continue;
+    var cw = cv.clientWidth;
+    var ch = cv.clientHeight;
+    if (cw < 1 || ch < 1) continue;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.max(1, Math.round(cw * dpr));
+    var h = Math.max(1, Math.round(ch * dpr));
+    if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+    var ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvases[ids[i]] = { ctx: ctx, el: cv };   /* cached: no per-frame getElementById */
+  }
+}
+
+var startTime = Date.now();
+var lastFrame = startTime;
+var inView = {};
+var errSeen = {};
+
+function reportErr(name, e) {
+  if (errSeen[name]) return;
+  errSeen[name] = true;
+  console.error('CoReX draw error in ' + name + ':', e);
+  showBanner(name + ': ' + ((e && e.message) || e));
+}
+
+/* Clears, then draws inside save/restore so no canvas state leaks between frames */
+function renderCanvas(id, fn, t) {
+  var entry = canvases[id];
+  if (!entry) return false;
+  var ctx = entry.ctx, cv = entry.el;
+  var W = cv.clientWidth, H = cv.clientHeight;
+  if (W <= 1 || H <= 1) return false;
+  ctx.save();
+  try {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#06080f';
+    ctx.fillRect(0, 0, W, H);
+    fn(ctx, W, H, t);
+  } catch (e) {
+    reportErr(id, e);
+  } finally {
+    ctx.restore();
+  }
+  return true;
+}
+
+function frame() {
+  try {
+    var now = Date.now();
+    var t = (now - startTime) / 1000;
+    var dt = Math.min(0.1, (now - lastFrame) / 1000);
+    lastFrame = now;
+    LAB.phase += dt * LAB.speed;   /* integrated, so moving the slider doesn't jump the phase */
+
+    var drawers = [null, draw1, draw2, draw3, draw4, draw5, draw6, draw7];
+    var panelEls = PANELS;
+    for (var i = 1; i <= 7; i++) {
+      var p = panelEls[i] || (panelEls[i] = document.getElementById('panel' + i));
+      if (p && p.classList.contains('on')) { renderCanvas('cv' + i, drawers[i], t); break; }
+    }
+    if (inView.labCv !== false) renderCanvas('labCv', drawLab, LAB.phase);
+    if (inView.dsCv !== false) renderCanvas('dsCv', drawDs, t);
+    if (inView.tmCv !== false) renderCanvas('tmCv', drawTm, t);
+    else TM.lastT = null;           /* avoid a time jump when it scrolls back into view */
+  } catch (e) {
+    reportErr('frame', e);
+  }
+  requestAnimationFrame(frame);
+}
+
+function watchView() {
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    for (var i = 0; i < entries.length; i++) inView[entries[i].target.id] = entries[i].isIntersecting;
+  }, { rootMargin: '80px' });
+  ['labCv', 'dsCv', 'tmCv'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+}
+
+function startApp() {
+  if (appStarted) return;
+  appStarted = true;
+  syncHeaderVar();
+  readLangParam();
+  syncDsChips();
+  requestAnimationFrame(function () {
+    setupCanvases();
+    requestAnimationFrame(frame);
+  });
+  window.addEventListener('resize', function () { syncHeaderVar(); scheduleCanvasSetup(); }, {passive:true});
+  if ('ResizeObserver' in window) {
+    var ro = new ResizeObserver(function () { syncHeaderVar(); scheduleCanvasSetup(); });
+    var h = document.querySelector('header');
+    if (h) ro.observe(h);
+    ['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv','dsCv','tmCv'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) ro.observe(el);
+    });
+  }
+  watchView();
+  console.log('CoReX ready. Handlers: goTo, goTop, setLang, selectSeven, updateN, updateS, toggleFlag, toggleDs, toggleTm');
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
+</script>
+</body>
+</html>
