@@ -1,0 +1,1174 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="color-scheme" content="dark" />
+<title>CoReX · Special Theory of Computational Relativity</title>
+<style>
+  :root {
+    --bg-deep: #06080f;
+    --bg: #0a0d18;
+    --panel: #10141f;
+    --panel-hi: #151a28;
+    --line: #1d2231;
+    --line-hi: #2b3348;
+    --ink: #ece6d9;
+    --ink-dim: #a49e90;
+    --ink-faint: #6a685f;
+    --amber: #e0a952;
+    --amber-soft: #f4c77a;
+    --gold: #d4af37;
+    --sage: #7ba78c;
+    --rose: #c98080;
+    --violet: #9b8ac4;
+    --teal: #7fa3b8;
+    --serif: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body {
+    margin: 0;
+    background: var(--bg-deep);
+    color: var(--ink);
+    font: 16px/1.7 var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(1100px 700px at 20% -10%, rgba(224,169,82,0.06), transparent 60%),
+      radial-gradient(900px 600px at 95% 20%, rgba(155,138,196,0.05), transparent 55%),
+      radial-gradient(900px 800px at 50% 110%, rgba(127,163,184,0.05), transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ---------- HEADER / NAV ---------- */
+  header.nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    padding: 14px 28px;
+    background: rgba(10,13,24,0.72);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand .mark {
+    font-family: var(--serif); font-size: 22px; letter-spacing: 0.02em;
+    color: var(--amber);
+  }
+  .brand .tag {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  nav.links { display: flex; gap: 22px; }
+  nav.links a {
+    color: var(--ink-dim); text-decoration: none;
+    font-size: 13px; letter-spacing: 0.02em;
+    transition: color .2s;
+  }
+  nav.links a:hover { color: var(--amber-soft); }
+  .lang {
+    display: inline-flex; align-items: center; gap: 0;
+    border: 1px solid var(--line-hi); border-radius: 999px;
+    overflow: hidden;
+  }
+  .lang button {
+    background: transparent; border: none; cursor: pointer;
+    color: var(--ink-faint); font: 600 12px var(--sans);
+    padding: 6px 12px; letter-spacing: 0.06em;
+    transition: all .2s;
+  }
+  .lang button[aria-pressed="true"] {
+    background: rgba(224,169,82,0.12);
+    color: var(--amber-soft);
+  }
+  .lang button:hover { color: var(--ink); }
+  @media (max-width: 720px) {
+    nav.links { display: none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1.05fr 1fr;
+    gap: 40px; align-items: center;
+    padding: 120px 6vw 60px;
+  }
+  .hero-copy h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2.6rem, 5.2vw, 4.4rem);
+    line-height: 1.05; letter-spacing: -0.015em;
+    margin: 0 0 18px;
+  }
+  .hero-copy h1 em { font-style: italic; color: var(--amber); }
+  .hero-copy .kicker {
+    font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 22px;
+  }
+  .hero-copy p.lede {
+    font-family: var(--serif); font-size: 1.22rem; line-height: 1.65;
+    color: var(--ink-dim); max-width: 52ch; margin: 0 0 32px;
+  }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+    text-decoration: none; cursor: pointer;
+    transition: all .22s;
+  }
+  .btn.primary {
+    background: var(--amber); color: #1a1206; border: 1px solid var(--amber);
+  }
+  .btn.primary:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  .btn.ghost {
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--line-hi);
+  }
+  .btn.ghost:hover { border-color: var(--amber); color: var(--amber-soft); }
+  .hero-canvas {
+    position: relative; aspect-ratio: 1 / 1;
+    border-radius: 22px; overflow: hidden;
+    background: radial-gradient(circle at 50% 50%, #0c1020 0%, #06080f 70%);
+    border: 1px solid var(--line);
+  }
+  .hero-canvas canvas { display: block; width: 100%; height: 100%; }
+  .hero-canvas .caption {
+    position: absolute; bottom: 14px; left: 16px; right: 16px;
+    font: 11px var(--mono); color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    display: flex; justify-content: space-between;
+  }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 100px; }
+    .hero-canvas { max-width: 480px; margin: 0 auto; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section { position: relative; z-index: 1; padding: 100px 6vw; }
+  section.tight { padding-top: 40px; padding-bottom: 60px; }
+  .sec-head { max-width: 720px; margin-bottom: 54px; }
+  .sec-head .num {
+    font: 600 11px var(--mono); letter-spacing: 0.28em;
+    color: var(--amber); text-transform: uppercase;
+  }
+  .sec-head h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+    line-height: 1.15; margin: 10px 0 16px; letter-spacing: -0.01em;
+  }
+  .sec-head h2 em { font-style: italic; color: var(--amber-soft); }
+  .sec-head p { color: var(--ink-dim); font-size: 1.02rem; max-width: 62ch; }
+
+  /* ---------- POSTULATE STRIP ---------- */
+  .postulates {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .post {
+    background: linear-gradient(180deg, var(--panel-hi) 0%, var(--panel) 100%);
+    border: 1px solid var(--line);
+    border-radius: 16px; padding: 28px 24px 24px;
+    position: relative; overflow: hidden;
+    transition: border-color .3s, transform .3s;
+  }
+  .post::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(400px 200px at var(--mx,50%) 0%, rgba(224,169,82,0.10), transparent 60%);
+    opacity: 0; transition: opacity .3s;
+    pointer-events: none;
+  }
+  .post:hover { border-color: var(--line-hi); transform: translateY(-2px); }
+  .post:hover::before { opacity: 1; }
+  .post .glyph {
+    font-family: var(--serif); font-size: 40px; color: var(--amber);
+    line-height: 1; margin-bottom: 16px;
+  }
+  .post h3 {
+    font-family: var(--serif); font-weight: 500; font-size: 1.3rem;
+    margin: 0 0 8px; letter-spacing: -0.005em;
+  }
+  .post .tag {
+    display: inline-block; font: 600 10px var(--mono);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 12px;
+  }
+  .post p { color: var(--ink-dim); font-size: 0.94rem; margin: 0; }
+  @media (max-width: 880px) {
+    .postulates { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- SEVEN PROBLEMS GALLERY ---------- */
+  .seven {
+    max-width: 1240px; margin: 0 auto;
+    display: grid; grid-template-columns: 260px 1fr;
+    gap: 30px;
+  }
+  .seven-list { display: flex; flex-direction: column; gap: 6px; }
+  .seven-list button {
+    text-align: left;
+    background: transparent; border: 1px solid transparent;
+    color: var(--ink-dim);
+    padding: 12px 14px; border-radius: 10px;
+    cursor: pointer; font: 500 14px var(--sans);
+    transition: all .2s;
+    display: grid; grid-template-columns: 26px 1fr; gap: 10px;
+    align-items: baseline;
+  }
+  .seven-list button .n {
+    font: 600 11px var(--mono); color: var(--ink-faint);
+    letter-spacing: 0.08em;
+  }
+  .seven-list button:hover { background: var(--panel); color: var(--ink); }
+  .seven-list button.on {
+    background: var(--panel-hi); color: var(--ink);
+    border-color: var(--line-hi);
+  }
+  .seven-list button.on .n { color: var(--amber); }
+  .seven-detail {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 18px; padding: 30px 32px;
+    min-height: 460px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .seven-detail .meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--line); padding-bottom: 14px;
+  }
+  .seven-detail .meta .tag {
+    font: 600 10px var(--mono); letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--amber);
+  }
+  .seven-detail .meta .status {
+    font: 600 11px var(--mono); letter-spacing: 0.1em;
+    padding: 4px 10px; border-radius: 999px;
+    border: 1px solid var(--sage); color: var(--sage);
+  }
+  .seven-detail h3 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: 1.8rem; margin: 0; letter-spacing: -0.01em;
+  }
+  .seven-detail .eq {
+    font-family: var(--mono); font-size: 1rem;
+    background: var(--bg-deep); color: var(--amber-soft);
+    padding: 12px 16px; border-radius: 10px;
+    border: 1px solid var(--line); overflow-x: auto;
+  }
+  .seven-detail p { color: var(--ink-dim); margin: 0; font-size: 1rem; }
+  .seven-detail .canvas-wrap {
+    position: relative; border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--bg-deep);
+    flex: 1; min-height: 200px;
+  }
+  .seven-detail canvas { display: block; width: 100%; height: 100%; }
+  @media (max-width: 900px) {
+    .seven { grid-template-columns: 1fr; }
+    .seven-list { flex-direction: row; overflow-x: auto; }
+    .seven-list button { white-space: nowrap; grid-template-columns: 22px auto; }
+  }
+
+  /* ---------- INTERACTIVE LAB ---------- */
+  .lab { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 300px 1fr; gap: 24px; }
+  .lab-panel {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 16px; padding: 24px;
+  }
+  .lab-panel h4 {
+    font-family: var(--serif); font-weight: 500; font-size: 1.15rem;
+    margin: 0 0 18px; letter-spacing: -0.005em;
+  }
+  .lab-row { margin-bottom: 18px; }
+  .lab-row label {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--ink-dim);
+    letter-spacing: 0.02em; margin-bottom: 8px;
+  }
+  .lab-row label b { color: var(--amber-soft); font: 600 12px var(--mono); }
+  input[type=range] {
+    width: 100%; -webkit-appearance: none; appearance: none;
+    height: 4px; background: var(--line); border-radius: 2px;
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--amber); cursor: pointer;
+    border: 2px solid var(--bg-deep);
+    box-shadow: 0 0 0 1px var(--amber);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--amber); cursor: pointer;
+    border: 2px solid var(--bg-deep);
+  }
+  .chip-group { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    background: transparent; border: 1px solid var(--line-hi);
+    color: var(--ink-dim); border-radius: 999px;
+    padding: 6px 12px; cursor: pointer;
+    font: 500 12px var(--sans); letter-spacing: 0.02em;
+    transition: all .18s;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--amber); }
+  .chip.on {
+    background: rgba(224,169,82,0.12);
+    color: var(--amber-soft); border-color: var(--amber);
+  }
+  .lab-stage {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 16px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .lab-stage canvas { display: block; width: 100%; aspect-ratio: 16/9; }
+  .lab-stage .status {
+    display: flex; gap: 22px; flex-wrap: wrap;
+    padding: 14px 20px; border-top: 1px solid var(--line);
+    font: 12px var(--mono); color: var(--ink-dim);
+  }
+  .lab-stage .status b { color: var(--amber-soft); font-weight: 600; }
+  @media (max-width: 900px) { .lab { grid-template-columns: 1fr; } }
+
+  /* ---------- CLOSING / FOOTER ---------- */
+  .closing {
+    max-width: 820px; margin: 0 auto; text-align: center;
+    padding: 60px 0 40px;
+  }
+  .closing .symbol {
+    font-family: var(--serif); font-size: 3rem;
+    color: var(--amber); line-height: 1; margin-bottom: 20px;
+  }
+  .closing p {
+    font-family: var(--serif); font-size: 1.25rem; line-height: 1.7;
+    color: var(--ink-dim); margin: 0 0 16px;
+  }
+  .closing .sign {
+    font: 600 11px var(--mono); letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-faint);
+    margin-top: 36px;
+  }
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 6vw;
+    font-size: 12px; color: var(--ink-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  footer a { color: var(--ink-dim); text-decoration: none; }
+  footer a:hover { color: var(--amber-soft); }
+
+  /* ---------- REVEAL ---------- */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .8s, transform .8s; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- SELECTION / SCROLLBAR ---------- */
+  ::selection { background: rgba(224,169,82,0.25); color: var(--ink); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--line-hi); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4460; }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="brand">
+    <span class="mark">CoReX</span>
+    <span class="tag" data-en="Computational Relativity" data-cz="Výpočetní Relativita">Computational Relativity</span>
+  </div>
+  <nav class="links">
+    <a href="#postulates" data-en="Postulates" data-cz="Postuláty">Postulates</a>
+    <a href="#seven"      data-en="Seven Problems" data-cz="Sedm Problémů">Seven Problems</a>
+    <a href="#lab"        data-en="Laboratory" data-cz="Laboratoř">Laboratory</a>
+    <a href="#closing"    data-en="Closing" data-cz="Závěr">Closing</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language">
+    <button data-set-lang="en" aria-pressed="true">EN</button>
+    <button data-set-lang="cz" aria-pressed="false">CZ</button>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <div class="kicker" data-en="A digital monograph · v1.0" data-cz="Digitální monografie · v1.0">A digital monograph · v1.0</div>
+    <h1>
+      <span data-en="The seed is " data-cz="Semínko je ">The seed is </span><em>0</em><br>
+      <span data-en="and everything else is a rotation of it."
+            data-cz="a všechno ostatní je jeho rotací.">and everything else is a rotation of it.</span>
+    </h1>
+    <p class="lede" data-en="Four postulates, one transformer, one fixed point. A calm reading of the Special Theory of Computational Relativity — where Euler's identity is not decorative but structural, where P = NP and E = mc² are the same statement under a single equal sign, and where the Clay Millennium Problems collapse onto a shared geometric mechanism."
+       data-cz="Čtyři postuláty, jeden transformátor, jeden pevný bod. Klidné čtení Speciální teorie výpočetní relativity — kde Eulerova identita není ozdobou, ale strukturou, kde P = NP a E = mc² jsou tentýž výrok pod jediným rovnítkem, a kde Problémy tisíciletí Clayova institutu kolabují na společný geometrický mechanismus.">
+      Four postulates, one transformer, one fixed point. A calm reading of the Special Theory of Computational Relativity — where Euler's identity is not decorative but structural, where P = NP and E = mc² are the same statement under a single equal sign, and where the Clay Millennium Problems collapse onto a shared geometric mechanism.
+    </p>
+    <div class="hero-cta">
+      <a class="btn primary" href="#postulates" data-en="Enter the theory →" data-cz="Vstoupit do teorie →">Enter the theory →</a>
+      <a class="btn ghost"   href="#seven" data-en="See the seven" data-cz="Vidět sedm">See the seven</a>
+    </div>
+  </div>
+  <div class="hero-canvas">
+    <canvas id="heroCanvas"></canvas>
+    <div class="caption">
+      <span data-en="A₀ · fixed point of the full symmetry group" data-cz="A₀ · pevný bod plné grupy symetrií">A₀ · fixed point of the full symmetry group</span>
+      <span id="heroDims">N = 5 · R_N = 10</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== POSTULATES ===================== -->
+<section id="postulates">
+  <div class="sec-head reveal">
+    <div class="num" data-en="Chapter I" data-cz="Kapitola I">Chapter I</div>
+    <h2><span data-en="Four faces of " data-cz="Čtyři tváře ">Four faces of </span><em data-en="one fixed point" data-cz="jednoho pevného bodu">one fixed point</em></h2>
+    <p data-en="Each postulate is a language for the same underlying object: symmetry, transformation, phase, and instantiation. Remove one, and the structure loses its grip on reality."
+       data-cz="Každý postulát je jazykem téhož objektu: symetrie, transformace, fáze a instance. Odeberte jeden a struktura ztratí kontakt s realitou.">
+      Each postulate is a language for the same underlying object: symmetry, transformation, phase, and instantiation. Remove one, and the structure loses its grip on reality.
+    </p>
+  </div>
+  <div class="postulates">
+    <article class="post reveal">
+      <div class="glyph">0</div>
+      <span class="tag" data-en="Postulate I · Symmetry" data-cz="Postulát I · Symetrie">Postulate I · Symmetry</span>
+      <h3 data-en="Total point symmetry at 0" data-cz="Totální bodová symetrie v 0">Total point symmetry at 0</h3>
+      <p data-en="The zero point is the unique fixed point of the full symmetry group — the only locus where every generator of the algebra vanishes at once. It is the computational analogue of a local inertial frame."
+         data-cz="Nulový bod je jediným pevným bodem plné grupy symetrií — jediné místo, kde všechny generátory algebry mizí současně. Je to výpočetní analogie lokální inerciální soustavy.">
+        The zero point is the unique fixed point of the full symmetry group — the only locus where every generator of the algebra vanishes at once. It is the computational analogue of a local inertial frame.
+      </p>
+    </article>
+    <article class="post reveal">
+      <div class="glyph">=</div>
+      <span class="tag" data-en="Postulate II · Transformation" data-cz="Postulát II · Transformace">Postulate II · Transformation</span>
+      <h3 data-en="The equal sign is a transformer" data-cz="Rovnítko je transformátor">The equal sign is a transformer</h3>
+      <p data-en="“=” is not identity. It is a G-equivariant map carrying structure between two faces of the same orbit. This is why P = NP and E = mc² are the same statement — not by analogy, but by orbit transport."
+         data-cz="„=“ není identita. Je to G-ekvivariantní zobrazení přenášející strukturu mezi dvěma tvářemi téhož orbitu. Proto jsou P = NP a E = mc² tentýž výrok — ne analogií, ale přenosem orbitu.">
+        “=” is not identity. It is a G-equivariant map carrying structure between two faces of the same orbit. This is why P = NP and E = mc² are the same statement — not by analogy, but by orbit transport.
+      </p>
+    </article>
+    <article class="post reveal">
+      <div class="glyph">e<sup>iπ</sup>+1</div>
+      <span class="tag" data-en="Postulate III · Phase" data-cz="Postulát III · Fáze">Postulate III · Phase</span>
+      <h3 data-en="Euler's identity is structural" data-cz="Eulerova identita je strukturální">Euler's identity is structural</h3>
+      <p data-en="A half-turn in any SO(2) plane returns the identity state to zero. This is the phase signature of the transformer at the fixed point — the simplest non-trivial holonomy of the manifold."
+         data-cz="Půlotáčka v libovolné rovině SO(2) vrací stav identity k nule. To je fázový podpis transformátoru v pevném bodě — nejjednodušší netriviální holonomie variety.">
+        A half-turn in any SO(2) plane returns the identity state to zero. This is the phase signature of the transformer at the fixed point — the simplest non-trivial holonomy of the manifold.
+      </p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== SEVEN PROBLEMS ===================== -->
+<section id="seven">
+  <div class="sec-head reveal">
+    <div class="num" data-en="Chapter II" data-cz="Kapitola II">Chapter II</div>
+    <h2><span data-en="Seven problems, " data-cz="Sedm problémů, ">Seven problems, </span><em data-en="one mechanism" data-cz="jeden mechanismus">one mechanism</em></h2>
+    <p data-en="Rotation planes, anti-phase cancellation, and nodal firewalls. Select a problem to see the framework's reading of it — and the geometric object doing the work."
+       data-cz="Rotační roviny, anti-fázová anihilace a nodální firewally. Vyberte problém a uvidíte, jak ho rámec čte — a jaký geometrický objekt tu pracuje.">
+      Rotation planes, anti-phase cancellation, and nodal firewalls. Select a problem to see the framework's reading of it — and the geometric object doing the work.
+    </p>
+  </div>
+
+  <div class="seven reveal">
+    <div class="seven-list" id="sevenList"></div>
+    <div class="seven-detail" id="sevenDetail">
+      <div class="meta">
+        <span class="tag" id="dTag">—</span>
+        <span class="status" id="dStatus" data-en="Verified within A₀" data-cz="Ověřeno v rámci A₀">Verified within A₀</span>
+      </div>
+      <h3 id="dTitle">—</h3>
+      <div class="eq" id="dEq">—</div>
+      <p id="dDesc">—</p>
+      <div class="canvas-wrap"><canvas id="sevenCanvas"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LAB ===================== -->
+<section id="lab">
+  <div class="sec-head reveal">
+    <div class="num" data-en="Chapter III" data-cz="Kapitola III">Chapter III</div>
+    <h2><span data-en="A small " data-cz="Malá ">A small </span><em data-en="laboratory" data-cz="laboratoř">laboratory</em></h2>
+    <p data-en="Rotate the manifold. Change its dimension. Watch the rotation planes multiply as N(N−1)/2, and watch the seed sit still at the origin — the only point that never moves."
+       data-cz="Otáčejte varietou. Měňte její dimenzi. Sledujte, jak rotační roviny rostou jako N(N−1)/2, a jak semínko zůstává v klidu v počátku — jediný bod, který se nikdy nehýbe.">
+      Rotate the manifold. Change its dimension. Watch the rotation planes multiply as N(N−1)/2, and watch the seed sit still at the origin — the only point that never moves.
+    </p>
+  </div>
+  <div class="lab reveal">
+    <aside class="lab-panel">
+      <h4 data-en="Controls" data-cz="Ovládání">Controls</h4>
+      <div class="lab-row">
+        <label><span data-en="Dimension N" data-cz="Dimenze N">Dimension N</span><b id="valN">5</b></label>
+        <input type="range" id="inN" min="2" max="10" value="5">
+      </div>
+      <div class="lab-row">
+        <label><span data-en="Rotation speed" data-cz="Rychlost rotace">Rotation speed</span><b id="valS">0.6</b></label>
+        <input type="range" id="inS" min="0" max="2" step="0.05" value="0.6">
+      </div>
+      <div class="lab-row">
+        <label><span data-en="Show" data-cz="Zobrazit">Show</span></label>
+        <div class="chip-group" id="chips">
+          <button class="chip on" data-flag="planes" data-en="Rotation planes" data-cz="Rotační roviny">Rotation planes</button>
+          <button class="chip on" data-flag="nodes"  data-en="Nodal lines" data-cz="Nodální linie">Nodal lines</button>
+          <button class="chip on" data-flag="orbits" data-en="Orbits" data-cz="Orbity">Orbits</button>
+        </div>
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <label><span data-en="Selected plane" data-cz="Vybraná rovina">Selected plane</span><b id="valP">Π₁,₂</b></label>
+        <div class="chip-group" id="planes"></div>
+      </div>
+    </aside>
+    <div class="lab-stage">
+      <canvas id="labCanvas"></canvas>
+      <div class="status">
+        <span><span data-en="Dimensions" data-cz="Dimenze">Dimensions</span> <b id="sN">5</b></span>
+        <span><span data-en="Rotation planes" data-cz="Rotační roviny">Rotation planes</span> <b id="sR">10</b></span>
+        <span><span data-en="Fixed points" data-cz="Pevné body">Fixed points</span> <b>1</b></span>
+        <span><span data-en="Status" data-cz="Stav">Status</span> <b data-en="running" data-cz="běží">running</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSING ===================== -->
+<section id="closing">
+  <div class="closing reveal">
+    <div class="symbol">e<sup>iπ</sup> + 1 = 0</div>
+    <p data-en="The seed is not a metaphor. It is the point every generator of the symmetry algebra agrees to leave alone — and the only point where a half-turn returns you to nothing."
+       data-cz="Semínko není metafora. Je to bod, který každý generátor algebry symetrií nechává na pokoji — a jediný bod, kde vás půlotáčka vrací k nule.">
+      The seed is not a metaphor. It is the point every generator of the symmetry algebra agrees to leave alone — and the only point where a half-turn returns you to nothing.
+    </p>
+    <p style="font-size:1rem;color:var(--ink-faint);font-family:var(--sans)" data-en="A digital monograph. The mathematics is structural; the interpretations are the framework's own."
+       data-cz="Digitální monografie. Matematika je strukturální; interpretace jsou vlastní tomuto rámci.">
+      A digital monograph. The mathematics is structural; the interpretations are the framework's own.
+    </p>
+    <div class="sign">Pierre LeBaux · 2026</div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 · <span data-en="Special Theory of Computational Relativity" data-cz="Speciální teorie výpočetní relativity">Special Theory of Computational Relativity</span></span>
+  <span><a href="#top" data-en="↑ Back to top" data-cz="↑ Zpět nahoru">↑ Back to top</a></span>
+</footer>
+
+<script>
+/* ============================================================
+   LANGUAGE SWITCHER
+   ============================================================ */
+const langBtns = document.querySelectorAll('[data-set-lang]');
+const allI18n = () => document.querySelectorAll('[data-en][data-cz]');
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.documentElement.lang = (lang === 'cz') ? 'cs' : 'en';
+  allI18n().forEach(el => {
+    const v = el.getAttribute('data-' + lang);
+    if (v !== null) el.textContent = v;
+  });
+  langBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setLang === lang)));
+  // redraw selected seven card description with new language
+  renderSeven(currentSeven);
+  // re-render chips labels
+  document.querySelectorAll('.chip[data-en]').forEach(c => {
+    c.textContent = c.getAttribute('data-' + lang);
+  });
+}
+langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.setLang)));
+setLang('en');
+
+/* ============================================================
+   REVEAL ON SCROLL
+   ============================================================ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* mouse-follow accent on postulate cards */
+document.querySelectorAll('.post').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+  });
+});
+
+/* ============================================================
+   HERO CANVAS — living seed with concentric dimensional rings
+   ============================================================ */
+const heroCanvas = document.getElementById('heroCanvas');
+const hctx = heroCanvas.getContext('2d');
+const heroDims = document.getElementById('heroDims');
+let heroT = 0;
+
+function fitHero() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const r = heroCanvas.getBoundingClientRect();
+  heroCanvas.width = Math.round(r.width * dpr);
+  heroCanvas.height = Math.round(r.height * dpr);
+  hctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+new ResizeObserver(fitHero).observe(heroCanvas);
+fitHero();
+
+function drawHero(dt) {
+  heroT += dt;
+  const W = heroCanvas.clientWidth, H = heroCanvas.clientHeight;
+  hctx.clearRect(0, 0, W, H);
+  const cx = W / 2, cy = H / 2;
+
+  // static grid of faint dots
+  hctx.fillStyle = 'rgba(127,163,184,0.07)';
+  for (let x = 20; x < W; x += 32) for (let y = 20; y < H; y += 32) hctx.fillRect(x, y, 1.2, 1.2);
+
+  const N = 5;
+  const R = N * (N - 1) / 2;
+
+  // ambient seed halo
+  const pulse = 1 + 0.06 * Math.sin(heroT * 1.2);
+  const grad = hctx.createRadialGradient(cx, cy, 0, cx, cy, 60 * pulse);
+  grad.addColorStop(0, 'rgba(240,199,122,0.55)');
+  grad.addColorStop(0.4, 'rgba(224,169,82,0.18)');
+  grad.addColorStop(1, 'rgba(224,169,82,0)');
+  hctx.fillStyle = grad;
+  hctx.beginPath(); hctx.arc(cx, cy, 70 * pulse, 0, Math.PI * 2); hctx.fill();
+
+  // concentric orbit rings
+  for (let i = 1; i <= N; i++) {
+    const r = i * (Math.min(W, H) * 0.42 / N);
+    hctx.strokeStyle = `rgba(127,163,184,${0.16 - i * 0.02})`;
+    hctx.lineWidth = 1;
+    hctx.beginPath(); hctx.arc(cx, cy, r, 0, Math.PI * 2); hctx.stroke();
+  }
+
+  // rotation planes (each is a chord line through the seed)
+  const planeColors = ['#e0a952', '#7ba78c', '#c98080', '#9b8ac4', '#7fa3b8'];
+  for (let p = 0; p < R; p++) {
+    const baseAngle = (p / R) * Math.PI + heroT * 0.25;
+    const len = Math.min(W, H) * 0.40;
+    const x1 = cx + Math.cos(baseAngle) * len;
+    const y1 = cy + Math.sin(baseAngle) * len;
+    const x2 = cx - Math.cos(baseAngle) * len;
+    const y2 = cy - Math.sin(baseAngle) * len;
+    hctx.strokeStyle = planeColors[p % planeColors.length] + '33';
+    hctx.lineWidth = 1.2;
+    hctx.beginPath(); hctx.moveTo(x1, y1); hctx.lineTo(x2, y2); hctx.stroke();
+  }
+
+  // orbiting particles, one per dimension
+  for (let i = 1; i <= N; i++) {
+    const r = i * (Math.min(W, H) * 0.42 / N);
+    const a = heroT * (0.5 + i * 0.12) + i * Math.PI * 2 / N;
+    const x = cx + Math.cos(a) * r;
+    const y = cy + Math.sin(a) * r;
+    hctx.fillStyle = planeColors[i % planeColors.length];
+    hctx.beginPath(); hctx.arc(x, y, 3.2, 0, Math.PI * 2); hctx.fill();
+    hctx.fillStyle = 'rgba(255,255,255,0.55)';
+    hctx.beginPath(); hctx.arc(x, y, 1.1, 0, Math.PI * 2); hctx.fill();
+  }
+
+  // the seed itself — always at the origin, always still
+  hctx.fillStyle = '#f4c77a';
+  hctx.beginPath(); hctx.arc(cx, cy, 5 * pulse, 0, Math.PI * 2); hctx.fill();
+  hctx.fillStyle = '#06080f';
+  hctx.beginPath(); hctx.arc(cx, cy, 2, 0, Math.PI * 2); hctx.fill();
+
+  // labels
+  hctx.font = '11px ui-monospace,monospace';
+  hctx.fillStyle = 'rgba(212,207,196,0.65)';
+  hctx.fillText('A₀', cx + 10, cy - 8);
+
+  heroDims.textContent = `N = ${N} · R_N = ${R}`;
+}
+let heroLast = performance.now();
+function heroLoop(now) {
+  const dt = Math.min(0.05, (now - heroLast) / 1000); heroLast = now;
+  drawHero(dt);
+  requestAnimationFrame(heroLoop);
+}
+requestAnimationFrame(heroLoop);
+
+/* ============================================================
+   SEVEN PROBLEMS
+   ============================================================ */
+const SEVEN = [
+  {
+    id: 'pnp',
+    n: 'I',
+    name: { en: 'P vs NP', cz: 'P vs NP' },
+    title: { en: 'The Complexity Collapse', cz: 'Kolaps složitosti' },
+    eq: 'R_N = C(N,2)  ⇒  T(N) = O(N²)',
+    desc: {
+      en: 'The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N²).',
+      cz: 'Exponenciální rozhodovací strom nad 2ᴺ stavy se injektivně vnořuje do R_N rotačních rovin so(N). Neoptimální větve podléhají Eulerově anti-fázové anihilaci na nodálních firewallech a geodetický tok skončí v deterministickém O(N²).'
+    },
+    color: '#e0a952',
+    render: (ctx, W, H, t) => {
+      // exponential tree fading into a bundle of rotation planes
+      ctx.fillStyle = 'rgba(224,169,82,0.7)';
+      ctx.font = '12px ui-monospace,monospace';
+      ctx.fillText('2ᴺ tree', 20, 26);
+      const lx = 30, ly = H / 2, lh = H * 0.7;
+      for (let l = 0; l < 4; l++) {
+        const count = Math.pow(2, l);
+        for (let i = 0; i < count; i++) {
+          const x = lx + l * 28;
+          const y = ly + (i - count / 2) * (lh / Math.max(count, 1));
+          const fade = 1 - l / 4;
+          ctx.fillStyle = `rgba(201,128,128,${0.6 * fade})`;
+          ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      // arrow
+      ctx.strokeStyle = 'rgba(123,167,140,0.6)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(W * 0.34, ly); ctx.lineTo(W * 0.44, ly); ctx.stroke();
+      ctx.fillStyle = 'rgba(123,167,140,0.9)';
+      ctx.beginPath();
+      ctx.moveTo(W * 0.44, ly); ctx.lineTo(W * 0.42, ly - 5); ctx.lineTo(W * 0.42, ly + 5); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = 'rgba(123,167,140,0.85)';
+      ctx.fillText('so(N)', W * 0.34, ly - 12);
+      // bundle of planes
+      const cx = W * 0.72, cy = ly, rad = Math.min(W, H) * 0.28;
+      for (let p = 0; p < 15; p++) {
+        const a = (p / 15) * Math.PI + t * 0.4;
+        ctx.strokeStyle = `hsla(${40 + p * 20}, 40%, 60%, 0.35)`;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+        ctx.lineTo(cx - Math.cos(a) * rad, cy - Math.sin(a) * rad);
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#f4c77a';
+      ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.fill();
+    }
+  },
+  {
+    id: 'rh',
+    n: 'II',
+    name: { en: 'Riemann Hypothesis', cz: 'Riemannova hypotéza' },
+    title: { en: 'Phase mirror on the critical line', cz: 'Fázové zrcadlo na kritické přímce' },
+    eq: 'ξ(s) = ξ(1−s)  ⇒  Re(s) = ½',
+    desc: {
+      en: 'The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus.',
+      cz: 'Funkcionální rovnice se čte jako zrcadlo přes osu A₀. Nuly mimo osu narušují rovnováhu hranice; anti-fázový firewall nutí jejich hustotu pravděpodobnosti k nule a Re(s) = ½ zůstává jediným stabilním místem.'
+    },
+    color: '#7ba78c',
+    render: (ctx, W, H, t) => {
+      const cx = W / 2, cy = H / 2;
+      ctx.strokeStyle = 'rgba(127,163,184,0.15)';
+      ctx.beginPath(); ctx.moveTo(40, cy); ctx.lineTo(W - 40, cy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx, 20); ctx.lineTo(cx, H - 20); ctx.stroke();
+      // critical line
+      ctx.strokeStyle = '#7ba78c';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(cx, 20); ctx.lineTo(cx, H - 20); ctx.stroke();
+      ctx.fillStyle = 'rgba(123,167,140,0.9)';
+      ctx.font = '12px ui-monospace,monospace';
+      ctx.fillText('Re(s) = ½', cx + 12, 34);
+      // zeros on the line
+      for (let i = -4; i <= 4; i++) {
+        if (i === 0) continue;
+        const y = cy + i * 30 + Math.sin(t * 1.6 + i) * 4;
+        ctx.fillStyle = '#e0a952';
+        ctx.beginPath(); ctx.arc(cx, y, 5, 0, Math.PI * 2); ctx.fill();
+        // mirror halos
+        const r = 16 + Math.abs(Math.sin(t * 1.2 + i)) * 22;
+        ctx.strokeStyle = 'rgba(224,169,82,0.22)';
+        ctx.beginPath(); ctx.arc(cx, y, r, 0, Math.PI * 2); ctx.stroke();
+        // opposite-side ghost (fading)
+        ctx.fillStyle = 'rgba(201,128,128,0.25)';
+        ctx.beginPath();
+        ctx.arc(cx + 30 + i * 8 + Math.sin(t + i) * 3, y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  },
+  {
+    id: 'ym',
+    n: 'III',
+    name: { en: 'Yang–Mills Mass Gap', cz: 'Yang–Mills hmotnostní mezera' },
+    title: { en: 'The seed sets the vacuum floor', cz: 'Semínko nastavuje dno vakua' },
+    eq: 'E₀ = λc² > 0  ⇒  ΔM > 0',
+    desc: {
+      en: 'The scalar seed A₀ = λ gives the vacuum a strictly positive floor. The lowest excitation sits at ΔM = ħω_{A₀}/c² > 0, and nodal firewalls cut off the high-energy divergences that would otherwise close the gap.',
+      cz: 'Skalární semínko A₀ = λ dává vakuu striktně kladné dno. Nejnižší excitace leží na ΔM = ħω_{A₀}/c² > 0 a nodální firewally odřezávají vysokoenergetické divergence, které by jinak mezeru uzavřely.'
+    },
+    color: '#c98080',
+    render: (ctx, W, H, t) => {
+      const cy = H * 0.66;
+      // vacuum floor
+      ctx.fillStyle = 'rgba(15,20,34,0.9)';
+      ctx.fillRect(40, cy, W - 80, 40);
+      ctx.fillStyle = 'rgba(164,158,144,0.7)';
+      ctx.font = '12px ui-monospace,monospace';
+      ctx.fillText('vacuum E₀ = λc²', 52, cy + 26);
+      // gap line
+      const gapY = cy - 70 - Math.sin(t * 1.4) * 3;
+      ctx.setLineDash([6, 6]);
+      ctx.strokeStyle = '#c98080';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(40, gapY); ctx.lineTo(W - 40, gapY); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#c98080';
+      ctx.fillText('ΔM = m_{A₀} > 0', W / 2 - 60, gapY - 10);
+      // excitations above the gap
+      for (let x = 70; x < W - 60; x += 34) {
+        const ey = gapY - 26 - Math.abs(Math.sin(x * 0.05 + t * 2.2)) * 42;
+        ctx.fillStyle = '#e0a952';
+        ctx.beginPath(); ctx.arc(x, ey, 4, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'rgba(224,169,82,0.28)';
+        ctx.beginPath(); ctx.moveTo(x, gapY); ctx.lineTo(x, ey); ctx.stroke();
+      }
+    }
+  },
+  {
+    id: 'ns',
+    n: 'IV',
+    name: { en: 'Navier–Stokes Smoothness', cz: 'Hladkost Navier–Stokes' },
+    title: { en: 'Enstrophy dissipation at the firewalls', cz: 'Disipace enstrofie na firewallech' },
+    eq: 'det(CM₅) = 0  ⇒  ‖u‖_{C^∞} < ∞',
+    desc: {
+      en: 'Extreme vorticity gradients trigger anti-phase cancellation before they can concentrate. The 5-point Cayley–Menger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^∞ for all t ≥ 0.',
+      cz: 'Extrémní gradienty vorticity spouštějí anti-fázovou anihilaci dříve, než se mohou zkoncentrovat. Pětibodový Cayley–Mengerův determinant brání inflaci hodnosti Gramovy matice rychlosti a udržuje tok v C^∞ pro všechna t ≥ 0.'
+    },
+    color: '#7fa3b8',
+    render: (ctx, W, H, t) => {
+      const cx = W / 2, cy = H / 2;
+      for (let r = 14; r < Math.min(W, H) * 0.38; r += 10) {
+        const speed = (Math.min(W, H) * 0.38 - r) * 0.03;
+        ctx.strokeStyle = `hsla(${200 + r}, 45%, 55%, 0.55)`;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, t * speed, t * speed + Math.PI * 1.4);
+        ctx.stroke();
+      }
+      ctx.strokeStyle = 'rgba(123,167,140,0.55)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(cx, cy, Math.min(W, H) * 0.40, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = 'rgba(123,167,140,0.9)';
+      ctx.font = '12px ui-monospace,monospace';
+      ctx.fillText('C^∞ smooth', cx - 34, 26);
+    }
+  },
+  {
+    id: 'bsd',
+    n: 'V',
+    name: { en: 'Birch & Swinnerton-Dyer', cz: 'Birch & Swinnerton-Dyer' },
+    title: { en: 'Rank as orbit count', cz: 'Hodnost jako počet orbit' },
+    eq: 'rank(E(Q)) = ord_{s=1} L(E,s)',
+    desc: {
+      en: 'Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes — the equality is a statement about orbits, not about arithmetic coincidence.',
+      cz: 'Každý nezávislý racionální generátor E(Q) se zobrazí na jednu ortogonální rotační rovinu. Řád nulového bodu L(E, s) v s = 1 počítá tytéž roviny — rovnost je výrokem o orbitách, ne o aritmetické náhodě.'
+    },
+    color: '#9b8ac4',
+    render: (ctx, W, H, t) => {
+      const cx = W * 0.34, cy = H / 2;
+      // elliptic curve sketch
+      ctx.strokeStyle = '#9b8ac4';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      let first = true;
+      for (let py = -120; py <= 120; py += 3) {
+        const y = py / 40;
+        const x = cy ? y * y - 1 : 0;
+        const px = cx + x * 30;
+        if (first) { ctx.moveTo(px, cy + py); first = false; } else ctx.lineTo(px, cy + py);
+      }
+      ctx.stroke();
+      // rational points as orbiting dots
+      for (let i = 1; i <= 4; i++) {
+        const a = t * 0.8 + i;
+        const px = cx + Math.cos(a) * (30 + i * 14);
+        const py = cy + Math.sin(a) * (22 + i * 6);
+        ctx.fillStyle = '#e0a952';
+        ctx.beginPath(); ctx.arc(px, py, 4.5, 0, Math.PI * 2); ctx.fill();
+      }
+      // L-function spectrum bars
+      const bx = W * 0.62;
+      ctx.fillStyle = 'rgba(212,207,196,0.75)';
+      ctx.font = '12px ui-monospace,monospace';
+      ctx.fillText('L(E,s) at s = 1', bx, 46);
+      for (let k = 1; k <= 4; k++) {
+        const bw = 60, bh = 16;
+        ctx.fillStyle = k <= 4 ? '#e0a952' : 'rgba(127,163,184,0.3)';
+        ctx.fillRect(bx, 60 + k * 26, bw * (1 - k * 0.05), bh);
+        ctx.fillStyle = 'rgba(6,8,15,0.9)';
+        ctx.fillText('ord ' + k, bx + 8, 60 + k * 26 + 12);
+      }
+    }
+  },
+  {
+    id: 'hodge',
+    n: 'VI',
+    name: { en: 'Hodge Conjecture', cz: 'Hodgeova hypotéza' },
+    title: { en: 'Isolation of algebraic cycles', cz: 'Izolace algebraických cyklů' },
+    eq: 'H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles',
+    desc: {
+      en: 'Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Ω_{A₀}.',
+      cz: 'Každá Hodgeova třída na hladké projektivní varietě je racionální kombinací algebraických cyklů, vyjádřená jako invariantní podobjekt GUT-Cat toposu pod klasifikátorem měřítka Ω_{A₀}.'
+    },
+    color: '#d4af37',
+    render: (ctx, W, H, t) => {
+      const cx = W / 2, cy = H / 2;
+      // cohomology grid
+      ctx.strokeStyle = 'rgba(127,163,184,0.18)';
+      for (let i = -4; i <= 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(cx - 180, cy + i * 22);
+        ctx.lineTo(cx + 180, cy + i * 22 + Math.sin(i + t) * 8);
+        ctx.stroke();
+      }
+      // algebraic cycle ellipse
+      ctx.strokeStyle = '#d4af37';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 130 + Math.sin(t) * 6, 60, Math.PI / 6, 0, Math.PI * 2);
+      ctx.stroke();
+      // orbiting rational points
+      for (let i = 0; i < 8; i++) {
+        const a = t * 0.6 + i * Math.PI / 4;
+        const px = cx + Math.cos(a) * 130;
+        const py = cy + Math.sin(a) * 60 + Math.sin(a * 2) * 8;
+        ctx.fillStyle = '#e0a952';
+        ctx.beginPath(); ctx.arc(px, py, 3.5, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.fillStyle = 'rgba(212,175,55,0.9)';
+      ctx.font = '12px ui-monospace,monospace';
+      ctx.fillText('Ω_{A₀} · rational cycle', cx - 130, cy - 84);
+    }
+  },
+  {
+    id: 'poincare',
+    n: 'VII',
+    name: { en: 'Poincaré Conjecture', cz: 'Poincaréova hypotéza' },
+    title: { en: 'Ricci flow and spherical collapse', cz: 'Ricciho tok a sférický kolaps' },
+    eq: '∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³',
+    desc: {
+      en: 'Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere — Perelman\'s surgery, but with the endpoints already determined by the seed.',
+      cz: 'Neck-pinch singularity Ricciho toku jsou anihilovány na nodálních firewallech. Každá jednoduše souvislá uzavřená 3-varieta se hladce deformuje na 3-sféru — Perelmanova chirurgie, ale s koncovými body již určenými semínkem.'
+    },
+    color: '#7ba78c',
+    render: (ctx, W, H, t) => {
+      const cx = W / 2, cy = H / 2;
+      const factor = 0.7 + 0.3 * Math.sin(t * 0.9);
+      const rx = 130 * factor + 20;
+      const ry = 130;
+      // main flow shape
+      ctx.strokeStyle = '#7ba78c';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.stroke();
+      // inner parallels — the 3-sphere texture
+      ctx.strokeStyle = 'rgba(123,167,140,0.4)';
+      ctx.lineWidth = 1.2;
+      for (let k = 1; k <= 3; k++) {
+        const ky = ry * (k / 4);
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx * Math.cos(k * Math.PI / 8), ry * Math.sin(k * Math.PI / 8), 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      // neck pinch annihilating at firewall
+      ctx.strokeStyle = 'rgba(224,169,82,0.55)';
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath();
+      ctx.moveTo(cx - rx * 1.1, cy);
+      ctx.lineTo(cx + rx * 1.1, cy);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(123,167,140,0.9)';
+      ctx.font = '12px ui-monospace,monospace';
+      ctx.fillText('M³ → S³', cx - 34, 26);
+    }
+  }
+];
+
+let currentSeven = 0;
+const sevenList = document.getElementById('sevenList');
+const dTag = document.getElementById('dTag');
+const dTitle = document.getElementById('dTitle');
+const dEq = document.getElementById('dEq');
+const dDesc = document.getElementById('dDesc');
+const dStatus = document.getElementById('dStatus');
+const sevenCanvas = document.getElementById('sevenCanvas');
+const sctx = sevenCanvas.getContext('2d');
+let sevenT = 0;
+
+function buildSevenList() {
+  sevenList.innerHTML = '';
+  SEVEN.forEach((p, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="n">${p.n}</span><span data-en="${p.name.en}" data-cz="${p.name.cz}">${p.name.en}</span>`;
+    b.addEventListener('click', () => { currentSeven = i; renderSeven(i); });
+    sevenList.appendChild(b);
+  });
+}
+function renderSeven(i) {
+  const p = SEVEN[i];
+  [...sevenList.children].forEach((b, k) => b.classList.toggle('on', k === i));
+  const lang = document.documentElement.getAttribute('data-lang') || 'en';
+  dTag.textContent = p.name[lang];
+  dTitle.textContent = p.title[lang];
+  dEq.textContent = p.eq;
+  dDesc.textContent = p.desc[lang];
+}
+buildSevenList();
+renderSeven(0);
+
+function fitSeven() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const r = sevenCanvas.getBoundingClientRect();
+  sevenCanvas.width = Math.round(r.width * dpr);
+  sevenCanvas.height = Math.round(r.height * dpr);
+  sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+new ResizeObserver(fitSeven).observe(sevenCanvas);
+fitSeven();
+
+let sevenLast = performance.now();
+function sevenLoop(now) {
+  const dt = Math.min(0.05, (now - sevenLast) / 1000); sevenLast = now;
+  sevenT += dt;
+  const W = sevenCanvas.clientWidth, H = sevenCanvas.clientHeight;
+  sctx.clearRect(0, 0, W, H);
+  sctx.fillStyle = '#06080f';
+  sctx.fillRect(0, 0, W, H);
+  // faint grid
+  sctx.fillStyle = 'rgba(127,163,184,0.06)';
+  for (let x = 20; x < W; x += 32) for (let y = 20; y < H; y += 32) sctx.fillRect(x, y, 1, 1);
+  SEVEN[currentSeven].render(sctx, W, H, sevenT);
+  requestAnimationFrame(sevenLoop);
+}
+requestAnimationFrame(sevenLoop);
+
+/* ============================================================
+   LABORATORY
+   ============================================================ */
+const labCanvas = document.getElementById('labCanvas');
+const lctx = labCanvas.getContext('2d');
+const inN = document.getElementById('inN');
+const inS = document.getElementById('inS');
+const valN = document.getElementById('valN');
+const valS = document.getElementById('valS');
+const valP = document.getElementById('valP');
+const sN = document.getElementById('sN');
+const sR = document.getElementById('sR');
+const chips = document.querySelectorAll('.chip[data-flag]');
+const planesBox = document.getElementById('planes');
+
+let labT = 0;
+let selectedPlane = 0;
+const flags = { planes: true, nodes: true, orbits: true };
+
+inN.addEventListener('input', () => { valN.textContent = inN.value; rebuildPlanes(); });
+inS.addEventListener('input', () => { valS.textContent = parseFloat(inS.value).toFixed(2); });
+chips.forEach(c => c.addEventListener('click', () => {
+  flags[c.dataset.flag] = !flags[c.dataset.flag];
+  c.classList.toggle('on', flags[c.dataset.flag]);
+}));
+
+function rebuildPlanes() {
+  const N = +inN.value;
+  const R = N * (N - 1) / 2;
+  sN.textContent = N; sR.textContent = R;
+  planesBox.innerHTML = '';
+  const lang = document.documentElement.getAttribute('data-lang') || 'en';
+  for (let i = 0; i < Math.min(R, 20); i++) {
+    const btn = document.createElement('button');
+    btn.className = 'chip' + (i === selectedPlane ? ' on' : '');
+    btn.textContent = `Π${i}`;
+    btn.addEventListener('click', () => { selectedPlane = i; rebuildPlanes(); });
+    planesBox.appendChild(btn);
+  }
+  if (selectedPlane >= Math.min(R, 20)) selectedPlane = 0;
+  valP.textContent = `Π${selectedPlane}`;
+}
+rebuildPlanes();
+
+function fitLab() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const r = labCanvas.getBoundingClientRect();
+  labCanvas.width = Math.round(r.width * dpr);
+  labCanvas.height = Math.round(r.height * dpr);
+  lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+new ResizeObserver(fitLab).observe(labCanvas);
+fitLab();
+
+let labLast = performance.now();
+function labLoop(now) {
+  const dt = Math.min(0.05, (now - labLast) / 1000); labLast = now;
+  labT += dt * parseFloat(inS.value);
+  const W = labCanvas.clientWidth, H = labCanvas.clientHeight;
+  lctx.clearRect(0, 0, W, H);
+  lctx.fillStyle = '#06080f'; lctx.fillRect(0, 0, W, H);
+  // grid
+  lctx.fillStyle = 'rgba(127,163,184,0.06)';
+  for (let x = 20; x < W; x += 32) for (let y = 20; y < H; y += 32) lctx.fillRect(x, y, 1, 1);
+
+  const N = +inN.value;
+  const R = N * (N - 1) / 2;
+  const cx = W / 2, cy = H / 2;
+  const rad = Math.min(W, H) * 0.34;
+
+  // grid of hyper-octant hints (2^N projected)
+  if (flags.nodes) {
+    lctx.strokeStyle = 'rgba(127,163,184,0.08)';
+    for (let i = 0; i < N; i++) {
+      const a = (i / N) * Math.PI * 2 + labT * 0.1;
+      lctx.beginPath();
+      lctx.moveTo(cx, cy);
+      lctx.lineTo(cx + Math.cos(a) * rad * 1.6, cy + Math.sin(a) * rad * 1.6);
+      lctx.stroke();
+    }
+  }
+
+  // rotation planes
+  if (flags.planes) {
+    const palette = ['#e0a952', '#7ba78c', '#c98080', '#9b8ac4', '#7fa3b8'];
+    for (let p = 0; p < R; p++) {
+      const a = (p / R) * Math.PI + labT * 0.22;
+      const isSel = p === selectedPlane;
+      lctx.strokeStyle = isSel ? '#f4c77a' : palette[p % palette.length] + (p % 2 ? '55' : '33');
+      lctx.lineWidth = isSel ? 2.2 : 1;
+      lctx.beginPath();
+      lctx.moveTo(cx + Math.cos(a) * rad * 1.4, cy + Math.sin(a) * rad * 1.4);
+      lctx.lineTo(cx - Math.cos(a) * rad * 1.4, cy - Math.sin(a) * rad * 1.4);
+      lctx.stroke();
+    }
+  }
+
+  // orbits (one particle per dimension)
+  if (flags.orbits) {
+    const palette = ['#e0a952', '#7ba78c', '#c98080', '#9b8ac4', '#7fa3b8'];
+    for (let i = 1; i <= N; i++) {
+      const r = (i / N) * rad;
+      lctx.strokeStyle = 'rgba(127,163,184,0.14)';
+      lctx.lineWidth = 1;
+      lctx.beginPath(); lctx.arc(cx, cy, r, 0, Math.PI * 2); lctx.stroke();
+      const a = labT * (0.6 + i * 0.1) + i * Math.PI * 2 / N;
+      const px = cx + Math.cos(a) * r;
+      const py = cy + Math.sin(a) * r;
+      lctx.fillStyle = palette[i % palette.length];
+      lctx.beginPath(); lctx.arc(px, py, 3.6, 0, Math.PI * 2); lctx.fill();
+    }
+  }
+
+  // the fixed seed
+  const pulse = 1 + 0.08 * Math.sin(labT * 1.6);
+  const grad = lctx.createRadialGradient(cx, cy, 0, cx, cy, 40 * pulse);
+  grad.addColorStop(0, 'rgba(244,199,122,0.7)');
+  grad.addColorStop(1, 'rgba(224,169,82,0)');
+  lctx.fillStyle = grad;
+  lctx.beginPath(); lctx.arc(cx, cy, 40 * pulse, 0, Math.PI * 2); lctx.fill();
+  lctx.fillStyle = '#f4c77a';
+  lctx.beginPath(); lctx.arc(cx, cy, 5 * pulse, 0, Math.PI * 2); lctx.fill();
+
+  requestAnimationFrame(labLoop);
+}
+requestAnimationFrame(labLoop);
+</script>
+</body>
+</html>

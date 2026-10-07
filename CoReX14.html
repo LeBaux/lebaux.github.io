@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>CoReX | Computational Relativity, P vs NP &amp; Euler's Identity</title>
+<meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — the A₀ seed, Euler's identity, the four postulates, and unified readings of all seven Clay Millennium Problems.">
+<meta name="keywords" content="computational relativity, P vs NP, Euler's identity, Clay Millennium Problems, Riemann hypothesis, Yang-Mills mass gap, Navier-Stokes, BSD conjecture, Hodge conjecture, Poincaré conjecture, A0 seed, so(N) Lie algebra">
+<meta name="author" content="Pierre LeBaux, PhD">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://lebaux.github.io/">
+<link rel="alternate" hreflang="en" href="https://lebaux.github.io/?lang=en">
+<link rel="alternate" hreflang="cs" href="https://lebaux.github.io/?lang=cz">
+<link rel="alternate" hreflang="x-default" href="https://lebaux.github.io/">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CoReX">
+<meta property="og:title" content="CoReX — Computational Relativity Explained">
+<meta property="og:description" content="Four postulates, one transformer, one fixed point. A calm reading of the Special Theory of Computational Relativity, in English and Czech.">
+<meta property="og:url" content="https://lebaux.github.io/">
+<meta property="og:image" content="https://lebaux.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="cs_CZ">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@lebaux">
+<meta name="twitter:title" content="CoReX — Computational Relativity Explained">
+<meta name="twitter:description" content="Four postulates, one transformer, one fixed point.">
+<meta name="twitter:image" content="https://lebaux.github.io/og-image.png">
+
+<meta name="theme-color" content="#06080f">
+<meta name="color-scheme" content="dark">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://lebaux.github.io/#website",
+      "url": "https://lebaux.github.io/",
+      "name": "CoReX",
+      "alternateName": "Computational Relativity Explained",
+      "inLanguage": ["en", "cs"]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lebaux.github.io/#person",
+      "name": "Pierre LeBaux",
+      "honorificSuffix": "PhD",
+      "jobTitle": "Theoretical Physicist & Computational Complexity Researcher"
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "author": { "@id": "https://lebaux.github.io/#person" },
+      "headline": "The Special Theory of Computational Relativity",
+      "datePublished": "2026-10-07",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is the Special Theory of Computational Relativity?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A digital monograph reading computation and physics through one fixed point — the A₀ seed at the origin. Four postulates govern the framework." } },
+        { "@type": "Question", "name": "Why is Euler's identity central to this theory?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It is the phase signature of the transformer at the fixed point: a half-turn in any SO(2) plane returns the identity to zero." } },
+        { "@type": "Question", "name": "How does the theory address the P vs NP problem?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The 2^N decision tree embeds into the R_N rotation planes of so(N); anti-phase cancellation at the nodal firewalls yields deterministic O(N²)." } },
+        { "@type": "Question", "name": "What are the seven Clay Millennium Problems?",
+          "acceptedAnswer": { "@type": "Answer", "text": "P vs NP, the Riemann Hypothesis, Yang–Mills mass gap, Navier–Stokes smoothness, Birch and Swinnerton-Dyer, Hodge, and Poincaré." } },
+        { "@type": "Question", "name": "What is the A₀ seed?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The unique fixed point of the full symmetry group on the manifold ℳ_N(A₀)." } }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#06080f;--panel:#10141f;--panel2:#151a28;--line:#1d2231;
+--line2:#2b3348;--ink:#ece6d9;--dim:#a49e90;--faint:#6a685f;
+--amber:#e0a952;--amber2:#f4c77a;--sage:#7ba78c;--rose:#c98080;
+--violet:#9b8ac4;--serif:Georgia,serif;
+--sans:system-ui,-apple-system,sans-serif;--mono:ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 var(--sans)}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+#banner{display:none;position:fixed;bottom:0;left:0;right:0;background:#5c1a1a;
+color:#ffd9d9;padding:10px 18px;font:12px var(--mono);z-index:9999;pointer-events:none}
+#banner.on{display:block}
+
+#status{position:fixed;top:80px;right:16px;background:rgba(11,21,34,.9);
+color:var(--amber2);padding:6px 12px;font:11px var(--mono);border-radius:6px;
+z-index:9000;pointer-events:none;opacity:0;transition:opacity .3s}
+#status.on{opacity:1}
+
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--amber);color:#1a1206;
+padding:10px 18px;font:600 13px var(--sans);z-index:10000;border-radius:0 0 6px 0;
+text-decoration:none}
+.skip-link:focus{left:0}
+
+header{position:sticky;top:0;z-index:100;display:flex;align-items:center;
+justify-content:space-between;gap:16px;padding:14px 24px;
+background:rgba(10,13,24,.98);border-bottom:1px solid var(--line);
+backdrop-filter:blur(8px)}
+.brand{font-family:var(--serif);font-size:20px;color:var(--amber);text-decoration:none}
+.brand:hover{color:var(--amber2)}
+
+nav[aria-label]{display:flex;gap:6px;align-items:center}
+.navlink{background:transparent;border:0;color:var(--dim);font:500 13px var(--sans);
+padding:8px 12px;cursor:pointer;border-radius:6px;font-family:inherit;
+transition:color .15s,background .15s;text-decoration:none;display:inline-block}
+.navlink:hover{color:var(--amber2);background:rgba(224,169,82,.08)}
+.navlink:active{transform:translateY(1px)}
+
+.lang{display:flex;gap:6px}
+.lang button{background:transparent;border:1px solid var(--line2);color:var(--dim);
+font:600 12px var(--sans);padding:6px 14px;cursor:pointer;border-radius:6px;
+font-family:inherit;transition:all .15s}
+.lang button:hover{color:var(--ink);border-color:var(--amber)}
+.lang button.active{background:var(--amber);color:#1a1206;border-color:var(--amber)}
+
+main{display:block}
+section{padding:60px 6vw;max-width:1200px;margin:0 auto;scroll-margin-top:90px}
+h1{font-family:var(--serif);font-weight:400;font-size:2.4rem;line-height:1.1;margin:0 0 16px}
+h1 em{font-style:italic;color:var(--amber)}
+h2{font-family:var(--serif);font-weight:400;font-size:1.8rem;margin:0 0 16px}
+h3{font-family:var(--serif);font-weight:500;font-size:1.4rem;margin:0 0 12px}
+p{color:var(--dim);max-width:62ch}
+a{color:var(--amber2)}
+a:hover{color:var(--amber)}
+.kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+color:var(--faint);margin-bottom:16px}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));
+border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:800px){.cards{grid-template-columns:1fr}}
+.glyph{font-family:var(--serif);font-size:36px;color:var(--amber);margin-bottom:10px}
+.tag{display:inline-block;font:600 10px var(--mono);letter-spacing:.18em;
+text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+
+.tabmenu{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tabmenu button{background:var(--panel);border:1px solid var(--line);color:var(--dim);
+font:500 13px var(--sans);padding:9px 14px;cursor:pointer;border-radius:8px;
+font-family:inherit;transition:all .15s}
+.tabmenu button:hover{color:var(--ink);border-color:var(--line2)}
+.tabmenu button.active{background:var(--amber);color:#1a1206;
+border-color:var(--amber);font-weight:700}
+
+.panel{display:none;background:var(--panel);border:1px solid var(--line);
+border-radius:14px;padding:24px}
+.panel.on{display:block}
+.panel .eq{font-family:var(--mono);font-size:.95rem;background:var(--bg);
+color:var(--amber2);padding:12px 16px;border-radius:8px;
+border:1px solid var(--line);overflow-x:auto;margin:12px 0}
+.panel .cw{margin-top:16px;border-radius:10px;overflow:hidden;
+border:1px solid var(--line);background:var(--bg);height:300px;position:relative}
+.panel canvas{display:block;width:100%;height:100%}
+
+.lab{display:grid;grid-template-columns:260px 1fr;gap:20px}
+@media(max-width:800px){.lab{grid-template-columns:1fr}}
+.lab-panel{background:var(--panel);border:1px solid var(--line);
+border-radius:14px;padding:20px}
+.lab-row{margin-bottom:16px}
+.lab-row label{display:flex;justify-content:space-between;font-size:12px;
+color:var(--dim);margin-bottom:6px}
+.lab-row b{color:var(--amber2);font-family:var(--mono)}
+input[type=range]{width:100%;height:4px;accent-color:var(--amber)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:transparent;border:1px solid var(--line2);color:var(--dim);
+border-radius:999px;padding:6px 12px;cursor:pointer;font:500 12px var(--sans);
+font-family:inherit;transition:all .15s}
+.chip:hover{color:var(--ink);border-color:var(--amber)}
+.chip.on{background:rgba(224,169,82,.14);color:var(--amber2);border-color:var(--amber)}
+.lab-stage{background:var(--panel);border:1px solid var(--line);
+border-radius:14px;overflow:hidden;height:400px}
+#labCv{display:block;width:100%;height:100%}
+
+.faq details{background:var(--panel);border:1px solid var(--line);
+border-radius:10px;padding:0;margin-bottom:10px;overflow:hidden}
+.faq details[open]{border-color:var(--line2)}
+.faq summary{cursor:pointer;padding:16px 20px;font-family:var(--serif);
+font-weight:500;font-size:1.05rem;color:var(--ink);list-style:none;
+display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--amber);font-size:1.4rem;
+font-family:var(--sans);transition:transform .2s;flex-shrink:0}
+.faq details[open] summary::after{content:"−"}
+.faq summary:hover{color:var(--amber2)}
+.faq .answer{padding:0 20px 18px;color:var(--dim);font-size:.95rem;
+max-width:70ch;line-height:1.7}
+
+.toc-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:12px;list-style:none;padding:0;margin:0}
+.toc-list a{display:block;padding:14px 18px;background:var(--panel);
+border:1px solid var(--line);border-radius:10px;color:var(--dim);
+text-decoration:none;font-size:13px;transition:all .15s}
+.toc-list a:hover{color:var(--amber2);border-color:var(--amber);
+background:var(--panel2)}
+.toc-list a b{display:block;color:var(--ink);font-family:var(--serif);
+font-size:1rem;font-weight:500;margin-bottom:4px}
+.toc-list a:hover b{color:var(--amber2)}
+
+footer{border-top:1px solid var(--line);padding:30px 6vw;font-size:12px;
+color:var(--faint);text-align:center;margin-top:60px}
+footer .navlink{margin-top:12px;display:inline-block}
+footer address{font-style:normal;margin-bottom:12px}
+::selection{background:rgba(224,169,82,.25)}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main"
+   data-en="Skip to main content" data-cz="Přeskočit na hlavní obsah">Skip to main content</a>
+<div id="banner" role="alert" aria-live="assertive"></div>
+<div id="status" aria-hidden="true"></div>
+
+<header>
+  <a href="#top" class="brand" aria-label="CoReX — return to top">CoReX</a>
+  <nav aria-label="Primary">
+    <button class="navlink" onclick="goTo('postulates')"
+            data-en="Postulates" data-cz="Postuláty">Postulates</button>
+    <button class="navlink" onclick="goTo('seven')"
+            data-en="Seven" data-cz="Sedm">Seven</button>
+    <button class="navlink" onclick="goTo('lab')"
+            data-en="Lab" data-cz="Laboratoř">Lab</button>
+    <button class="navlink" onclick="goTo('faq')"
+            data-en="FAQ" data-cz="Časté otázky">FAQ</button>
+  </nav>
+  <div class="lang" role="group" aria-label="Language selection">
+    <button id="btnEn" class="active" onclick="setLang('en')"
+            aria-label="Switch to English" aria-pressed="true">EN</button>
+    <button id="btnCz" onclick="setLang('cz')"
+            aria-label="Přepnout do češtiny" aria-pressed="false">CZ</button>
+  </div>
+</header>
+
+<main id="main">
+
+<section id="top" aria-labelledby="hero-title">
+  <p class="kicker"
+     data-en="A digital monograph · CoReX"
+     data-cz="Digitální monografie · CoReX">A digital monograph · CoReX</p>
+  <h1 id="hero-title">
+    <span data-en="The Special Theory of "
+          data-cz="Speciální teorie ">The Special Theory of </span><em
+          data-en="Computational Relativity"
+          data-cz="výpočetní relativity">Computational Relativity</em>
+  </h1>
+  <p data-en="The seed is 0, and everything else is a rotation of it. Four postulates, one transformer, one fixed point — a calm reading of computation and physics through a shared geometric mechanism."
+     data-cz="Semínko je 0 a všechno ostatní je jeho rotací. Čtyři postuláty, jeden transformátor, jeden pevný bod — klidné čtení výpočtu a fyziky skrze společný geometrický mechanismus.">
+    The seed is 0, and everything else is a rotation of it. Four postulates, one transformer, one fixed point — a calm reading of computation and physics through a shared geometric mechanism.
+  </p>
+</section>
+
+<section id="postulates" aria-labelledby="postulates-title">
+  <p class="kicker" data-en="Chapter I" data-cz="Kapitola I">Chapter I</p>
+  <h2 id="postulates-title"
+      data-en="Four faces of one fixed point"
+      data-cz="Čtyři tváře jednoho pevného bodu">Four faces of one fixed point</h2>
+
+  <div class="cards">
+    <article class="card">
+      <div class="glyph" aria-hidden="true">0</div>
+      <span class="tag"
+            data-en="Postulate I · Symmetry"
+            data-cz="Postulát I · Symetrie">Postulate I · Symmetry</span>
+      <h3 data-en="Total point symmetry at 0"
+          data-cz="Totální bodová symetrie v 0">Total point symmetry at 0</h3>
+      <p data-en="The zero point is the unique fixed point of the full symmetry group — the only locus where every generator of the algebra vanishes at once."
+         data-cz="Nulový bod je jediným pevným bodem plné grupy symetrií — jediné místo, kde všechny generátory algebry mizí současně.">
+        The zero point is the unique fixed point of the full symmetry group — the only locus where every generator of the algebra vanishes at once.
+      </p>
+    </article>
+    <article class="card">
+      <div class="glyph" aria-hidden="true">=</div>
+      <span class="tag"
+            data-en="Postulate II · Transformation"
+            data-cz="Postulát II · Transformace">Postulate II · Transformation</span>
+      <h3 data-en="The equal sign is a transformer"
+          data-cz="Rovnítko je transformátor">The equal sign is a transformer</h3>
+      <p data-en="Not identity — a G-equivariant map between two faces of one orbit. This is why P = NP and E = mc² are the same statement under a single equal sign."
+         data-cz="Není identita — G-ekvivariantní zobrazení mezi dvěma tvářemi jednoho orbitu. Proto jsou P = NP a E = mc² tentýž výrok pod jediným rovnítkem.">
+        Not identity — a G-equivariant map between two faces of one orbit. This is why P = NP and E = mc² are the same statement under a single equal sign.
+      </p>
+    </article>
+    <article class="card">
+      <div class="glyph" aria-hidden="true">e<sup>iπ</sup>+1</div>
+      <span class="tag"
+            data-en="Postulate III · Phase"
+            data-cz="Postulát III · Fáze">Postulate III · Phase</span>
+      <h3 data-en="Euler's identity is structural"
+          data-cz="Eulerova identita je strukturální">Euler's identity is structural</h3>
+      <p data-en="A half-turn in any SO(2) plane returns the identity state to zero. This is the phase signature of the transformer at the fixed point."
+         data-cz="Půlotáčka v libovolné rovině SO(2) vrací stav identity k nule. To je fázový podpis transformátoru v pevném bodě.">
+        A half-turn in any SO(2) plane returns the identity state to zero. This is the phase signature of the transformer at the fixed point.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section id="seven" aria-labelledby="seven-title">
+  <p class="kicker" data-en="Chapter II" data-cz="Kapitola II">Chapter II</p>
+  <h2 id="seven-title"
+      data-en="Seven Millennium Problems, one mechanism"
+      data-cz="Sedm problémů tisíciletí, jeden mechanismus">Seven Millennium Problems, one mechanism</h2>
+
+  <div class="tabmenu" role="tablist" aria-label="Seven Clay Millennium Problems">
+    <button id="tab1" class="active" onclick="selectSeven(1)" role="tab"
+            aria-selected="true" aria-controls="panel1"
+            data-en="I · P vs NP" data-cz="I · P vs NP">I · P vs NP</button>
+    <button id="tab2" onclick="selectSeven(2)" role="tab"
+            aria-selected="false" aria-controls="panel2"
+            data-en="II · Riemann" data-cz="II · Riemann">II · Riemann</button>
+    <button id="tab3" onclick="selectSeven(3)" role="tab"
+            aria-selected="false" aria-controls="panel3"
+            data-en="III · Yang–Mills" data-cz="III · Yang–Mills">III · Yang–Mills</button>
+    <button id="tab4" onclick="selectSeven(4)" role="tab"
+            aria-selected="false" aria-controls="panel4"
+            data-en="IV · Navier–Stokes" data-cz="IV · Navier–Stokes">IV · Navier–Stokes</button>
+    <button id="tab5" onclick="selectSeven(5)" role="tab"
+            aria-selected="false" aria-controls="panel5"
+            data-en="V · BSD" data-cz="V · BSD">V · BSD</button>
+    <button id="tab6" onclick="selectSeven(6)" role="tab"
+            aria-selected="false" aria-controls="panel6"
+            data-en="VI · Hodge" data-cz="VI · Hodge">VI · Hodge</button>
+    <button id="tab7" onclick="selectSeven(7)" role="tab"
+            aria-selected="false" aria-controls="panel7"
+            data-en="VII · Poincaré" data-cz="VII · Poincaré">VII · Poincaré</button>
+  </div>
+
+  <article class="panel on" id="panel1" role="tabpanel" aria-labelledby="tab1">
+    <h3 data-en="P vs NP" data-cz="P vs NP">P vs NP</h3>
+    <div class="eq">R_N = C(N,2)  ⇒  T(N) = O(N²)</div>
+    <p data-en="The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N²)."
+       data-cz="Exponenciální rozhodovací strom nad 2ᴺ stavy se injektivně vnořuje do R_N rotačních rovin Lieovy algebry so(N). Neoptimální větve podléhají Eulerově anti-fázové anihilaci na nodálních firewallech a geodetický tok skončí v deterministickém O(N²).">
+      The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N²).
+    </p>
+    <p class="sr-only"
+       data-en="Visualization: an exponential binary decision tree collapses into a bundle of rotation planes centered on the A₀ seed."
+       data-cz="Vizualizace: exponenciální binární rozhodovací strom kolabuje do svazku rotačních rovin se středem v semínku A₀.">
+      Visualization: an exponential binary decision tree collapses into a bundle of rotation planes centered on the A₀ seed.
+    </p>
+    <div class="cw"><canvas id="cv1" width="800" height="300" role="img"
+      data-aria-en="Diagram: exponential decision tree over 2 to the N states collapsing into rotation planes of the Lie algebra so(N)"
+      data-aria-cz="Diagram: exponenciální rozhodovací strom nad 2 na N stavů kolabující do rotačních rovin Lieovy algebry so(N)"
+      aria-label="Diagram: exponential decision tree over 2 to the N states collapsing into rotation planes of the Lie algebra so(N)"></canvas></div>
+  </article>
+  <article class="panel" id="panel2" role="tabpanel" aria-labelledby="tab2">
+    <h3 data-en="Riemann Hypothesis" data-cz="Riemannova hypotéza">Riemann Hypothesis</h3>
+    <div class="eq">ξ(s) = ξ(1−s)  ⇒  Re(s) = ½</div>
+    <p data-en="The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus."
+       data-cz="Funkcionální rovnice se čte jako zrcadlo přes osu A₀. Nuly mimo osu narušují rovnováhu hranice; anti-fázový firewall nutí jejich hustotu pravděpodobnosti k nule a Re(s) = ½ zůstává jediným stabilním místem.">
+      The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus.
+    </p>
+    <p class="sr-only"
+       data-en="Visualization: the critical line at Re(s) = ½ with non-trivial zeros locked on the line and mirrored ghost zeros off it."
+       data-cz="Vizualizace: kritická přímka Re(s) = ½ s netriviálními nulami uzamčenými na přímce a zrcadlovými duchem nulami mimo ni.">
+      Visualization: the critical line at Re(s) = ½ with non-trivial zeros locked on the line and mirrored ghost zeros off it.
+    </p>
+    <div class="cw"><canvas id="cv2" width="800" height="300" role="img"
+      data-aria-en="Diagram: the critical line Re(s) = one-half with non-trivial zeros of the Riemann zeta function plotted on it"
+      data-aria-cz="Diagram: kritická přímka Re(s) = jedna polovina s netriviálními nulami Riemannovy zeta funkce"
+      aria-label="Diagram: the critical line Re(s) = one-half with non-trivial zeros of the Riemann zeta function plotted on it"></canvas></div>
+  </article>
+  <article class="panel" id="panel3" role="tabpanel" aria-labelledby="tab3">
+    <h3 data-en="Yang–Mills Mass Gap" data-cz="Yang–Millsova hmotnostní mezera">Yang–Mills Mass Gap</h3>
+    <div class="eq">E₀ = λc² &gt; 0  ⇒  ΔM &gt; 0</div>
+    <p data-en="The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ΔM = ħω_{A₀}/c²."
+       data-cz="Skalární semínko A₀ = λ dává vakuu striktně kladné dno. Nodální firewally odřezávají vysokoenergetické divergence, které by jinak mezeru uzavřely, a vzniká striktně kladná hmotnostní mezera ΔM = ħω_{A₀}/c².">
+      The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ΔM = ħω_{A₀}/c².
+    </p>
+    <p class="sr-only"
+       data-en="Visualization: a positive vacuum energy floor E₀ = λc², a dashed mass gap ΔM above it, and discrete excitations sitting above the gap."
+       data-cz="Vizualizace: kladné energetické dno vakua E₀ = λc², čárkovaná hmotnostní mezera ΔM nad ním a diskrétní excitace nad mezerou.">
+      Visualization: a positive vacuum energy floor E₀ = λc², a dashed mass gap ΔM above it, and discrete excitations sitting above the gap.
+    </p>
+    <div class="cw"><canvas id="cv3" width="800" height="300" role="img"
+      data-aria-en="Diagram: a positive vacuum energy floor and a mass gap above it for the Yang-Mills theory"
+      data-aria-cz="Diagram: kladné energetické dno vakua a hmotnostní mezera nad ním pro Yang-Millsovu teorii"
+      aria-label="Diagram: a positive vacuum energy floor and a mass gap above it for the Yang-Mills theory"></canvas></div>
+  </article>
+  <article class="panel" id="panel4" role="tabpanel" aria-labelledby="tab4">
+    <h3 data-en="Navier–Stokes Smoothness" data-cz="Hladkost Navier–Stokesových rovnic">Navier–Stokes Smoothness</h3>
+    <div class="eq">det(CM₅) = 0  ⇒  ‖u‖_{C^∞} &lt; ∞</div>
+    <p data-en="Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The 5-point Cayley–Menger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^∞ for all t ≥ 0."
+       data-cz="Extrémní gradienty vorticity spouštějí anti-fázovou anihilaci dříve, než se mohou zkoncentrovat. Pětibodový Cayley–Mengerův determinant brání inflaci hodnosti Gramovy matice rychlosti a udržuje tok v C^∞ pro všechna t ≥ 0.">
+      Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The 5-point Cayley–Menger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^∞ for all t ≥ 0.
+    </p>
+    <p class="sr-only"
+       data-en="Visualization: turbulent vorticity rings with their gradient bounded by the Cayley–Menger determinant, resulting in C-infinity smoothness."
+       data-cz="Vizualizace: turbulentní vírové prstence s gradientem omezeným Cayley–Mengerovým determinantem, což vede k hladkosti třídy C-nekonečno.">
+      Visualization: turbulent vorticity rings with their gradient bounded by the Cayley–Menger determinant, resulting in C-infinity smoothness.
+    </p>
+    <div class="cw"><canvas id="cv4" width="800" height="300" role="img"
+      data-aria-en="Diagram: turbulent vorticity rings bounded within a smooth C-infinity envelope"
+      data-aria-cz="Diagram: turbulentní vírové prstence omezené v hladkém obalu třídy C-nekonečno"
+      aria-label="Diagram: turbulent vorticity rings bounded within a smooth C-infinity envelope"></canvas></div>
+  </article>
+  <article class="panel" id="panel5" role="tabpanel" aria-labelledby="tab5">
+    <h3 data-en="Birch &amp; Swinnerton-Dyer" data-cz="Birchova a Swinnerton-Dyerova hypotéza">Birch &amp; Swinnerton-Dyer</h3>
+    <div class="eq">rank(E(Q)) = ord_{s=1} L(E,s)</div>
+    <p data-en="Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes — the equality is a statement about orbits, not about arithmetic coincidence."
+       data-cz="Každý nezávislý racionální generátor E(Q) se zobrazí na jednu ortogonální rotační rovinu. Řád nulového bodu L(E, s) v s = 1 počítá tytéž roviny — rovnost je výrokem o orbitách, ne o aritmetické náhodě.">
+      Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes — the equality is a statement about orbits, not about arithmetic coincidence.
+    </p>
+    <p class="sr-only"
+       data-en="Visualization: an elliptic curve with rational generators orbiting the A₀ seed, paired with an L-function spectrum at s = 1."
+       data-cz="Vizualizace: eliptická křivka s racionálními generátory obíhajícími semínko A₀, spárovaná se spektrem L-funkce v s = 1.">
+      Visualization: an elliptic curve with rational generators orbiting the A₀ seed, paired with an L-function spectrum at s = 1.
+    </p>
+    <div class="cw"><canvas id="cv5" width="800" height="300" role="img"
+      data-aria-en="Diagram: an elliptic curve with rational generators and the L-function spectrum at s equals one"
+      data-aria-cz="Diagram: eliptická křivka s racionálními generátory a spektrem L-funkce v s rovno jedné"
+      aria-label="Diagram: an elliptic curve with rational generators and the L-function spectrum at s equals one"></canvas></div>
+  </article>
+  <article class="panel" id="panel6" role="tabpanel" aria-labelledby="tab6">
+    <h3 data-en="Hodge Conjecture" data-cz="Hodgeova hypotéza">Hodge Conjecture</h3>
+    <div class="eq">H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles</div>
+    <p data-en="Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Ω_{A₀}."
+       data-cz="Každá Hodgeova třída na hladké projektivní varietě je racionální kombinací algebraických cyklů, vyjádřená jako invariantní podobjekt GUT-Cat toposu pod klasifikátorem měřítka Ω_{A₀}.">
+      Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Ω_{A₀}.
+    </p>
+    <p class="sr-only"
+       data-en="Visualization: a cohomology grid with a rational algebraic cycle isolating invariant classes."
+       data-cz="Vizualizace: kohomologická mřížka s racionálním algebraickým cyklem izolujícím invariantní třídy.">
+      Visualization: a cohomology grid with a rational algebraic cycle isolating invariant classes.
+    </p>
+    <div class="cw"><canvas id="cv6" width="800" height="300" role="img"
+      data-aria-en="Diagram: a cohomology grid with a rational algebraic cycle"
+      data-aria-cz="Diagram: kohomologická mřížka s racionálním algebraickým cyklem"
+      aria-label="Diagram: a cohomology grid with a rational algebraic cycle"></canvas></div>
+  </article>
+  <article class="panel" id="panel7" role="tabpanel" aria-labelledby="tab7">
+    <h3 data-en="Poincaré Conjecture" data-cz="Poincaréova hypotéza">Poincaré Conjecture</h3>
+    <div class="eq">∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³</div>
+    <p data-en="Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere — Perelman's surgery, but with the endpoints already determined by the seed."
+       data-cz="Neck-pinch singularity Ricciho toku jsou anihilovány na nodálních firewallech. Každá jednoduše souvislá uzavřená 3-varieta se hladce deformuje na 3-sféru — Perelmanova chirurgie, ale s koncovými body již určenými semínkem.">
+      Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere — Perelman's surgery, but with the endpoints already determined by the seed.
+    </p>
+    <p class="sr-only"
+       data-en="Visualization: a neck-pinching 3-manifold deforming under Ricci flow into the round 3-sphere S³."
+       data-cz="Vizualizace: 3-varieta s neck-pinch deformující se pod Ricciho tokem do kulové 3-sféry S³.">
+      Visualization: a neck-pinching 3-manifold deforming under Ricci flow into the round 3-sphere S³.
+    </p>
+    <div class="cw"><canvas id="cv7" width="800" height="300" role="img"
+      data-aria-en="Diagram: Ricci flow deforming a neck-pinched three-manifold into the three-sphere"
+      data-aria-cz="Diagram: Ricciho tok deformující 3-varietu s neck-pinch do 3-sféry"
+      aria-label="Diagram: Ricci flow deforming a neck-pinched three-manifold into the three-sphere"></canvas></div>
+  </article>
+</section>
+
+<section id="lab" aria-labelledby="lab-title">
+  <p class="kicker" data-en="Chapter III" data-cz="Kapitola III">Chapter III</p>
+  <h2 id="lab-title"
+      data-en="A small laboratory"
+      data-cz="Malá laboratoř">A small laboratory</h2>
+  <p data-en="Rotate the manifold. Change its dimension. Watch the rotation planes multiply as N(N−1)/2 and the seed sit still at the origin."
+     data-cz="Otáčejte varietou. Měňte její dimenzi. Sledujte, jak rotační roviny rostou jako N(N−1)/2 a semínko zůstává v klidu v počátku.">
+    Rotate the manifold. Change its dimension. Watch the rotation planes multiply as N(N−1)/2 and the seed sit still at the origin.
+  </p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Laboratory controls">
+      <div class="lab-row">
+        <label for="inN"><span data-en="Dimension N" data-cz="Dimenze N">Dimension N</span><b id="valN">5</b></label>
+        <input type="range" id="inN" min="2" max="10" value="5" oninput="updateN(this.value)"
+               data-aria-en="Dimension N" data-aria-cz="Dimenze N" aria-label="Dimension N">
+      </div>
+      <div class="lab-row">
+        <label for="inS"><span data-en="Rotation speed" data-cz="Rychlost rotace">Rotation speed</span><b id="valS">0.60</b></label>
+        <input type="range" id="inS" min="0" max="2" step="0.05" value="0.6" oninput="updateS(this.value)"
+               data-aria-en="Rotation speed" data-aria-cz="Rychlost rotace" aria-label="Rotation speed">
+      </div>
+      <div class="lab-row">
+        <span id="lab-show-label" style="display:block;font-size:12px;color:var(--dim);margin-bottom:6px"
+              data-en="Show" data-cz="Zobrazit">Show</span>
+        <div class="chips" role="group" aria-labelledby="lab-show-label">
+          <button class="chip on" id="chipPlanes" onclick="toggleFlag('planes',this)" aria-pressed="true"
+                  data-en="Planes" data-cz="Roviny"
+                  data-aria-en="Toggle rotation planes" data-aria-cz="Přepnout rotační roviny">Planes</button>
+          <button class="chip on" id="chipNodes" onclick="toggleFlag('nodes',this)" aria-pressed="true"
+                  data-en="Nodes" data-cz="Uzly"
+                  data-aria-en="Toggle nodal lines" data-aria-cz="Přepnout nodální linie">Nodes</button>
+          <button class="chip on" id="chipOrbits" onclick="toggleFlag('orbits',this)" aria-pressed="true"
+                  data-en="Orbits" data-cz="Orbity"
+                  data-aria-en="Toggle orbits" data-aria-cz="Přepnout orbity">Orbits</button>
+        </div>
+      </div>
+    </aside>
+    <div class="lab-stage">
+      <canvas id="labCv" width="800" height="450" role="img"
+        data-aria-en="Interactive visualization of the A-zero seed at the origin with N-dimensional rotation planes and orbits"
+        data-aria-cz="Interaktivní vizualizace semínka A-nula v počátku s N-dimenzionálními rotačními rovinami a orbitami"
+        aria-label="Interactive visualization of the A-zero seed at the origin with N-dimensional rotation planes and orbits"></canvas>
+    </div>
+  </div>
+</section>
+
+<section id="faq" aria-labelledby="faq-title">
+  <p class="kicker" data-en="Frequently asked" data-cz="Časté otázky">Frequently asked</p>
+  <h2 id="faq-title"
+      data-en="Questions about Computational Relativity"
+      data-cz="Otázky o výpočetní relativitě">Questions about Computational Relativity</h2>
+  <div class="faq">
+    <details>
+      <summary data-en="What is the Special Theory of Computational Relativity?"
+               data-cz="Co je Speciální teorie výpočetní relativity?">What is the Special Theory of Computational Relativity?</summary>
+      <div class="answer"
+        data-en="The Special Theory of Computational Relativity (CoReX) is a digital monograph that reads computation and physics through one fixed point — the A₀ seed at the origin. Four postulates govern the framework: total point symmetry at 0, the equal sign as a G-equivariant transformer, Euler's identity as the phase signature of the fixed point, and the instantiation of the A₀-evaluation oracle in biological substrate. Within this framework, P = NP and E = mc² become the same structural statement seen from two faces of the same orbit."
+        data-cz="Speciální teorie výpočetní relativity (CoReX) je digitální monografie, která čte výpočet a fyziku skrze jeden pevný bod — semínko A₀ v počátku. Rámec řídí čtyři postuláty: totální bodová symetrie v 0, rovnítko jako G-ekvivariantní transformátor, Eulerova identita jako fázový podpis pevného bodu a instance A₀-orákula v biologickém substrátu. V tomto rámci se P = NP a E = mc² stávají týmž strukturálním výrokem viděným ze dvou tváří téhož orbitu.">
+        The Special Theory of Computational Relativity (CoReX) is a digital monograph that reads computation and physics through one fixed point — the A₀ seed at the origin. Four postulates govern the framework: total point symmetry at 0, the equal sign as a G-equivariant transformer, Euler's identity as the phase signature of the fixed point, and the instantiation of the A₀-evaluation oracle in biological substrate.
+      </div>
+    </details>
+    <details>
+      <summary data-en="Why is Euler's identity central to this theory?"
+               data-cz="Proč je Eulerova identita v této teorii ústřední?">Why is Euler's identity central to this theory?</summary>
+      <div class="answer"
+        data-en="Euler's identity e^{iπ} + 1 = 0 is not decorative — it is the phase signature of the transformer at the fixed point. In any SO(2) rotation plane of the manifold, a half-turn returns the identity state to zero. This is the simplest non-trivial holonomy of the manifold, and it is the same anti-phase cancellation that suppresses non-optimal branches in the P vs NP reduction."
+        data-cz="Eulerova identita e^{iπ} + 1 = 0 není ozdobou — je fázovým podpisem transformátoru v pevném bodě. V libovolné rovině SO(2) variety vrací půlotáčka stav identity k nule. Je to nejjednodušší netriviální holonomie variety a tatáž anti-fázová anihilace, která potlačuje neoptimální větve v redukci P vs NP.">
+        Euler's identity e^{iπ} + 1 = 0 is not decorative — it is the phase signature of the transformer at the fixed point. In any SO(2) rotation plane of the manifold, a half-turn returns the identity state to zero.
+      </div>
+    </details>
+    <details>
+      <summary data-en="How does the theory address the P vs NP problem?"
+               data-cz="Jak teorie řeší problém P vs NP?">How does the theory address the P vs NP problem?</summary>
+      <div class="answer"
+        data-en="The exponential decision tree over 2^N states embeds injectively into the R_N = N(N−1)/2 rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls. The geodesic flow completes in deterministic O(N²), and the result extends to every NP language through the Cook–Levin theorem. The framework explicitly labels this as relative to the A₀ postulate — it does not claim to resolve the unrelativized Cook–Levin question."
+        data-cz="Exponenciální rozhodovací strom nad 2^N stavy se injektivně vnořuje do R_N = N(N−1)/2 rotačních rovin Lieovy algebry so(N). Neoptimální větve podléhají Eulerově anti-fázové anihilaci na nodálních firewallech. Geodetický tok skončí v deterministickém O(N²) a výsledek se rozšiřuje na každý jazyk NP přes Cook–Levinův teorém. Rámec to výslovně označuje jako relativní vůči postulátu A₀ — netvrdí, že řeší nerelativizovanou Cook–Levinovu otázku.">
+        The exponential decision tree over 2^N states embeds injectively into the R_N = N(N−1)/2 rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls.
+      </div>
+    </details>
+    <details>
+      <summary data-en="What are the seven Clay Millennium Problems?"
+               data-cz="Co je sedm problémů tisíciletí Clayova institutu?">What are the seven Clay Millennium Problems?</summary>
+      <div class="answer"
+        data-en="The seven Millennium Prize Problems were designated by the Clay Mathematics Institute in 2000: P vs NP, the Riemann Hypothesis, the Yang–Mills existence and mass gap, the Navier–Stokes existence and smoothness, the Birch and Swinnerton-Dyer Conjecture, the Hodge Conjecture, and the Poincaré Conjecture. The Poincaré Conjecture was resolved by Grigori Perelman in 2003. CoReX presents unified readings of all seven under one geometric mechanism — rotation planes, anti-phase cancellation, and nodal firewalls."
+        data-cz="Sedm problémů tisíciletí bylo vyhlášeno Clayovým matematickým institutem v roce 2000: P vs NP, Riemannova hypotéza, Yang–Millsova existence a hmotnostní mezera, Navier–Stokesova existence a hladkost, Birch–Swinnerton-Dyerova hypotéza, Hodgeova hypotéza a Poincaréova hypotéza. Poincaréovu hypotézu vyřešil Grigorij Perelman v roce 2003. CoReX představuje sjednocená čtení všech sedmi pod jedním geometrickým mechanismem — rotační roviny, anti-fázová anihilace a nodální firewally.">
+        The seven Millennium Prize Problems were designated by the Clay Mathematics Institute in 2000: P vs NP, the Riemann Hypothesis, the Yang–Mills existence and mass gap, the Navier–Stokes existence and smoothness, the Birch and Swinnerton-Dyer Conjecture, the Hodge Conjecture, and the Poincaré Conjecture.
+      </div>
+    </details>
+    <details>
+      <summary data-en="What is the A₀ seed?"
+               data-cz="Co je semínko A₀?">What is the A₀ seed?</summary>
+      <div class="answer"
+        data-en="A₀ is the distinguished zero point of the manifold ℳ_N(A₀) — the unique fixed point of the full symmetry group G generated by the rotation-plane family, the permutation group S_N, the local Lorentz group SO(1,3), and inversion. It is the only locus where every generator of the algebra vanishes at once. In the framework, the seed is not a coordinate artifact but the geometric origin from which all structure — physical, computational, and arithmetic — grows."
+        data-cz="A₀ je vyznačený nulový bod variety ℳ_N(A₀) — jediný pevný bod plné grupy symetrií G generované rodinou rotačních rovin, permutační grupou S_N, lokální Lorentzovou grupou SO(1,3) a inverzí. Je to jediné místo, kde všechny generátory algebry mizí současně. V rámci není semínko souřadnicovým artefaktem, ale geometrickým původem, z něhož roste veškerá struktura — fyzikální, výpočetní i aritmetická.">
+        A₀ is the distinguished zero point of the manifold ℳ_N(A₀) — the unique fixed point of the full symmetry group G generated by the rotation-plane family, the permutation group S_N, the local Lorentz group SO(1,3), and inversion.
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="toc" aria-labelledby="toc-title">
+  <p class="kicker" data-en="Explore" data-cz="Prozkoumat">Explore</p>
+  <h2 id="toc-title"
+      data-en="What this monograph contains"
+      data-cz="Co tato monografie obsahuje">What this monograph contains</h2>
+  <ul class="toc-list">
+    <li><a href="#postulates" onclick="goTo('postulates');return false;">
+      <b data-en="The four postulates" data-cz="Čtyři postuláty">The four postulates</b>
+      <span data-en="Symmetry, transformation, phase, and instantiation — the four languages of one fixed point."
+            data-cz="Symetrie, transformace, fáze a instance — čtyři jazyky jednoho pevného bodu.">Symmetry, transformation, phase, and instantiation.</span>
+    </a></li>
+    <li><a href="#seven" onclick="goTo('seven');return false;">
+      <b data-en="Seven Millennium Problems" data-cz="Sedm problémů tisíciletí">Seven Millennium Problems</b>
+      <span data-en="Unified geometric readings of all seven Clay Prize problems."
+            data-cz="Sjednocená geometrická čtení všech sedmi Clayových problémů.">Unified geometric readings of all seven Clay Prize problems.</span>
+    </a></li>
+    <li><a href="#lab" onclick="goTo('lab');return false;">
+      <b data-en="Interactive laboratory" data-cz="Interaktivní laboratoř">Interactive laboratory</b>
+      <span data-en="Rotate the manifold, change N, and watch the rotation planes multiply."
+            data-cz="Otáčejte varietou, měňte N a sledujte, jak rotační roviny rostou.">Rotate the manifold, change N, and watch the planes multiply.</span>
+    </a></li>
+    <li><a href="#faq" onclick="goTo('faq');return false;">
+      <b data-en="Frequently asked questions" data-cz="Časté otázky">Frequently asked questions</b>
+      <span data-en="Direct answers on the A₀ seed, Euler's identity, and P vs NP."
+            data-cz="Přímé odpovědi o semínku A₀, Eulerově identitě a P vs NP.">Direct answers on the A₀ seed, Euler's identity, and P vs NP.</span>
+    </a></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <address>
+    <span data-en="CoReX · Special Theory of Computational Relativity"
+          data-cz="CoReX · Speciální teorie výpočetní relativity">CoReX · Special Theory of Computational Relativity</span><br>
+    <span data-en="By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity"
+          data-cz="Autor: Pierre LeBaux, PhD · Teoretická fyzika a výpočetní složitost">By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity</span>
+  </address>
+  <button class="navlink" onclick="goTop()"
+          data-en="↑ Back to top" data-cz="↑ Zpět nahoru">↑ Back to top</button>
+</footer>
+
+<script>
+/* ============================================================
+   ERROR BANNER
+   ============================================================ */
+window.onerror = function (msg) {
+  var b = document.getElementById('banner');
+  if (b) { b.textContent = '⚠ ' + msg; b.classList.add('on'); }
+};
+
+/* ============================================================
+   LIVE STATUS
+   ============================================================ */
+var statusTimer = null;
+function showStatus(msg) {
+  var s = document.getElementById('status');
+  if (!s) return;
+  s.textContent = msg;
+  s.classList.add('on');
+  if (statusTimer) clearTimeout(statusTimer);
+  statusTimer = setTimeout(function () { s.classList.remove('on'); }, 1100);
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function headerOffset() {
+  var h = document.querySelector('header');
+  return (h ? h.offsetHeight : 60) + 16;
+}
+function goTo(id) {
+  showStatus('→ ' + id);
+  var el = document.getElementById(id);
+  if (!el) { showStatus('✗ no #' + id); return; }
+  var top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset();
+  try { window.scrollTo({ top: top, behavior: 'smooth' }); }
+  catch (e) { window.scrollTo(0, top); }
+}
+function goTop() {
+  showStatus('→ top');
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  catch (e) { window.scrollTo(0, 0); }
+}
+
+/* ============================================================
+   LANGUAGE — full coverage: textContent + aria-label + URL param
+   ============================================================ */
+function setLang(lang) {
+  if (lang !== 'cz') lang = 'en';
+  showStatus('lang: ' + lang);
+
+  // 1. Text content
+  var els = document.querySelectorAll('[data-en][data-cz]');
+  for (var i = 0; i < els.length; i++) {
+    var v = els[i].getAttribute('data-' + lang);
+    if (v !== null) els[i].textContent = v;
+  }
+
+  // 2. aria-label translations
+  var ariaEls = document.querySelectorAll('[data-aria-en][data-aria-cz]');
+  for (var j = 0; j < ariaEls.length; j++) {
+    var av = ariaEls[j].getAttribute('data-aria-' + lang);
+    if (av !== null) ariaEls[j].setAttribute('aria-label', av);
+  }
+
+  // 3. Button state
+  var en = document.getElementById('btnEn');
+  var cz = document.getElementById('btnCz');
+  if (en) {
+    en.className = (lang === 'en') ? 'active' : '';
+    en.setAttribute('aria-pressed', String(lang === 'en'));
+  }
+  if (cz) {
+    cz.className = (lang === 'cz') ? 'active' : '';
+    cz.setAttribute('aria-pressed', String(lang === 'cz'));
+  }
+
+  // 4. Document lang attribute
+  document.documentElement.lang = (lang === 'cz') ? 'cs' : 'en';
+
+  // 5. URL param sync (for crawlable variants + shareable links)
+  try {
+    var url = new URL(window.location.href);
+    if (lang === 'en') url.searchParams.delete('lang');
+    else url.searchParams.set('lang', lang);
+    history.replaceState({}, '', url.toString());
+  } catch (e) { /* sandboxed environment */ }
+}
+
+function readLangParam() {
+  try {
+    var url = new URL(window.location.href);
+    var lang = url.searchParams.get('lang');
+    if (lang === 'cz') setLang('cz');
+  } catch (e) { /* ignore */ }
+}
+
+/* ============================================================
+   SEVEN TABS
+   ============================================================ */
+function selectSeven(n) {
+  showStatus('tab ' + n);
+  for (var i = 1; i <= 7; i++) {
+    var p = document.getElementById('panel' + i);
+    if (p) p.classList.toggle('on', i === n);
+    var b = document.getElementById('tab' + i);
+    if (b) {
+      b.classList.toggle('active', i === n);
+      b.setAttribute('aria-selected', String(i === n));
+    }
+  }
+  requestAnimationFrame(setupCanvases);
+}
+
+/* ============================================================
+   LAB CONTROLS
+   ============================================================ */
+var LAB = { N: 5, speed: 0.6, planes: true, nodes: true, orbits: true };
+
+function updateN(v) {
+  var n = parseInt(v, 10);
+  if (isNaN(n) || n < 2) n = 2;
+  if (n > 10) n = 10;
+  LAB.N = n;
+  var el = document.getElementById('valN');
+  if (el) el.textContent = n;
+}
+function updateS(v) {
+  var s = parseFloat(v);
+  if (isNaN(s)) s = 0.6;
+  LAB.speed = s;
+  var el = document.getElementById('valS');
+  if (el) el.textContent = s.toFixed(2);
+}
+function toggleFlag(name, btn) {
+  LAB[name] = !LAB[name];
+  if (btn) {
+    btn.classList.toggle('on', LAB[name]);
+    btn.setAttribute('aria-pressed', String(LAB[name]));
+  }
+  showStatus(name + ': ' + LAB[name]);
+}
+
+/* ============================================================
+   CANVAS RENDERERS
+   ============================================================ */
+function draw1(ctx, W, H, t) {
+  ctx.fillStyle = 'rgba(224,169,82,0.75)';
+  ctx.font = '12px monospace';
+  ctx.fillText('2^N tree -> so(N)', 20, 26);
+  var lx = 30, ly = H / 2;
+  for (var l = 0; l < 4; l++) {
+    var count = Math.pow(2, l);
+    for (var i = 0; i < count; i++) {
+      var x = lx + l * 30;
+      var y = ly + (i - count / 2) * (H * 0.6 / Math.max(count, 1));
+      ctx.fillStyle = 'rgba(201,128,128,' + (0.7 - l * 0.15) + ')';
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  var cx = W * 0.72, cy = ly, rad = Math.min(W, H) * 0.28;
+  for (var p = 0; p < 15; p++) {
+    var a = (p / 15) * Math.PI + t * 0.4;
+    ctx.strokeStyle = 'hsla(' + (40 + p * 20) + ',40%,60%,0.35)';
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+    ctx.lineTo(cx - Math.cos(a) * rad, cy - Math.sin(a) * rad);
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#f4c77a';
+  ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.fill();
+}
+function draw2(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2;
+  ctx.strokeStyle = 'rgba(127,163,184,0.15)';
+  ctx.beginPath(); ctx.moveTo(40, cy); ctx.lineTo(W - 40, cy); ctx.stroke();
+  ctx.strokeStyle = '#7ba78c';
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(cx, 20); ctx.lineTo(cx, H - 20); ctx.stroke();
+  ctx.fillStyle = 'rgba(123,167,140,0.9)';
+  ctx.font = '12px monospace';
+  ctx.fillText('Re(s) = 1/2', cx + 12, 34);
+  for (var i = -4; i <= 4; i++) {
+    if (i === 0) continue;
+    var y = cy + i * 30 + Math.sin(t * 1.6 + i) * 4;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath(); ctx.arc(cx, y, 5, 0, Math.PI * 2); ctx.fill();
+  }
+}
+function draw3(ctx, W, H, t) {
+  var cy = H * 0.66;
+  ctx.fillStyle = 'rgba(15,20,34,0.9)';
+  ctx.fillRect(40, cy, W - 80, 40);
+  ctx.fillStyle = 'rgba(164,158,144,0.7)';
+  ctx.font = '12px monospace';
+  ctx.fillText('vacuum floor', 52, cy + 26);
+  var gapY = cy - 70 - Math.sin(t * 1.4) * 3;
+  ctx.strokeStyle = '#c98080';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(40, gapY); ctx.lineTo(W - 40, gapY); ctx.stroke();
+  ctx.fillStyle = '#c98080';
+  ctx.fillText('Delta M > 0', W / 2 - 40, gapY - 10);
+  for (var x = 70; x < W - 60; x += 34) {
+    var ey = gapY - 26 - Math.abs(Math.sin(x * 0.05 + t * 2.2)) * 42;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath(); ctx.arc(x, ey, 4, 0, Math.PI * 2); ctx.fill();
+  }
+}
+function draw4(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2;
+  var rmax = Math.min(W, H) * 0.38;
+  for (var r = 14; r < rmax; r += 10) {
+    var speed = (rmax - r) * 0.03;
+    ctx.strokeStyle = 'hsla(' + (200 + r) + ',45%,55%,0.55)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, t * speed, t * speed + Math.PI * 1.4);
+    ctx.stroke();
+  }
+  ctx.fillStyle = 'rgba(123,167,140,0.9)';
+  ctx.font = '12px monospace';
+  ctx.fillText('C-infinity smooth', cx - 60, 26);
+}
+function draw5(ctx, W, H, t) {
+  var cx = W * 0.34, cy = H / 2;
+  ctx.strokeStyle = '#9b8ac4';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  var first = true;
+  for (var py = -120; py <= 120; py += 3) {
+    var y = py / 40;
+    var x = y * y - 1;
+    var px = cx + x * 30;
+    if (first) { ctx.moveTo(px, cy + py); first = false; }
+    else ctx.lineTo(px, cy + py);
+  }
+  ctx.stroke();
+  for (var i = 1; i <= 4; i++) {
+    var a = t * 0.8 + i;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath();
+    ctx.arc(cx + Math.cos(a) * (30 + i * 14), cy + Math.sin(a) * (22 + i * 6), 4.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  var bx = W * 0.62;
+  ctx.fillStyle = 'rgba(212,207,196,0.75)';
+  ctx.font = '12px monospace';
+  ctx.fillText('L(E,s) at s=1', bx, 46);
+  for (var k = 1; k <= 4; k++) {
+    ctx.fillStyle = '#e0a952';
+    ctx.fillRect(bx, 60 + k * 26, 60, 16);
+    ctx.fillStyle = 'rgba(6,8,15,0.9)';
+    ctx.fillText('ord ' + k, bx + 8, 60 + k * 26 + 12);
+  }
+}
+function draw6(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2;
+  ctx.strokeStyle = 'rgba(127,163,184,0.18)';
+  for (var i = -4; i <= 4; i++) {
+    ctx.beginPath();
+    ctx.moveTo(cx - 180, cy + i * 22);
+    ctx.lineTo(cx + 180, cy + i * 22 + Math.sin(i + t) * 8);
+    ctx.stroke();
+  }
+  ctx.strokeStyle = '#d4af37';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, 130 + Math.sin(t) * 6, 60, Math.PI / 6, 0, Math.PI * 2);
+  ctx.stroke();
+  for (var j = 0; j < 8; j++) {
+    var a = t * 0.6 + j * Math.PI / 4;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath();
+    ctx.arc(cx + Math.cos(a) * 130, cy + Math.sin(a) * 60, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.fillStyle = 'rgba(212,175,55,0.9)';
+  ctx.font = '12px monospace';
+  ctx.fillText('rational cycle', cx - 130, cy - 84);
+}
+function draw7(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2;
+  var factor = 0.7 + 0.3 * Math.sin(t * 0.9);
+  var rx = 130 * factor + 20;
+  var ry = 130;
+  ctx.strokeStyle = '#7ba78c';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = 'rgba(123,167,140,0.4)';
+  ctx.lineWidth = 1.2;
+  for (var k = 1; k <= 3; k++) {
+    ctx.beginPath();
+    ctx.ellipse(cx, cy,
+      rx * Math.cos(k * Math.PI / 8),
+      ry * Math.sin(k * Math.PI / 8),
+      0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.fillStyle = 'rgba(123,167,140,0.9)';
+  ctx.font = '12px monospace';
+  ctx.fillText('M3 -> S3', cx - 34, 26);
+}
+function drawLab(ctx, W, H, t) {
+  ctx.fillStyle = 'rgba(127,163,184,0.06)';
+  for (var gx = 20; gx < W; gx += 32) {
+    for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+  }
+  var N = LAB.N;
+  var R = N * (N - 1) / 2;
+  var cx = W / 2, cy = H / 2;
+  var rad = Math.min(W, H) * 0.34;
+  var palette = ['#e0a952','#7ba78c','#c98080','#9b8ac4','#7fa3b8'];
+
+  if (LAB.nodes) {
+    ctx.strokeStyle = 'rgba(127,163,184,0.08)';
+    for (var i = 0; i < N; i++) {
+      var a = (i / N) * Math.PI * 2 + t * 0.1;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(a) * rad * 1.6, cy + Math.sin(a) * rad * 1.6);
+      ctx.stroke();
+    }
+  }
+  if (LAB.planes) {
+    for (var p = 0; p < R; p++) {
+      var ang = (p / R) * Math.PI + t * 0.22;
+      ctx.strokeStyle = palette[p % palette.length] + (p % 2 ? '66' : '44');
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(ang) * rad * 1.4, cy + Math.sin(ang) * rad * 1.4);
+      ctx.lineTo(cx - Math.cos(ang) * rad * 1.4, cy - Math.sin(ang) * rad * 1.4);
+      ctx.stroke();
+    }
+  }
+  if (LAB.orbits) {
+    for (var j = 1; j <= N; j++) {
+      var rr = (j / N) * rad;
+      ctx.strokeStyle = 'rgba(127,163,184,0.14)';
+      ctx.beginPath(); ctx.arc(cx, cy, rr, 0, Math.PI * 2); ctx.stroke();
+      var aa = t * (0.6 + j * 0.1) + j * Math.PI * 2 / N;
+      ctx.fillStyle = palette[j % palette.length];
+      ctx.beginPath();
+      ctx.arc(cx + Math.cos(aa) * rr, cy + Math.sin(aa) * rr, 3.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  var pulse = 1 + 0.08 * Math.sin(t * 1.6);
+  ctx.fillStyle = '#f4c77a';
+  ctx.beginPath(); ctx.arc(cx, cy, 5 * pulse, 0, Math.PI * 2); ctx.fill();
+}
+
+/* ============================================================
+   CANVAS SETUP + MAIN LOOP
+   ============================================================ */
+var canvases = {};
+
+function setupCanvases() {
+  var ids = ['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv'];
+  for (var i = 0; i < ids.length; i++) {
+    var cv = document.getElementById(ids[i]);
+    if (!cv) continue;
+    var cw = cv.clientWidth;
+    var ch = cv.clientHeight;
+    if (cw < 1 || ch < 1) continue;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.max(1, Math.round(cw * dpr));
+    var h = Math.max(1, Math.round(ch * dpr));
+    if (cv.width !== w || cv.height !== h) {
+      cv.width = w;
+      cv.height = h;
+    }
+    var ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvases[ids[i]] = ctx;
+  }
+}
+
+var startTime = Date.now();
+var lastFrameTs = startTime;
+
+function frame() {
+  var now = Date.now();
+  var dt = (now - lastFrameTs) / 1000;
+  if (dt > 0.05) dt = 0.05;
+  if (dt < 0) dt = 0;
+  lastFrameTs = now;
+  var t = (now - startTime) / 1000;
+
+  var visible = 0;
+  for (var i = 1; i <= 7; i++) {
+    var p = document.getElementById('panel' + i);
+    if (p && p.classList.contains('on')) { visible = i; break; }
+  }
+  if (visible) {
+    var ctx = canvases['cv' + visible];
+    var cv = document.getElementById('cv' + visible);
+    if (ctx && cv) {
+      try {
+        var W = cv.clientWidth, H = cv.clientHeight;
+        if (W > 1 && H > 1) {
+          ctx.clearRect(0, 0, W, H);
+          ctx.fillStyle = '#06080f';
+          ctx.fillRect(0, 0, W, H);
+          if (visible === 1) draw1(ctx, W, H, t);
+          else if (visible === 2) draw2(ctx, W, H, t);
+          else if (visible === 3) draw3(ctx, W, H, t);
+          else if (visible === 4) draw4(ctx, W, H, t);
+          else if (visible === 5) draw5(ctx, W, H, t);
+          else if (visible === 6) draw6(ctx, W, H, t);
+          else if (visible === 7) draw7(ctx, W, H, t);
+        }
+      } catch (e) {}
+    }
+  }
+  var lctx = canvases['labCv'];
+  var lcv = document.getElementById('labCv');
+  if (lctx && lcv) {
+    try {
+      var LW = lcv.clientWidth, LH = lcv.clientHeight;
+      if (LW > 1 && LH > 1) {
+        lctx.clearRect(0, 0, LW, LH);
+        lctx.fillStyle = '#06080f';
+        lctx.fillRect(0, 0, LW, LH);
+        drawLab(lctx, LW, LH, t * LAB.speed);
+      }
+    } catch (e) {}
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ============================================================
+   START
+   ============================================================ */
+function startApp() {
+  requestAnimationFrame(function () {
+    setupCanvases();
+    requestAnimationFrame(frame);
+  });
+  window.addEventListener('resize', setupCanvases);
+  readLangParam();
+  console.log('CoReX ready. Full bilingual build. Handlers: goTo, goTop, setLang, selectSeven, updateN, updateS, toggleFlag');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoReX - Computational Relativity Explained</title>
+<style>
+:root{--bg:#06080f;--panel:#10141f;--panel2:#151a28;--line:#1d2231;
+--line2:#2b3348;--ink:#ece6d9;--dim:#a49e90;--faint:#6a685f;
+--amber:#e0a952;--amber2:#f4c77a;--sage:#7ba78c;--rose:#c98080;
+--violet:#9b8ac4;--serif:Georgia,serif;
+--sans:system-ui,-apple-system,sans-serif;--mono:ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 var(--sans)}
+
+#banner{display:none;position:fixed;bottom:0;left:0;right:0;background:#5c1a1a;
+color:#ffd9d9;padding:10px 18px;font:12px var(--mono);z-index:9999;pointer-events:none}
+#banner.on{display:block}
+
+#status{position:fixed;top:80px;right:16px;background:rgba(11,21,34,.9);
+color:var(--amber2);padding:6px 12px;font:11px var(--mono);border-radius:6px;
+z-index:9000;pointer-events:none;opacity:0;transition:opacity .3s}
+#status.on{opacity:1}
+
+header{position:sticky;top:0;z-index:100;display:flex;align-items:center;
+justify-content:space-between;gap:16px;padding:14px 24px;
+background:rgba(10,13,24,.98);border-bottom:1px solid var(--line);
+backdrop-filter:blur(8px)}
+.brand{font-family:var(--serif);font-size:20px;color:var(--amber)}
+
+nav{display:flex;gap:6px;align-items:center}
+.navlink{background:transparent;border:0;color:var(--dim);font:500 13px var(--sans);
+padding:8px 12px;cursor:pointer;border-radius:6px;font-family:inherit;
+transition:color .15s,background .15s;text-decoration:none;display:inline-block}
+.navlink:hover{color:var(--amber2);background:rgba(224,169,82,.08)}
+.navlink:active{transform:translateY(1px)}
+
+.lang{display:flex;gap:6px}
+.lang button{background:transparent;border:1px solid var(--line2);color:var(--dim);
+font:600 12px var(--sans);padding:6px 14px;cursor:pointer;border-radius:6px;
+font-family:inherit;transition:all .15s}
+.lang button:hover{color:var(--ink);border-color:var(--amber)}
+.lang button.active{background:var(--amber);color:#1a1206;border-color:var(--amber)}
+
+section{padding:60px 6vw;max-width:1200px;margin:0 auto;scroll-margin-top:90px}
+h1{font-family:var(--serif);font-weight:400;font-size:2.4rem;line-height:1.1;margin:0 0 16px}
+h1 em{font-style:italic;color:var(--amber)}
+h2{font-family:var(--serif);font-weight:400;font-size:1.8rem;margin:0 0 16px}
+h3{font-family:var(--serif);font-weight:500;font-size:1.4rem;margin:0 0 12px}
+p{color:var(--dim);max-width:62ch}
+.kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+color:var(--faint);margin-bottom:16px}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));
+border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:800px){.cards{grid-template-columns:1fr}}
+.glyph{font-family:var(--serif);font-size:36px;color:var(--amber);margin-bottom:10px}
+.tag{display:inline-block;font:600 10px var(--mono);letter-spacing:.18em;
+text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+
+.tabmenu{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tabmenu button{background:var(--panel);border:1px solid var(--line);color:var(--dim);
+font:500 13px var(--sans);padding:9px 14px;cursor:pointer;border-radius:8px;
+font-family:inherit;transition:all .15s}
+.tabmenu button:hover{color:var(--ink);border-color:var(--line2)}
+.tabmenu button.active{background:var(--amber);color:#1a1206;
+border-color:var(--amber);font-weight:700}
+
+.panel{display:none;background:var(--panel);border:1px solid var(--line);
+border-radius:14px;padding:24px}
+.panel.on{display:block}
+.panel .eq{font-family:var(--mono);font-size:.95rem;background:var(--bg);
+color:var(--amber2);padding:12px 16px;border-radius:8px;
+border:1px solid var(--line);overflow-x:auto;margin:12px 0}
+.panel .cw{margin-top:16px;border-radius:10px;overflow:hidden;
+border:1px solid var(--line);background:var(--bg);height:300px;position:relative}
+.panel canvas{display:block;width:100%;height:100%}
+
+.lab{display:grid;grid-template-columns:260px 1fr;gap:20px}
+@media(max-width:800px){.lab{grid-template-columns:1fr}}
+.lab-panel{background:var(--panel);border:1px solid var(--line);
+border-radius:14px;padding:20px}
+.lab-row{margin-bottom:16px}
+.lab-row label{display:flex;justify-content:space-between;font-size:12px;
+color:var(--dim);margin-bottom:6px}
+.lab-row b{color:var(--amber2);font-family:var(--mono)}
+input[type=range]{width:100%;height:4px;accent-color:var(--amber)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:transparent;border:1px solid var(--line2);color:var(--dim);
+border-radius:999px;padding:6px 12px;cursor:pointer;font:500 12px var(--sans);
+font-family:inherit;transition:all .15s}
+.chip:hover{color:var(--ink);border-color:var(--amber)}
+.chip.on{background:rgba(224,169,82,.14);color:var(--amber2);border-color:var(--amber)}
+.lab-stage{background:var(--panel);border:1px solid var(--line);
+border-radius:14px;overflow:hidden;height:400px}
+#labCv{display:block;width:100%;height:100%}
+
+footer{border-top:1px solid var(--line);padding:30px 6vw;font-size:12px;
+color:var(--faint);text-align:center;margin-top:60px}
+footer .navlink{margin-top:12px;display:inline-block}
+::selection{background:rgba(224,169,82,.25)}
+</style>
+</head>
+<body>
+
+<div id="banner"></div>
+<div id="status"></div>
+
+<header>
+  <div class="brand">CoReX</div>
+  <nav>
+    <button class="navlink" onclick="goTo('postulates')"
+            data-en="Postulates" data-cz="Postuláty">Postulates</button>
+    <button class="navlink" onclick="goTo('seven')"
+            data-en="Seven" data-cz="Sedm">Seven</button>
+    <button class="navlink" onclick="goTo('lab')"
+            data-en="Lab" data-cz="Laboratoř">Lab</button>
+  </nav>
+  <div class="lang">
+    <button id="btnEn" class="active" onclick="setLang('en')">EN</button>
+    <button id="btnCz" onclick="setLang('cz')">CZ</button>
+  </div>
+</header>
+
+<section id="hero">
+  <div class="kicker" data-en="A digital monograph" data-cz="Digitální monografie">A digital monograph</div>
+  <h1>
+    <span data-en="The seed is " data-cz="Semínko je ">The seed is </span><em>0</em><br>
+    <span data-en="and everything else is a rotation of it."
+          data-cz="a všechno ostatní je jeho rotací.">and everything else is a rotation of it.</span>
+  </h1>
+  <p data-en="Four postulates, one transformer, one fixed point. A calm reading of the Special Theory of Computational Relativity."
+     data-cz="Čtyři postuláty, jeden transformátor, jeden pevný bod. Klidné čtení Speciální teorie výpočetní relativity.">
+    Four postulates, one transformer, one fixed point.
+  </p>
+</section>
+
+<section id="postulates">
+  <div class="kicker" data-en="Chapter I" data-cz="Kapitola I">Chapter I</div>
+  <h2 data-en="Four faces of one fixed point"
+      data-cz="Čtyři tváře jednoho pevného bodu">Four faces of one fixed point</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="glyph">0</div>
+      <span class="tag" data-en="Symmetry" data-cz="Symetrie">Symmetry</span>
+      <h3 data-en="Total point symmetry at 0"
+          data-cz="Totální bodová symetrie v 0">Total point symmetry at 0</h3>
+      <p data-en="The zero point is the unique fixed point of the full symmetry group."
+         data-cz="Nulový bod je jediným pevným bodem plné grupy symetrií.">
+        The zero point is the unique fixed point.
+      </p>
+    </div>
+    <div class="card">
+      <div class="glyph">=</div>
+      <span class="tag" data-en="Transformation" data-cz="Transformace">Transformation</span>
+      <h3 data-en="The equal sign is a transformer"
+          data-cz="Rovnítko je transformátor">The equal sign is a transformer</h3>
+      <p data-en="Not identity — a G-equivariant map between two faces of one orbit."
+         data-cz="Není identita — G-ekvivariantní zobrazení mezi dvěma tvářemi jednoho orbitu.">
+        Not identity — a G-equivariant map.
+      </p>
+    </div>
+    <div class="card">
+      <div class="glyph">e<sup>iπ</sup>+1</div>
+      <span class="tag" data-en="Phase" data-cz="Fáze">Phase</span>
+      <h3 data-en="Euler's identity is structural"
+          data-cz="Eulerova identita je strukturální">Euler's identity is structural</h3>
+      <p data-en="A half-turn in any SO(2) plane returns the identity to zero."
+         data-cz="Půlotáčka v libovolné rovině SO(2) vrací identitu k nule.">
+        A half-turn returns the identity to zero.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="seven">
+  <div class="kicker" data-en="Chapter II" data-cz="Kapitola II">Chapter II</div>
+  <h2 data-en="Seven problems, one mechanism"
+      data-cz="Sedm problémů, jeden mechanismus">Seven problems, one mechanism</h2>
+
+  <div class="tabmenu">
+    <button id="tab1" class="active" onclick="selectSeven(1)">I · P vs NP</button>
+    <button id="tab2" onclick="selectSeven(2)">II · Riemann</button>
+    <button id="tab3" onclick="selectSeven(3)">III · Yang–Mills</button>
+    <button id="tab4" onclick="selectSeven(4)">IV · Navier–Stokes</button>
+    <button id="tab5" onclick="selectSeven(5)">V · BSD</button>
+    <button id="tab6" onclick="selectSeven(6)">VI · Hodge</button>
+    <button id="tab7" onclick="selectSeven(7)">VII · Poincaré</button>
+  </div>
+
+  <div class="panel on" id="panel1">
+    <h3>P vs NP</h3>
+    <div class="eq">R_N = C(N,2)  ⇒  T(N) = O(N²)</div>
+    <p>The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls.</p>
+    <div class="cw"><canvas id="cv1" width="800" height="300"></canvas></div>
+  </div>
+  <div class="panel" id="panel2">
+    <h3>Riemann Hypothesis</h3>
+    <div class="eq">ξ(s) = ξ(1−s)  ⇒  Re(s) = ½</div>
+    <p>The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their density to zero.</p>
+    <div class="cw"><canvas id="cv2" width="800" height="300"></canvas></div>
+  </div>
+  <div class="panel" id="panel3">
+    <h3>Yang–Mills Mass Gap</h3>
+    <div class="eq">E₀ = λc² &gt; 0  ⇒  ΔM &gt; 0</div>
+    <p>The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would close the gap.</p>
+    <div class="cw"><canvas id="cv3" width="800" height="300"></canvas></div>
+  </div>
+  <div class="panel" id="panel4">
+    <h3>Navier–Stokes Smoothness</h3>
+    <div class="eq">det(CM₅) = 0  ⇒  ‖u‖_{C^∞} &lt; ∞</div>
+    <p>Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The Cayley–Menger determinant prevents rank inflation.</p>
+    <div class="cw"><canvas id="cv4" width="800" height="300"></canvas></div>
+  </div>
+  <div class="panel" id="panel5">
+    <h3>Birch &amp; Swinnerton-Dyer</h3>
+    <div class="eq">rank(E(Q)) = ord_{s=1} L(E,s)</div>
+    <p>Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) counts the same planes.</p>
+    <div class="cw"><canvas id="cv5" width="800" height="300"></canvas></div>
+  </div>
+  <div class="panel" id="panel6">
+    <h3>Hodge Conjecture</h3>
+    <div class="eq">H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles</div>
+    <p>Every Hodge class is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under Ω_{A₀}.</p>
+    <div class="cw"><canvas id="cv6" width="800" height="300"></canvas></div>
+  </div>
+  <div class="panel" id="panel7">
+    <h3>Poincaré Conjecture</h3>
+    <div class="eq">∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³</div>
+    <p>Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms to S³.</p>
+    <div class="cw"><canvas id="cv7" width="800" height="300"></canvas></div>
+  </div>
+</section>
+
+<section id="lab">
+  <div class="kicker" data-en="Chapter III" data-cz="Kapitola III">Chapter III</div>
+  <h2 data-en="A small laboratory" data-cz="Malá laboratoř">A small laboratory</h2>
+  <div class="lab">
+    <div class="lab-panel">
+      <div class="lab-row">
+        <label><span data-en="Dimension N" data-cz="Dimenze N">Dimension N</span><b id="valN">5</b></label>
+        <input type="range" id="inN" min="2" max="10" value="5" oninput="updateN(this.value)">
+      </div>
+      <div class="lab-row">
+        <label><span data-en="Rotation speed" data-cz="Rychlost rotace">Rotation speed</span><b id="valS">0.60</b></label>
+        <input type="range" id="inS" min="0" max="2" step="0.05" value="0.6" oninput="updateS(this.value)">
+      </div>
+      <div class="lab-row">
+        <label><span data-en="Show" data-cz="Zobrazit">Show</span></label>
+        <div class="chips">
+          <button class="chip on" id="chipPlanes" onclick="toggleFlag('planes',this)"
+                  data-en="Planes" data-cz="Roviny">Planes</button>
+          <button class="chip on" id="chipNodes" onclick="toggleFlag('nodes',this)"
+                  data-en="Nodes" data-cz="Uzly">Nodes</button>
+          <button class="chip on" id="chipOrbits" onclick="toggleFlag('orbits',this)"
+                  data-en="Orbits" data-cz="Orbity">Orbits</button>
+        </div>
+      </div>
+    </div>
+    <div class="lab-stage">
+      <canvas id="labCv" width="800" height="450"></canvas>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 · Pierre LeBaux ·
+  <span data-en="Special Theory of Computational Relativity"
+        data-cz="Speciální teorie výpočetní relativity">
+    Special Theory of Computational Relativity
+  </span>
+  <br>
+  <button class="navlink" onclick="goTop()"
+          data-en="↑ Back to top" data-cz="↑ Zpět nahoru">↑ Back to top</button>
+</footer>
+
+<script>
+/* ============================================================
+   ERROR BANNER — no suppression, just visible display
+   ============================================================ */
+window.onerror = function (msg) {
+  var b = document.getElementById('banner');
+  if (b) { b.textContent = '⚠ ' + msg; b.classList.add('on'); }
+};
+
+/* ============================================================
+   LIVE STATUS — shows which handler fired
+   ============================================================ */
+var statusTimer = null;
+function showStatus(msg) {
+  var s = document.getElementById('status');
+  if (!s) return;
+  s.textContent = msg;
+  s.classList.add('on');
+  if (statusTimer) clearTimeout(statusTimer);
+  statusTimer = setTimeout(function () {
+    s.classList.remove('on');
+  }, 1100);
+}
+
+/* ============================================================
+   NAVIGATION — dynamic header height offset
+   ============================================================ */
+function headerOffset() {
+  var h = document.querySelector('header');
+  return (h ? h.offsetHeight : 60) + 16;
+}
+
+function goTo(id) {
+  showStatus('→ ' + id);
+  var el = document.getElementById(id);
+  if (!el) { showStatus('✗ no #' + id); return; }
+  var top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset();
+  try { window.scrollTo({ top: top, behavior: 'smooth' }); }
+  catch (e) { window.scrollTo(0, top); }
+}
+
+function goTop() {
+  showStatus('→ top');
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  catch (e) { window.scrollTo(0, 0); }
+}
+
+/* ============================================================
+   LANGUAGE
+   ============================================================ */
+function setLang(lang) {
+  showStatus('lang: ' + lang);
+  if (lang !== 'cz') lang = 'en';
+  var els = document.querySelectorAll('[data-en][data-cz]');
+  for (var i = 0; i < els.length; i++) {
+    var v = els[i].getAttribute('data-' + lang);
+    if (v !== null) els[i].textContent = v;
+  }
+  var en = document.getElementById('btnEn');
+  var cz = document.getElementById('btnCz');
+  if (en) en.className = (lang === 'en') ? 'active' : '';
+  if (cz) cz.className = (lang === 'cz') ? 'active' : '';
+}
+
+/* ============================================================
+   SEVEN PROBLEMS TABS — also re-measures the newly visible canvas
+   ============================================================ */
+function selectSeven(n) {
+  showStatus('tab ' + n);
+  for (var i = 1; i <= 7; i++) {
+    var p = document.getElementById('panel' + i);
+    if (p) p.classList.toggle('on', i === n);
+    var b = document.getElementById('tab' + i);
+    if (b) b.classList.toggle('active', i === n);
+  }
+  // After the browser lays out the newly-visible panel, resize its canvas
+  requestAnimationFrame(setupCanvases);
+}
+
+/* ============================================================
+   LAB CONTROLS
+   ============================================================ */
+var LAB = { N: 5, speed: 0.6, planes: true, nodes: true, orbits: true };
+
+function updateN(v) {
+  var n = parseInt(v, 10);
+  if (isNaN(n) || n < 2) n = 2;
+  if (n > 10) n = 10;
+  LAB.N = n;
+  var el = document.getElementById('valN');
+  if (el) el.textContent = n;
+}
+
+function updateS(v) {
+  var s = parseFloat(v);
+  if (isNaN(s)) s = 0.6;
+  LAB.speed = s;
+  var el = document.getElementById('valS');
+  if (el) el.textContent = s.toFixed(2);
+}
+
+function toggleFlag(name, btn) {
+  LAB[name] = !LAB[name];
+  if (btn) btn.classList.toggle('on', LAB[name]);
+  showStatus(name + ': ' + LAB[name]);
+}
+
+/* ============================================================
+   CANVAS RENDERERS — pure functions, no external state
+   ============================================================ */
+function draw1(ctx, W, H, t) {
+  ctx.fillStyle = 'rgba(224,169,82,0.75)';
+  ctx.font = '12px monospace';
+  ctx.fillText('2^N tree -> so(N)', 20, 26);
+  var lx = 30, ly = H / 2;
+  for (var l = 0; l < 4; l++) {
+    var count = Math.pow(2, l);
+    for (var i = 0; i < count; i++) {
+      var x = lx + l * 30;
+      var y = ly + (i - count / 2) * (H * 0.6 / Math.max(count, 1));
+      ctx.fillStyle = 'rgba(201,128,128,' + (0.7 - l * 0.15) + ')';
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  var cx = W * 0.72, cy = ly, rad = Math.min(W, H) * 0.28;
+  for (var p = 0; p < 15; p++) {
+    var a = (p / 15) * Math.PI + t * 0.4;
+    ctx.strokeStyle = 'hsla(' + (40 + p * 20) + ',40%,60%,0.35)';
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+    ctx.lineTo(cx - Math.cos(a) * rad, cy - Math.sin(a) * rad);
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#f4c77a';
+  ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.fill();
+}
+
+function draw2(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2;
+  ctx.strokeStyle = 'rgba(127,163,184,0.15)';
+  ctx.beginPath(); ctx.moveTo(40, cy); ctx.lineTo(W - 40, cy); ctx.stroke();
+  ctx.strokeStyle = '#7ba78c';
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(cx, 20); ctx.lineTo(cx, H - 20); ctx.stroke();
+  ctx.fillStyle = 'rgba(123,167,140,0.9)';
+  ctx.font = '12px monospace';
+  ctx.fillText('Re(s) = 1/2', cx + 12, 34);
+  for (var i = -4; i <= 4; i++) {
+    if (i === 0) continue;
+    var y = cy + i * 30 + Math.sin(t * 1.6 + i) * 4;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath(); ctx.arc(cx, y, 5, 0, Math.PI * 2); ctx.fill();
+  }
+}
+
+function draw3(ctx, W, H, t) {
+  var cy = H * 0.66;
+  ctx.fillStyle = 'rgba(15,20,34,0.9)';
+  ctx.fillRect(40, cy, W - 80, 40);
+  ctx.fillStyle = 'rgba(164,158,144,0.7)';
+  ctx.font = '12px monospace';
+  ctx.fillText('vacuum floor', 52, cy + 26);
+  var gapY = cy - 70 - Math.sin(t * 1.4) * 3;
+  ctx.strokeStyle = '#c98080';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(40, gapY); ctx.lineTo(W - 40, gapY); ctx.stroke();
+  ctx.fillStyle = '#c98080';
+  ctx.fillText('Delta M > 0', W / 2 - 40, gapY - 10);
+  for (var x = 70; x < W - 60; x += 34) {
+    var ey = gapY - 26 - Math.abs(Math.sin(x * 0.05 + t * 2.2)) * 42;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath(); ctx.arc(x, ey, 4, 0, Math.PI * 2); ctx.fill();
+  }
+}
+
+function draw4(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2;
+  var rmax = Math.min(W, H) * 0.38;
+  for (var r = 14; r < rmax; r += 10) {
+    var speed = (rmax - r) * 0.03;
+    ctx.strokeStyle = 'hsla(' + (200 + r) + ',45%,55%,0.55)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, t * speed, t * speed + Math.PI * 1.4);
+    ctx.stroke();
+  }
+  ctx.fillStyle = 'rgba(123,167,140,0.9)';
+  ctx.font = '12px monospace';
+  ctx.fillText('C-infinity smooth', cx - 60, 26);
+}
+
+function draw5(ctx, W, H, t) {
+  var cx = W * 0.34, cy = H / 2;
+  ctx.strokeStyle = '#9b8ac4';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  var first = true;
+  for (var py = -120; py <= 120; py += 3) {
+    var y = py / 40;
+    var x = y * y - 1;
+    var px = cx + x * 30;
+    if (first) { ctx.moveTo(px, cy + py); first = false; }
+    else ctx.lineTo(px, cy + py);
+  }
+  ctx.stroke();
+  for (var i = 1; i <= 4; i++) {
+    var a = t * 0.8 + i;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath();
+    ctx.arc(cx + Math.cos(a) * (30 + i * 14), cy + Math.sin(a) * (22 + i * 6), 4.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  var bx = W * 0.62;
+  ctx.fillStyle = 'rgba(212,207,196,0.75)';
+  ctx.font = '12px monospace';
+  ctx.fillText('L(E,s) at s=1', bx, 46);
+  for (var k = 1; k <= 4; k++) {
+    ctx.fillStyle = '#e0a952';
+    ctx.fillRect(bx, 60 + k * 26, 60, 16);
+    ctx.fillStyle = 'rgba(6,8,15,0.9)';
+    ctx.fillText('ord ' + k, bx + 8, 60 + k * 26 + 12);
+  }
+}
+
+function draw6(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2;
+  ctx.strokeStyle = 'rgba(127,163,184,0.18)';
+  for (var i = -4; i <= 4; i++) {
+    ctx.beginPath();
+    ctx.moveTo(cx - 180, cy + i * 22);
+    ctx.lineTo(cx + 180, cy + i * 22 + Math.sin(i + t) * 8);
+    ctx.stroke();
+  }
+  ctx.strokeStyle = '#d4af37';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, 130 + Math.sin(t) * 6, 60, Math.PI / 6, 0, Math.PI * 2);
+  ctx.stroke();
+  for (var j = 0; j < 8; j++) {
+    var a = t * 0.6 + j * Math.PI / 4;
+    ctx.fillStyle = '#e0a952';
+    ctx.beginPath();
+    ctx.arc(cx + Math.cos(a) * 130, cy + Math.sin(a) * 60, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.fillStyle = 'rgba(212,175,55,0.9)';
+  ctx.font = '12px monospace';
+  ctx.fillText('rational cycle', cx - 130, cy - 84);
+}
+
+function draw7(ctx, W, H, t) {
+  var cx = W / 2, cy = H / 2;
+  var factor = 0.7 + 0.3 * Math.sin(t * 0.9);
+  var rx = 130 * factor + 20;
+  var ry = 130;
+  ctx.strokeStyle = '#7ba78c';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = 'rgba(123,167,140,0.4)';
+  ctx.lineWidth = 1.2;
+  for (var k = 1; k <= 3; k++) {
+    ctx.beginPath();
+    ctx.ellipse(cx, cy,
+      rx * Math.cos(k * Math.PI / 8),
+      ry * Math.sin(k * Math.PI / 8),
+      0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.fillStyle = 'rgba(123,167,140,0.9)';
+  ctx.font = '12px monospace';
+  ctx.fillText('M3 -> S3', cx - 34, 26);
+}
+
+function drawLab(ctx, W, H, t) {
+  ctx.fillStyle = 'rgba(127,163,184,0.06)';
+  for (var gx = 20; gx < W; gx += 32) {
+    for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+  }
+  var N = LAB.N;
+  var R = N * (N - 1) / 2;
+  var cx = W / 2, cy = H / 2;
+  var rad = Math.min(W, H) * 0.34;
+  var palette = ['#e0a952','#7ba78c','#c98080','#9b8ac4','#7fa3b8'];
+
+  if (LAB.nodes) {
+    ctx.strokeStyle = 'rgba(127,163,184,0.08)';
+    for (var i = 0; i < N; i++) {
+      var a = (i / N) * Math.PI * 2 + t * 0.1;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(a) * rad * 1.6, cy + Math.sin(a) * rad * 1.6);
+      ctx.stroke();
+    }
+  }
+  if (LAB.planes) {
+    for (var p = 0; p < R; p++) {
+      var ang = (p / R) * Math.PI + t * 0.22;
+      ctx.strokeStyle = palette[p % palette.length] + (p % 2 ? '66' : '44');
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(ang) * rad * 1.4, cy + Math.sin(ang) * rad * 1.4);
+      ctx.lineTo(cx - Math.cos(ang) * rad * 1.4, cy - Math.sin(ang) * rad * 1.4);
+      ctx.stroke();
+    }
+  }
+  if (LAB.orbits) {
+    for (var j = 1; j <= N; j++) {
+      var rr = (j / N) * rad;
+      ctx.strokeStyle = 'rgba(127,163,184,0.14)';
+      ctx.beginPath(); ctx.arc(cx, cy, rr, 0, Math.PI * 2); ctx.stroke();
+      var aa = t * (0.6 + j * 0.1) + j * Math.PI * 2 / N;
+      ctx.fillStyle = palette[j % palette.length];
+      ctx.beginPath();
+      ctx.arc(cx + Math.cos(aa) * rr, cy + Math.sin(aa) * rr, 3.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  var pulse = 1 + 0.08 * Math.sin(t * 1.6);
+  ctx.fillStyle = '#f4c77a';
+  ctx.beginPath(); ctx.arc(cx, cy, 5 * pulse, 0, Math.PI * 2); ctx.fill();
+}
+
+/* ============================================================
+   CANVAS SETUP — sizes canvases from their real CSS layout
+   ============================================================ */
+var canvases = {};
+
+function setupCanvases() {
+  var ids = ['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv'];
+  for (var i = 0; i < ids.length; i++) {
+    var cv = document.getElementById(ids[i]);
+    if (!cv) continue;
+    // clientWidth is 0 when the parent panel is hidden — safe minimum 1
+    var cw = cv.clientWidth;
+    var ch = cv.clientHeight;
+    if (cw < 1 || ch < 1) {
+      // hidden panel: leave it alone; it will be resized when made visible
+      continue;
+    }
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.max(1, Math.round(cw * dpr));
+    var h = Math.max(1, Math.round(ch * dpr));
+    if (cv.width !== w || cv.height !== h) {
+      cv.width = w;
+      cv.height = h;
+    }
+    var ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvases[ids[i]] = ctx;
+  }
+}
+
+/* ============================================================
+   MAIN ANIMATION LOOP — single rAF, guarded, no recursion
+   ============================================================ */
+var startTime = Date.now();
+var lastFrameTs = startTime;
+
+function frame() {
+  var now = Date.now();
+  var dt = (now - lastFrameTs) / 1000;
+  if (dt > 0.05) dt = 0.05;
+  if (dt < 0) dt = 0;
+  lastFrameTs = now;
+  var t = (now - startTime) / 1000;
+
+  // find visible seven panel
+  var visible = 0;
+  for (var i = 1; i <= 7; i++) {
+    var p = document.getElementById('panel' + i);
+    if (p && p.classList.contains('on')) { visible = i; break; }
+  }
+
+  if (visible) {
+    var ctx = canvases['cv' + visible];
+    var cv = document.getElementById('cv' + visible);
+    if (ctx && cv) {
+      try {
+        var W = cv.clientWidth, H = cv.clientHeight;
+        if (W > 1 && H > 1) {
+          ctx.clearRect(0, 0, W, H);
+          ctx.fillStyle = '#06080f';
+          ctx.fillRect(0, 0, W, H);
+          if (visible === 1) draw1(ctx, W, H, t);
+          else if (visible === 2) draw2(ctx, W, H, t);
+          else if (visible === 3) draw3(ctx, W, H, t);
+          else if (visible === 4) draw4(ctx, W, H, t);
+          else if (visible === 5) draw5(ctx, W, H, t);
+          else if (visible === 6) draw6(ctx, W, H, t);
+          else if (visible === 7) draw7(ctx, W, H, t);
+        }
+      } catch (e) {}
+    }
+  }
+
+  var lctx = canvases['labCv'];
+  var lcv = document.getElementById('labCv');
+  if (lctx && lcv) {
+    try {
+      var LW = lcv.clientWidth, LH = lcv.clientHeight;
+      if (LW > 1 && LH > 1) {
+        lctx.clearRect(0, 0, LW, LH);
+        lctx.fillStyle = '#06080f';
+        lctx.fillRect(0, 0, LW, LH);
+        drawLab(lctx, LW, LH, t * LAB.speed);
+      }
+    } catch (e) {}
+  }
+
+  requestAnimationFrame(frame);
+}
+
+/* ============================================================
+   START
+   ============================================================ */
+function startApp() {
+  // Wait one frame so the browser has completed initial layout,
+  // then measure and start the loop.
+  requestAnimationFrame(function () {
+    setupCanvases();
+    requestAnimationFrame(frame);
+  });
+  window.addEventListener('resize', setupCanvases);
+  console.log('CoReX ready. Handlers: goTo, goTop, setLang, selectSeven, updateN, updateS, toggleFlag');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
+</script>
+</body>
+</html>
