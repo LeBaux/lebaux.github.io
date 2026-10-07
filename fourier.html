@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>A₀ Fourier Simulation Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0C10;--pn:#10141b;--ln:#232a36;--tx:#d7dde8;--mu:#7d8798;--cy:#3de0ff;--go:#ffc94d;--mg:#ff3df0;--rd:#ff4d5e;--wh:#f2f5fa;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:13px/1.45 "IBM Plex Sans",system-ui,sans-serif}
+.app{display:grid;grid-template-columns:276px minmax(0,1fr);min-height:100vh}
+aside{background:var(--pn);border-right:1px solid var(--ln);padding:16px 16px 24px;overflow-y:auto}
+h1{font:500 15px/1.3 "IBM Plex Mono",monospace;margin:0 0 2px;color:var(--wh)}
+.sub{color:var(--mu);font-size:12px;margin-bottom:14px}
+.grp{border-top:1px solid var(--ln);padding:12px 0 4px}
+label{display:block;margin:8px 0 3px;color:var(--mu);font-size:12px}
+.ck,.rd{display:flex;gap:8px;align-items:center;margin:6px 0;color:var(--tx);font-size:13px}
+input[type=range]{width:100%;accent-color:var(--cy)}
+input[type=checkbox],input[type=radio]{accent-color:var(--cy)}
+select,button{background:#0d1117;color:var(--tx);border:1px solid var(--ln);border-radius:6px;padding:6px 8px;font:inherit;width:100%}
+button{cursor:pointer}button:hover{border-color:var(--cy)}
+.row{display:flex;gap:8px}
+.ind{font:12px "IBM Plex Mono",monospace;color:var(--cy);margin-top:4px}
+details{margin-top:10px;color:var(--mu);font-size:12px}summary{cursor:pointer;color:var(--tx)}
+main{display:flex;flex-direction:column;min-width:0;padding:12px;gap:10px}
+#hd{display:flex;flex-wrap:wrap;gap:6px 16px;font:12px "IBM Plex Mono",monospace;color:var(--mu);background:var(--pn);border:1px solid var(--ln);border-radius:8px;padding:8px 12px}
+#hd b{color:var(--wh);font-weight:500}
+canvas{display:block;width:100%;background:var(--pn);border:1px solid var(--ln);border-radius:8px;touch-action:none}
+#main{height:min(54vh,500px);min-height:300px}#spec{height:190px}
+.fn{color:var(--mu);font-size:11.5px}
+@media(max-width:820px){.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--ln)}}
+</style></head><body>
+<div class="app">
+<aside>
+<h1>A₀ Fourier Engine</h1><div class="sub">Classical synthesis vs the A₀ framework mode</div>
+<div class="grp">
+<label for="N">Dimension / harmonic count N</label><input type="range" id="N" min="1" max="64" value="24">
+<div class="ind" id="Nind"></div>
+<label for="sig">Signal</label>
+<select id="sig"><option value="square">Square wave</option><option value="saw">Sawtooth wave</option><option value="tri">Triangle wave</option><option value="pulse">Pulse train</option><option value="custom">Custom drawn path</option></select>
+</div>
+<div class="grp">
+<label for="spd">Simulation speed <span id="spdv">1.0×</span></label><input type="range" id="spd" min="0" max="3" step="0.1" value="1">
+<div class="row" style="margin-top:8px"><button id="pp">Pause</button><button id="rs">Reset</button></div>
+<label for="ts">Time t = <span id="tsv">0.00</span> rad</label><input type="range" id="ts" min="0" max="6.2832" step="0.001" value="0">
+</div>
+<div class="grp">
+<div class="rd"><input type="radio" name="m" id="mC" value="C"><label for="mC" style="margin:0;color:var(--tx)">Classical Fourier</label></div>
+<div class="rd"><input type="radio" name="m" id="mA" value="A0" checked><label for="mA" style="margin:0;color:var(--tx)">A₀ Computational Relativity</label></div>
+<div class="ck"><input type="checkbox" id="fw" checked><label for="fw" style="margin:0;color:var(--tx)">Euler firewall e<sup>iπ</sup>+1=0</label></div>
+<div class="ck"><input type="checkbox" id="tr" checked><label for="tr" style="margin:0;color:var(--tx)">Orbital tiers δ, φ, O₈</label></div>
+<div class="ck"><input type="checkbox" id="ep" checked><label for="ep" style="margin:0;color:var(--tx)">Epicycles</label></div>
+<div class="ck"><input type="checkbox" id="gb" checked><label for="gb" style="margin:0;color:var(--tx)">Highlight Gibbs overshoot</label></div>
+</div>
+<div class="grp">
+<label for="sg">Firewall width σ <span id="sgv">0.35</span></label><input type="range" id="sg" min="0.05" max="1" step="0.01" value="0.35">
+<label for="lm">Seed λ <span id="lmv"></span></label><input type="range" id="lm" min="0.01" max="0.5" step="0.01" value="0.02">
+</div>
+<details><summary>What this implements</summary>
+<p>Mode A sums the truncated series with no filtering, so the ~9% Gibbs overshoot appears.</p>
+<p>Mode B anchors a₀ at 0 (the lim 0/x seed is 0 in ordinary analysis) and caps k at Λ = 1/λ. The literal firewall factor 1−exp(−|Δf|/σ) would zero every amplitude away from jumps, so it is applied as a blend weight g(t) near jumps between plain and σ-smoothed (Lanczos) harmonics. The overshoot reduction is that smoothing, not a physical derivation.</p>
+<p>The R<sub>N</sub> = N(N−1)/2 counter is shown as specified. Actual synthesis cost is k_max terms per sample, which is O(N).</p>
+<p>Custom path: choose it, then draw on the waveform panel.</p></details>
+</aside>
+<main>
+<div id="hd"></div>
+<canvas id="main"></canvas>
+<canvas id="spec"></canvas>
+<div class="fn">Theory-programme visualization. Fourier synthesis is standard; the A₀ mode is a labeled smoothing model, not an established physical result.</div>
+</main></div>
+<script>
+const TAU=Math.PI*2,MAXK=64,M=256,DUTY=.25,$=id=>document.getElementById(id);
+const S={N:24,speed:1,mode:'A0',fw:true,tr:true,ep:true,gb:true,t:0,play:true,sig:'square',sigma:.35,lam:.02};
+const custom=new Float32Array(M);let cver=0;
+for(let i=0;i<M;i++){const u=i/M;custom[i]=u<.25?.8:u<.6?.8-(u-.25)/.35*1.4:u<.75?-.6:.2}
+const wrap=t=>((t+Math.PI)%TAU+TAU)%TAU-Math.PI;
+function ref(t){const w=wrap(t);switch(S.sig){
+case'square':return Math.sin(t)>=0?1:-1;
+case'saw':return w/Math.PI;
+case'tri':return 2/Math.PI*Math.asin(Math.sin(t));
+case'pulse':return Math.abs(w)<Math.PI*DUTY?1:0;
+default:{const u=(((t%TAU)+TAU)%TAU)/TAU*M,i=Math.floor(u),f=u-i;return custom[i%M]*(1-f)+custom[(i+1)%M]*f}}}
+let A0=0,a=new Float64Array(MAXK+1),b=new Float64Array(MAXK+1),jumps=[];
+function coefs(){a.fill(0);b.fill(0);A0=0;jumps=[];const g=S.sig;
+if(g==='square'){for(let k=1;k<=MAXK;k+=2)b[k]=4/(Math.PI*k);jumps=[{t:0,s:2},{t:Math.PI,s:2}]}
+else if(g==='saw'){for(let k=1;k<=MAXK;k++)b[k]=2/(Math.PI*k)*(k%2?1:-1);jumps=[{t:Math.PI,s:2}]}
+else if(g==='tri'){for(let k=1;k<=MAXK;k+=2)b[k]=8/(Math.PI**2*k*k)*(((k-1)/2)%2?-1:1)}
+else if(g==='pulse'){A0=DUTY;for(let k=1;k<=MAXK;k++)a[k]=2*Math.sin(k*Math.PI*DUTY)/(Math.PI*k);jumps=[{t:Math.PI*DUTY,s:1},{t:TAU-Math.PI*DUTY,s:1}]}
+else{let s0=0;for(let i=0;i<M;i++)s0+=custom[i];A0=s0/M;
+for(let k=1;k<=MAXK;k++){let c=0,s=0;for(let i=0;i<M;i++){const th=TAU*i/M*k;c+=custom[i]*Math.cos(th);s+=custom[i]*Math.sin(th)}a[k]=2*c/M;b[k]=2*s/M}
+for(let i=0;i<M;i++){const d=Math.abs(custom[(i+1)%M]-custom[i]);if(d>.4)jumps.push({t:(i+.5)*TAU/M,s:d})}}}
+const isA=()=>S.mode==='A0',Kact=()=>isA()?Math.min(S.N,Math.floor(1/S.lam)):S.N;
+const L=(k,K)=>{const x=Math.PI*k/(K+1);return Math.sin(x)/x};
+function gAt(t,K){if(!(isA()&&S.fw)||!jumps.length)return 0;
+const wd=Math.min(.7,Math.max(.12,6/Math.max(K,1)));let mx=0,J=0;
+for(const j of jumps){let d=Math.abs(((t-j.t)%TAU+TAU)%TAU);d=Math.min(d,TAU-d);J+=j.s*Math.exp(-((d/wd)**2));mx=Math.max(mx,j.s)}
+return 1-Math.exp(-(J/mx)/S.sigma)}
+const wt=(k,g,K)=>1-g*(1-L(k,K));
+function synth(t,K,g){let y=isA()?0:A0;for(let k=1;k<=K;k++)y+=wt(k,g,K)*(a[k]*Math.cos(k*t)+b[k]*Math.sin(k*t));return y}
+const refv=t=>ref(t)-(isA()?A0:0);
+let curve=null,key='';
+function build(){const K=Kact(),kk=[S.sig,S.N,S.mode,S.fw,S.sigma,S.lam,cver].join();if(kk===key)return;key=kk;
+const P=600;curve={y:new Float32Array(P+1),n:P};let mx=-9,mn=9,rx=-9,rn=9;
+for(let i=0;i<=P;i++){const t=TAU*i/P,y=synth(t,K,gAt(t,K)),r=refv(t);curve.y[i]=y;mx=Math.max(mx,y);mn=Math.min(mn,y);rx=Math.max(rx,r);rn=Math.min(rn,r)}
+const J=Math.max(0,...jumps.map(j=>j.s));curve.ov=J?Math.max(0,mx-rx,rn-mn)/J*100:0;curve.rx=rx;curve.rn=rn}
+const TC=['#5b6b86','#f2f5fa','#3de0ff','#ffc94d','#ff3df0'],tcol=k=>TC[k<=4?k:0],TN=['','σ/π','δ','φ','O₈'];
+const cv={main:$('main'),spec:$('spec')},cx={main:cv.main.getContext('2d'),spec:cv.spec.getContext('2d')};
+function fit(){for(const k in cv){const c=cv[k],r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);cx[k].setTransform(d,0,0,d,0,0)}}
+new ResizeObserver(fit).observe(document.body);
+function geo(){const W=cv.main.clientWidth,H=cv.main.clientHeight;return{W,H,sc:H/2/1.75,cy:H/2,lw:W*.38,wx0:W*.41,ww:W-14-W*.41,ox:W*.19}}
+function drawMain(){const x=cx.main,G=geo(),{W,H,sc,cy,lw,wx0,ww,ox}=G,K=Kact(),t=S.t,g=gAt(t,K);build();
+x.clearRect(0,0,W,H);x.font='11px "IBM Plex Mono",monospace';
+x.strokeStyle='#232a36';x.lineWidth=1;x.strokeRect(6,6,lw-6,H-12);x.strokeRect(wx0-8,6,ww+16,H-12);
+x.fillStyle='#7d8798';x.fillText('Epicycle orbitals',14,22);x.fillText('Waveform f(t)'+(S.sig==='custom'?'  (draw here)':''),wx0,22);
+x.beginPath();x.moveTo(wx0,cy);x.lineTo(wx0+ww,cy);x.stroke();
+['0','π','2π'].forEach((s,i)=>x.fillText(s,wx0+ww*i/2-(i?8:0),H-14));
+// reference
+x.strokeStyle='rgba(242,245,250,.28)';x.beginPath();
+for(let i=0;i<=curve.n;i++){const tt=TAU*i/curve.n,X=wx0+ww*i/curve.n,Y=cy-sc*refv(tt);i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke();
+// synthesized
+const base=isA()?'#3de0ff':'#9fb4ff';x.lineWidth=2;x.strokeStyle=base;x.beginPath();
+for(let i=0;i<=curve.n;i++){const X=wx0+ww*i/curve.n,Y=cy-sc*curve.y[i];i?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke();
+if(S.gb){const e=.02*Math.max(.5,curve.rx-curve.rn);x.strokeStyle='#ff4d5e';x.lineWidth=3;x.beginPath();let on=false;
+for(let i=0;i<=curve.n;i++){const y=curve.y[i],o=y>curve.rx+e||y<curve.rn-e,X=wx0+ww*i/curve.n,Y=cy-sc*y;
+if(o){on?x.lineTo(X,Y):x.moveTo(X,Y);on=true}else on=false}x.stroke()}
+// firewall glow
+const fwOn=isA()&&S.fw&&jumps.length>0;
+if(fwOn){x.save();x.shadowColor='#ff3df0';x.shadowBlur=14;x.fillStyle='#ff3df0';x.strokeStyle='rgba(255,61,240,.35)';x.setLineDash([3,4]);x.lineWidth=1;
+for(const j of jumps){const X=wx0+ww*j.t/TAU,Y=cy-sc*synth(j.t,K,gAt(j.t,K));x.beginPath();x.moveTo(X,cy-sc*1.6);x.lineTo(X,cy+sc*1.6);x.stroke();x.beginPath();x.arc(X,Y,4,0,TAU);x.fill()}x.restore()}
+// epicycles
+x.save();x.beginPath();x.rect(7,7,lw-8,H-14);x.clip();
+let px=ox,py=cy-sc*(isA()?0:A0);
+for(let k=1;k<=K;k++){const w=wt(k,g,K),r=w*Math.hypot(a[k],b[k]);if(r<1e-9)continue;
+const ang=k*t+Math.atan2(a[k],b[k]),R=sc*r,nx=px+R*Math.cos(ang),ny=py-R*Math.sin(ang),col=tcol(k);
+if(S.ep&&R>.6){x.strokeStyle=col;x.globalAlpha=k<=4?.8:.35;x.lineWidth=1;x.beginPath();x.arc(px,py,R,0,TAU);x.stroke();
+x.beginPath();x.moveTo(px,py);x.lineTo(nx,ny);x.stroke();
+if(S.tr&&k>=2&&k<=4){x.globalAlpha=.9;x.lineWidth=1.4;x.beginPath();
+for(let q=0;q<=120;q++){const th=TAU*q/120,rr=R*Math.abs(Math.cos(k*(th-ang)));const X=px+rr*Math.cos(th),Y=py-rr*Math.sin(th);q?x.lineTo(X,Y):x.moveTo(X,Y)}x.stroke();
+x.fillStyle=col;x.fillText(TN[k],px+R+3,py-3)}x.globalAlpha=1}
+px=nx;py=ny}
+x.strokeStyle='#ff3df0';x.lineWidth=1;x.beginPath();x.moveTo(ox-7,cy);x.lineTo(ox+7,cy);x.moveTo(ox,cy-7);x.lineTo(ox,cy+7);x.stroke();
+x.fillStyle=isA()?'#ff3df0':'#7d8798';x.fillText(isA()?'A₀ (0,0)':'origin',ox+9,cy+16);x.restore();
+// tracker
+const tx=wx0+ww*t/TAU;x.strokeStyle='rgba(61,224,255,.7)';x.setLineDash([4,4]);x.lineWidth=1;x.beginPath();x.moveTo(px,py);x.lineTo(tx,py);x.stroke();x.setLineDash([]);
+x.fillStyle='#f2f5fa';x.beginPath();x.arc(px,py,3.5,0,TAU);x.fill();x.beginPath();x.arc(tx,py,4,0,TAU);x.fill()}
+function drawSpec(){const x=cx.spec,c=cv.spec,W=c.clientWidth,H=c.clientHeight,K=Kact(),g=gAt(S.t,K),pad=34,bw=(W-pad-12)/MAXK,bs=H-24,top=36;
+x.clearRect(0,0,W,H);x.font='11px "IBM Plex Mono",monospace';
+let mx=1e-9;for(let k=1;k<=S.N;k++)mx=Math.max(mx,Math.hypot(a[k],b[k]));
+for(let k=1;k<=S.N;k++){const h=(bs-top)*Math.hypot(a[k],b[k])/mx,x0=pad+(k-1)*bw+1,col=tcol(k),act=k<=K,w=act?wt(k,g,K):0;
+x.strokeStyle=col;x.globalAlpha=.5;x.strokeRect(x0,bs-h,bw-2,h);x.fillStyle=col;x.globalAlpha=act?.9:.1;x.fillRect(x0,bs-h*w,bw-2,h*w)}
+x.globalAlpha=1;x.fillStyle='#7d8798';[1,2,3,4,8,16,32,64].forEach(k=>x.fillText(k,pad+(k-1)*bw,H-8));x.fillText('|c_k|',4,top+4);
+let lx=pad;[['σ/π',1],['δ',2],['φ',3],['O₈',4]].forEach(([n,k])=>{x.fillStyle=tcol(k);x.fillRect(lx,12,9,9);x.fillStyle='#d7dde8';x.fillText(n,lx+13,21);lx+=56});
+if(isA()){x.strokeStyle='#ff3df0';x.setLineDash([4,4]);x.beginPath();x.moveTo(pad+K*bw,top-6);x.lineTo(pad+K*bw,bs);x.stroke();x.setLineDash([]);x.fillStyle='#ff3df0';x.fillText('Λ=1/λ',pad+K*bw+4,top)}
+const on=isA()&&S.fw;x.fillStyle=on?'#ff3df0':'#7d8798';x.textAlign='right';x.fillText('Firewall: '+(on?'ACTIVE':'INACTIVE'),W-10,21);x.textAlign='left'}
+let last=performance.now(),fps=60,hdT=0;
+function loop(ts){const dt=Math.min(.1,(ts-last)/1000);last=ts;fps+=(1/Math.max(dt,1e-3)-fps)*.1;
+if(S.play){S.t=(S.t+S.speed*dt*.8)%TAU;$('ts').value=S.t;$('tsv').textContent=S.t.toFixed(2)}
+drawMain();drawSpec();
+if(ts-hdT>200){hdT=ts;const N=S.N,R=N*(N-1)/2,K=Kact();
+$('hd').innerHTML=`<span>Mode <b>${isA()?'A₀ Computational Relativity':'Classical Fourier'}</b></span><span>N <b>${N}</b></span><span>R<sub>N</sub> <b>${R}</b></span><span>k<sub>max</sub> <b>${K}</b> (ops/sample)</span><span>Gibbs overshoot <b>${curve.ov.toFixed(1)}%</b></span><span>FPS <b>${fps.toFixed(0)}</b></span><span>Status <b>${S.play?'running':'paused'}</b></span>`}
+requestAnimationFrame(loop)}
+function ui(){const N=S.N;$('Nind').textContent=`N = ${N} Dimensions | R_N = ${N*(N-1)/2} Lie Rotation Planes`;
+$('lmv').textContent=`${S.lam.toFixed(2)} → Λ = ${Math.floor(1/S.lam)}`;$('sgv').textContent=S.sigma.toFixed(2);$('spdv').textContent=S.speed.toFixed(1)+'×'}
+$('N').oninput=e=>{S.N=+e.target.value;ui()};
+$('sig').onchange=e=>{S.sig=e.target.value;coefs()};
+$('spd').oninput=e=>{S.speed=+e.target.value;ui()};
+$('sg').oninput=e=>{S.sigma=+e.target.value;ui()};
+$('lm').oninput=e=>{S.lam=+e.target.value;ui()};
+$('pp').onclick=()=>{S.play=!S.play;$('pp').textContent=S.play?'Pause':'Play'};
+$('rs').onclick=()=>{S.t=0;$('ts').value=0;$('tsv').textContent='0.00'};
+$('ts').oninput=e=>{S.t=+e.target.value;S.play=false;$('pp').textContent='Play';$('tsv').textContent=S.t.toFixed(2)};
+document.querySelectorAll('input[name=m]').forEach(r=>r.onchange=e=>{S.mode=e.target.value});
+[['fw','fw'],['tr','tr'],['ep','ep'],['gb','gb']].forEach(([id,k])=>$(id).onchange=e=>{S[k]=e.target.checked});
+let drag=null;
+function pt(e){const r=cv.main.getBoundingClientRect(),G=geo(),x=e.clientX-r.left,y=e.clientY-r.top;
+if(x<G.wx0||x>G.wx0+G.ww)return;const i=Math.round((x-G.wx0)/G.ww*M)%M,v=Math.max(-1.6,Math.min(1.6,(G.cy-y)/G.sc));
+if(drag!==null&&drag!==i){const d=((i-drag+M+M/2)%M)-M/2,n=Math.abs(d)||1;for(let s=0;s<=n;s++){const j=(drag+Math.round(s*Math.sign(d)))%M;custom[(j+M)%M]=custom[(drag%M+M)%M]+(v-custom[(drag%M+M)%M])*s/n}}
+custom[i]=v;drag=i;cver++;coefs()}
+cv.main.onpointerdown=e=>{if(S.sig!=='custom')return;cv.main.setPointerCapture(e.pointerId);drag=null;pt(e)};
+cv.main.onpointermove=e=>{if(S.sig==='custom'&&e.buttons)pt(e)};
+cv.main.onpointerup=()=>{drag=null};
+coefs();fit();ui();requestAnimationFrame(loop);
+</script></body></html>
