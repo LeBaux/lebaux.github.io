@@ -118,6 +118,11 @@ border-radius:999px;padding:6px 12px;cursor:pointer;font:500 12px var(--sans);
 font-family:inherit;transition:all .15s}
 .chip:hover{color:var(--ink);border-color:var(--amber)}
 .chip.on{background:rgba(224,169,82,.14);color:var(--amber2);border-color:var(--amber)}
+/* Context-aware: red = the toggle still changes state, but has no visual
+   effect in the current mode. Still fully clickable - information, not
+   a disabled state. */
+.chip.na{border-color:#7a2d3a;color:#c98080;opacity:.65}
+.chip.na.on{background:rgba(201,128,128,.10);color:#e0a5a5}
 .lab-stage{background:var(--panel);border:1px solid var(--line);
 border-radius:14px;overflow:hidden;height:400px}
 #labCv{display:block;width:100%;height:100%}
@@ -194,7 +199,7 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
 <a class="skip-link" href="#main"
    data-en="Skip to main content" data-cz="Přeskočit na hlavní obsah">Skip to main content</a>
 <div id="banner" role="alert" aria-live="assertive"></div>
-<div id="status" aria-hidden="true"></div>
+<div id="status" role="status" aria-live="polite"></div>
 
 <header>
   <a href="#top" class="brand" aria-label="CoReX — return to top">CoReX</a>
@@ -619,10 +624,18 @@ h1,h2,h3,p,.eq,.faq .answer,.toc-list a{overflow-wrap:anywhere}
 </footer>
 
 <script>
-window.onerror = function (msg) {
+/* One banner, one policy: show it, then auto-hide - no sticky overlays
+ * fighting over the same element. */
+var bannerTimer = null;
+function showBanner(msg) {
   var b = document.getElementById('banner');
-  if (b) { b.textContent = '⚠ ' + msg; b.classList.add('on'); }
-};
+  if (!b) return;
+  b.textContent = '⚠ ' + msg;
+  b.classList.add('on');
+  if (bannerTimer) clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(function () { b.classList.remove('on'); }, 6000);
+}
+window.onerror = function (msg) { showBanner(msg); };
 
 /* roundRect fallback (older Safari) */
 if (window.CanvasRenderingContext2D && !CanvasRenderingContext2D.prototype.roundRect) {
@@ -746,7 +759,29 @@ function toggleDs(name, btn) {
   DS[name] = !DS[name];
   if (btn) { btn.classList.toggle('on', DS[name]); btn.setAttribute('aria-pressed', String(DS[name])); }
   showStatus('ds.' + name + ': ' + DS[name]);
+  syncDsChips();
   renderReadouts();
+}
+
+/* Context-aware chip marking: in which-path mode the wavefronts are
+ * replaced by explicit path lines and no dark bands exist, so the
+ * Wavefronts and Nodal-firewalls chips have no visual effect. They stay
+ * toggleable (state always applies); the red outline is information. */
+function syncDsChips() {
+  var w = document.getElementById('dsChipWave');
+  var f = document.getElementById('dsChipFire');
+  if (w) {
+    w.classList.toggle('na', DS.observer);
+    w.title = DS.observer
+      ? 'no visual effect while the observer is on - which-path lines replace the wavefronts (state still toggles)'
+      : '';
+  }
+  if (f) {
+    f.classList.toggle('na', DS.observer);
+    f.title = DS.observer
+      ? 'no visual effect while the observer is on - no dark bands exist to firewall (state still toggles)'
+      : '';
+  }
 }
 
 /* Time-machine state + handler.
@@ -761,7 +796,12 @@ var TM = {
   pinned: false,
   lastT: null,
   hit: 0,
-  pulse: 0
+  pulse: 0,
+  /* Direction-signed phases: accumulate incrementally so toggling
+   * "Reverse time" smoothly reverses motion instead of teleporting
+   * the clock hand and belt markers to their mirrored positions. */
+  clockPhase: 0,
+  markerPhase: 0
 };
 function toggleTm(name, btn) {
   TM[name] = !TM[name];
@@ -788,6 +828,7 @@ var CZ_LABELS = {
   '2^N tree → so(N)': '2^N strom → so(N)', 'rotation planes': 'rotační roviny',
   'vacuum floor': 'dno vakua', 'C∞ smooth': 'C∞ hladké', 'L(E,s) at s=1': 'L(E,s) v s=1',
   'rational cycle': 'racionální cyklus', 'SOURCE': 'ZDROJ', 'BARRIER': 'BARIÉRA', 'SCREEN': 'STÍNÍTKO',
+  'ΔM > 0': 'ΔM > 0', 'M³ → S³': 'M³ → S³', 'I(y) = cos²(k·Δr / 2)': 'I(y) = cos²(k·Δr / 2)',
   'WHICH-PATH — interference removed': 'KTERÁ DRÁHA — interference odstraněna',
   'COHERENT — interference pattern': 'KOHERENTNÍ — interferenční vzor',
   'FUTURE': 'BUDOUCNOST', 'PAST': 'MINULOST', 'NODAL FIREWALL': 'NODÁLNÍ FIREWALL',
@@ -868,7 +909,8 @@ function draw3(ctx,W,H,t){
   ctx.strokeStyle='#c98080';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(30,gapY);ctx.lineTo(W-30,gapY);ctx.stroke();
   canvasLabel(ctx,'ΔM > 0',W/2,gapY-10,{align:'center',color:'#c98080',size:11});
   for(var x=55;x<W-45;x+=Math.max(24,W/28)){
-    var ey=gapY-22-Math.abs(Math.sin(x*.05+t*2.2))*Math.min(42,H*.15);
+    /* particles bob INSIDE the gap: between the floor (cy) and the gap line */
+    var ey=gapY+8+Math.abs(Math.sin(x*.05+t*2.2))*Math.min(30,Math.max(0,cy-gapY-12));
     ctx.fillStyle='#e0a952';ctx.beginPath();ctx.arc(x,ey,4,0,Math.PI*2);ctx.fill();
   }
 }
@@ -910,7 +952,13 @@ function draw6(ctx,W,H,t){
   for(var i=-4;i<=4;i++){ctx.beginPath();ctx.moveTo(cx-span,cy+i*18);ctx.lineTo(cx+span,cy+i*18+Math.sin(i+t)*6);ctx.stroke();}
   ctx.strokeStyle='#d4af37';ctx.lineWidth=2.5;ctx.beginPath();
   ctx.ellipse(cx,cy,Math.min(130,W*.28)+Math.sin(t)*5,Math.min(60,H*.20),Math.PI/6,0,Math.PI*2);ctx.stroke();
-  for(var j=0;j<8;j++){var a=t*.6+j*Math.PI/4;ctx.fillStyle='#e0a952';ctx.beginPath();ctx.arc(cx+Math.cos(a)*Math.min(130,W*.28),cy+Math.sin(a)*Math.min(60,H*.20),3.5,0,Math.PI*2);ctx.fill();}
+  /* Dots ride the same tilted, breathing ellipse that is drawn below,
+   * instead of an untilted one. */
+  var tilt=Math.PI/6, ea=Math.min(130,W*.28)+Math.sin(t)*5, eb=Math.min(60,H*.20);
+  for(var j=0;j<8;j++){var a=t*.6+j*Math.PI/4;
+    var ux=Math.cos(a)*ea, uy=Math.sin(a)*eb;
+    ctx.fillStyle='#e0a952';ctx.beginPath();
+    ctx.arc(cx+Math.cos(tilt)*ux-Math.sin(tilt)*uy, cy+Math.sin(tilt)*ux+Math.cos(tilt)*uy,3.5,0,Math.PI*2);ctx.fill()}
   canvasLabel(ctx,'rational cycle',cx,cy-Math.min(84,H*.30),{align:'center',color:'rgba(212,175,55,.9)',size:11});
 }
 function draw7(ctx,W,H,t){
@@ -1088,7 +1136,7 @@ function drawDs(ctx, W, H, t) {
   ctx.lineWidth = 1;
   ctx.strokeRect(screenX, screenTop, screenW, screenH);
 
-  var darkYs = [];
+  var darkYs = [], brightYs = [];
   var bars = Math.max(90, Math.floor(screenH));
   for (var yi = 0; yi < bars; yi++) {
     var yy = screenTop + (yi + 0.5) * screenH / bars;
@@ -1111,6 +1159,7 @@ function drawDs(ctx, W, H, t) {
     ctx.fillStyle = 'rgba(244,199,122,' + (0.10 + intensity * 0.84) + ')';
     ctx.fillRect(screenX + 2, yy - screenH / bars / 2, screenW - 4, screenH / bars + 0.7);
     if (!DS.observer && intensity < 0.035) darkYs.push(yy);
+    if (!DS.observer && intensity > 0.18) brightYs.push(yy);
   }
 
   /* Nodal firewalls are drawn as rays only where the calculated screen intensity is near zero. */
@@ -1135,8 +1184,13 @@ function drawDs(ctx, W, H, t) {
     seed = Math.abs(seed);
     var hy;
     if (!DS.observer) {
-      var center = cy + (seed - 0.5) * screenH * 0.82;
-      hy = center + Math.sin(phaseH) * 12;
+      /* Impacts follow the physics: in coherent mode a particle only
+       * lands where the interference intensity is high - never inside
+       * a nodal dark band. brightYs was collected during the screen
+       * pass above, so this sampler matches the drawn pattern. */
+      if (!brightYs.length) continue;
+      var picked = brightYs[Math.floor(seed * brightYs.length) % brightYs.length];
+      hy = picked + Math.sin(phaseH) * 3;
     } else {
       hy = hit % 2 ? slitAY + Math.sin(phaseH) * 20 : slitBY + Math.sin(phaseH * 1.13) * 20;
     }
@@ -1201,6 +1255,10 @@ function drawTm(ctx, W, H, t) {
 
   TM.hit = Math.max(0, TM.hit - dt * 1.8);
   TM.pulse = Math.max(0, TM.pulse - dt * 2.5);
+  /* Incremental, direction-signed phase advance (dt is already clamped),
+   * so both animations reverse smoothly at the toggle. */
+  TM.clockPhase += dt * 2.5 * dir;
+  TM.markerPhase += dt * 34 * dir;
 
   var carriageX = leftPath + TM.x * (rightPath - leftPath);
   var carriageY = beltY - 30;
@@ -1237,7 +1295,7 @@ function drawTm(ctx, W, H, t) {
     : 'rgba(123,167,140,.72)';
   ctx.lineWidth = 1.5;
   var markerSpacing = 46;
-  var markerOffset = ((t * 34 * markerDir) % markerSpacing + markerSpacing) % markerSpacing;
+  var markerOffset = ((TM.markerPhase % markerSpacing) + markerSpacing) % markerSpacing;
   for (var mx = x0 + markerOffset; mx < x1; mx += markerSpacing) {
     ctx.beginPath();
     ctx.moveTo(mx - 5 * markerDir, beltY + 1);
@@ -1305,7 +1363,7 @@ function drawTm(ctx, W, H, t) {
   ctx.arc(carriageX, carriageY, clockR, 0, Math.PI * 2);
   ctx.stroke();
 
-  var handAngle = dir * (t * 2.5);
+  var handAngle = TM.clockPhase;
   ctx.strokeStyle = '#f4c77a';
   ctx.lineWidth = 2;
   ctx.beginPath();
@@ -1394,6 +1452,7 @@ function drawTm(ctx, W, H, t) {
 
 /* Canvas setup + main loop */
 var canvases = {};
+var PANELS = [];   /* panel elements cached on first use, not per frame */
 var appStarted = false;
 var resizeRaf = 0;
 
@@ -1419,7 +1478,7 @@ function setupCanvases() {
     if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
     var ctx = cv.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    canvases[ids[i]] = ctx;
+    canvases[ids[i]] = { ctx: ctx, el: cv };   /* cached: no per-frame getElementById */
   }
 }
 
@@ -1432,18 +1491,14 @@ function reportErr(name, e) {
   if (errSeen[name]) return;
   errSeen[name] = true;
   console.error('CoReX draw error in ' + name + ':', e);
-  var b = document.getElementById('banner');
-  if (b) {
-    b.textContent = '⚠ ' + name + ': ' + ((e && e.message) || e);
-    b.classList.add('on');
-    setTimeout(function () { b.classList.remove('on'); }, 6000);
-  }
+  showBanner(name + ': ' + ((e && e.message) || e));
 }
 
 /* Clears, then draws inside save/restore so no canvas state leaks between frames */
 function renderCanvas(id, fn, t) {
-  var ctx = canvases[id], cv = document.getElementById(id);
-  if (!ctx || !cv) return false;
+  var entry = canvases[id];
+  if (!entry) return false;
+  var ctx = entry.ctx, cv = entry.el;
   var W = cv.clientWidth, H = cv.clientHeight;
   if (W <= 1 || H <= 1) return false;
   ctx.save();
@@ -1469,8 +1524,9 @@ function frame() {
     LAB.phase += dt * LAB.speed;   /* integrated, so moving the slider doesn't jump the phase */
 
     var drawers = [null, draw1, draw2, draw3, draw4, draw5, draw6, draw7];
+    var panelEls = PANELS;
     for (var i = 1; i <= 7; i++) {
-      var p = document.getElementById('panel' + i);
+      var p = panelEls[i] || (panelEls[i] = document.getElementById('panel' + i));
       if (p && p.classList.contains('on')) { renderCanvas('cv' + i, drawers[i], t); break; }
     }
     if (inView.labCv !== false) renderCanvas('labCv', drawLab, LAB.phase);
@@ -1499,6 +1555,7 @@ function startApp() {
   appStarted = true;
   syncHeaderVar();
   readLangParam();
+  syncDsChips();
   requestAnimationFrame(function () {
     setupCanvases();
     requestAnimationFrame(frame);
