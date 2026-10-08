@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3FT through the lens of CoReX</title>
+<style>
+  :root{
+    --bg:#06080f;--panel:#10141f;--line:#1d2231;--line2:#2b3348;
+    --ink:#ece6d9;--dim:#a49e90;--faint:#6a685f;
+    --amber:#e0a952;--amber2:#f4c77a;--sage:#7ba78c;--rose:#c98080;
+    --serif:Georgia,"Times New Roman",serif;
+    --mono:ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.7 system-ui,-apple-system,sans-serif;
+    padding:40px 22px 64px;
+  }
+  .wrap{max-width:780px;margin:0 auto}
+  h1{font-family:var(--serif);font-weight:400;font-size:1.85rem;
+     margin:0 0 6px;line-height:1.15}
+  h2{font-family:var(--serif);font-weight:500;font-size:1.25rem;
+     margin:38px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  h3{font-family:var(--serif);font-weight:500;font-size:1.05rem;
+     margin:22px 0 8px;color:#c9c4b7}
+  .sub{color:var(--faint);font-size:.9rem;margin:0 0 30px}
+  p{margin:12px 0;color:var(--dim)}
+  strong{color:var(--ink)}
+  em{color:var(--amber2);font-style:normal}
+  .eq{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:20px 22px;margin:20px 0;
+    font-family:var(--serif);font-size:1.18rem;line-height:1.55;
+    text-align:center;color:var(--amber2);overflow-x:auto;
+  }
+  .eq .lbl{
+    display:block;font-family:var(--mono);font-size:.7rem;
+    letter-spacing:.16em;color:var(--faint);text-transform:uppercase;
+    margin-bottom:10px;text-align:left;
+  }
+  .eq i{font-style:italic}
+  .eq sub{font-size:.68em;vertical-align:-.25em}
+  .eq sup{font-size:.68em;vertical-align:.4em}
+  .frac{display:inline-flex;flex-direction:column;text-align:center;
+        vertical-align:-.55em;font-size:.85em;margin:0 .2em;line-height:1.05}
+  .frac>span:first-child{border-bottom:1px solid #3b4d63;padding:0 .3em .1em}
+  .frac>span:last-child{padding:.1em .3em 0}
+  table{width:100%;border-collapse:collapse;margin:18px 0;
+        font-size:.92rem;font-family:var(--mono)}
+  th,td{border:1px solid var(--line);padding:9px 12px;
+        text-align:left;vertical-align:top}
+  th{background:#0a0d16;color:var(--amber2);font-family:var(--serif);
+     font-size:.9rem;font-weight:500}
+  td{color:var(--dim)}
+  td.k{color:var(--ink);width:26%}
+  .callout{
+    border-left:3px solid var(--amber);background:var(--panel);
+    padding:14px 18px;border-radius:0 8px 8px 0;margin:22px 0;
+  }
+  .callout p{margin:0;color:var(--ink)}
+  .warn{
+    border-left:3px solid var(--rose);background:var(--panel);
+    padding:14px 18px;border-radius:0 8px 8px 0;margin:22px 0;
+  }
+  .warn p{margin:0;color:#e2c0c0}
+  hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+  ul{margin:12px 0 12px 22px;padding:0}
+  li{margin:6px 0;color:var(--dim)}
+  li strong{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.9em;color:var(--sage)}
+  .foot{font-size:.85rem;color:var(--faint);text-align:center;margin-top:40px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>3FT through the lens of CoReX</h1>
+<p class="sub">Structural mapping, the unifying equation, and the three weak points CoReX exposes.</p>
+
+<h2>1 · What 3FT claims, stated precisely</h2>
+
+<p>Strip the phrasing down and Three Field Theory asserts four things:</p>
+
+<ul>
+  <li>Substrate is <strong>spherical</strong> (not pointlike).</li>
+  <li>Substrate is <strong>discrete</strong> (not continuous).</li>
+  <li>Substrate updates in <strong>synchronized ticks</strong> (a global clock).</li>
+  <li>Physical phenomena are <strong>excitations of the substrate</strong>, not passengers on it.</li>
+</ul>
+
+<p>The phonon analogy is doing the real work in the prompt: matter, light, gravity and time are all read as features of one underlying object rather than separate substances laid on top of a spacetime.</p>
+
+<h2>2 · The mapping onto CoReX</h2>
+
+<p>Every 3FT claim has an exact CoReX counterpart. None of it is forced — the correspondence is one-to-one.</p>
+
+<table>
+  <thead>
+    <tr><th>3FT claim</th><th>CoReX structure</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="k">Spherical substrate</td><td>State space S<sup>N−1</sup> ⊂ ℝ<sup>N</sup> — the unit sphere on which the 2<sup>N</sup> binary configurations sit</td></tr>
+    <tr><td class="k">Discrete updates</td><td>Discrete rotation steps Δθ in the one-parameter subgroups exp(θ J<sub>ab</sub>)</td></tr>
+    <tr><td class="k">Synchronized ticks</td><td>Simultaneous action of all R<sub>N</sub> = N(N−1)/2 rotation planes by the same Δθ</td></tr>
+    <tr><td class="k">Matter = locked tension</td><td>Fixed point of the Cartan subalgebra: eigenvector of ∑ c<sub>ab</sub> J<sub>ab</sub> with eigenvalue 0</td></tr>
+    <tr><td class="k">Light = propagating disturbance</td><td>Null geodesic on S<sup>N−1</sup> — a state that never reaches a fixed point</td></tr>
+    <tr><td class="k">Gravity = tension gradient</td><td>Spatial gradient ∇λ of the seed field; modifies the local rate of rotation of 𝔰𝔬(N)</td></tr>
+    <tr><td class="k">Time = update rhythm</td><td>The parameter θ in U(θ) = exp(θ ∑ c<sub>ab</sub> J<sub>ab</sub>)</td></tr>
+  </tbody>
+</table>
+
+<p>The substrate is not a lattice of points in the naive sense — it is the Lie algebra 𝔰𝔬(N) itself. What 3FT calls a "site" is a root of that algebra; what it calls a "tick" is one half-turn in a rotation plane; what it calls "locked tension" is a root eigenstate.</p>
+
+<h2>3 · The unifying equation</h2>
+
+<div class="eq">
+  <span class="lbl">The substrate, in one line</span>
+  <i>U</i>(Δθ) = exp( Δθ · ∑<sub>a&lt;b</sub> <i>c</i><sub>ab</sub> <i>J</i><sub>ab</sub> ) &nbsp; acting on &nbsp; <i>S</i><sup>N−1</sup> ⊂ ℝ<sup>N</sup>
+</div>
+
+<p>Every claim in 3FT is a property of this one map. The sphere is the domain. The discrete Δθ is the update. The synchronized tick is the fact that <em>one</em> scalar Δθ drives all R<sub>N</sub> planes at once. The four phenomena — matter, light, gravity, time — are four readings of the same U:</p>
+
+<div class="eq">
+  <span class="lbl">Four readings of U</span>
+  Matter: &nbsp; [ ∑ <i>c</i><sub>ab</sub> <i>J</i><sub>ab</sub>, ψ ] = 0 &nbsp; (Cartan fixed point)<br>
+  Light: &nbsp; ψ(θ+π) = −ψ(θ) &nbsp; forever &nbsp; (null geodesic)<br>
+  Gravity: &nbsp; ∇λ ≠ 0 &nbsp; ⟹ &nbsp; <i>R</i><sub>N</sub> varies locally<br>
+  Time: &nbsp; θ itself, the parameter of the flow
+</div>
+
+<p>And the two special values of Δθ that produce everything observable:</p>
+
+<div class="eq">
+  <span class="lbl">The two clocks</span>
+  Δθ = π &nbsp;⟹&nbsp; <i>e</i><sup>iπ</sup> + 1 = 0 &nbsp;⟹&nbsp; anti-phase firewall: <strong>chirality flip</strong><br><br>
+  Δθ = 2π/3 &nbsp;⟹&nbsp; <i>e</i><sup>i·2π/3</sup> = ω &nbsp;⟹&nbsp; ℤ<sub>3</sub> color phase advance: <strong>charge step</strong>
+</div>
+
+<p>The π-tick is the matter clock: every half-turn a state reaches its own anti-phase and either locks (matter) or transits (transmission through a node). The 2π/3-tick is the color clock: every third of a full turn the phase advances by one third of a cycle, closing after 1080° = 3 × 360°. These are <em>not the same clock</em>. 3FT conflates them. That is the first weak point.</p>
+
+<h2>4 · Where 3FT is right</h2>
+
+<p>Three things in the prompt are structurally correct and CoReX agrees with them cleanly:</p>
+
+<ul>
+  <li><strong>Substrate-first is correct.</strong> The phonon analogy is the right one. A phonon is not a particle riding a lattice; it <em>is</em> an organized mode of the lattice. In CoReX the same is true of the photon — it is a mode of the 𝔰𝔬(N) flow, not a passenger on a background.</li>
+  <li><strong>Discrete-under-continuous is correct.</strong> The sphere S<sup>N−1</sup> is continuous, but its physically meaningful states are the discrete roots of 𝔰𝔬(N). The continuum is bookkeeping; the physics is at the roots.</li>
+  <li><strong>Time-as-update-rhythm is correct.</strong> In CoReX the time parameter is exactly the θ of the flow. There is no separate "external time" that the flow happens <em>in</em>. The rhythm of the update <em>is</em> the time.</li>
+</ul>
+
+<h2>5 · The three weak points</h2>
+
+<h3>5.1 · The synchronized global clock has no justification</h3>
+
+<div class="warn">
+  <p>3FT assumes a global tick — a single Δθ applied everywhere at once. But a global clock is only well-defined if the metric is flat. The moment the seed field λ(x) varies in space, the rotation rate varies, and there is no longer a single Δθ that all sites agree on. <strong>Synchronized updates are a special case, not the general rule.</strong></p>
+</div>
+
+<p>CoReX reads this as: 3FT is a <em>special</em> theory in exactly the sense that special relativity is special. It works in the flat case. The moment you try to make gravity nontrivial, the global clock breaks. The fix is to replace "synchronized ticks" with "local rate field" — that is, to promote λ from a constant to a scalar field λ(x), whose gradient is gravity. The moment you do, 3FT stops being a discrete automaton and becomes a geodesic flow. That is the transition from 3FT to CoReX.</p>
+
+<h3>5.2 · The sphere dimension is unspecified</h3>
+
+<div class="warn">
+  <p>3FT says "spherical" but never says the dimension. S<sup>1</sup>, S<sup>2</sup>, S<sup>3</sup>, S<sup>N−1</sup> — these produce physically different theories. The rotation-algebra dimension R<sub>N</sub> = N(N−1)/2 depends critically on N. For N = 3 you get 3 rotation planes; for N = 4 you get 6; for N = 5 you get 10. The <em>structure</em> of 𝔰𝔬(N) changes at each N (simple for N = 3, semi-simple for N = 4, simple again for N ≥ 5). 3FT cannot be evaluated without specifying N.</p>
+</div>
+
+<p>CoReX's answer: N is the number of independent binary degrees of freedom in the state. For a three-color, two-chirality theory, N = 4 is the natural choice (𝔰𝔬(4) = 𝔰𝔲(2)<sub>L</sub> ⊕ 𝔰𝔲(2)<sub>R</sub>, giving two rows of three). For a color-only theory, N = 3 (𝔰𝔬(3) = 𝔰𝔲(2), giving one row of three). The prompt's "quark is two rows" is a statement that N = 4.</p>
+
+<h3>5.3 · The phonon analogy needs a specified lattice</h3>
+
+<div class="warn">
+  <p>A phonon is defined on a specific lattice — a Bravais lattice plus a basis. 3FT never states the lattice. Without that, "phonon" is a metaphor, not a model. You cannot compute a phonon dispersion relation without knowing the lattice geometry.</p>
+</div>
+
+<p>CoReX's answer: the lattice is the <em>weight lattice</em> of 𝔰𝔬(N). For 𝔰𝔬(4) this is the lattice ℤ<sup>2</sup> ∪ (ℤ + ½)<sup>2</sup> — two interpenetrating square lattices. The "phonon dispersion" on this lattice is the set of allowed θ-advances per tick, which is exactly the set of possible phase velocities in the cohomology of the manifold. Making this explicit turns 3FT from a picture into a calculable theory.</p>
+
+<h2>6 · The unified statement</h2>
+
+<div class="callout">
+  <p>3FT is a <strong>special case of CoReX</strong>: the case where the metric is flat (λ is a global constant) so that a single synchronized tick Δθ is well-defined everywhere. The general case — where λ varies in space and time, so that each site has its own local tick rate — is CoReX. The general case is required the moment you want nontrivial gravity.</p>
+</div>
+
+<p>Formally:</p>
+
+<div class="eq">
+  <span class="lbl">3FT ⊂ CoReX</span>
+  3FT: &nbsp; Δθ = const, &nbsp; λ = const &nbsp;&nbsp;(flat, global clock)<br><br>
+  CoReX: &nbsp; Δθ = Δθ(<b>x</b>), &nbsp; λ = λ(<b>x</b>) &nbsp;&nbsp;(curved, local clocks)<br><br>
+  Gravity: &nbsp; <b>g</b><sub>μν</sub> ↔ ∇<sub>μ</sub>∇<sub>ν</sub>λ
+</div>
+
+<p>The passage from 3FT to CoReX is not an augmentation. It is the same move as the passage from special relativity to general relativity: promote the constant to a field, watch the global symmetry become local, and discover that the local symmetry <em>is</em> the force.</p>
+
+<h2>7 · How to make 3FT pressure-testable</h2>
+
+<p>If the 3FT author wants a program that a physicist can attack, four commitments are needed:</p>
+
+<ul>
+  <li><strong>Fix N.</strong> State the dimension of the sphere. If the theory claims quarks, N = 4 is the minimum. If it also claims color, N = 4 splits 3 + 1 or 3 + 3. State which.</li>
+  <li><strong>State the lattice.</strong> Which root system? A<sub>N−1</sub>, B<sub>N</sub>, C<sub>N</sub>, D<sub>N</sub>, or the exceptional ones? The physical predictions depend on this choice.</li>
+  <li><strong>Give up global synchronization — or defend it.</strong> Either the clock is local (and gravity emerges from its gradient), or the clock is global (and you must explain why every site in the universe stays in phase). Cosmologically the second option is hard: two events at opposite ends of the observable universe have no causal contact, so a shared tick would have to be acausal.</li>
+  <li><strong>Publish one falsifiable prediction.</strong> For example: if the tick rate is Δθ per unit time and the sphere is S<sup>N−1</sup>, then the mass spectrum of stable locked states is the set of Cartan eigenvalues in some window. Predict the first three.</li>
+</ul>
+
+<div class="callout">
+  <p>The kernel of truth in 3FT is the substrate-first commitment and the discrete-under-continuous picture. The gap is that it names the <em>shape</em> of the substrate (sphere) without naming its <em>algebra</em> (𝔰𝔬(N)) — and once you name the algebra, the sphere, the lattice, the clock, and the four forces all follow.</p>
+</div>
+
+<hr>
+
+<p style="text-align:center;font-family:Georgia,serif;font-style:italic;color:var(--amber2)">
+  Veritas et Ratio Invariantia Sunt in Toposo *𝕍
+</p>
+
+<p class="foot">— prepared as a structural reply to the 3FT prompt.</p>
+
+</div>
+</body>
+</html>
