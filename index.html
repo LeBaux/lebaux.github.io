@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CoReX v28 | Computational Relativity, P vs NP &amp; Euler's Identity</title>
+<title>CoReX v31 | Computational Relativity, P vs NP &amp; Euler's Identity</title>
 <meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — the A₀ seed, Euler's identity, the double-slit experiment, the time machine, Fourier analysis without the Gibbs phenomenon, and unified readings of all seven Clay Millennium Problems.">
 <meta name="author" content="Pierre LeBaux, PhD">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#06080f">
 <meta name="color-scheme" content="dark">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","dateModified":"2026-10-08","version":"28","inLanguage":["en","cs"]}
+{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","dateModified":"2026-10-08","version":"31","inLanguage":["en","cs"]}
 </script>
 <style>
 :root{--bg:#06080f;--panel:#10141f;--panel2:#151a28;--line:#1d2231;
@@ -100,7 +100,7 @@ border-color:var(--amber);font-weight:700}
 .panel{display:none;background:var(--panel);border:1px solid var(--line);
 border-radius:14px;padding:24px;min-width:0}
 .panel.on{display:block}
-.panel .eq{font-family:var(--mono);font-size:.95rem;background:var(--bg);
+.eq{font-family:var(--mono);font-size:.95rem;background:var(--bg);
 color:var(--amber2);padding:12px 16px;border-radius:8px;
 border:1px solid var(--line);overflow-x:auto;margin:12px 0;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
 .math{margin:14px 0;padding:20px 16px;background:rgba(224,169,82,.035);
@@ -171,6 +171,9 @@ color:var(--faint);text-align:center;margin-top:60px}
 footer .navlink{margin-top:12px;display:inline-block}
 footer address{font-style:normal;margin-bottom:12px}
 ::selection{background:rgba(224,169,82,.25)}
+.navlink:focus-visible,.lang button:focus-visible,.tabmenu button:focus-visible,
+.chip:focus-visible,.skip-link:focus-visible,a:focus-visible{outline:2px solid var(--amber);
+outline-offset:2px;border-radius:6px}
 .axtable{width:100%;border-collapse:collapse;font:13px/1.5 var(--sans);
 color:var(--dim);margin:0 0 12px;min-width:0}
 .axtable th{font-family:var(--serif);font-weight:500;color:var(--ink);
@@ -246,8 +249,8 @@ aria-label="Přepnout do češtiny" aria-pressed="false">CZ</button>
 <main id="main">
 
 <section id="top" aria-labelledby="hero-title">
-<p class="kicker" data-en="A digital monograph · CoReX v28"
-data-cz="Digitální monografie · CoReX v28">A digital monograph · CoReX v28</p>
+<p class="kicker" data-en="A digital monograph · CoReX v31"
+data-cz="Digitální monografie · CoReX v31">A digital monograph · CoReX v31</p>
 <h1 id="hero-title">
 <span data-en="The Special Theory of " data-cz="Speciální teorie ">The Special Theory of </span><em data-en="Computational Relativity" data-cz="výpočetní relativity">Computational Relativity</em>
 </h1>
@@ -794,8 +797,8 @@ data-cz="Referenční tabulka, bonusové medicínské aplikace a otevřený arch
 data-cz="CoReX · Speciální teorie výpočetní relativity">CoReX · Special Theory of Computational Relativity</span><br>
 <span data-en="By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity"
 data-cz="Autor: Pierre LeBaux, PhD · Teoretická fyzika a výpočetní složitost">By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity</span><br>
-<span data-en="Version 28 · self-contained HTML · offline-ready"
-data-cz="Verze 28 · samostatné HTML · připraveno offline">Version 28 · self-contained HTML · offline-ready</span>
+<span data-en="Version 31 · self-contained HTML · offline-ready"
+data-cz="Verze 31 · samostatné HTML · připraveno offline">Version 31 · self-contained HTML · offline-ready</span>
 </address>
 <button class="navlink" onclick="goTop()"
 data-en="↑ Back to top" data-cz="↑ Zpět nahoru">↑ Back to top</button>
@@ -910,6 +913,7 @@ var b = document.getElementById('tab' + i);
 if (b) { b.classList.toggle('active', i === n); b.setAttribute('aria-selected', String(i === n)); }
 }
 requestAnimationFrame(setupCanvases);
+requestAnimationFrame(repaint);
 }
 
 document.addEventListener('keydown', function (e) {
@@ -935,6 +939,7 @@ if (n > 10) n = 10;
 LAB.N = n;
 var el = document.getElementById('valN');
 if (el) el.textContent = n;
+repaint();
 }
 function updateS(v) {
 var s = parseFloat(v);
@@ -942,20 +947,24 @@ if (isNaN(s)) s = 0.6;
 LAB.speed = s;
 var el = document.getElementById('valS');
 if (el) el.textContent = s.toFixed(2);
+repaint();
 }
 function toggleFlag(name, btn) {
 LAB[name] = !LAB[name];
 if (btn) { btn.classList.toggle('on', LAB[name]); btn.setAttribute('aria-pressed', String(LAB[name])); }
 showStatus(name + ': ' + LAB[name]);
+repaint();
 }
 
 var DS = { observer: false, firewalls: true, wavefronts: true };
+function repaint() { if (!loopOn) frame(); }
 function toggleDs(name, btn) {
 DS[name] = !DS[name];
 if (btn) { btn.classList.toggle('on', DS[name]); btn.setAttribute('aria-pressed', String(DS[name])); }
 showStatus('ds.' + name + ': ' + DS[name]);
 syncDsChips();
 renderReadouts();
+repaint();
 }
 
 function syncDsChips() {
@@ -993,6 +1002,7 @@ TM[name] = !TM[name];
 if (btn) { btn.classList.toggle('on', TM[name]); btn.setAttribute('aria-pressed', String(TM[name])); }
 showStatus('tm.' + name + ': ' + TM[name]);
 renderReadouts();
+repaint();
 }
 
 var FO = { square: true, classic: true, a0: true, holdN: false, frozenN: null, curN: 2 };
@@ -1006,6 +1016,7 @@ if (btn) { btn.classList.toggle('on', FO[name]); btn.setAttribute('aria-pressed'
 showStatus('fo.' + name + ': ' + FO[name]);
 syncFoChips();
 renderReadouts();
+repaint();
 }
 
 function syncFoChips() {
@@ -1811,9 +1822,9 @@ canvasLabel(ctx, 'ΔE ≥ k_B T ln 2', meterX, meterY + meterH + 12, {size:9, co
 canvasLabel(ctx, 'carriage = temporal state', W / 2, H - 48, {size:9, color:'rgba(127,163,184,.55)', align:'center'});
 }
 
-var FO_CACHE = { n: -1, count: 0, vals: null };
+var FO_CACHE = { n: -1, count: 0, scale: -1, vals: null };
 function foSamples(n, count, scale) {
-if (FO_CACHE.n === n && FO_CACHE.count === count && FO_CACHE.vals) return FO_CACHE.vals;
+if (FO_CACHE.n === n && FO_CACHE.count === count && FO_CACHE.scale === scale && FO_CACHE.vals) return FO_CACHE.vals;
 var vals = FO_CACHE.vals;
 if (!vals || vals.length !== count) { vals = new Float32Array(count); FO_CACHE.vals = vals; }
 for (var i = 0; i < count; i++) {
@@ -1822,7 +1833,7 @@ var s = 0;
 for (var k = 0; k < n; k++) s += Math.sin((2 * k + 1) * Math.PI * xc / 2) / (2 * k + 1);
 vals[i] = (4 / Math.PI) * s;
 }
-FO_CACHE.n = n; FO_CACHE.count = count;
+FO_CACHE.n = n; FO_CACHE.count = count; FO_CACHE.scale = scale;
 return vals;
 }
 
@@ -2045,8 +2056,14 @@ reportErr('frame', e);
 if (loopOn) rafId = requestAnimationFrame(frame);
 }
 
+function reducedMotion() {
+try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+catch (e) { return false; }
+}
+
 function startLoop() {
 if (loopOn || !appStarted) return;
+if (reducedMotion()) { frame(); return; }
 loopOn = true;
 lastFrame = Date.now();
 rafId = requestAnimationFrame(frame);
@@ -2070,6 +2087,18 @@ if (el) io.observe(el);
 });
 var sevenSec = document.getElementById('seven');
 if (sevenSec) io.observe(sevenSec);
+}
+
+function watchReducedMotion() {
+try {
+var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+if (mq && mq.addEventListener) {
+mq.addEventListener('change', function (ev) {
+if (ev.matches) { stopLoop(); frame(); }
+else startLoop();
+});
+}
+} catch (e) {}
 }
 
 function startApp() {
@@ -2098,7 +2127,8 @@ if (el) ro.observe(el);
 });
 }
 watchView();
-console.log('CoReX v28 ready.');
+watchReducedMotion();
+console.log('CoReX v31 ready.');
 }
 
 if (document.readyState === 'loading') {
