@@ -1,7 +1,5 @@
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CoReX v39 | Computational Relativity, P vs NP &amp; Euler's Identity</title>
-<meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — the A₀ seed, Euler's identity, the double-slit experiment, the time machine, Fourier analysis without the Gibbs phenomenon, and unified readings of all seven Clay Millennium Problems.">
+<title>CoReX v43 | Computational Relativity, P vs NP &amp; Euler's Identity</title>
+<meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — the A₀ seed, Euler's identity, the double-slit experiment, the three-body problem, the time machine, Fourier analysis without the Gibbs phenomenon, and unified readings of all seven Clay Millennium Problems.">
 <meta name="author" content="Pierre LeBaux, PhD">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://lebaux.github.io/">
@@ -19,7 +17,7 @@
 <meta name="theme-color" content="#06080f">
 <meta name="color-scheme" content="dark">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","alternativeHeadline":"Veritas et Ratio Invariantia Sunt in Toposo *𝕍","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","dateModified":"2026-10-08","version":"39","inLanguage":["en","cs"]}
+{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","alternativeHeadline":"Veritas et Ratio Invariantia Sunt in Toposo *𝕍","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","dateModified":"2026-10-08","version":"43","inLanguage":["en","cs"]}
 </script>
 <style>
 :root{--bg:#06080f;--panel:#10141f;--panel2:#151a28;--line:#1d2231;
@@ -149,7 +147,7 @@ font-family:inherit;transition:all .15s;min-height:44px;display:inline-flex;alig
 .chip.na.on{background:rgba(201,128,128,.10);color:#e0a5a5}
 .lab-stage{background:var(--panel);border:1px solid var(--line);
 border-radius:14px;overflow:hidden;height:400px;width:100%;min-width:0}
-#labCv,#dsCv,#tmCv,#foCv{display:block;width:100%;height:100%;max-width:100%}
+#labCv,#dsCv,#tbCv,#tmCv,#foCv{display:block;width:100%;height:100%;max-width:100%}
 .lab-stage.tall{height:420px}
 .ds-readout{margin-top:14px;padding:12px 16px;background:var(--bg);
 border:1px solid var(--line);border-radius:8px;font:12px var(--mono);color:var(--dim)}
@@ -241,6 +239,8 @@ data-en="Seven" data-cz="Sedm">Seven</button>
 data-en="Lab" data-cz="Laboratoř">Lab</button>
 <button class="navlink" onclick="goTo('doubleslit')"
 data-en="Double-Slit" data-cz="Dvouštěrbina">Double-Slit</button>
+<button class="navlink" onclick="goTo('threebody')"
+data-en="Three-Body" data-cz="Tři tělesa">Three-Body</button>
 <button class="navlink" onclick="goTo('timemachine')"
 data-en="Time Machine" data-cz="Stroj času">Time Machine</button>
 <button class="navlink" onclick="goTo('fourier')"
@@ -259,8 +259,8 @@ aria-label="Přepnout do češtiny" aria-pressed="false">CZ</button>
 <main id="main">
 
 <section id="top" aria-labelledby="hero-title">
-<p class="kicker" data-en="A digital monograph · CoReX v39"
-data-cz="Digitální monografie · CoReX v39">A digital monograph · CoReX v39</p>
+<p class="kicker" data-en="A digital monograph · CoReX v43"
+data-cz="Digitální monografie · CoReX v43">A digital monograph · CoReX v43</p>
 <h1 id="hero-title">
 <span data-en="The Special Theory of " data-cz="Speciální teorie ">The Special Theory of </span><em data-en="Computational Relativity" data-cz="výpočetní relativity">Computational Relativity</em>
 </h1>
@@ -501,8 +501,55 @@ Toggle the observer to switch the measurement to which-path. The coherence betwe
 </p>
 </section>
 
-<section id="timemachine" aria-labelledby="tm-title">
+<section id="threebody" aria-labelledby="tb-title">
 <p class="kicker" data-en="Chapter V" data-cz="Kapitola V">Chapter V</p>
+<h2 id="tb-title" data-en="The three-body problem" data-cz="Problém tří těles">The three-body problem</h2>
+<p data-en="The three-body problem is where classical mechanics confesses: two bodies dance a closed ellipse, three bodies drown in chaos. Newton's equations stay honest — ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³ — but the trajectories entangle into non-integrable tangles; a nudge the size of δ grows exponentially, and no closed-form solution exists. In this framework the chaos branch is not solved, it is removed. The phase seed A₀ = λ &gt; 0 locks all three bodies onto one shared orbit — the figure-eight choreography of Chenciner and Montgomery — with phase offsets of exactly 2π/3. Every trajectory that leaves the choreography is anti-phase against the ground state, Δφ = π, and at the node where the eight crosses itself it meets a nodal firewall: e^{iπ} + 1 = 0. The chaotic twins below are honest classical perturbations — watch them diverge, and watch A₀ re-seed them the moment they leave the topos."
+data-cz="Problém tří těles je místo, kde klasická mechanika vyznává: dvě tělesa tančí uzavřenou elipsu, tři tělesa se utopí v chaosu. Newtonovy rovnice zůstávají poctivé — ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³ — ale trajektorie se zamotávají do neintegrabilních uzlů; postrčítko velikosti δ roste exponenciálně a uzavřené řešení neexistuje. V tomto rámci se chaotická větec neřeší — odstraňuje se. Fázový zárodek A₀ = λ &gt; 0 uzamkne všechna tři tělesa na jednu společnou dráhu — osmičkovou choreografii Chencinera a Montgomeryho — s fázovými posuny přesně 2π/3. Každá trajektorie, která choreografii opustí, je anti-fázová vůči základnímu stavu, Δφ = π, a v uzlu, kde se osmička protíná sama se sebou, narazí na nodální firewall: e^{iπ} + 1 = 0. Chaotičtí dvojníci níže jsou poctivé klasické perturbace — sledujte, jak divergují, a jak je A₀ okamžitě znovu zaseje, jakmile opustí topos.">
+The three-body problem is where classical mechanics confesses: two bodies dance a closed ellipse, three bodies drown in chaos. Newton's equations stay honest — ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³ — but the trajectories entangle into non-integrable tangles; a nudge the size of δ grows exponentially, and no closed-form solution exists. In this framework the chaos branch is not solved, it is removed. The phase seed A₀ = λ &gt; 0 locks all three bodies onto one shared orbit — the figure-eight choreography of Chenciner and Montgomery — with phase offsets of exactly 2π/3. Every trajectory that leaves the choreography is anti-phase against the ground state, Δφ = π, and at the node where the eight crosses itself it meets a nodal firewall: e^{iπ} + 1 = 0. The chaotic twins below are honest classical perturbations — watch them diverge, and watch A₀ re-seed them the moment they leave the topos.
+</p>
+<div class="eq"><span class="eq-text">ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³  ⇒  A₀ lock: chaos → e^{iπ} + 1 = 0</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
+<div class="math"><i>r̈</i><sub><i>i</i></sub> = −<i>G</i> Σ<sub><i>j</i>≠<i>i</i></sub> <i>m</i><sub><i>j</i></sub>(<b>r</b><sub><i>i</i></sub>−<b>r</b><sub><i>j</i></sub>)/‖<b>r</b><sub><i>i</i></sub>−<b>r</b><sub><i>j</i></sub>‖³ &nbsp;⇒&nbsp; A₀ lock: chaos → e^{iπ} + 1 = 0</div>
+<div class="lab">
+<aside class="lab-panel" aria-label="Three-body controls">
+<div class="lab-row">
+<span style="display:block;font-size:12px;color:var(--dim);margin-bottom:6px"
+data-en="Show" data-cz="Zobrazit">Show</span>
+<div class="chips" role="group">
+<button class="chip on" id="tbChipChor" onclick="toggleTb('choreography',this)" aria-pressed="true"
+data-en="Figure-eight" data-cz="Osmička">Figure-eight</button>
+<button class="chip on" id="tbChipChaos" onclick="toggleTb('chaos',this)" aria-pressed="true"
+data-en="Chaos twins" data-cz="Chaotičtí dvojníci">Chaos twins</button>
+<button class="chip on" id="tbChipTrace" onclick="toggleTb('trace',this)" aria-pressed="true"
+data-en="Trails" data-cz="Stopy">Trails</button>
+</div>
+</div>
+<div class="lab-row" style="margin-bottom:0">
+<span style="display:block;font-size:12px;color:var(--dim);margin-bottom:6px"
+data-en="Observation" data-cz="Pozorování">Observation</span>
+<div class="chips" role="group">
+<button class="chip" id="tbChipKick" onclick="kickTb(this)" aria-pressed="false"
+data-en="Perturb twins" data-cz="Perturbovat dvojníky">Perturb twins</button>
+</div>
+</div>
+<div class="ds-readout" id="tbReadout"></div>
+</aside>
+<div class="lab-stage tall">
+<canvas id="tbCv" width="800" height="470" role="img"
+data-aria-en="Three-body problem: three equal bodies share one figure-eight orbit with phase offsets of 120 degrees. Chaotic twin bodies start slightly perturbed and drift away from the choreography; when a twin leaves the shared orbit, the A-zero seed re-seeds it back onto the eight."
+data-aria-cz="Problém tří těles: tři stejně těžká tělesa sdílejí jednu osmičkovou dráhu s fázovými posuny 120 stupňů. Chaotická dvojní tělesa začínají lehce perturbovaná a odchylují se od choreografie; když dvojník opustí společnou dráhu, zárodek A-nula jej znovu zaseje zpět na osmičku."
+aria-label="Three-body problem: three bodies share a figure-eight choreography, chaotic twins diverge until re-seeded"></canvas>
+</div>
+</div>
+<p style="margin-top:20px"
+data-en="Toggle the chaos twins off and the eight stands alone: a periodic choreography, Δφ = 0, three bodies sharing one geodesic. Toggle them on and perturb: the twins drift off the shared orbit, the separation grows — until the crossing node annuls the branch and A₀ re-seeds them back onto the eight. Chaos is not integrated; it is forbidden."
+data-cz="Vypněte chaotické dvojníky a osmička stojí sama: periodická choreografie, Δφ = 0, tři tělesa sdílející jednu geodetiku. Zapněte je a perturbovejte: dvojníci odplouvají ze společné dráhy, separace roste — dokud protínací uzel větev neanuluje a A₀ je znovu nezaseje zpět na osmičku. Chaos se neintegruje; je zakázán.">
+Toggle the chaos twins off and the eight stands alone: a periodic choreography, Δφ = 0, three bodies sharing one geodesic. Toggle them on and perturb: the twins drift off the shared orbit, the separation grows — until the crossing node annuls the branch and A₀ re-seeds them back onto the eight. Chaos is not integrated; it is forbidden.
+</p>
+</section>
+
+<section id="timemachine" aria-labelledby="tm-title">
+<p class="kicker" data-en="Chapter VI" data-cz="Kapitola VI">Chapter VI</p>
 <h2 id="tm-title"
 data-en="The time machine"
 data-cz="Stroj času">The time machine</h2>
@@ -547,7 +594,7 @@ The Reversal toggle shows the belt change direction. The clock hand reverses its
 </section>
 
 <section id="fourier" aria-labelledby="fo-title">
-<p class="kicker" data-en="Chapter VI" data-cz="Kapitola VI">Chapter VI</p>
+<p class="kicker" data-en="Chapter VII" data-cz="Kapitola VII">Chapter VII</p>
 <h2 id="fo-title" data-en="Fourier analysis without the Gibbs overshoot" data-cz="Fourierova analýza bez Gibbsova překmitu">Fourier analysis without the Gibbs overshoot</h2>
 <p data-en="Classical Fourier series pay a toll at every jump: no matter how many harmonics N are added, the partial sum overshoots the step by roughly 8.95% of the jump height — the Wilbraham–Gibbs phenomenon. In this framework the toll is not paid. The phase seed A₀ = λ &gt; 0 replaces the classical Dirichlet kernel Dₙ(x) with a modified kernel D*ₙ(x) that damps the high-frequency ringing exactly where it would appear. The overshoot oscillations are phase-shifted by exactly Δφ = π against the ground state, so at the nodal firewalls they meet the same fate as every other non-optimal branch: anti-phase annihilation, e^{iπ} + 1 = 0. The modified series converges uniformly to f(x) on the whole interval, in class C^∞, with no ringing at the discontinuity."
 data-cz="Klasická Fourierova řada platí daň u každého skoku: bez ohledu na počet harmonických N překračuje částečný součet skok o přibližně 8,95 % výšky skoku — Wilbraham–Gibbsův jev. V tomto rámci se daň neplatí. Fázový zárodek A₀ = λ &gt; 0 nahrazuje klasické Dirichletovo jádro Dₙ(x) modifikovaným jádrem D*ₙ(x), které utlumuje vysokofrekvenční vlnění přesně tam, kde by se mělo objevit. Oscilace překmitu jsou vůči základnímu stavu posunuty o přesně Δφ = π, takže na nodálních firewallech je čeká tentýž osud jako každou neoptimální větev: anti-fázová anihilace, e^{iπ} + 1 = 0. Modifikovaná řada konverguje rovnoměrně k f(x) na celém intervalu, ve třídě C^∞, bez vlnění na diskontinuitě.">
@@ -594,7 +641,7 @@ The rose curve is the honest classical partial sum — it keeps its 8.95% spike 
 </section>
 
 <section id="faq" aria-labelledby="faq-title">
-<p class="kicker" data-en="Chapter VII" data-cz="Kapitola VII">Chapter VII</p>
+<p class="kicker" data-en="Chapter VIII" data-cz="Kapitola VIII">Chapter VIII</p>
 <h2 id="faq-title" data-en="Questions about Computational Relativity" data-cz="Otázky o výpočetní relativitě">Questions about Computational Relativity</h2>
 <div class="faq">
 <details>
@@ -720,8 +767,8 @@ No — recording a path is a firewall event, not a collapse. The observer is a b
 <section id="appendix" aria-labelledby="ax-title">
 <p class="kicker" data-en="Appendix A–B" data-cz="Apendix A–B">Appendix A–B</p>
 <h2 id="ax-title" data-en="Axioms, postulates and invariants" data-cz="Axiomy, postuláty a invarianty">Axioms, postulates and invariants</h2>
-<p data-en="The theory distinguishes strictly between axioms — the unprovable logical-philosophical cornerstones — and postulates: the physical, algorithmable laws of dynamics. The full derivations, with constructive proofs of all seven Millennium readings, the Fourier chapter and the CTC impossibility theorem, are carried in the Czech dissertation monograph (Edition V19) that accompanies this portal."
-data-cz="Teorie striktně rozlišuje mezi axiomy — neprokazatelnými logicko-filosofickými základními kameny — a postuláty: fyzikálními, algoritmovatelnými zákony dynamiky. Úplná odvození, s konstruktivními důkazy všech sedmi čtení problémů tisíciletí, Fourierovou kapitolou a větou o nemožnosti CTC, nese česká dizertační monografie (Edice V19), která tento portál doprovází.">
+<p data-en="The theory distinguishes strictly between axioms — the unprovable logical-philosophical cornerstones — and postulates: the physical, algorithmable laws of dynamics. The full derivations, with constructive proofs of all seven Millennium readings, the Fourier chapter and the CTC impossibility theorem, are carried in the Czech dissertation monograph (Edition V19) and the English academic edition (Synclock V40) that accompany this portal."
+data-cz="Teorie striktně rozlišuje mezi axiomy — neprokazatelnými logicko-filosofickými základními kameny — a postuláty: fyzikálními, algoritmovatelnými zákony dynamiky. Úplná odvození, s konstruktivními důkazy všech sedmi čtení problémů tisíciletí, Fourierovou kapitolou a větou o nemožnosti CTC, nesou česká dizertační monografie (Edice V19) a anglická akademická edice (Synclock V40), které tento portál doprovázejí.">
 The theory distinguishes strictly between axioms — the unprovable logical-philosophical cornerstones — and postulates: the physical, algorithmable laws of dynamics. The full derivations are carried in the Czech dissertation monograph (Edition V19).
 </p>
 <table class="axtable">
@@ -767,6 +814,26 @@ The theory distinguishes strictly between axioms — the unprovable logical-phil
 <td data-en="Postulate IV" data-cz="Postulát IV">Postulate IV</td>
 <td data-en="Multi-lobe orbital hierarchy" data-cz="Multi-laloková hierarchie orbitalů">Multi-lobe orbital hierarchy</td>
 <td class="mono">δ, φ, octadic lattice 𝒪₈</td>
+</tr>
+<tr>
+<td data-en="Postulate V" data-cz="Postulát V">Postulate V</td>
+<td data-en="Zero entropic friction (Perfect Newtonian Universe)" data-cz="Nulové entropické tření (Perfektní Newtonův vesmír)">Zero entropic friction (Perfect Newtonian Universe)</td>
+<td class="mono">Q_diss = 0 ⇒ t_alg = t_phys</td>
+</tr>
+<tr>
+<td data-en="Postulate VI" data-cz="Postulát VI">Postulate VI</td>
+<td data-en="Dirichlet phase filtering (A₀ kernel)" data-cz="Dirichletovo fázové filtrování (jádro A₀)">Dirichlet phase filtering (A₀ kernel)</td>
+<td class="mono">D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ))</td>
+</tr>
+<tr>
+<td data-en="Postulate VII" data-cz="Postulát VII">Postulate VII</td>
+<td data-en="Causal sector isolation" data-cz="Kauzální izolace sektorů">Causal sector isolation</td>
+<td class="mono">|ψ(Σ_firewall)|² = 0</td>
+</tr>
+<tr>
+<td data-en="Postulate VIII" data-cz="Postulát VIII">Postulate VIII</td>
+<td data-en="Landauer thermodynamic bound" data-cz="Landauerův termodynamický limit">Landauer thermodynamic bound</td>
+<td class="mono">ΔE ≥ k_B T ln 2</td>
 </tr>
 </tbody>
 </table>
@@ -835,6 +902,11 @@ data-cz="Otáčejte varietou, měňte N, sledujte, jak roviny rostou.">Rotate th
 <span data-en="Anti-phase cancellation at the nodal firewalls."
 data-cz="Anti-fázová anihilace na nodálních firewallech.">Anti-phase cancellation at the nodal firewalls.</span>
 </a></li>
+<li><a href="#threebody" onclick="goTo('threebody');return false;">
+<b data-en="The three-body problem" data-cz="Problém tří těles">The three-body problem</b>
+<span data-en="The A₀ phase lock removes the chaos branch instead of integrating it."
+data-cz="Fázový zámek A₀ chaotickou větec odstraňuje, místo aby ji integroval.">The A₀ phase lock removes the chaos branch instead of integrating it.</span>
+</a></li>
 <li><a href="#timemachine" onclick="goTo('timemachine');return false;">
 <b data-en="The time machine" data-cz="Stroj času">The time machine</b>
 <span data-en="Orientation inversion, energy conservation, boundary isolation."
@@ -866,8 +938,8 @@ data-cz="Referenční tabulka, bonusové medicínské aplikace a otevřený arch
 data-cz="CoReX · Speciální teorie výpočetní relativity">CoReX · Special Theory of Computational Relativity</span><br>
 <span data-en="By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity"
 data-cz="Autor: Pierre LeBaux, PhD · Teoretická fyzika a výpočetní složitost">By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity</span><br>
-<span data-en="Version 39 · self-contained HTML · offline-ready"
-data-cz="Verze 39 · samostatné HTML · připraveno offline">Version 39 · self-contained HTML · offline-ready</span>
+<span data-en="Version 43 · self-contained HTML · offline-ready"
+data-cz="Verze 43 · samostatné HTML · připraveno offline">Version 43 · self-contained HTML · offline-ready</span>
 </address>
 <button class="navlink" onclick="goTop()"
 data-en="↑ Back to top" data-cz="↑ Zpět nahoru">↑ Back to top</button>
@@ -938,6 +1010,7 @@ var EQ_LATEX = {
 'H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles': 'H^{2k}(X,\\mathbb{Q}) \\cap H^{k,k}(X) = \\text{rational cycles}',
 '∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³': '\\frac{\\partial g}{\\partial t} = -2 R_{ij} \\;\\Rightarrow\\; M^3 \\cong S^3',
 'D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ · ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895': 'D^*_n(x) = D_n(x)\\cdot\\left(1 - e^{(-|x-x_0|/\\lambda)}\\right) \\;\\Rightarrow\\; C^\\infty \\;\\cdot\\; \\int_0^\\pi \\frac{\\sin t}{t}\\,dt - \\pi/2 \\approx 0.0895',
+'ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³  ⇒  A₀ lock: chaos → e^{iπ} + 1 = 0': '\\ddot{\\mathbf{r}}_i = -G\\sum_{j \\neq i} m_j\\frac{\\mathbf{r}_i - \\mathbf{r}_j}{\\lVert\\mathbf{r}_i - \\mathbf{r}_j\\rVert^3} \\;\\Rightarrow\\; A_0\\ \\mathrm{lock}:\\ \\mathrm{chaos} \\to e^{i\\pi} + 1 = 0',
 };
 
 function eqCopy(txt, btn) {
@@ -1131,6 +1204,33 @@ renderReadouts();
 repaint();
 }
 
+var TB = {
+choreography: true,
+chaos: true,
+trace: true,
+phase: 0,
+lastT: null,
+eps: 0.004,
+pulse: 0,
+kick: 0,
+trail: []
+};
+function toggleTb(name, btn) {
+TB[name] = !TB[name];
+if (btn) { btn.classList.toggle('on', TB[name]); btn.setAttribute('aria-pressed', String(TB[name])); }
+showStatus('tb.' + name + ': ' + TB[name]);
+renderReadouts();
+repaint();
+}
+function kickTb(btn) {
+TB.kick = 1;
+TB.eps = Math.min(0.34, TB.eps * 14 + 0.02);
+if (btn) { btn.classList.add('on'); setTimeout(function () { btn.classList.remove('on'); }, 350); }
+showStatus(T('twins perturbed'));
+renderReadouts();
+repaint();
+}
+
 var FO = { square: true, classic: true, a0: true, holdN: false, frozenN: null, curN: 2 };
 function toggleFo(name, btn) {
 FO[name] = !FO[name];
@@ -1171,6 +1271,10 @@ var f = document.getElementById('foReadout');
 if (f) f.textContent = (cz
 ? ('Stav: N = ' + FO.curN + (FO.holdN ? ' zmraženo' : ' cykluje') + ' · Gibbsův hrot 8,95 %' + (FO.a0 ? ' · jádro A₀: hrot → 0' : ''))
 : ('State: N = ' + FO.curN + (FO.holdN ? ' frozen' : ' cycling') + ' · Gibbs spike 8.95%' + (FO.a0 ? ' · A₀ kernel: spike → 0' : '')));
+var b = document.getElementById('tbReadout');
+if (b) b.textContent = TB.choreography
+? (cz ? ('Stav: choreografie uzamčena · Δφ = 0 · dvojníci δ = ' + TB.eps.toFixed(3)) : ('State: choreography locked · Δφ = 0 · twins δ = ' + TB.eps.toFixed(3)))
+: (cz ? 'Stav: osmička skryta · chaotický režim bez zámku A₀' : 'State: eight hidden · chaotic regime without the A₀ lock');
 }
 
 var CZ_LABELS = {
@@ -1178,6 +1282,9 @@ var CZ_LABELS = {
 '2^4 = 16 branches': '2^4 = 16 větví', ' rotation planes': ' rotačních rovin',
 '  ✓ collapsed': '  ✓ zkollapsed', '  … collapsing': '  … kolapsuje',
 'copied': 'zkopírováno', 'copy failed': 'kopírování se nezdařilo',
+'figure-eight choreography': 'osmičková choreografie', 'chaos twins': 'chaotičtí dvojníci',
+'A₀ re-seed': 'znovuzasetí A₀', 'twins perturbed': 'dvojníci perturbováni',
+'Δφ = 0 · one geodesic, three bodies': 'Δφ = 0 · jedna geodetika, tři tělesa',
 'no visual effect while the observer is on - which-path lines replace the wavefronts': 'žádný vizuální efekt při zapnutém pozorovateli - čáry kterou-dráhu nahrazují vlnoplochy',
 'only the square wave is shown - turn a curve back on to compare': 'zobrazena je pouze obdélníková vlna - zapněte zpět některou křivku pro srovnání',
 'vacuum floor': 'dno vakua', 'C∞ smooth': 'C∞ hladké', 'L(E,s) at s=1': 'L(E,s) v s=1',
@@ -1839,6 +1946,93 @@ canvasLabel(ctx,'I(y) = cos²(k·Δr / 2)',W < 600 ? W / 2 : screenX - 28,24,
 {size:9,color:'rgba(244,199,122,.82)',align:W < 600 ? 'center' : 'right'});
 }
 
+function drawTb(ctx, W, H, t) {
+var dt = TB.lastT === null ? 0 : Math.max(0, Math.min(0.05, t - TB.lastT));
+TB.lastT = t;
+
+TB.eps += TB.eps * 0.5 * dt;
+if (TB.eps > 0.34) { TB.eps = 0.004; TB.pulse = 1; }
+TB.kick = Math.max(0, TB.kick - dt * 1.4);
+TB.pulse = Math.max(0, TB.pulse - dt * 2.2);
+TB.phase += dt * 0.85;
+if (dt > 0) { TB.trail.push(TB.phase); if (TB.trail.length > 110) TB.trail.shift(); }
+
+var cx = W / 2;
+var cy = H * 0.5 + 14;
+var k = Math.min(W * 0.42, H * 0.52);
+var bodyColors = ['rgba(244,199,122,', 'rgba(123,167,140,', 'rgba(127,163,184,'];
+
+function eightX(s) { return cx + Math.cos(s) * k; }
+function eightY(s, sc) { return cy - 0.7 * Math.sin(s) * Math.cos(s) * k * (sc || 1); }
+
+ctx.fillStyle = 'rgba(127,163,184,0.05)';
+for (var gx = 20; gx < W; gx += 32) {
+for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+}
+
+if (TB.choreography) {
+ctx.strokeStyle = 'rgba(244,199,122,0.16)';
+ctx.lineWidth = 1.2;
+ctx.beginPath();
+for (var s = 0; s <= Math.PI * 2 + 0.02; s += 0.02) {
+var px = eightX(s), py = eightY(s);
+if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+}
+ctx.stroke();
+
+if (TB.trace) {
+for (var ti = 0; ti < TB.trail.length; ti++) {
+var ts = TB.trail[ti];
+var age = (TB.trail.length - ti) / TB.trail.length;
+for (var bi = 0; bi < 3; bi++) {
+ctx.fillStyle = bodyColors[bi] + (0.05 + 0.16 * age) + ')';
+ctx.beginPath();
+ctx.arc(eightX(ts + bi * 2.0944), eightY(ts + bi * 2.0944), 1.1, 0, Math.PI * 2);
+ctx.fill();
+}
+}
+}
+}
+
+for (var i3 = 0; i3 < 3; i3++) {
+var si = TB.phase + i3 * 2.0944;
+var bx = eightX(si), by = eightY(si);
+if (TB.chaos) {
+var sg = si + TB.eps * 2.6;
+var sc = 1 + TB.eps * 0.35;
+var gx3 = cx + Math.cos(sg) * k * sc;
+var gy3 = cy - 0.7 * Math.sin(sg) * Math.cos(sg) * k * sc;
+ctx.strokeStyle = 'rgba(201,128,128,' + (0.10 + 0.30 * TB.kick) + ')';
+ctx.lineWidth = 1;
+ctx.setLineDash([3, 3]);
+ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(gx3, gy3); ctx.stroke();
+ctx.setLineDash([]);
+ctx.strokeStyle = 'rgba(201,128,128,' + (0.35 + 0.45 * TB.kick) + ')';
+ctx.lineWidth = 1.3;
+ctx.beginPath(); ctx.arc(gx3, gy3, 3 + 2.4 * TB.kick, 0, Math.PI * 2); ctx.stroke();
+}
+if (TB.choreography) {
+var breathe = 0.5 + 0.5 * Math.sin(t * 2.4 + i3 * 2.1);
+ctx.fillStyle = bodyColors[i3] + '0.14)';
+ctx.beginPath(); ctx.arc(bx, by, 10 + 2 * breathe, 0, Math.PI * 2); ctx.fill();
+ctx.fillStyle = bodyColors[i3] + '0.95)';
+ctx.beginPath(); ctx.arc(bx, by, 4.4, 0, Math.PI * 2); ctx.fill();
+}
+}
+
+var nodeR = 5 + 5 * TB.pulse + 1.6 * (0.5 + 0.5 * Math.sin(t * 3));
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.22 + 0.55 * TB.pulse) + ')';
+ctx.lineWidth = 1.4;
+ctx.setLineDash([4, 4]);
+ctx.beginPath(); ctx.arc(cx, cy, nodeR, 0, Math.PI * 2); ctx.stroke();
+ctx.setLineDash([]);
+
+canvasLabel(ctx, T('Δφ = 0 · one geodesic, three bodies'), 18, 24, { size: 10, color: 'rgba(164,158,144,.8)' });
+if (TB.choreography) canvasLabel(ctx, T('figure-eight choreography'), 18, H - 12, { size: 10, color: 'rgba(164,158,144,.7)' });
+if (TB.chaos) canvasLabel(ctx, T('chaos twins'), W - 18, 24, { size: 10, color: 'rgba(201,128,128,.85)', align: 'right' });
+if (TB.pulse > 0.15) canvasLabel(ctx, T('A₀ re-seed'), cx, cy - k * 0.52 - 14, { size: 10, color: 'rgba(244,199,122,.95)', align: 'center' });
+}
+
 function drawTm(ctx, W, H, t) {
 var dt = TM.lastT === null ? 0 : Math.max(0, Math.min(0.05, t - TM.lastT));
 TM.lastT = t;
@@ -2322,7 +2516,7 @@ setupCanvases();
 }
 
 function setupCanvases() {
-var ids = ['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv','dsCv','tmCv','foCv'];
+var ids = ['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv','dsCv','tbCv','tmCv','foCv'];
 for (var i = 0; i < ids.length; i++) {
 var cv = document.getElementById(ids[i]);
 if (!cv) continue;
@@ -2393,6 +2587,8 @@ if (p && p.classList.contains('on')) { renderCanvas('cv' + i, drawers[i], t); br
 }
 if (inView.labCv !== false) renderCanvas('labCv', drawLab, LAB.phase);
 if (inView.dsCv !== false) renderCanvas('dsCv', drawDs, t);
+if (inView.tbCv !== false) renderCanvas('tbCv', drawTb, t);
+else TB.lastT = null;
 if (inView.tmCv !== false) renderCanvas('tmCv', drawTm, t);
 else TM.lastT = null;
 if (inView.foCv !== false) renderCanvas('foCv', draw8, t);
@@ -2427,7 +2623,7 @@ if (!('IntersectionObserver' in window)) return;
 var io = new IntersectionObserver(function (entries) {
 for (var i = 0; i < entries.length; i++) inView[entries[i].target.id] = entries[i].isIntersecting;
 }, { rootMargin: '80px' });
-['labCv', 'dsCv', 'tmCv', 'foCv'].forEach(function (id) {
+['labCv', 'dsCv', 'tbCv', 'tmCv', 'foCv'].forEach(function (id) {
 var el = document.getElementById(id);
 if (el) io.observe(el);
 });
@@ -2467,14 +2663,14 @@ if ('ResizeObserver' in window) {
 var ro = new ResizeObserver(function () { syncHeaderVar(); scheduleCanvasSetup(); });
 var h = document.querySelector('header');
 if (h) ro.observe(h);
-['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv','dsCv','tmCv','foCv'].forEach(function (id) {
+['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv','dsCv','tbCv','tmCv','foCv'].forEach(function (id) {
 var el = document.getElementById(id);
 if (el) ro.observe(el);
 });
 }
 watchView();
 watchReducedMotion();
-console.log('CoReX v39 ready.');
+console.log('CoReX v43 ready.');
 }
 
 if (document.readyState === 'loading') {
