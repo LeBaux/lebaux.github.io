@@ -1,9 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CoReX v31 | Computational Relativity, P vs NP &amp; Euler's Identity</title>
+<title>CoReX v39 | Computational Relativity, P vs NP &amp; Euler's Identity</title>
 <meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — the A₀ seed, Euler's identity, the double-slit experiment, the time machine, Fourier analysis without the Gibbs phenomenon, and unified readings of all seven Clay Millennium Problems.">
 <meta name="author" content="Pierre LeBaux, PhD">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -22,7 +19,7 @@
 <meta name="theme-color" content="#06080f">
 <meta name="color-scheme" content="dark">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","dateModified":"2026-10-08","version":"31","inLanguage":["en","cs"]}
+{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"The Special Theory of Computational Relativity","alternativeHeadline":"Veritas et Ratio Invariantia Sunt in Toposo *𝕍","author":{"@type":"Person","name":"Pierre LeBaux","honorificSuffix":"PhD"},"datePublished":"2026-10-07","dateModified":"2026-10-08","version":"39","inLanguage":["en","cs"]}
 </script>
 <style>
 :root{--bg:#06080f;--panel:#10141f;--panel2:#151a28;--line:#1d2231;
@@ -83,6 +80,10 @@ a{color:var(--amber2)}
 a:hover{color:var(--amber)}
 .kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;
 color:var(--faint);margin-bottom:16px}
+.motto{font-family:var(--serif);font-style:italic;font-size:1.15rem;
+color:var(--amber2);letter-spacing:.04em;margin:0 0 4px;overflow-wrap:anywhere}
+.motto sup{font-size:.7em}
+.motto-gloss{font-size:.85rem;color:var(--faint);margin:0 0 16px;overflow-wrap:anywhere}
 .card{background:linear-gradient(180deg,var(--panel2),var(--panel));
 border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px;min-width:0}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -102,7 +103,16 @@ border-radius:14px;padding:24px;min-width:0}
 .panel.on{display:block}
 .eq{font-family:var(--mono);font-size:.95rem;background:var(--bg);
 color:var(--amber2);padding:12px 16px;border-radius:8px;
-border:1px solid var(--line);overflow-x:auto;margin:12px 0;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
+border:1px solid var(--line);overflow-x:auto;margin:12px 0;white-space:normal;word-break:break-word;overflow-wrap:anywhere;
+display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.eq-text{flex:1 1 auto;min-width:0}
+.eq-tools{margin-left:auto;display:inline-flex;gap:6px;flex-shrink:0}
+.eq-btn{font:600 9px var(--mono);letter-spacing:.12em;color:var(--faint);
+background:transparent;border:1px solid var(--line2);border-radius:5px;
+padding:3px 8px;cursor:pointer;font-family:inherit;min-height:24px;
+transition:color .15s,border-color .15s}
+.eq-btn:hover{color:var(--amber2);border-color:var(--amber)}
+.eq-btn.ok{color:#7ba78c;border-color:rgba(123,167,140,.55)}
 .math{margin:14px 0;padding:20px 16px;background:rgba(224,169,82,.035);
 border:1px solid rgba(224,169,82,.20);border-radius:10px;
 display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;
@@ -249,11 +259,16 @@ aria-label="Přepnout do češtiny" aria-pressed="false">CZ</button>
 <main id="main">
 
 <section id="top" aria-labelledby="hero-title">
-<p class="kicker" data-en="A digital monograph · CoReX v31"
-data-cz="Digitální monografie · CoReX v31">A digital monograph · CoReX v31</p>
+<p class="kicker" data-en="A digital monograph · CoReX v39"
+data-cz="Digitální monografie · CoReX v39">A digital monograph · CoReX v39</p>
 <h1 id="hero-title">
 <span data-en="The Special Theory of " data-cz="Speciální teorie ">The Special Theory of </span><em data-en="Computational Relativity" data-cz="výpočetní relativity">Computational Relativity</em>
 </h1>
+<p class="motto" lang="la" aria-label="Veritas et Ratio Invariantia Sunt in Toposo star V" data-aria-en="Veritas et Ratio Invariantia Sunt in Toposo star V" data-aria-cz="Veritas et Ratio Invariantia Sunt in Toposo hvězdička V">Veritas et Ratio Invariantia Sunt in Toposo&#8202;<sup>*</sup>&#120141;</p>
+<p class="motto-gloss" data-en="Truth and reason are invariant in the topos *𝕍 — the motto and credo of this monograph."
+data-cz="Pravda a rozum jsou v Toposu *𝕍 invariantní — motto a krédo této monografie.">
+Truth and reason are invariant in the topos *𝕍 — the motto and credo of this monograph.
+</p>
 <p data-en="The seed is 0, and everything else is a rotation of it. Four postulates, one transformer, one fixed point — a calm reading of computation and physics through a shared geometric mechanism."
 data-cz="Semínko je 0 a všechno ostatní je jeho rotací. Čtyři postuláty, jeden transformátor, jeden pevný bod — klidné čtení výpočtu a fyziky skrze společný geometrický mechanismus.">
 The seed is 0, and everything else is a rotation of it. Four postulates, one transformer, one fixed point — a calm reading of computation and physics through a shared geometric mechanism.
@@ -309,7 +324,7 @@ A half-turn in any SO(2) plane returns the identity state to zero. This is the p
 
 <article class="panel on" id="panel1" role="tabpanel" aria-labelledby="tab1">
 <h3 data-en="P vs NP" data-cz="P vs NP">P vs NP</h3>
-<div class="eq">R_N = C(N,2)  ⇒  T(N) = O(N²)</div>
+<div class="eq"><span class="eq-text">R_N = C(N,2)  ⇒  T(N) = O(N²)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
 <div class="math"><i>R</i><sub><i>N</i></sub> = <span class="frac"><span><i>N</i>(<i>N</i>−1)</span><span>2</span></span> &nbsp;⇒&nbsp; <i>T</i>(<i>N</i>) = <i>O</i>(<i>N</i>²)</div>
 <p data-en="The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N²)."
 data-cz="Exponenciální rozhodovací strom nad 2ᴺ stavy se injektivně vnořuje do R_N rotačních rovin Lieovy algebry so(N). Neoptimální větve podléhají Eulerově anti-fázové anihilaci na nodálních firewallech a geodetický tok skončí v deterministickém O(N²).">
@@ -322,7 +337,7 @@ aria-label="Diagram: exponential decision tree collapsing into so(N) rotation pl
 </article>
 <article class="panel" id="panel2" role="tabpanel" aria-labelledby="tab2">
 <h3 data-en="Riemann Hypothesis" data-cz="Riemannova hypotéza">Riemann Hypothesis</h3>
-<div class="eq">ξ(s) = ξ(1−s)  ⇒  Re(s) = ½</div>
+<div class="eq"><span class="eq-text">ξ(s) = ξ(1−s)  ⇒  Re(s) = ½</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
 <div class="math">ξ(<i>s</i>) = ξ(1−<i>s</i>) &nbsp;⇒&nbsp; Re(<i>s</i>) = <span class="frac"><span>1</span><span>2</span></span></div>
 <p data-en="The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus."
 data-cz="Funkcionální rovnice se čte jako zrcadlo přes osu A₀. Nuly mimo osu narušují rovnováhu hranice; anti-fázový firewall nutí jejich hustotu pravděpodobnosti k nule a Re(s) = ½ zůstává jediným stabilním místem.">
@@ -335,7 +350,7 @@ aria-label="Diagram: critical line Re(s) = one-half with non-trivial zeros"></ca
 </article>
 <article class="panel" id="panel3" role="tabpanel" aria-labelledby="tab3">
 <h3 data-en="Yang–Mills Mass Gap" data-cz="Yang–Millsova hmotnostní mezera">Yang–Mills Mass Gap</h3>
-<div class="eq">E₀ = λc² &gt; 0  ⇒  ΔM &gt; 0</div>
+<div class="eq"><span class="eq-text">E₀ = λc² &gt; 0  ⇒  ΔM &gt; 0</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
 <div class="math"><i>E</i>₀ = λ<i>c</i>² &gt; 0 &nbsp;⇒&nbsp; Δ<i>M</i> = <span class="frac"><span>ħω<sub>A₀</sub></span><span><i>c</i>²</span></span> &gt; 0</div>
 <p data-en="The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ΔM = ħω_{A₀}/c²."
 data-cz="Skalární semínko A₀ = λ dává vakuu striktně kladné dno. Nodální firewally odřezávají vysokoenergetické divergence, které by jinak mezeru uzavřely, a vzniká striktně kladná hmotnostní mezera ΔM = ħω_{A₀}/c².">
@@ -348,7 +363,7 @@ aria-label="Diagram: positive vacuum energy floor and mass gap"></canvas></div>
 </article>
 <article class="panel" id="panel4" role="tabpanel" aria-labelledby="tab4">
 <h3 data-en="Navier–Stokes Smoothness" data-cz="Hladkost Navier–Stokesových rovnic">Navier–Stokes Smoothness</h3>
-<div class="eq">det(CM₅) = 0  ⇒  ‖u‖_{C^∞} &lt; ∞</div>
+<div class="eq"><span class="eq-text">det(CM₅) = 0  ⇒  ‖u‖_{C^∞} &lt; ∞</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
 <div class="math">det(CM₅) = 0 &nbsp;⇒&nbsp; ‖<i>u</i>‖<sub><i>C</i><sup>∞</sup></sub> &lt; ∞</div>
 <p data-en="Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The 5-point Cayley–Menger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^∞ for all t ≥ 0."
 data-cz="Extrémní gradienty vorticity spouštějí anti-fázovou anihilaci dříve, než se mohou zkoncentrovat. Pětibodový Cayley–Mengerův determinant brání inflaci hodnosti Gramovy matice rychlosti a udržuje tok v C^∞ pro všechna t ≥ 0.">
@@ -361,7 +376,7 @@ aria-label="Diagram: turbulent vorticity bounded within C-infinity smoothness"><
 </article>
 <article class="panel" id="panel5" role="tabpanel" aria-labelledby="tab5">
 <h3 data-en="Birch &amp; Swinnerton-Dyer" data-cz="Birchova a Swinnerton-Dyerova hypotéza">Birch &amp; Swinnerton-Dyer</h3>
-<div class="eq">rank(E(Q)) = ord_{s=1} L(E,s)</div>
+<div class="eq"><span class="eq-text">rank(E(Q)) = ord_{s=1} L(E,s)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
 <div class="math">rank <i>E</i>(ℚ) = ord<sub><i>s</i>=1</sub> <i>L</i>(<i>E</i>,<i>s</i>)</div>
 <p data-en="Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes — the equality is a statement about orbits, not about arithmetic coincidence."
 data-cz="Každý nezávislý racionální generátor E(Q) se zobrazí na jednu ortogonální rotační rovinu. Řád nulového bodu L(E, s) v s = 1 počítá tytéž roviny — rovnost je výrokem o orbitách, ne o aritmetické náhodě.">
@@ -374,7 +389,7 @@ aria-label="Diagram: elliptic curve with rational generators and L-function spec
 </article>
 <article class="panel" id="panel6" role="tabpanel" aria-labelledby="tab6">
 <h3 data-en="Hodge Conjecture" data-cz="Hodgeova hypotéza">Hodge Conjecture</h3>
-<div class="eq">H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles</div>
+<div class="eq"><span class="eq-text">H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
 <div class="math">H<sup>2k</sup>(<i>X</i>,ℚ) ∩ H<sup>k,k</sup>(<i>X</i>) = ℚ · [algebraic cycles]</div>
 <p data-en="Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Ω_{A₀}."
 data-cz="Každá Hodgeova třída na hladké projektivní varietě je racionální kombinací algebraických cyklů, vyjádřená jako invariantní podobjekt GUT-Cat toposu pod klasifikátorem měřítka Ω_{A₀}.">
@@ -387,7 +402,7 @@ aria-label="Diagram: cohomology grid with rational algebraic cycle"></canvas></d
 </article>
 <article class="panel" id="panel7" role="tabpanel" aria-labelledby="tab7">
 <h3 data-en="Poincaré Conjecture" data-cz="Poincaréova hypotéza">Poincaré Conjecture</h3>
-<div class="eq">∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³</div>
+<div class="eq"><span class="eq-text">∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
 <div class="math"><span class="frac"><span>∂<i>g</i></span><span>∂<i>t</i></span></span> = −2<i>R</i><sub><i>ij</i></sub> &nbsp;⇒&nbsp; <i>M</i>³ ≅ <i>S</i>³</div>
 <p data-en="Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere — Perelman's surgery, but with the endpoints already determined by the seed."
 data-cz="Neck-pinch singularity Ricciho toku jsou anihilovány na nodálních firewallech. Každá jednoduše souvislá uzavřená 3-varieta se hladce deformuje na 3-sféru — Perelmanova chirurgie, ale s koncovými body již určenými semínkem.">
@@ -538,7 +553,7 @@ The Reversal toggle shows the belt change direction. The clock hand reverses its
 data-cz="Klasická Fourierova řada platí daň u každého skoku: bez ohledu na počet harmonických N překračuje částečný součet skok o přibližně 8,95 % výšky skoku — Wilbraham–Gibbsův jev. V tomto rámci se daň neplatí. Fázový zárodek A₀ = λ &gt; 0 nahrazuje klasické Dirichletovo jádro Dₙ(x) modifikovaným jádrem D*ₙ(x), které utlumuje vysokofrekvenční vlnění přesně tam, kde by se mělo objevit. Oscilace překmitu jsou vůči základnímu stavu posunuty o přesně Δφ = π, takže na nodálních firewallech je čeká tentýž osud jako každou neoptimální větev: anti-fázová anihilace, e^{iπ} + 1 = 0. Modifikovaná řada konverguje rovnoměrně k f(x) na celém intervalu, ve třídě C^∞, bez vlnění na diskontinuitě.">
 Classical Fourier series pay a toll at every jump: no matter how many harmonics N are added, the partial sum overshoots the step by roughly 8.95% of the jump height — the Wilbraham–Gibbs phenomenon. In this framework the toll is not paid. The phase seed A₀ = λ &gt; 0 replaces the classical Dirichlet kernel Dₙ(x) with a modified kernel D*ₙ(x) that damps the high-frequency ringing exactly where it would appear. The overshoot oscillations are phase-shifted by exactly Δφ = π against the ground state, so at the nodal firewalls they meet the same fate as every other non-optimal branch: anti-phase annihilation, e^{iπ} + 1 = 0. The modified series converges uniformly to f(x) on the whole interval, in class C^∞, with no ringing at the discontinuity.
 </p>
-<div class="eq">D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ &nbsp;·&nbsp; ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895</div>
+<div class="eq"><span class="eq-text">D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ &nbsp;·&nbsp; ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')" aria-label="Copy as plain text" data-aria-en="Copy as plain text" data-aria-cz="Kopírovat jako prostý text">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')" aria-label="Copy as LaTeX" data-aria-en="Copy as LaTeX" data-aria-cz="Kopírovat jako LaTeX">LaTeX</button></span></div>
 <div class="math"><i>D</i>*<sub><i>n</i></sub>(<i>x</i>) = <i>D</i><sub><i>n</i></sub>(<i>x</i>) · (1 − <span class="frac"><span>e<sup>−|<i>x</i>−<i>x₀</i>|</sup></span><span>λ</span></span>) &nbsp;⇒&nbsp; <i>C</i><sup>∞</sup><span aria-hidden="true" style="flex-basis:100%;height:0"></span>∫<sub>0</sub><sup>π</sup> <span class="frac"><span>sin <i>t</i></span><span><i>t</i></span></span> d<i>t</i> − <span class="frac"><span>π</span><span>2</span></span> ≈ 0.0895</div>
 <div class="lab">
 <aside class="lab-panel" aria-label="Fourier controls">
@@ -643,6 +658,60 @@ data-cz="Co je semínko A₀?">What is the A₀ seed?</summary>
 data-en="A₀ is the unique fixed point of the full symmetry group G on the manifold ℳ_N(A₀) — the only locus where every generator of the algebra vanishes at once."
 data-cz="A₀ je jediný pevný bod plné grupy symetrií G na varietě ℳ_N(A₀) — jediné místo, kde všechny generátory algebry mizí současně.">
 A₀ is the unique fixed point of the full symmetry group G on the manifold ℳ_N(A₀).
+</div>
+</details>
+<details>
+<summary data-en="Why is the theory &quot;special&quot;?"
+data-cz="Proč je teorie „speciální“?">Why is the theory "special"?</summary>
+<div class="answer"
+data-en="For the same reason special relativity is special: the computational metric is taken as fixed and flat. Complexity is measured against a rigid grid of computational light-cones anchored at A₀. A general theory — where the computational metric itself curves under problem load — is left as future work."
+data-cz="Ze stejného důvodu, proč je speciální teorie relativity speciální: výpočetní metrika je brána jako pevná a plochá. Složitost se měří vůči tuhé mřížce výpočetních světelných kuželů ukotvených v A₀. Obecná teorie — ve které se výpočetní metrika sama zakřivuje pod zátěží problému — zůstává jako budoucí práce.">
+For the same reason special relativity is special: the computational metric is taken as fixed and flat.
+</div>
+</details>
+<details>
+<summary data-en="What does E = mc² mean in this framework?"
+data-cz="Co znamená E = mc² v tomto rámci?">What does E = mc² mean in this framework?</summary>
+<div class="answer"
+data-en="Rest energy is the invariant magnitude of the state vector under the full symmetry group. Reversing the time arrow changes the orientation of a trajectory but never this magnitude — which is why the E = mc² badge on the time-machine carriage stays fixed even when the clock hand runs backwards."
+data-cz="Klidová energie je invariantní velikost stavového vektoru vůči plné grupě symetrií. Obrácení časové šipky mění orientaci trajektorie, ale nikdy tuto velikost — proto štítek E = mc² na vozíku stroje času zůstává nehybný, i když ručička hodin běží dozadu.">
+Rest energy is the invariant magnitude of the state vector under the full symmetry group — reversing the time arrow never changes it.
+</div>
+</details>
+<details>
+<summary data-en="Why does a Fourier chapter belong in a relativity monograph?"
+data-cz="Proč patří Fourierova kapitola do monografie o relativitě?">Why does a Fourier chapter belong in a relativity monograph?</summary>
+<div class="answer"
+data-en="Because the Gibbs overshoot is the visible signature of the origin singularity: every partial sum of a non-analytic signal rings at a jump, and the ring concentrates exactly at the A₀ point. The modified kernel D*ₙ annihilates the overshoot — demonstrating concretely what it means for the A₀ seed to absorb the discontinuity that classical computation cannot."
+data-cz="Protože Gibbsův přeskok je viditelným podpisem singularity v počátku: každá parciální suma neanalytického signálu vyzvánívá na skoku a vyzvánění se soustřeďuje přesně v bodě A₀. Modifikované jádro D*ₙ přeskok anihiluje — a konkrétně tak ukazuje, co znamená, že semínko A₀ pohlcuje diskontinuitu, kterou klasický výpočet pohltit nedokáže.">
+Because the Gibbs overshoot is the visible signature of the origin singularity — and the modified kernel D*ₙ annihilates it at A₀.
+</div>
+</details>
+<details>
+<summary data-en="Is the theory falsifiable?"
+data-cz="Je teorie vyvratitelná?">Is the theory falsifiable?</summary>
+<div class="answer"
+data-en="Yes, along three lines. (1) Constructive readings of the seven Millennium Problems are mathematical claims: a single error in an embedding or a proof collapses the corresponding reading. (2) The firewall interpretation of interference is testable against any double-slit configuration with controllable path phases. (3) The chrono-structural CTC impossibility theorem makes a precise, refutable claim: no causal loop survives a nodal firewall with |ψ| = 0."
+data-cz="Ano, ve třech liniích. (1) Konstruktivní čtení sedmi problémů tisíciletí jsou matematická tvrzení: jediná chyba ve vnoření nebo důkazu srází odpovídající čtení. (2) Firewallové čtení interference je testovatelné proti libovolné dvouštěrbinové konfiguraci s říditelnými fázemi drah. (3) Věta o nemožnosti CTC v chrono-struktuře činí přesné vyvratitelné tvrzení: žádná kauzální smyčka nepřežije nodální firewall s |ψ| = 0.">
+Yes, along three lines — the constructive readings are mathematical claims, the firewall reading of interference is experimentally testable, and the CTC theorem makes a precise refutable claim.
+</div>
+</details>
+<details>
+<summary data-en="What does the motto &quot;Veritas et Ratio Invariantia Sunt in Toposo&quot; mean?"
+data-cz="Co znamená motto „Veritas et Ratio Invariantia Sunt in Toposo“?">What does the motto "Veritas et Ratio Invariantia Sunt in Toposo" mean?</summary>
+<div class="answer"
+data-en="Truth and reason are invariants of the topos — the foundational arena where logic and geometry meet. Just as magnitudes are preserved under symmetry transformations, valid inference itself is an invariant structure: it survives every change of observer, language, or coordinate chart anchored at A₀."
+data-cz="Pravda a rozum jsou invarianty toposu — základní arény, kde se setkává logika a geometrie. Stejně jako velikosti zůstávají zachovány při transformacích symetrie, je platná inference sama invariantní strukturou: přežije každou změnu pozorovatele, jazyka či souřadnicové soustavy ukotvené v A₀.">
+Truth and reason are invariants of the topos — valid inference survives every change of observer, language, or coordinate chart anchored at A₀.
+</div>
+</details>
+<details>
+<summary data-en="Does the observer collapse the wave function here?"
+data-cz="Kolabuje zde pozorovatel vlnovou funkci?">Does the observer collapse the wave function here?</summary>
+<div class="answer"
+data-en="No — the framework is observer-free by construction. What a classical register does when it records a path is not collapse but a firewall event: the interaction carves a nodal surface |ψ| = 0 between the recorded and unrecorded sectors. The DS experiment panel shows both readings side by side; the observer is a boundary condition, not a cause."
+data-cz="Nikoliv — rámec je z konstrukce nezávislý na pozorovateli. Co klasický registr při záznamu dráhy činí, není kolaps, ale událost firewallu: interakce vytesá nodální plochu |ψ| = 0 mezi zaznamenaným a nezaznamenaným sektorem. Panel DS ukazuje obě čtení vedle sebe; pozovatel je okrajová podmínka, nikoli příčina.">
+No — recording a path is a firewall event, not a collapse. The observer is a boundary condition, not a cause.
 </div>
 </details>
 </div>
@@ -797,8 +866,8 @@ data-cz="Referenční tabulka, bonusové medicínské aplikace a otevřený arch
 data-cz="CoReX · Speciální teorie výpočetní relativity">CoReX · Special Theory of Computational Relativity</span><br>
 <span data-en="By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity"
 data-cz="Autor: Pierre LeBaux, PhD · Teoretická fyzika a výpočetní složitost">By Pierre LeBaux, PhD · Theoretical Physics &amp; Computational Complexity</span><br>
-<span data-en="Version 31 · self-contained HTML · offline-ready"
-data-cz="Verze 31 · samostatné HTML · připraveno offline">Version 31 · self-contained HTML · offline-ready</span>
+<span data-en="Version 39 · self-contained HTML · offline-ready"
+data-cz="Verze 39 · samostatné HTML · připraveno offline">Version 39 · self-contained HTML · offline-ready</span>
 </address>
 <button class="navlink" onclick="goTop()"
 data-en="↑ Back to top" data-cz="↑ Zpět nahoru">↑ Back to top</button>
@@ -860,6 +929,63 @@ try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 catch (e) { window.scrollTo(0, 0); }
 }
 
+var EQ_LATEX = {
+'R_N = C(N,2)  ⇒  T(N) = O(N²)': 'R_N = \\binom{N}{2} \\;\\Rightarrow\\; T(N) = O(N^2)',
+'ξ(s) = ξ(1−s)  ⇒  Re(s) = ½': '\\xi(s) = \\xi(1-s) \\;\\Rightarrow\\; \\operatorname{Re}(s) = \\tfrac{1}{2}',
+'E₀ = λc² > 0  ⇒  ΔM > 0': 'E_0 = \\lambda c^2 > 0 \\;\\Rightarrow\\; \\Delta M > 0',
+'det(CM₅) = 0  ⇒  ‖u‖_{C^∞} < ∞': '\\det(\\mathrm{CM}_5) = 0 \\;\\Rightarrow\\; \\lVert u \\rVert_{C^\\infty} < \\infty',
+'rank(E(Q)) = ord_{s=1} L(E,s)': '\\operatorname{rank}(E(\\mathbb{Q})) = \\operatorname{ord}_{s=1} L(E,s)',
+'H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles': 'H^{2k}(X,\\mathbb{Q}) \\cap H^{k,k}(X) = \\text{rational cycles}',
+'∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³': '\\frac{\\partial g}{\\partial t} = -2 R_{ij} \\;\\Rightarrow\\; M^3 \\cong S^3',
+'D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ · ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895': 'D^*_n(x) = D_n(x)\\cdot\\left(1 - e^{(-|x-x_0|/\\lambda)}\\right) \\;\\Rightarrow\\; C^\\infty \\;\\cdot\\; \\int_0^\\pi \\frac{\\sin t}{t}\\,dt - \\pi/2 \\approx 0.0895',
+};
+
+function eqCopy(txt, btn) {
+var done = function () {
+btn.classList.add('ok');
+var old = btn.getAttribute('data-label') || btn.textContent;
+btn.setAttribute('data-label', old);
+btn.textContent = '✓';
+setTimeout(function () { btn.textContent = old; btn.classList.remove('ok'); }, 1100);
+showStatus(T('copied'));
+};
+var fallback = function () {
+try {
+var ta = document.createElement('textarea');
+ta.value = txt;
+ta.style.cssText = 'position:fixed;top:-9999px;opacity:0';
+document.body.appendChild(ta);
+ta.select();
+var ok = document.execCommand('copy');
+document.body.removeChild(ta);
+if (ok) done(); else showStatus(T('copy failed'));
+} catch (e) { showStatus(T('copy failed')); }
+};
+try {
+if (navigator.clipboard && navigator.clipboard.writeText) {
+navigator.clipboard.writeText(txt).then(done, fallback);
+return;
+}
+} catch (e) {}
+fallback();
+}
+
+function copyEq(btn, kind) {
+var box = btn.closest ? btn.closest('.eq') : null;
+var text = '';
+if (box) {
+var sp = box.querySelector('.eq-text');
+text = sp ? sp.textContent : box.textContent;
+} else { text = btn.parentNode.textContent; }
+text = text.replace(/\s+/g, ' ').trim();
+var _texMap = null;
+if (kind === 'tex') {
+if (!_texMap) { _texMap = {}; for (var k in EQ_LATEX) _texMap[k.replace(/\s+/g, ' ').trim()] = EQ_LATEX[k]; }
+text = _texMap[text] || text;
+}
+eqCopy(text, btn);
+}
+
 function setLang(lang, quiet) {
 if (lang !== 'cz') lang = 'en';
 if (!quiet) showStatus('lang: ' + lang);
@@ -917,7 +1043,7 @@ requestAnimationFrame(repaint);
 }
 
 document.addEventListener('keydown', function (e) {
-if (e.target && e.target.id && /^tab$/.test(e.target.id)) {
+if (e.target && e.target.id && /^tab\d$/.test(e.target.id)) {
 var cur = parseInt(e.target.id.slice(3), 10), nxt = null;
 if (e.key === 'ArrowRight') nxt = cur % 7 + 1;
 else if (e.key === 'ArrowLeft') nxt = (cur + 5) % 7 + 1;
@@ -973,7 +1099,7 @@ var f = document.getElementById('dsChipFire');
 if (w) {
 w.classList.toggle('na', DS.observer);
 w.title = DS.observer
-? 'no visual effect while the observer is on - which-path lines replace the wavefronts'
+? T('no visual effect while the observer is on - which-path lines replace the wavefronts')
 : '';
 }
 if (f) {
@@ -1024,7 +1150,7 @@ var c = document.getElementById('foChipClass');
 var a = document.getElementById('foChipA0');
 if (c && a && !FO.classic && !FO.a0) {
 var sq = document.getElementById('foChipSq');
-if (sq && FO.square) { sq.classList.add('na'); sq.title = 'only the square wave is shown - turn a curve back on to compare'; }
+if (sq && FO.square) { sq.classList.add('na'); sq.title = T('only the square wave is shown - turn a curve back on to compare'); }
 } else {
 var sq2 = document.getElementById('foChipSq');
 if (sq2 && sq2.classList.contains('na')) { sq2.classList.remove('na'); sq2.title = ''; }
@@ -1051,6 +1177,9 @@ var CZ_LABELS = {
 '2^N tree → so(N)': '2^N strom → so(N)', 'rotation planes': 'rotační roviny',
 '2^4 = 16 branches': '2^4 = 16 větví', ' rotation planes': ' rotačních rovin',
 '  ✓ collapsed': '  ✓ zkollapsed', '  … collapsing': '  … kolapsuje',
+'copied': 'zkopírováno', 'copy failed': 'kopírování se nezdařilo',
+'no visual effect while the observer is on - which-path lines replace the wavefronts': 'žádný vizuální efekt při zapnutém pozorovateli - čáry kterou-dráhu nahrazují vlnoplochy',
+'only the square wave is shown - turn a curve back on to compare': 'zobrazena je pouze obdélníková vlna - zapněte zpět některou křivku pro srovnání',
 'vacuum floor': 'dno vakua', 'C∞ smooth': 'C∞ hladké', 'L(E,s) at s=1': 'L(E,s) v s=1',
 'rational cycle': 'racionální cyklus', 'SOURCE': 'ZDROJ', 'BARRIER': 'BARIÉRA', 'SCREEN': 'STÍNÍTKO',
 'ΔM > 0': 'ΔM > 0', 'M³ → S³': 'M³ → S³', 'I(y) = cos²(k·Δr / 2)': 'I(y) = cos²(k·Δr / 2)',
@@ -1160,10 +1289,14 @@ ctx.beginPath(); ctx.arc(cx, cy, 6 + pu * 22, 0, Math.PI * 2); ctx.stroke();
 var remaining = Math.max(6, 16 - Math.floor(wave * 8));
 ctx.font = 'bold 11px monospace';
 ctx.textAlign = 'center';
+var lab1 = T('2^4 = 16 branches');
+var lab2 = '→ ' + remaining + T(' rotation planes') + (ph > 0.35 ? T('  ✓ collapsed') : T('  … collapsing'));
+var labHalf = Math.max(ctx.measureText(lab1).width, ctx.measureText(lab2).width) / 2;
+var labCx = Math.max(labHalf + 8, Math.min(cx, W - labHalf - 8));
 ctx.fillStyle = 'rgba(164,158,144,.75)';
-ctx.fillText(T('2^4 = 16 branches'), cx, cy + rad + 22);
+ctx.fillText(lab1, labCx, cy + rad + 22);
 ctx.fillStyle = ph > 0.35 ? '#7ba78c' : '#c98080';
-ctx.fillText('→ ' + remaining + T(' rotation planes') + (ph > 0.35 ? T('  ✓ collapsed') : T('  … collapsing')), cx, cy + rad + 38);
+ctx.fillText(lab2, labCx, cy + rad + 38);
 ctx.textAlign = 'left';
 if (ph > 0.72) {
 var cu = (ph - 0.72) / 0.28;
@@ -1185,34 +1318,87 @@ ctx.lineWidth = 2;
 ctx.beginPath(); ctx.arc(cx, cy, 8 + lu2 * 24, 0, Math.PI * 2); ctx.stroke();
 }
 }
-canvasLabel(ctx, 'rotation planes · geodesic O(N²)', cx, H - 14, { align: 'center', color: 'rgba(164,158,144,.72)', size: 10 });
+ctx.font = '10px monospace';
+var footHalf = ctx.measureText(T('rotation planes · geodesic O(N²)')).width / 2;
+var footCx = Math.max(footHalf + 8, Math.min(cx, W - footHalf - 8));
+canvasLabel(ctx, 'rotation planes · geodesic O(N²)', footCx, H - 14, { align: 'center', color: 'rgba(164,158,144,.72)', size: 10 });
 }
 function EASEo(x) { x = Math.max(0, Math.min(1, x)); return 1 - Math.pow(1 - x, 3); }
 
+var RIEM_TRAIL = [];
+
 function draw2(ctx, W, H, t) {
 var cx = W / 2, cy = H * 0.52;
+var bandW = Math.min(26, W * 0.06);
+
+// critical line band (shaded strip along Re(s) = 1/2)
+var grad = ctx.createLinearGradient(cx - bandW / 2, 0, cx + bandW / 2, 0);
+grad.addColorStop(0, 'rgba(224,169,82,0)');
+grad.addColorStop(0.5, 'rgba(224,169,82,0.07)');
+grad.addColorStop(1, 'rgba(224,169,82,0)');
+ctx.fillStyle = grad;
+ctx.fillRect(cx - bandW / 2, 36, bandW, H - 66);
+
 ctx.strokeStyle = 'rgba(127,163,184,.15)';
 ctx.lineWidth = 1;
 ctx.beginPath(); ctx.moveTo(28, cy); ctx.lineTo(W - 28, cy); ctx.stroke();
 ctx.strokeStyle = '#7ba78c'; ctx.lineWidth = 3;
 ctx.beginPath(); ctx.moveTo(cx, 42); ctx.lineTo(cx, H - 30); ctx.stroke();
 canvasLabel(ctx, 'Re(s) = 1/2', cx + 12, 28, { color: 'rgba(123,167,140,.9)' });
+canvasLabel(ctx, 'ξ(s) = ξ(1−s)', 18, 28, { color: 'rgba(164,158,144,.65)', size: 10 });
+
+// non-trivial zeros on the line: gentle bob + expanding pulse rings
 for (var i = -4; i <= 4; i++) {
 if (i === 0) continue;
-var y = cy + i * Math.min(24, H * .08);
+var y = cy + i * Math.min(24, H * .08) + Math.sin(t * 2 + i * 0.7) * 2.2;
 var g = 0.6 + 0.4 * Math.sin(t * 1.6 + i);
+for (var r2 = 0; r2 < 2; r2++) {
+var pr = ((t * 0.7 + i * 0.37 + r2 * 0.5) % 1 + 1) % 1;
+ctx.strokeStyle = 'rgba(224,169,82,' + ((1 - pr) * 0.3 * g).toFixed(3) + ')';
+ctx.lineWidth = 1.2;
+ctx.beginPath(); ctx.arc(cx, y, 5 + pr * 11, 0, Math.PI * 2); ctx.stroke();
+}
 ctx.fillStyle = '#e0a952';
 ctx.beginPath(); ctx.arc(cx, y, 5, 0, Math.PI * 2); ctx.fill();
-ctx.strokeStyle = 'rgba(224,169,82,' + (0.35 * g) + ')';
-ctx.lineWidth = 1.2;
-ctx.beginPath(); ctx.arc(cx, y, 5 + g * 5, 0, Math.PI * 2); ctx.stroke();
 }
+
+// wandering zero cycle: off-axis excursion → pushed back → damped → locked
 var P = 6, ph = t % P;
 var off = 0, ry = cy - Math.min(46, H * 0.16);
 if (ph < 1.6) off = (ph / 1.6) * W * 0.16;
 else if (ph < 2.6) { var q = (ph - 1.6) / 1.0; off = W * 0.16 * (1 - EASEo(q)); }
 else if (ph < 4.4) { var d = Math.exp(-(ph - 2.6) * 2.2); off = Math.sin((ph - 2.6) * 9) * W * 0.04 * d; }
 var rx = cx + off;
+
+// motion trail (fading afterimages of the wandering zero)
+if (ph < 4.4) {
+var last = RIEM_TRAIL[RIEM_TRAIL.length - 1];
+if (!last || t - last.pt > 0.06) {
+RIEM_TRAIL.push({ u: off / (W * 0.16), pt: t });
+if (RIEM_TRAIL.length > 12) RIEM_TRAIL.shift();
+}
+}
+for (var ti = 0; ti < RIEM_TRAIL.length; ti++) {
+var tr = RIEM_TRAIL[RIEM_TRAIL.length - 1 - ti];
+var age = t - tr.pt;
+if (age > 0.45) continue;
+ctx.fillStyle = 'rgba(224,169,82,' + ((1 - age / 0.45) * 0.3).toFixed(3) + ')';
+ctx.beginPath(); ctx.arc(cx + tr.u * W * 0.16, ry, 4.5 * (1 - age / 0.45) + 1.5, 0, Math.PI * 2); ctx.fill();
+}
+if (ph >= 4.4) { RIEM_TRAIL.length = 0; }
+
+// functional-equation mirror ghost: the symmetric partner ξ(1−s)
+if (Math.abs(off) > 2) {
+var mx = cx - off;
+ctx.strokeStyle = 'rgba(127,163,184,.30)';
+ctx.lineWidth = 1;
+ctx.setLineDash([3, 4]);
+ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(mx, ry); ctx.stroke();
+ctx.setLineDash([]);
+ctx.strokeStyle = 'rgba(127,163,184,.45)';
+ctx.beginPath(); ctx.arc(mx, ry, 5.5, 0, Math.PI * 2); ctx.stroke();
+}
+
 ctx.fillStyle = off > 4 ? '#c98080' : '#e0a952';
 ctx.beginPath(); ctx.arc(rx, ry, 5.5, 0, Math.PI * 2); ctx.fill();
 if (ph >= 1.6 && ph < 2.6) {
@@ -1223,9 +1409,12 @@ ctx.beginPath(); ctx.moveTo(cx, ry); ctx.lineTo(cx + W * 0.16 * (1 - EASEo(q2)),
 canvasLabel(ctx, 'off-axis zero pushed back', cx + W * 0.08, ry - 12, { align: 'center', color: 'rgba(255,209,102,.9)', size: 10 });
 } else if (ph >= 4.4) {
 var lu = (ph - 4.4) / 1.6;
-ctx.strokeStyle = 'rgba(123,167,140,' + (0.7 * Math.max(0, 1 - lu * 2)) + ')';
+for (var rp = 0; rp < 2; rp++) {
+var rq = Math.min(1, Math.max(0, lu - rp * 0.18));
+ctx.strokeStyle = 'rgba(123,167,140,' + (0.7 * Math.max(0, 1 - rq * 2)).toFixed(3) + ')';
 ctx.lineWidth = 2;
-ctx.beginPath(); ctx.arc(cx, ry, 6 + EASEo(Math.min(1, lu * 2)) * 20, 0, Math.PI * 2); ctx.stroke();
+ctx.beginPath(); ctx.arc(cx, ry, 6 + EASEo(rq) * (20 + rp * 10), 0, Math.PI * 2); ctx.stroke();
+}
 if (lu < 0.5) canvasLabel(ctx, 'locked on the mirror axis', cx, ry - 16, { align: 'center', color: 'rgba(123,167,140,.95)', size: 10 });
 }
 canvasLabel(ctx, 'muted by firewall', W - 20, H - 12, { align: 'right', color: 'rgba(164,158,144,.6)', size: 10 });
@@ -1316,7 +1505,7 @@ var barW = Math.min(60, W * .12);
 var P = 2.2;
 for (var k = 1; k <= 4; k++) {
 var by = 56 + k * Math.min(23, H * .08);
-var fire = ((t + (k - 1) * -P / 4) % P) / P;
+var fire = (((t + (k - 1) * -P / 4) % P) + P) % P / P;
 var glow = fire < 0.35 ? 0.35 + 0.65 * (1 - fire / 0.35) : 0.35;
 ctx.fillStyle = 'rgba(224,169,82,' + glow + ')';
 ctx.fillRect(bx, by, barW, 14);
@@ -1664,6 +1853,7 @@ var leftPath = x0 + 38;
 var rightPath = x1 - 38;
 var speed = 0.16;
 var dir = TM.reversed ? -1 : 1;
+if (!TM.trail) TM.trail = [];
 
 if (dt > 0) {
 TM.x = Math.max(0, Math.min(1, TM.x + dir * speed * dt));
@@ -1686,24 +1876,49 @@ TM.pulse = Math.max(0, TM.pulse - dt * 2.5);
 TM.clockPhase += dt * 2.5 * dir;
 TM.markerPhase += dt * 34 * dir;
 
+if (dt > 0) {
+TM.trail.push(TM.x);
+if (TM.trail.length > 26) TM.trail.shift();
+}
+
 var carriageX = leftPath + TM.x * (rightPath - leftPath);
-var carriageY = beltY - 30;
+var carriageY = beltY - 30 + Math.sin(t * 2.2) * 1.6;
 
 ctx.fillStyle = 'rgba(127,163,184,0.05)';
 for (var gx = 20; gx < W; gx += 32) {
 for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
 }
 
-ctx.fillStyle = 'rgba(201,128,128,0.055)';
+var gradPast = ctx.createLinearGradient(0, top, 0, bottom);
+gradPast.addColorStop(0, 'rgba(201,128,128,0.025)');
+gradPast.addColorStop(1, 'rgba(201,128,128,0.095)');
+ctx.fillStyle = gradPast;
 ctx.fillRect(x0, top, Math.max(0, cx - x0), bottom - top);
-ctx.fillStyle = 'rgba(123,167,140,0.055)';
+var gradFut = ctx.createLinearGradient(0, top, 0, bottom);
+gradFut.addColorStop(0, 'rgba(123,167,140,0.025)');
+gradFut.addColorStop(1, 'rgba(123,167,140,0.095)');
+ctx.fillStyle = gradFut;
 ctx.fillRect(cx, top, Math.max(0, x1 - cx), bottom - top);
+
+for (var ci = 0; ci < 16; ci++) {
+var cu = (ci * 0.618034 + t * 0.05 * dir) % 1; if (cu < 0) cu += 1;
+var px2 = x0 + cu * (x1 - x0);
+if (TM.firewalls && Math.abs(px2 - cx) < 10) continue;
+var py2 = top + 14 + ((ci * 0.378) % 1) * (bottom - top - 28);
+var tw = 0.5 + 0.5 * Math.sin(t * 2 + ci);
+ctx.fillStyle = px2 < cx ? 'rgba(201,128,128,' + (0.08 + 0.20 * tw) + ')' : 'rgba(123,167,140,' + (0.08 + 0.20 * tw) + ')';
+ctx.beginPath(); ctx.arc(px2, py2, 1.3, 0, Math.PI * 2); ctx.fill();
+}
 
 canvasLabel(ctx, 'PAST', x0 + 8, 82, {size:11, color:'rgba(201,128,128,.9)'});
 canvasLabel(ctx, 'FUTURE', x1 - 8, 82, {size:11, color:'rgba(123,167,140,.9)', align:'right'});
 
-ctx.strokeStyle = 'rgba(127,163,184,0.22)';
-ctx.lineWidth = 1;
+var beltGrad = ctx.createLinearGradient(x0, 0, x1, 0);
+beltGrad.addColorStop(0, 'rgba(127,163,184,0.06)');
+beltGrad.addColorStop(0.5, 'rgba(244,199,122,0.34)');
+beltGrad.addColorStop(1, 'rgba(127,163,184,0.06)');
+ctx.strokeStyle = beltGrad;
+ctx.lineWidth = 2.5;
 ctx.beginPath(); ctx.moveTo(x0, beltY + 5); ctx.lineTo(x1, beltY + 5); ctx.stroke();
 
 var markerDir = TM.reversed ? -1 : 1;
@@ -1727,11 +1942,25 @@ ctx.setLineDash([4, 4]);
 ctx.beginPath(); ctx.moveTo(cx, top); ctx.lineTo(cx, bottom); ctx.stroke();
 ctx.setLineDash([]);
 
+for (var fi = 0; fi < 9; fi++) {
+var fy = top + ((fi + 0.5) / 9) * (bottom - top);
+var fph = 0.5 + 0.5 * Math.sin(t * 4 + fi * 0.9);
+ctx.fillStyle = 'rgba(255,209,102,' + (0.22 + 0.42 * fph) + ')';
+ctx.beginPath(); ctx.arc(cx + Math.sin(t * 5 + fi * 1.7) * 5, fy, 1.6, 0, Math.PI * 2); ctx.fill();
+}
+
 canvasLabel(ctx, 'NODAL FIREWALL', cx + 9, 102, {size:10, color:'rgba(255,209,102,.95)'});
 
 if (TM.hit > 0.02) {
 ctx.fillStyle = 'rgba(255,209,102,' + (0.16 + 0.22 * TM.hit) + ')';
 ctx.beginPath(); ctx.arc(cx, beltY - 4, 15 + 12 * TM.hit, 0, Math.PI * 2); ctx.fill();
+for (var ri = 0; ri < 3; ri++) {
+var ru = TM.hit - ri * 0.18;
+if (ru <= 0) continue;
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.5 * ru) + ')';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.arc(cx, beltY - 4, 15 + (1 - ru) * 55, 0, Math.PI * 2); ctx.stroke();
+}
 canvasLabel(ctx, 'BOUNDARY REACHED', cx, beltY - 62, {size:9, color:'rgba(255,209,102,.95)', align:'center'});
 }
 } else {
@@ -1741,6 +1970,13 @@ ctx.setLineDash([4, 4]);
 ctx.beginPath(); ctx.moveTo(cx, top); ctx.lineTo(cx, bottom); ctx.stroke();
 ctx.setLineDash([]);
 canvasLabel(ctx, 'SECTORS CONNECTED', cx, 102, {size:10, color:'rgba(201,128,128,.9)', align:'center'});
+}
+
+for (var gi = 0; gi < TM.trail.length; gi++) {
+var gx2 = leftPath + TM.trail[gi] * (rightPath - leftPath);
+var ga = 0.04 + 0.13 * (gi / Math.max(1, TM.trail.length - 1));
+ctx.fillStyle = 'rgba(224,169,82,' + ga + ')';
+ctx.beginPath(); ctx.roundRect(gx2 - 22, carriageY - 18, 44, 36, 4); ctx.fill();
 }
 
 ctx.fillStyle = 'rgba(224,169,82,0.12)';
@@ -1754,10 +1990,45 @@ ctx.roundRect(carriageX - 27, carriageY - 22, 54, 44, 5);
 ctx.fill();
 ctx.stroke();
 
+for (var wi = 0; wi < 2; wi++) {
+var wx = carriageX + (wi ? 15 : -15);
+ctx.strokeStyle = TM.reversed ? 'rgba(201,128,128,0.85)' : 'rgba(224,169,82,0.85)';
+ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.arc(wx, beltY - 1, 6, 0, Math.PI * 2); ctx.stroke();
+var wA = TM.markerPhase * 0.12;
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(wx + Math.cos(wA) * 4.2, beltY - 1 + Math.sin(wA) * 4.2);
+ctx.lineTo(wx - Math.cos(wA) * 4.2, beltY - 1 - Math.sin(wA) * 4.2);
+ctx.stroke();
+}
+
+var beamA = TM.reversed ? 0.10 : 0.15;
+var beamGrad = ctx.createLinearGradient(carriageX, 0, carriageX + dir * 74, 0);
+beamGrad.addColorStop(0, 'rgba(244,199,122,' + beamA + ')');
+beamGrad.addColorStop(1, 'rgba(244,199,122,0)');
+ctx.fillStyle = beamGrad;
+ctx.beginPath();
+ctx.moveTo(carriageX + dir * 27, carriageY - 13);
+ctx.lineTo(carriageX + dir * 74, carriageY - 4);
+ctx.lineTo(carriageX + dir * 74, carriageY + 4);
+ctx.lineTo(carriageX + dir * 27, carriageY + 13);
+ctx.closePath(); ctx.fill();
+
 var clockR = 14;
 ctx.strokeStyle = 'rgba(244,199,122,0.9)';
 ctx.lineWidth = 1.5;
 ctx.beginPath(); ctx.arc(carriageX, carriageY, clockR, 0, Math.PI * 2); ctx.stroke();
+
+for (var tk = 0; tk < 12; tk++) {
+var tka = (tk / 12) * Math.PI * 2;
+ctx.strokeStyle = 'rgba(244,199,122,0.45)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(carriageX + Math.cos(tka) * (clockR - 2), carriageY + Math.sin(tka) * (clockR - 2));
+ctx.lineTo(carriageX + Math.cos(tka) * (clockR - 4), carriageY + Math.sin(tka) * (clockR - 4));
+ctx.stroke();
+}
 
 var handAngle = TM.clockPhase;
 ctx.strokeStyle = '#f4c77a';
@@ -1769,6 +2040,19 @@ carriageX + Math.cos(handAngle - Math.PI / 2) * (clockR - 3),
 carriageY + Math.sin(handAngle - Math.PI / 2) * (clockR - 3)
 );
 ctx.stroke();
+
+ctx.strokeStyle = 'rgba(244,199,122,0.6)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(carriageX, carriageY);
+ctx.lineTo(
+carriageX + Math.cos(handAngle * 0.55 - Math.PI / 2) * (clockR - 7),
+carriageY + Math.sin(handAngle * 0.55 - Math.PI / 2) * (clockR - 7)
+);
+ctx.stroke();
+
+ctx.fillStyle = '#f4c77a';
+ctx.beginPath(); ctx.arc(carriageX, carriageY, 1.8, 0, Math.PI * 2); ctx.fill();
 
 ctx.strokeStyle = TM.reversed ? 'rgba(201,128,128,.9)' : 'rgba(123,167,140,.9)';
 ctx.lineWidth = 2;
@@ -1822,26 +2106,30 @@ canvasLabel(ctx, 'ΔE ≥ k_B T ln 2', meterX, meterY + meterH + 12, {size:9, co
 canvasLabel(ctx, 'carriage = temporal state', W / 2, H - 48, {size:9, color:'rgba(127,163,184,.55)', align:'center'});
 }
 
-var FO_CACHE = { n: -1, count: 0, scale: -1, vals: null };
+var FO_CACHE = { n: -1, count: 0, scale: -1, vals: null, age: 0 };
+var FO_CACHE2 = { n: -1, count: 0, scale: -1, vals: null, age: 0 };
 function foSamples(n, count, scale) {
-if (FO_CACHE.n === n && FO_CACHE.count === count && FO_CACHE.scale === scale && FO_CACHE.vals) return FO_CACHE.vals;
-var vals = FO_CACHE.vals;
-if (!vals || vals.length !== count) { vals = new Float32Array(count); FO_CACHE.vals = vals; }
+var hit = null;
+if (FO_CACHE.n === n && FO_CACHE.count === count && FO_CACHE.scale === scale && FO_CACHE.vals) hit = FO_CACHE;
+else if (FO_CACHE2.n === n && FO_CACHE2.count === count && FO_CACHE2.scale === scale && FO_CACHE2.vals) hit = FO_CACHE2;
+if (!hit) {
+hit = (FO_CACHE.age || 0) <= (FO_CACHE2.age || 0) ? FO_CACHE : FO_CACHE2;
+if (!hit.vals || hit.vals.length !== count) hit.vals = new Float32Array(count);
+var vals = hit.vals;
 for (var i = 0; i < count; i++) {
 var xc = -1 + (i * 3) / scale;
 var s = 0;
 for (var k = 0; k < n; k++) s += Math.sin((2 * k + 1) * Math.PI * xc / 2) / (2 * k + 1);
 vals[i] = (4 / Math.PI) * s;
 }
-FO_CACHE.n = n; FO_CACHE.count = count; FO_CACHE.scale = scale;
-return vals;
+hit.n = n; hit.count = count; hit.scale = scale;
+}
+hit.age = (FO_CACHE.age || 0) + (FO_CACHE2.age || 0) + 1;
+return hit.vals;
 }
 
 function draw8(ctx, W, H, t) {
 var P = 8, ph = t % P;
-var n = FO.holdN && FO.frozenN != null ? FO.frozenN : (2 + Math.floor(EASEo(Math.min(1, ph / (P * 0.75))) * 13));
-FO.curN = n;
-
 var pad = 24;
 var plotX0 = pad, plotX1 = W - pad;
 var wide = W >= 620;
@@ -1880,11 +2168,32 @@ if (FO.a0) canvasLabel(ctx, 'A₀ kernel D*ₙ — overshoot annihilated', 18, 8
 }
 
 var count = Math.floor((plotX1 - plotX0) / 3) + 1;
-var vals = foSamples(n, count, scale);
+
+var nF = FO.holdN && FO.frozenN != null ? FO.frozenN : (2 + EASEo(Math.min(1, ph / (P * 0.75))) * 13);
+var n0 = Math.max(1, Math.min(14, Math.floor(nF)));
+var n1 = n0 + 1;
+var fr = nF - Math.floor(nF);
+var w = fr * fr * (3 - 2 * fr);
+FO.curN = Math.round(nF);
+var vA = foSamples(n0, count, scale);
+var vB = foSamples(n1, count, scale);
+
+var scanU = (t * 0.14) % 1;
+var scanX = plotX0 + scanU * (plotX1 - plotX0);
+var scanGrad = ctx.createLinearGradient(scanX - 34, 0, scanX + 34, 0);
+scanGrad.addColorStop(0, 'rgba(244,199,122,0)');
+scanGrad.addColorStop(0.5, 'rgba(244,199,122,0.07)');
+scanGrad.addColorStop(1, 'rgba(244,199,122,0)');
+ctx.fillStyle = scanGrad;
+ctx.fillRect(scanX - 34, topBand, 68, botBand - topBand);
 
 ctx.strokeStyle = 'rgba(127,163,184,0.16)';
 ctx.lineWidth = 1;
 ctx.beginPath(); ctx.moveTo(plotX0, cy); ctx.lineTo(plotX1, cy); ctx.stroke();
+for (var tkx = 0; tkx <= 8; tkx++) {
+var tx = plotX0 + (tkx / 8) * (plotX1 - plotX0);
+ctx.beginPath(); ctx.moveTo(tx, cy - 3); ctx.lineTo(tx, cy + 3); ctx.stroke();
+}
 
 if (FO.square) {
 ctx.strokeStyle = 'rgba(123,167,140,0.7)';
@@ -1898,11 +2207,20 @@ ctx.setLineDash([]);
 }
 
 if (FO.classic) {
+ctx.strokeStyle = 'rgba(201,128,128,0.18)';
+ctx.lineWidth = 4.5;
+ctx.beginPath();
+for (var pcg = 0; pcg < count; pcg++) {
+var ycg = cy - (vA[pcg] + (vB[pcg] - vA[pcg]) * w) * yScale;
+var pxg = plotX0 + pcg * 3;
+if (pcg === 0) ctx.moveTo(pxg, ycg); else ctx.lineTo(pxg, ycg);
+}
+ctx.stroke();
 ctx.strokeStyle = 'rgba(201,128,128,0.85)';
 ctx.lineWidth = 1.5;
 ctx.beginPath();
 for (var pc = 0; pc < count; pc++) {
-var yc = cy - vals[pc] * yScale;
+var yc = cy - (vA[pc] + (vB[pc] - vA[pc]) * w) * yScale;
 var px = plotX0 + pc * 3;
 if (pc === 0) ctx.moveTo(px, yc); else ctx.lineTo(px, yc);
 }
@@ -1910,22 +2228,50 @@ ctx.stroke();
 }
 
 if (FO.a0) {
+ctx.strokeStyle = 'rgba(224,169,82,0.22)';
+ctx.lineWidth = 5.5;
+ctx.beginPath();
+for (var pdg = 0; pdg < count; pdg++) {
+var xdg = -1 + (pdg * 3) / scale;
+var ydg = cy - (vA[pdg] + (vB[pdg] - vA[pdg]) * w) * (1 - Math.exp(-Math.abs(xdg) / 0.09)) * yScale;
+var pdgx = plotX0 + pdg * 3;
+if (pdg === 0) ctx.moveTo(pdgx, ydg); else ctx.lineTo(pdgx, ydg);
+}
+ctx.stroke();
 ctx.strokeStyle = '#e0a952';
 ctx.lineWidth = 2.2;
 ctx.beginPath();
 for (var pd = 0; pd < count; pd++) {
 var xd = -1 + (pd * 3) / scale;
-var yd = cy - vals[pd] * (1 - Math.exp(-Math.abs(xd) / 0.09)) * yScale;
+var yd = cy - (vA[pd] + (vB[pd] - vA[pd]) * w) * (1 - Math.exp(-Math.abs(xd) / 0.09)) * yScale;
 var pdx = plotX0 + pd * 3;
 if (pd === 0) ctx.moveTo(pdx, yd); else ctx.lineTo(pdx, yd);
 }
 ctx.stroke();
 }
 
+if (FO.classic || FO.a0) {
+var jpu = (t * 0.9) % 1;
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.55 * (1 - jpu)) + ')';
+ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.arc(cx, cy - yScale, 3 + jpu * 26, 0, Math.PI * 2); ctx.stroke();
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.35 * (1 - jpu)) + ')';
+ctx.beginPath(); ctx.arc(cx, cy + yScale, 3 + jpu * 26, 0, Math.PI * 2); ctx.stroke();
+}
+
+if (FO.classic && n0 >= 2) {
+var peakY = cy - (1 + 0.089) * yScale;
+ctx.strokeStyle = 'rgba(201,128,128,0.55)';
+ctx.setLineDash([2, 3]);
+ctx.beginPath(); ctx.moveTo(cx, cy - yScale); ctx.lineTo(cx + 26, peakY); ctx.stroke();
+ctx.setLineDash([]);
+canvasLabel(ctx, '+8.95%', cx + 29, peakY + 3, { size: 9, color: 'rgba(201,128,128,.9)', pad: 4 });
+}
+
 ctx.font = 'bold 12px monospace';
 ctx.fillStyle = 'rgba(164,158,144,.8)';
 ctx.textAlign = 'right';
-ctx.fillText('N = ' + n, W - 18, 26);
+ctx.fillText('N = ' + (Math.round(nF * 10) / 10), W - 18, 26);
 ctx.textAlign = 'left';
 
 if (W >= 520 && (FO.classic || FO.a0)) {
@@ -2128,7 +2474,7 @@ if (el) ro.observe(el);
 }
 watchView();
 watchReducedMotion();
-console.log('CoReX v31 ready.');
+console.log('CoReX v39 ready.');
 }
 
 if (document.readyState === 'loading') {
