@@ -32,3 +32,16 @@ $$
 
 % Leges invariabiles: Veritas et Ratio.
 % \forall x \in X,\ \forall T \in \mathcal{T},\ \forall I \in \mathcal{I}:\quad I(Tx)=I(x).
+
+4. COMPLICATING IT AGAIN
+- more clarity
+- more math
+- less fun
+
+\textit{Leges invariabiles: Veritas et Ratio.}
+\[
+\forall x \in X,\ \forall T \in \mathcal{T},\ \forall I \in \mathcal{I}:\quad I(Tx)=I(x).
+\]
+
+
+.........END.........
