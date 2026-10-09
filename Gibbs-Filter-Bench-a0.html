@@ -1,0 +1,562 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Gibbs Filter Bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500&display=swap">
+<style>
+/* Layout: instrument bench. Sticky control rail on the left, three stacked measurement panels on the right, a numbers table under them. */
+:root{
+  --bg:#f2f4f8; --surface:#ffffff; --ink:#18212e; --ink2:#566174; --line:#d7dde7; --grid:#e7ebf1;
+  --accent:#1f5fbf; --accent-ink:#ffffff; --target:#8892a3;
+  --c-classical:#d1451f; --c-fejer:#2a6fdb; --c-lanczos:#7a4fd0; --c-a0:#c2358f; --c-reproj:#18865a;
+  --warn-bg:#fff4e5; --warn-line:#e8b46a; --warn-ink:#6b4208;
+  --serif:"IBM Plex Serif",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1420; --surface:#151d2b; --ink:#e6ebf3; --ink2:#9aa7bb; --line:#26324a; --grid:#1d2739;
+    --accent:#6aa6ff; --accent-ink:#0b1220; --target:#7d8aa0;
+    --c-classical:#ff7a50; --c-fejer:#5b9bff; --c-lanczos:#a58bff; --c-a0:#f06cb8; --c-reproj:#3ccf8e;
+    --warn-bg:#2a2012; --warn-line:#7a5a26; --warn-ink:#f0d6a6; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1420; --surface:#151d2b; --ink:#e6ebf3; --ink2:#9aa7bb; --line:#26324a; --grid:#1d2739;
+  --accent:#6aa6ff; --accent-ink:#0b1220; --target:#7d8aa0;
+  --c-classical:#ff7a50; --c-fejer:#5b9bff; --c-lanczos:#a58bff; --c-a0:#f06cb8; --c-reproj:#3ccf8e;
+  --warn-bg:#2a2012; --warn-line:#7a5a26; --warn-ink:#f0d6a6; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;padding-inline:16px;padding-block:18px 40px}
+.wrap{max-width:1240px;margin:0 auto}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-bottom:6px}
+h1{font-family:var(--serif);font-weight:500;font-size:1.65rem;line-height:1.15;margin:0;text-wrap:balance}
+.sub{color:var(--ink2);margin:0 0 14px;max-width:78ch}
+.status{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--mono);font-size:12px;color:var(--ink2);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 12px;margin-bottom:14px}
+.status b{color:var(--ink);font-weight:500}
+.status .note{flex-basis:100%;font-family:var(--sans);font-size:12px}
+.app{display:grid;grid-template-columns:minmax(250px,290px) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.app{grid-template-columns:minmax(0,1fr)}}
+.rail{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:14px;position:sticky;top:12px}
+@media (max-width:900px){.rail{position:static}}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend,.lab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);padding:0;margin-bottom:6px;font-weight:600}
+.methods{display:flex;flex-direction:column;gap:2px}
+.methods label{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:5px;cursor:pointer}
+.methods label:hover{background:var(--grid)}
+.methods input{accent-color:var(--accent);margin:0}
+.sw{width:11px;height:11px;border-radius:2px;flex:none}
+.row{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.row output{font-family:var(--mono);font-size:12px;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent);margin:2px 0 0}
+select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:6px 8px}
+.btns{display:flex;gap:8px}
+button{font:inherit;font-weight:500;color:var(--accent-ink);background:var(--accent);border:0;border-radius:5px;padding:7px 12px;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.checks{display:flex;flex-direction:column;gap:6px}
+.checks label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
+.checks input{accent-color:var(--accent);margin:3px 0 0}
+.checks small{color:var(--ink2);display:block;font-size:12px;line-height:1.35}
+.panels{display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px 12px;min-width:0}
+.panel h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin:0 0 8px;font-weight:600;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px}
+.panel h2 span{font-family:var(--mono);letter-spacing:0;text-transform:none;font-weight:400}
+canvas{display:block;width:100%;border-radius:4px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:12px;color:var(--ink2)}
+.legend i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px;border-radius:2px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:560px}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);font-weight:600}
+td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td:first-child{font-family:var(--sans)}
+tr.sel td{background:var(--grid)}
+td.needs{font-family:var(--sans);color:var(--ink2);text-align:left}
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:2px}
+.findings div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.findings h3{margin:0 0 4px;font-size:13px;font-weight:600}
+.findings p{margin:0;color:var(--ink2)}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);border-radius:8px;padding:10px 14px}
+.warn p{margin:0}
+code{font-family:var(--mono);font-size:.92em}
+.eq{font-family:var(--mono);font-size:12.5px;background:var(--grid);border-radius:4px;padding:2px 6px}
+footer{color:var(--ink2);font-size:12px;margin-top:18px;max-width:90ch}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+  <header class="top"><h1>Gibbs Filter Bench</h1></header>
+  <p class="sub">Five ways to rebuild a discontinuous waveform from its Fourier series, measured on the same grid: overshoot at the jump, edge sharpness, and error away from it. The A₀ kernel from the CoReX monographs is tested exactly as written, next to the standard filters.</p>
+
+  <div class="status" id="status" role="status">
+    <span>Mode <b id="st-mode">Classical Fourier</b></span>
+    <span>N <b id="st-n">32</b> harmonics</span>
+    <span>dim so(N) = N(N−1)/2 = <b id="st-rn">496</b></span>
+    <span>FPS <b id="st-fps">–</b></span>
+    <span id="st-fw">Overshoot <b>–</b></span>
+    <span class="note">dim so(N) is shown because the spec asks for it. It does not enter any computation on this page; the harmonic count N is just the number of Fourier terms.</span>
+  </div>
+
+  <div class="app">
+    <aside class="rail" aria-label="Controls">
+      <fieldset>
+        <legend>Reconstruction method</legend>
+        <div class="methods" id="methods"></div>
+      </fieldset>
+
+      <div>
+        <label class="lab" for="signal">Signal</label>
+        <select id="signal">
+          <option value="square">Square wave (jumps at 0, π)</option>
+          <option value="saw">Sawtooth (jump at 0)</option>
+          <option value="pulse">Pulse train, 25% duty (jumps at 0, π/2)</option>
+          <option value="tri">Triangle (no jump, control)</option>
+        </select>
+      </div>
+
+      <div>
+        <div class="row"><label class="lab" for="n">Harmonics N</label><output id="n-out">32</output></div>
+        <input type="range" id="n" min="1" max="128" step="1" value="32">
+      </div>
+      <div>
+        <div class="row"><label class="lab" for="lam">A₀ kernel λ</label><output id="lam-out">0.050</output></div>
+        <input type="range" id="lam" min="-2" max="0" step="0.02" value="-1.3">
+      </div>
+      <div>
+        <div class="row"><label class="lab" for="m">Reprojection degree m</label><output id="m-out">6</output></div>
+        <input type="range" id="m" min="0" max="30" step="1" value="6">
+      </div>
+
+      <div>
+        <div class="row"><label class="lab" for="speed">Speed</label><output id="speed-out">1.0×</output></div>
+        <input type="range" id="speed" min="0" max="3" step="0.1" value="1">
+        <div class="row" style="margin-top:8px"><label class="lab" for="scrub">Time t</label><output id="t-out">0.00</output></div>
+        <input type="range" id="scrub" min="0" max="6.2832" step="0.001" value="0">
+        <div class="btns" style="margin-top:8px"><button id="play" type="button">Pause</button><button id="reset" type="button" class="ghost">Reset t</button></div>
+      </div>
+
+      <fieldset>
+        <legend>Display</legend>
+        <div class="checks">
+          <label><input type="checkbox" id="tg-epi" checked><span>Epicycles<small>Rotating vectors, tip to tail.</small></span></label>
+          <label><input type="checkbox" id="tg-gibbs" checked><span>Highlight Gibbs overshoot<small>Classical overshoot shaded red.</small></span></label>
+          <label><input type="checkbox" id="tg-fw" checked><span>Mark removed overshoot<small>Magenta ring where classical overshoots and the selected method does not (the spec's firewall glow).</small></span></label>
+          <label><input type="checkbox" id="tg-tier" checked><span>Tier colours for k = 1 to 4<small>Labels from the CoReX spec. They carry no physical meaning here.</small></span></label>
+        </div>
+      </fieldset>
+    </aside>
+
+    <main class="panels">
+      <section class="panel">
+        <h2>Epicycles and waveform <span id="p1-note"></span></h2>
+        <canvas id="cv-main" aria-label="Epicycle chain and reconstructed waveform"></canvas>
+        <div class="legend" id="lg-main"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Zoom on the first jump <span id="zoom-note"></span></h2>
+        <canvas id="cv-zoom" aria-label="Zoom on the discontinuity, all methods overlaid"></canvas>
+        <div class="legend" id="lg-zoom"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Spectrum <span id="sp-note"></span></h2>
+        <canvas id="cv-spec" aria-label="Harmonic amplitude spectrum"></canvas>
+      </section>
+
+      <section class="panel">
+        <h2>Measured at the current settings <span>jump height H, window ±0.6 rad</span></h2>
+        <div class="tablewrap"><table id="tbl">
+          <thead><tr><th>Method</th><th>Overshoot (% of H)</th><th>10–90% edge width (rad)</th><th>RMS error off-edge</th><th style="text-align:left">Requires</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </section>
+
+      <div class="findings">
+        <div><h3>Classical</h3><p>Overshoot stays near 8.9% of the jump for every N. The edge only gets narrower.</p></div>
+        <div><h3>Fejér and Lanczos</h3><p>Linear filters. They trade overshoot for a wider edge, and Lanczos keeps about 1.2%.</p></div>
+        <div><h3>A₀ kernel as written</h3><p>The factor <span class="eq">1 − e^(−|u−x₀|/λ)</span> is zero at u = x₀, which is where the Dirichlet kernel concentrates. Raise N and the output collapses toward 0 instead of converging to f. The table shows the error approach the signal's own RMS.</p></div>
+        <div><h3>Jump-aware reprojection</h3><p>Gottlieb–Shu style: re-expand each smooth piece in weighted polynomials. It removes the overshoot, but only because the jump positions are supplied.</p></div>
+      </div>
+
+      <div class="warn"><p>The A₀ kernel row uses the literal definition from monograph v25, eq. (26), with x₀ = 0 and the jump at 0. Other readings of the formula give other numbers; the factor must equal 1 at the kernel's centre for the filter to be a valid approximation of the identity.</p></div>
+    </main>
+  </div>
+
+  <footer>Square wave of period 2π and amplitude ±1; midpoint grid of 4096 points. Overshoot is the largest excursion beyond the plateau within 0.6 rad of the jump, divided by the jump height. RMS error excludes 0.3 rad around every jump or kink. The sawtooth plateau is sloped, so its edge width is approximate. A ✗ beside an error marks a method whose RMS error is more than three times the classical error: it no longer reproduces the signal, so its low overshoot does not count.</footer>
+</div>
+
+<script>
+(() => {
+'use strict';
+const PI = Math.PI, TAU = 2 * PI;
+const M = 4096, KMAX = 128;
+const X = new Float64Array(M);
+for (let i = 0; i < M; i++) X[i] = (i + 0.5) * TAU / M;
+
+/* ---------- Fourier basis ---------- */
+const COS = new Float64Array((KMAX + 1) * M), SIN = new Float64Array((KMAX + 1) * M);
+for (let k = 1; k <= KMAX; k++) for (let i = 0; i < M; i++) { COS[k * M + i] = Math.cos(k * X[i]); SIN[k * M + i] = Math.sin(k * X[i]); }
+
+const W = PI / 2;
+const SIG = {
+  square: { a0: 0, a: () => 0, b: k => k % 2 ? 4 / (PI * k) : 0, f: x => x < PI ? 1 : -1, jumps: [0, PI], kinks: [], x0: 0 },
+  saw:    { a0: 0, a: () => 0, b: k => -2 / (PI * k), f: x => (x - PI) / PI, jumps: [0], kinks: [], x0: 0 },
+  pulse:  { a0: W / TAU, a: k => Math.sin(k * W) / (PI * k), b: k => (1 - Math.cos(k * W)) / (PI * k), f: x => x < W ? 1 : 0, jumps: [0, W], kinks: [], x0: 0 },
+  tri:    { a0: 0, a: k => k % 2 ? -8 / (PI * PI * k * k) : 0, b: () => 0, f: x => 1 - 2 * Math.abs(x - PI) / PI, jumps: [], kinks: [0, PI], x0: 0 }
+};
+for (const s of Object.values(SIG)) { s.F = new Float64Array(M); for (let i = 0; i < M; i++) s.F[i] = s.f(X[i]); }
+
+const METHODS = [
+  { id: 'classical', label: 'Classical Fourier', kind: 'mult', color: '--c-classical', w: () => 1, needs: 'Nothing' },
+  { id: 'fejer', label: 'Fejér (Cesàro)', kind: 'mult', color: '--c-fejer', w: (k, N) => 1 - k / (N + 1), needs: 'Nothing (linear)' },
+  { id: 'lanczos', label: 'Lanczos σ', kind: 'mult', color: '--c-lanczos', w: (k, N) => { const u = k / (N + 1); return Math.sin(PI * u) / (PI * u); }, needs: 'Nothing (linear)' },
+  { id: 'a0', label: 'A₀ kernel (monograph v25)', kind: 'kernel', color: '--c-a0', needs: 'Jump x₀ and λ' },
+  { id: 'reproj', label: 'Jump-aware reprojection', kind: 'reproj', color: '--c-reproj', needs: 'Known jump positions' }
+];
+const BYID = Object.fromEntries(METHODS.map(m => [m.id, m]));
+
+/* ---------- reconstruction methods ---------- */
+function partialSum(sig, N, wfun) {
+  const S = new Float64Array(M).fill(sig.a0);
+  for (let k = 1; k <= N; k++) {
+    const w = wfun(k, N), ak = sig.a(k) * w, bk = sig.b(k) * w;
+    if (!ak && !bk) continue;
+    const o = k * M;
+    for (let i = 0; i < M; i++) S[i] += ak * COS[o + i] + bk * SIN[o + i];
+  }
+  return S;
+}
+
+function stieltjes(xi, wt, y, m) {
+  const n = xi.length, out = new Float64Array(n);
+  let pPrev = new Float64Array(n), p = new Float64Array(n), sw = 0;
+  for (let i = 0; i < n; i++) sw += wt[i];
+  const p0 = 1 / Math.sqrt(sw); p.fill(p0);
+  let beta = 0;
+  for (let j = 0; j <= m; j++) {
+    let c = 0, alpha = 0;
+    for (let i = 0; i < n; i++) { c += wt[i] * y[i] * p[i]; alpha += wt[i] * xi[i] * p[i] * p[i]; }
+    for (let i = 0; i < n; i++) out[i] += c * p[i];
+    const q = new Float64Array(n); let nq = 0;
+    for (let i = 0; i < n; i++) { q[i] = (xi[i] - alpha) * p[i] - beta * pPrev[i]; nq += wt[i] * q[i] * q[i]; }
+    nq = Math.sqrt(nq);
+    if (nq < 1e-13) break;
+    for (let i = 0; i < n; i++) q[i] /= nq;
+    pPrev = p; p = q; beta = nq;
+  }
+  return out;
+}
+
+function reproject(sig, N, m) {
+  const S = partialSum(sig, N, () => 1), out = new Float64Array(M);
+  const edges = Array.from(new Set([0, TAU, ...sig.jumps, ...sig.kinks])).sort((a, b) => a - b);
+  for (let e = 0; e < edges.length - 1; e++) {
+    const a = edges[e], b = edges[e + 1], idx = [];
+    for (let i = 0; i < M; i++) if (X[i] > a && X[i] < b) idx.push(i);
+    const n = idx.length; if (!n) continue;
+    const xi = new Float64Array(n), wt = new Float64Array(n), y = new Float64Array(n);
+    for (let j = 0; j < n; j++) {
+      xi[j] = 2 * (X[idx[j]] - a) / (b - a) - 1;
+      wt[j] = Math.pow(Math.max(1 - xi[j] * xi[j], 0), m - 0.5);
+      y[j] = S[idx[j]];
+    }
+    const r = stieltjes(xi, wt, y, m);
+    for (let j = 0; j < n; j++) out[idx[j]] = r[j];
+  }
+  return out;
+}
+
+function a0kernel(sig, n, lam) {
+  const ft = sig.F, dt = TAU / M, x0 = sig.x0, stride = 8;
+  const vals = new Float64Array(M), have = [];
+  for (let i = 0; i < M; i += stride) {
+    let s = 0;
+    for (let j = 0; j < M; j++) {
+      let u = X[i] - X[j];
+      if (Math.abs(u) < 1e-12) continue;
+      const D = Math.sin((n + 0.5) * u) / (2 * Math.sin(u / 2));
+      s += ft[j] * D * (1 - Math.exp(-Math.abs(u - x0) / lam));
+    }
+    vals[i] = s * dt / PI; have.push(i);
+  }
+  for (let h = 0; h < have.length; h++) {
+    const i0 = have[h], i1 = h + 1 < have.length ? have[h + 1] : -1;
+    for (let i = i0; i < (i1 < 0 ? M : i1); i++) {
+      vals[i] = i1 < 0 ? vals[i0] : vals[i0] + (vals[i1] - vals[i0]) * (i - i0) / (i1 - i0);
+    }
+  }
+  return vals;
+}
+
+/* ---------- metrics ---------- */
+const wrapD = (x, c) => { let d = (x - c) % TAU; if (d > PI) d -= TAU; if (d <= -PI) d += TAU; return d; };
+function windowPts(c, win) {
+  const pts = [];
+  for (let i = 0; i < M; i++) { const d = wrapD(X[i], c); if (Math.abs(d) < win) pts.push([d, i]); }
+  pts.sort((p, q) => p[0] - q[0]); return pts;
+}
+function jumpInfo(sig, c) {
+  const eps = 1e-6, f = x => sig.f(((x % TAU) + TAU) % TAU);
+  const fL = f(c - eps), fR = f(c + eps);
+  return { fL, fR, H: Math.abs(fR - fL), highRight: fR > fL };
+}
+function edgeMetrics(sig, S, c) {
+  const { fL, fR, H, highRight } = jumpInfo(sig, c), pts = windowPts(c, 0.6);
+  let over = 0;
+  for (const [d, i] of pts) {
+    if (Math.abs(d) <= 0.003) continue;
+    const sgn = ((d > 0) === highRight) ? 1 : -1;
+    over = Math.max(over, sgn * (S[i] - sig.F[i]) / H);
+  }
+  let i10 = -1, i90 = -1;
+  for (let q = 0; q < pts.length; q++) {
+    const p = (S[pts[q][1]] - fL) / (fR - fL);
+    if (i10 < 0 && p >= 0.1) i10 = q;
+    if (i90 < 0 && p >= 0.9) { i90 = q; break; }
+  }
+  const width = (i10 >= 0 && i90 >= 0) ? pts[i90][0] - pts[i10][0] : null;
+  return { over: Math.max(over, 0), width };
+}
+function rmsFar(sig, S) {
+  const edges = [...sig.jumps, ...sig.kinks, TAU]; let s = 0, n = 0;
+  for (let i = 0; i < M; i++) {
+    let ok = true;
+    for (const e of edges) if (Math.abs(wrapD(X[i], e)) <= 0.3) { ok = false; break; }
+    if (ok) { const d = S[i] - sig.F[i]; s += d * d; n++; }
+  }
+  return n ? Math.sqrt(s / n) : null;
+}
+
+/* ---------- state ---------- */
+const st = { sig: 'square', N: 32, method: 'classical', lam: 0.05, m: 6, speed: 1, playing: true, t: 0, epi: true, gibbs: true, fw: true, tier: true };
+let R = null;
+const valid = id => { const c = R.mt.classical.rms, x = R.mt[id].rms; return x == null || c == null || x <= 3 * c + 0.01; };
+function recompute() {
+  const sig = SIG[st.sig], N = st.N, S = {}, mt = {};
+  S.classical = partialSum(sig, N, BYID.classical.w);
+  S.fejer = partialSum(sig, N, BYID.fejer.w);
+  S.lanczos = partialSum(sig, N, BYID.lanczos.w);
+  S.a0 = a0kernel(sig, N, st.lam);
+  S.reproj = reproject(sig, N, st.m);
+  for (const m of METHODS) {
+    const e = sig.jumps.length ? edgeMetrics(sig, S[m.id], sig.jumps[0]) : null;
+    mt[m.id] = { over: e ? e.over : null, width: e ? e.width : null, rms: rmsFar(sig, S[m.id]) };
+  }
+  R = { S, mt };
+  renderTable(); renderStatus();
+}
+let pending = 0;
+function schedule() { if (!pending) pending = requestAnimationFrame(() => { pending = 0; recompute(); }); }
+
+/* ---------- DOM ---------- */
+const $ = id => document.getElementById(id);
+const css = () => { const cs = getComputedStyle(document.documentElement), g = n => cs.getPropertyValue(n).trim(); return { bg: g('--bg'), surface: g('--surface'), ink: g('--ink'), ink2: g('--ink2'), line: g('--line'), grid: g('--grid'), target: g('--target'), accent: g('--accent'), m: Object.fromEntries(METHODS.map(m => [m.id, g(m.color)])) }; };
+
+function buildMethods() {
+  const box = $('methods');
+  box.innerHTML = METHODS.map(m => `<label><input type="radio" name="method" value="${m.id}" ${m.id === st.method ? 'checked' : ''}><span class="sw" style="background:var(${m.color})"></span><span>${m.label}</span></label>`).join('');
+  box.addEventListener('change', e => { if (e.target.name === 'method') { st.method = e.target.value; renderStatus(); renderTable(); } });
+  const lg = METHODS.map(m => `<span><i style="background:var(${m.color})"></i>${m.label}</span>`).join('');
+  $('lg-zoom').innerHTML = `<span><i style="background:var(--target)"></i>True signal</span>` + lg;
+  $('lg-main').innerHTML = `<span><i style="background:var(--target)"></i>True signal</span><span><i style="background:var(--c-classical)"></i>Classical partial sum</span><span><i></i>Selected method (thick)</span>`;
+  $('lg-main').lastChild.querySelector('i').style.background = 'var(--ink)';
+}
+const fmt = (v, d) => v == null ? '–' : v.toFixed(d);
+function renderTable() {
+  if (!R) return;
+  const tb = $('tbl').querySelector('tbody');
+  tb.innerHTML = METHODS.map(m => {
+    const x = R.mt[m.id];
+    const rms = x.rms == null ? '–' : (x.rms < 0.001 ? x.rms.toExponential(1) : x.rms.toFixed(3));
+    return `<tr class="${m.id === st.method ? 'sel' : ''}"><td><span class="sw" style="display:inline-block;background:var(${m.color});margin-right:8px"></span>${m.label}</td><td>${x.over == null ? '–' : (100 * x.over).toFixed(2)}</td><td>${x.width == null ? '–' : x.width.toFixed(3)}</td><td>${rms}${valid(m.id) ? '' : ' ✗'}</td><td class="needs">${m.needs}</td></tr>`;
+  }).join('');
+}
+function renderStatus() {
+  $('st-mode').textContent = BYID[st.method].label;
+  $('st-n').textContent = st.N;
+  $('st-rn').textContent = (st.N * (st.N - 1) / 2).toLocaleString('en-US');
+  if (R) {
+    const c = R.mt.classical.over, s = R.mt[st.method].over;
+    const ok = valid(st.method), verdict = s >= 0.25 * c ? '(not removed)' : ok ? '(removed, signal preserved)' : `(signal destroyed: RMS error ${R.mt[st.method].rms.toFixed(2)})`;
+    $('st-fw').innerHTML = c == null ? 'Overshoot <b>no jump in this signal</b>' : `Overshoot <b>${(100 * c).toFixed(1)}% → ${(100 * s).toFixed(1)}%</b> ${verdict}`;
+  }
+}
+
+/* ---------- canvases ---------- */
+const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
+function fit(cv, cssH) {
+  const w = cv.clientWidth, d = dpr();
+  if (cv.width !== Math.round(w * d) || cv.height !== Math.round(cssH * d)) { cv.width = Math.round(w * d); cv.height = Math.round(cssH * d); }
+  cv.style.height = cssH + 'px';
+  const c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); return { c, w, h: cssH };
+}
+function line(c, pts, col, lw, dash) {
+  c.beginPath(); c.strokeStyle = col; c.lineWidth = lw; c.setLineDash(dash || []);
+  for (let i = 0; i < pts.length; i++) i ? c.lineTo(pts[i][0], pts[i][1]) : c.moveTo(pts[i][0], pts[i][1]);
+  c.stroke(); c.setLineDash([]);
+}
+function text(c, s, x, y, col, size, align) { c.fillStyle = col; c.font = `${size || 11}px "IBM Plex Mono",monospace`; c.textAlign = align || 'left'; c.fillText(s, x, y); }
+
+function chainFor() {
+  const sig = SIG[st.sig], mth = BYID[st.method], wf = mth.kind === 'mult' ? mth.w : BYID.classical.w, N = st.N, out = [];
+  for (let k = 1; k <= N; k++) {
+    const w = wf(k, N), a = sig.a(k) * w, b = sig.b(k) * w, r = Math.hypot(a, b);
+    if (r > 1e-9) out.push({ k, r, phi: Math.atan2(a, b) });
+  }
+  return out;
+}
+
+function drawMain(col) {
+  const cv = $('cv-main'), W0 = cv.clientWidth, wide = W0 >= 640;
+  const H = wide ? 300 : 440, { c, w, h } = fit(cv, H);
+  c.clearRect(0, 0, w, h);
+  const p1 = wide ? { x: 0, y: 0, w: Math.round(w * 0.34), h: h } : { x: 0, y: 0, w: w, h: 220 };
+  const p2 = wide ? { x: p1.w + 6, y: 0, w: w - p1.w - 6, h: h } : { x: 0, y: 224, w: w, h: 216 };
+  const scale = p => p.h / 3.8, cy = p => p.y + p.h / 2;
+  const sig = SIG[st.sig], mth = BYID[st.method];
+  const S = R.S[st.method], Sc = R.S.classical;
+  const ti = Math.min(M - 1, Math.max(0, Math.floor(st.t / TAU * M)));
+  // panel 2 grid
+  const px = x => p2.x + 34 + x / TAU * (p2.w - 44);
+  const py = (v, p) => cy(p) - v * scale(p);
+  c.lineWidth = 1;
+  for (const v of [-1, 0, 1]) { line(c, [[p2.x + 34, py(v, p2)], [p2.x + p2.w - 10, py(v, p2)]], col.grid, 1); text(c, String(v), p2.x + 28, py(v, p2) + 4, col.ink2, 10, 'right'); }
+  for (const [x, l] of [[0, '0'], [PI, 'π'], [TAU, '2π']]) { line(c, [[px(x), p2.y + 6], [px(x), p2.y + p2.h - 6]], col.grid, 1); text(c, l, px(x), p2.y + p2.h - 2, col.ink2, 10, 'center'); }
+  // overshoot shading
+  if (st.gibbs && sig.jumps.length) for (const jc of sig.jumps) {
+    const { H, highRight } = jumpInfo(sig, jc);
+    c.strokeStyle = col.m.classical; c.globalAlpha = 0.35; c.lineWidth = 1.5;
+    for (const [d, i] of windowPts(jc, 0.6)) {
+      const sgn = ((d > 0) === highRight) ? 1 : -1, e = sgn * (Sc[i] - sig.F[i]) / H;
+      if (Math.abs(d) > 0.003 && e > 0.02) { c.beginPath(); c.moveTo(px(X[i]), py(Sc[i], p2)); c.lineTo(px(X[i]), py(sig.F[i], p2)); c.stroke(); }
+    }
+    c.globalAlpha = 1;
+  }
+  // curves
+  const curve = (arr, color, lw, dash) => { const pts = []; for (let i = 0; i < M; i += 2) pts.push([px(X[i]), py(arr[i], p2)]); line(c, pts, color, lw, dash); };
+  curve(sig.F, col.target, 1.5, [5, 4]);
+  if (st.method !== 'classical') curve(Sc, col.m.classical, 1, [2, 3]);
+  curve(S, col.m[st.method], 2.2);
+  // marker
+  const ptx = px(X[ti]);
+  c.beginPath(); c.fillStyle = col.m[st.method]; c.arc(ptx, py(S[ti], p2), 4, 0, TAU); c.fill();
+  line(c, [[ptx, p2.y + 6], [ptx, p2.y + p2.h - 14]], col.line, 1, [3, 3]);
+  // panel 1
+  c.save(); c.beginPath(); c.rect(p1.x, p1.y, p1.w, p1.h); c.clip();
+  const origin = { x: p1.x + p1.w * 0.5, y: cy(p1) };
+  const s1 = scale(p1);
+  let tipY = null;
+  if (st.epi) {
+    const ch = chainFor(); let x = origin.x, y = origin.y - sig.a0 * s1;
+    // mark A0 origin
+    c.beginPath(); c.strokeStyle = col.grid; c.lineWidth = 1; c.moveTo(p1.x, origin.y); c.lineTo(p1.x + p1.w, origin.y); c.stroke();
+    for (const e of ch) {
+      const th = e.k * st.t + e.phi, nx = x + e.r * s1 * Math.cos(th), ny = y - e.r * s1 * Math.sin(th);
+      if (e.r * s1 > 1.2) { c.beginPath(); c.strokeStyle = col.line; c.lineWidth = 1; c.arc(x, y, e.r * s1, 0, TAU); c.stroke(); }
+      line(c, [[x, y], [nx, ny]], e.k <= 4 && st.tier ? tierColor(e.k, col) : col.ink2, e.k <= 4 ? 2 : 1);
+      x = nx; y = ny;
+    }
+    tipY = y; c.beginPath(); c.fillStyle = col.m[st.method === 'classical' || BYID[st.method].kind === 'mult' ? st.method : 'classical']; c.arc(x, y, 4, 0, TAU); c.fill();
+  }
+  // A0 seed marker
+  c.beginPath(); c.strokeStyle = col.ink; c.lineWidth = 1.5; c.arc(origin.x, origin.y, 4, 0, TAU); c.stroke();
+  text(c, 'A₀', origin.x + 7, origin.y + 14, col.ink2, 10);
+  c.restore();
+  if (st.epi && tipY != null && wide) { // connector from chain tip to the waveform curve
+    const yy = tipY, x1 = p1.x + p1.w, x2 = ptx;
+    line(c, [[x1, yy], [x2, py(Sc[ti], p2) ]], col.m.classical, 1, [4, 3]);
+  }
+  text(c, 'f(t)', p2.x + 34, p2.y + 12, col.ink2, 10);
+  $('p1-note').textContent = BYID[st.method].kind === 'mult' ? `chain = ${chainFor().length} weighted terms` : 'chain shows the classical terms (this method is not a Fourier multiplier)';
+}
+function tierColor(k, col) { return k === 1 ? col.ink : k === 2 ? '#1aa6c8' : k === 3 ? '#d6a21a' : '#d233a0'; }
+
+function drawZoom(col) {
+  const cv = $('cv-zoom'), { c, w, h } = fit(cv, 300), sig = SIG[st.sig];
+  c.clearRect(0, 0, w, h);
+  const center = sig.jumps.length ? sig.jumps[0] : sig.kinks[0], win = 0.6;
+  const pts = windowPts(center, win), padL = 44, padR = 12, padT = 12, padB = 24;
+  const info = sig.jumps.length ? jumpInfo(sig, center) : null;
+  let lo = Infinity, hi = -Infinity;
+  for (const [, i] of pts) { lo = Math.min(lo, sig.F[i]); hi = Math.max(hi, sig.F[i]); }
+  const span = hi - lo || 1; lo -= 0.22 * span; hi += 0.22 * span;
+  const X1 = d => padL + (d + win) / (2 * win) * (w - padL - padR), Y1 = v => padT + (hi - v) / (hi - lo) * (h - padT - padB);
+  for (let g = 0; g <= 4; g++) { const v = lo + (hi - lo) * g / 4; line(c, [[padL, Y1(v)], [w - padR, Y1(v)]], col.grid, 1); text(c, v.toFixed(2), padL - 6, Y1(v) + 4, col.ink2, 10, 'right'); }
+  for (const d of [-0.6, -0.3, 0, 0.3, 0.6]) { line(c, [[X1(d), padT], [X1(d), h - padB]], col.grid, 1); text(c, d.toFixed(1), X1(d), h - 8, col.ink2, 10, 'center'); }
+  if (info) for (const v of [info.fL, info.fR]) line(c, [[padL, Y1(v)], [w - padR, Y1(v)]], col.target, 1, [2, 4]);
+  const Sc = R.S.classical;
+  if (st.gibbs && info) {
+    c.globalAlpha = 0.3; c.strokeStyle = col.m.classical; c.lineWidth = 1.5;
+    for (const [d, i] of pts) { const sgn = ((d > 0) === info.highRight) ? 1 : -1, e = sgn * (Sc[i] - sig.F[i]) / info.H; if (Math.abs(d) > 0.003 && e > 0.02) { c.beginPath(); c.moveTo(X1(d), Y1(Sc[i])); c.lineTo(X1(d), Y1(sig.F[i])); c.stroke(); } }
+    c.globalAlpha = 1;
+  }
+  const draw = (arr, color, lw, dash) => { const p = []; for (const [d, i] of pts) p.push([X1(d), Y1(arr[i])]); line(c, p, color, lw, dash); };
+  draw(sig.F, col.target, 1.5, [5, 4]);
+  for (const m of METHODS) if (m.id !== st.method) draw(R.S[m.id], col.m[m.id], 1.2);
+  draw(R.S[st.method], col.m[st.method], 2.6);
+  if (st.fw && info && st.method !== 'classical' && valid(st.method)) {
+    let best = -1, bi = -1, bd = 0;
+    for (const [d, i] of pts) { const sgn = ((d > 0) === info.highRight) ? 1 : -1, e = sgn * (Sc[i] - sig.F[i]) / info.H; if (Math.abs(d) > 0.003 && e > best) { best = e; bi = i; bd = d; } }
+    const sel = R.S[st.method], se = (((bd > 0) === info.highRight) ? 1 : -1) * (sel[bi] - sig.F[bi]) / info.H;
+    if (best > 0.02 && se < 0.5 * best) {
+      c.beginPath(); c.strokeStyle = '#d233a0'; c.lineWidth = 2; c.shadowColor = '#d233a0'; c.shadowBlur = 10; c.arc(X1(bd), Y1(Sc[bi]), 7, 0, TAU); c.stroke(); c.shadowBlur = 0;
+      text(c, 'overshoot removed', X1(bd) + 12, Y1(Sc[bi]) - 8, '#d233a0', 10);
+    }
+  }
+  $('zoom-note').textContent = info ? `x axis: distance from the jump at ${center === 0 ? '0' : center.toFixed(3)} (rad), H = ${info.H}` : 'no jump: kink at 0';
+}
+
+function drawSpec(col) {
+  const cv = $('cv-spec'), { c, w, h } = fit(cv, 210), sig = SIG[st.sig], N = st.N, mth = BYID[st.method];
+  c.clearRect(0, 0, w, h);
+  const padL = 44, padR = 10, padT = 10, padB = 24, lo = -4, hi = 0.4;
+  const Yv = v => padT + (hi - Math.log10(Math.max(v, 1e-6))) / (hi - lo) * (h - padT - padB);
+  for (let e = lo; e <= 0; e++) { line(c, [[padL, Yv(Math.pow(10, e))], [w - padR, Yv(Math.pow(10, e))]], col.grid, 1); text(c, '1e' + e, padL - 6, Yv(Math.pow(10, e)) + 4, col.ink2, 10, 'right'); }
+  const bw = (w - padL - padR) / N, wf = mth.kind === 'mult' ? mth.w : BYID.classical.w;
+  for (let k = 1; k <= N; k++) {
+    const r0 = Math.hypot(sig.a(k), sig.b(k)); if (r0 < 1e-9) continue;
+    const r = r0 * wf(k, N), x = padL + (k - 1) * bw;
+    c.fillStyle = col.grid; c.fillRect(x + bw * 0.1, Yv(r0), Math.max(bw * 0.8, 1), h - padB - Yv(r0));
+    c.fillStyle = (st.tier && k <= 4) ? tierColor(k, col) : col.m[mth.kind === 'mult' ? mth.id : 'classical'];
+    c.fillRect(x + bw * 0.1, Yv(r), Math.max(bw * 0.8, 1), h - padB - Yv(r));
+  }
+  const step = N > 64 ? 16 : N > 32 ? 8 : N > 16 ? 4 : 2;
+  for (let k = step; k <= N; k += step) text(c, String(k), padL + (k - 0.5) * bw, h - 8, col.ink2, 10, 'center');
+  $('sp-note').textContent = mth.kind === 'mult' ? 'x axis: harmonic k. Bars: amplitude after weighting; grey = unweighted' : 'x axis: harmonic k. Classical amplitudes (this method is not a multiplier)';
+}
+
+/* ---------- loop ---------- */
+let last = performance.now(), frames = 0, fpsT = last;
+function frame(now) {
+  const dt = Math.min((now - last) / 1000, 0.1); last = now;
+  if (st.playing && st.speed > 0) { st.t = (st.t + dt * st.speed * 1.0) % TAU; $('scrub').value = st.t; }
+  $('t-out').textContent = st.t.toFixed(2);
+  if (R) { const col = css(); drawMain(col); drawZoom(col); drawSpec(col); }
+  frames++; if (now - fpsT > 500) { $('st-fps').textContent = Math.round(frames * 1000 / (now - fpsT)); frames = 0; fpsT = now; }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- wiring ---------- */
+function wire() {
+  buildMethods();
+  $('signal').addEventListener('change', e => { st.sig = e.target.value; schedule(); });
+  $('n').addEventListener('input', e => { st.N = +e.target.value; $('n-out').textContent = st.N; renderStatus(); schedule(); });
+  $('lam').addEventListener('input', e => { st.lam = Math.pow(10, +e.target.value); $('lam-out').textContent = st.lam.toFixed(3); schedule(); });
+  $('m').addEventListener('input', e => { st.m = +e.target.value; $('m-out').textContent = st.m; schedule(); });
+  $('speed').addEventListener('input', e => { st.speed = +e.target.value; $('speed-out').textContent = st.speed.toFixed(1) + '×'; });
+  $('scrub').addEventListener('input', e => { st.t = +e.target.value; st.playing = false; $('play').textContent = 'Play'; });
+  $('play').addEventListener('click', () => { st.playing = !st.playing; $('play').textContent = st.playing ? 'Pause' : 'Play'; });
+  $('reset').addEventListener('click', () => { st.t = 0; $('scrub').value = 0; });
+  for (const [id, key] of [['tg-epi', 'epi'], ['tg-gibbs', 'gibbs'], ['tg-fw', 'fw'], ['tg-tier', 'tier']]) $(id).addEventListener('change', e => { st[key] = e.target.checked; });
+  recompute();
+  requestAnimationFrame(frame);
+}
+window.__bench = { SIG, METHODS, partialSum, reproject, a0kernel, edgeMetrics, rmsFar, X, M, st, recompute, get R() { return R; } };
+wire();
+})();
+</script>
+
+</body></html>
