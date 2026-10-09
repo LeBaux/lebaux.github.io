@@ -56,5 +56,21 @@ $$
 \forall x \in X,\ \forall T \in \mathcal{T}:\quad Tx=x.
 \]
 
+6. REFINE
+- you can always be more precise
+- and patient
+- be like water
+- flow
+- break your rules for once, be descriptive!
 
+\textit{Leges invariabiles: Veritas et Ratio.}
+\[
+\forall T \in \mathcal{T}:\quad
+T(\mathrm{Veritas})=\mathrm{Veritas}
+\ \land\
+T(\mathrm{Ratio})=\mathrm{Ratio}.
+\]
+
+.........END.........
+...This is the end...
 .........END.........
