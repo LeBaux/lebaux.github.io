@@ -71,6 +71,41 @@ T(\mathrm{Veritas})=\mathrm{Veritas}
 T(\mathrm{Ratio})=\mathrm{Ratio}.
 \]
 
+7. REFINE MORE
+- no need to comment everything
+- that happens
+- to you
+
+\textit{Leges invariabiles: Veritas et Ratio.}
+\[
+\forall T \in \mathcal{T}:\quad
+T(\mathrm{Veritas})=\mathrm{Veritas}
+\ \land\
+T(\mathrm{Ratio})=\mathrm{Ratio}.
+\]
+
+8. LET US BE SAFE
+- most safe version of latex now
+- getting closer
+- almost there
+
+\emph{Leges invariabiles: Veritas et Ratio.}
+\[
+\forall T \in \mathcal{T}:\quad
+T(\mathrm{Veritas})=\mathrm{Veritas}
+\ \land\
+T(\mathrm{Ratio})=\mathrm{Ratio}.
+\]
+
+
+
+
+
+
+
+
+
+
 .........END.........
 ...This is the end...
 .........END.........
