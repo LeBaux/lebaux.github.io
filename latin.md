@@ -43,5 +43,18 @@ $$
 \forall x \in X,\ \forall T \in \mathcal{T},\ \forall I \in \mathcal{I}:\quad I(Tx)=I(x).
 \]
 
+5. NEXT BIG SMALL THING
+- always have fun
+- take notes
+- be precise
+
+\textit{Leges invariabiles: Veritas et Ratio.}
+\[
+\forall x \in X,\ \forall T \in \mathcal{T}:\quad
+\operatorname{Id}_X(Tx)=\operatorname{Id}_X(x)
+\quad\Longleftrightarrow\quad
+\forall x \in X,\ \forall T \in \mathcal{T}:\quad Tx=x.
+\]
+
 
 .........END.........
