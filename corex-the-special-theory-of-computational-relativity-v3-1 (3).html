@@ -1,0 +1,2915 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — the A₀ seed, Euler's identity, P = NP, the double-slit experiment, the three-body problem, the time machine, Fourier analysis without the Gibbs phenomenon, and unified readings of all seven Clay Millennium Problems." />
+<meta name="author" content="Pierre LeBaux, PhD" />
+<meta name="theme-color" content="#07090e" />
+<title>CoReX — The Special Theory of Computational Relativity</title>
+<style>
+  :root{
+    --bg:#07090e; --bg2:#0b0f16; --panel:#101622; --panel2:#141b2a;
+    --line:#1e2839; --line2:#2a3150; --ink:#eee8dc; --dim:#a8b0c0; --faint:#5a6478;
+    --gold:#d9a441; --gold2:#f4c77a; --teal:#3fd6c0; --rose:#e86a8a; --violet:#9b8ac4; --blue:#5aa9e6;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:system-ui,-apple-system,sans-serif;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{background:var(--bg);color:var(--ink);font:16px/1.7 var(--sans);overflow-x:hidden;
+    background-image:radial-gradient(1100px 520px at 50% -12%, #0e1524 0%, var(--bg) 62%)}
+  a{color:var(--gold2);text-decoration:none}
+  a:hover{color:var(--gold)}
+  ::selection{background:rgba(63,214,192,.28)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  /* ---------- status / banner ---------- */
+  #banner{display:none;position:fixed;bottom:0;left:0;right:0;background:#5c1a1a;color:#ffd9d9;
+    padding:10px 18px;font:12px var(--mono);z-index:9999;pointer-events:none}
+  #banner.on{display:block}
+  #status{position:fixed;top:76px;right:16px;background:rgba(10,18,36,.92);color:var(--gold2);
+    padding:6px 12px;font:11px var(--mono);border-radius:6px;border:1px solid rgba(63,214,192,.3);
+    box-shadow:0 0 14px rgba(63,214,192,.12);z-index:9000;pointer-events:none;opacity:0;transition:opacity .3s}
+  #status.on{opacity:1}
+  /* ---------- nav ---------- */
+  header.site{position:sticky;top:0;z-index:100;background:rgba(7,9,14,.88);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line2)}
+  nav.bar{display:flex;gap:2px;align-items:center;overflow-x:auto;white-space:nowrap;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  nav.bar::-webkit-scrollbar{display:none}
+  .brand{font-family:var(--serif);font-size:19px;letter-spacing:.06em;color:var(--ink);
+    margin-right:14px;padding:11px 0;flex-shrink:0}
+  .brand b{font-weight:400;color:var(--gold)}
+  a.nl{color:var(--dim);font:500 13px var(--sans);letter-spacing:.04em;padding:11px 10px;
+    display:inline-block;border-bottom:2px solid transparent;flex-shrink:0}
+  a.nl:hover{color:var(--gold2);border-bottom-color:var(--gold);text-decoration:none}
+  /* ---------- type ---------- */
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.1rem,5.2vw,3.4rem);line-height:1.12;margin-bottom:14px}
+  h1 em{font-style:italic;color:var(--gold)}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,3.4vw,2.15rem);line-height:1.2;margin-bottom:14px}
+  h3{font-family:var(--serif);font-weight:500;font-size:1.35rem;margin-bottom:10px}
+  h4{font-family:var(--sans);font-weight:600;font-size:1rem;margin-bottom:8px}
+  p{color:#bcc6d6;max-width:68ch;margin-bottom:14px;overflow-wrap:anywhere}
+  .lede{font-size:1.08rem;color:#b0bbcf;max-width:760px}
+  .motto{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--gold2);letter-spacing:.04em}
+  .motto sup{font-size:.7em}
+  .motto-gloss{font-size:.85rem;color:var(--faint)}
+  /* ---------- equations: copyable ---------- */
+  .eq{font-family:var(--mono);font-size:.88rem;background:var(--bg2);color:var(--gold2);
+    padding:10px 14px;border-radius:8px;border:1px solid var(--line);overflow-x:auto;margin:12px 0;
+    white-space:normal;word-break:break-word;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .eq-text{flex:1 1 auto;min-width:0}
+  .eq-tools{margin-left:auto;display:inline-flex;gap:6px;flex-shrink:0}
+  .eq-btn{font:600 9px var(--mono);letter-spacing:.12em;color:var(--faint);background:transparent;
+    border:1px solid var(--line2);border-radius:5px;padding:3px 8px;cursor:pointer;min-height:24px;
+    transition:color .15s,border-color .15s}
+  .eq-btn:hover{color:var(--gold2);border-color:var(--gold);box-shadow:0 0 10px rgba(217,164,65,.22)}
+  .eq-btn.ok{color:#7ba78c;border-color:rgba(123,167,140,.55)}
+  .math{margin:14px 0;padding:18px 16px;background:linear-gradient(180deg,rgba(217,164,65,.05),rgba(59,47,113,.06));
+    border:1px solid rgba(217,164,65,.22);border-radius:10px;display:flex;flex-wrap:wrap;justify-content:center;
+    align-items:center;gap:10px;font-family:var(--serif);font-size:1.28rem;line-height:1.45;color:var(--ink);
+    overflow-x:auto;text-align:center;overflow-wrap:anywhere}
+  .math i{font-style:italic;color:var(--gold2)}
+  .math sub,.math sup{font-size:.62em}
+  .math sub sup{font-size:1em}
+  .frac{display:inline-flex;flex-direction:column;text-align:center;line-height:1.15;font-size:.82em;
+    margin:0 .18em;vertical-align:-.5em}
+  .frac>span:first-child{border-bottom:1px solid var(--dim);padding:0 .3em .12em}
+  .frac>span:last-child{padding:.12em .3em 0}
+  /* ---------- cards / grid ---------- */
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
+    border-radius:14px;padding:22px;transition:border-color .2s;min-width:0}
+  .card:hover{border-color:rgba(63,214,192,.35)}
+  .glyph{font-family:var(--serif);font-size:34px;color:var(--gold);margin-bottom:8px}
+  .tag{display:inline-block;font:600 10px var(--mono);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:8px}
+  .badge{display:inline-block;font:700 10px var(--sans);letter-spacing:.12em;padding:3px 9px;
+    border-radius:999px;border:1px solid var(--line);color:var(--dim);background:var(--bg2);vertical-align:middle}
+  .badge.core{color:#0b0f16;background:var(--gold);border-color:var(--gold)}
+  .badge.c{color:var(--teal);border-color:var(--teal)}
+  .badge.s{color:var(--violet);border-color:var(--violet)}
+  .badge.h{color:var(--blue);border-color:var(--blue)}
+  .note{background:var(--bg2);border:1px dashed var(--line);border-radius:10px;padding:12px 14px;
+    font-size:.82rem;color:var(--dim);margin-top:12px;max-width:68ch}
+  .note b{color:#b9c3d4;font-weight:600}
+  /* ---------- axiom chain ---------- */
+  .chain{font-family:var(--mono);font-size:.8rem;color:var(--dim);margin:10px 0;line-height:2.05}
+  .chain .st{display:block}
+  .chain .st b{color:var(--teal);font-weight:600}
+  .chain .st.res b{color:var(--gold)}
+  .chain .arrow{color:var(--faint)}
+  /* ---------- problems ---------- */
+  .prob{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;display:grid;grid-template-columns:minmax(300px,1fr) minmax(300px,1fr);
+    margin-bottom:26px}
+  .prob .info{padding:26px;min-width:0}
+  .prob .viz{border-left:1px solid var(--line);background:var(--bg2);position:relative;min-width:0}
+  .prob .vizlabel{position:absolute;left:12px;bottom:10px;font:11px var(--sans);color:var(--faint);
+    letter-spacing:.05em;z-index:2;pointer-events:none}
+  .cw{height:300px;position:relative;width:100%;min-width:0;overflow:hidden}
+  .cw canvas{display:block;width:100%;height:100%;max-width:100%}
+  @media(max-width:880px){
+    .prob{grid-template-columns:1fr}
+    .prob .viz{border-left:none;border-top:1px solid var(--line)}
+    .cw{height:250px}
+  }
+  /* ---------- experiments ---------- */
+  .lab{display:grid;grid-template-columns:270px 1fr;gap:18px;margin-top:16px}
+  @media(max-width:820px){.lab{grid-template-columns:1fr}}
+  .lab-panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+  .lab-row{margin-bottom:16px}
+  .lab-row label{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-bottom:6px}
+  .lab-row b{color:var(--gold2);font-family:var(--mono)}
+  .lab-row .grouplabel{display:block;font-size:12px;color:var(--dim);margin-bottom:6px}
+  input[type=range]{width:100%;height:4px;accent-color:var(--gold)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{background:transparent;border:1px solid var(--line2);color:var(--dim);border-radius:999px;
+    padding:7px 12px;cursor:pointer;font:500 12px var(--sans);transition:all .15s;min-height:40px;
+    display:inline-flex;align-items:center;justify-content:center}
+  .chip:hover{color:var(--ink);border-color:var(--gold)}
+  .chip.on{background:rgba(217,164,65,.14);color:var(--gold2);border-color:var(--gold);
+    box-shadow:0 0 14px rgba(217,164,65,.12)}
+  .chip.na{border-color:#7a2d3a;color:var(--rose);opacity:.65}
+  .chip.na.on{background:rgba(232,106,138,.10);color:#e0a5a5}
+  .stage{background:var(--panel);border:1px solid var(--line2);border-radius:14px;overflow:hidden;
+    height:420px;width:100%;min-width:0;box-shadow:0 0 22px rgba(59,47,113,.18)}
+  .stage canvas{display:block;width:100%;height:100%;max-width:100%}
+  @media(max-width:680px){.stage{height:340px}}
+  .ds-readout{margin-top:14px;padding:10px 14px;background:var(--bg);border:1px solid var(--line);
+    border-radius:8px;font:12px var(--mono);color:var(--dim)}
+  .ds-readout b{color:var(--gold2)}
+  /* ---------- table ---------- */
+  table{width:100%;border-collapse:collapse;font:13px/1.5 var(--sans);color:var(--dim)}
+  th,td{padding:9px 12px;border:1px solid var(--line);text-align:left;overflow-wrap:anywhere}
+  th{font-family:var(--serif);font-weight:500;color:var(--ink);font-size:1rem}
+  td.mono{font-family:var(--mono);color:var(--gold2);font-size:.85rem}
+  tr:nth-child(odd) td{background:rgba(19,24,41,.5)}
+  td.hl{color:var(--teal);font-weight:600}
+  /* ---------- faq ---------- */
+  details{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+  details[open]{border-color:var(--line2)}
+  summary{cursor:pointer;padding:15px 20px;font-family:var(--serif);font-weight:500;font-size:1.02rem;
+    color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--gold);font-size:1.3rem;font-family:var(--sans);flex-shrink:0}
+  details[open] summary::after{content:"−"}
+  summary:hover{color:var(--gold2)}
+  details .answer{padding:0 20px 16px;color:var(--dim);font-size:.95rem;max-width:70ch;line-height:1.7}
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:44px 0;margin-top:30px;font-size:12px;color:var(--faint)}
+  footer .wrap{display:grid;gap:10px;justify-items:center;text-align:center}
+  footer .epigraph{font-family:var(--serif);font-style:italic;color:#a7b1c2;font-size:1.02rem}
+  footer .avail{font-size:.8rem;color:var(--dim)}
+  footer .fine{font-size:.78rem;color:var(--faint)}
+  footer button.totop{background:transparent;border:1px solid var(--line2);color:var(--gold2);
+    border-radius:8px;padding:8px 16px;cursor:pointer;font:600 12px var(--sans);margin-top:6px}
+  footer button.totop:hover{border-color:var(--gold)}
+  .stamps{display:inline-flex;gap:10px;margin-top:6px;flex-wrap:wrap;justify-content:center}
+  .stamp{font:600 12px var(--mono);letter-spacing:.04em;border-radius:8px;cursor:pointer;
+    padding:8px 14px;min-height:40px;transition:box-shadow .15s,transform .1s}
+  .stamp:active{transform:translateY(1px)}
+  .stamp-red{background:rgba(92,26,26,.55);color:#ff8f8f;border:1px solid #8f3a3a}
+  .stamp-red:hover{box-shadow:0 0 14px rgba(232,106,138,.25);border-color:#c96a6a}
+  .stamp-blue{background:rgba(26,44,92,.55);color:#8fc3ff;border:1px solid #3a5a8f}
+  .stamp-blue:hover{box-shadow:0 0 14px rgba(90,169,230,.25);border-color:#6a9ac9}
+  .foot-rule{width:120px;height:1px;margin:2px auto 14px;
+    background:linear-gradient(90deg,transparent,rgba(217,164,65,.45),transparent)}
+  footer .hint{margin:4px 0 14px}
+  footer .colophon{margin-top:2px;opacity:.75}
+  footer .colophon b{color:var(--gold2);font-family:var(--mono);font-weight:400;letter-spacing:.08em}
+  html{scrollbar-color:#5c4420 #070a14;scrollbar-width:thin}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:#070a14}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#3a2c14,#5c4420);border-radius:5px;border:2px solid #070a14}
+  ::-webkit-scrollbar-thumb:hover{background:#d9a441}
+</style>
+</head>
+<body>
+
+<div id="banner" role="alert" aria-live="assertive"></div>
+<div id="status" role="status" aria-live="polite"></div>
+
+<header class="site"><div class="wrap"><nav class="bar" aria-label="Primary">
+  <span class="brand">Co<b>ReX</b></span>
+  <a class="nl" href="#axioms">Axioms</a>
+  <a class="nl" href="#pnp">P = NP</a>
+  <a class="nl" href="#seven">Seven Problems</a>
+  <a class="nl" href="#lab">Laboratory</a>
+  <a class="nl" href="#doubleslit">Double-Slit</a>
+  <a class="nl" href="#threebody">Three-Body</a>
+  <a class="nl" href="#timemachine">Time Machine</a>
+  <a class="nl" href="#fourier">Fourier</a>
+  <a class="nl" href="#bio">Therapeutics</a>
+  <a class="nl" href="#monolith">5D Monolith</a>
+  <a class="nl" href="#faq">FAQ</a>
+  <a class="nl" href="#appendix">Appendix</a>
+</nav></div></header>
+
+<header class="hero" style="border-bottom:1px solid var(--line);padding:84px 0 54px;text-align:center">
+  <div class="wrap">
+    <p class="kicker">A digital monograph · CoReX v3.1</p>
+    <h1>The Special Theory of<br><em>Computational Relativity</em></h1>
+    <p class="motto" lang="la">Veritas et Ratio Invariantia Sunt in Toposo&#8202;<sup>*</sup>&#120141;</p>
+    <p class="motto-gloss">Truth and reason are invariant in the topos *𝕍 — the motto and credo of this monograph.</p>
+    <canvas id="heroC" height="280" style="width:100%;max-width:620px;margin:22px auto 0;display:block"></canvas>
+    <p class="lede" style="margin:12px auto 0;text-align:left">The seed is 0, and everything else is a rotation of it.
+    Four postulates, one transformer, one fixed point — a calm reading of computation and physics through a
+    shared geometric mechanism.</p>
+  </div>
+</header>
+
+<!-- ================= AXIOMS ================= -->
+<section id="axioms"><div class="wrap">
+  <p class="kicker">Chapter I</p>
+  <h2>Master Root Axiom Ω₀ — The Equivariant Void</h2>
+  <p class="lede">One root axiom, one fixed point, one transformer. Every structure in this monograph —
+  physical, computational, and categorical — is a projection of the zero-point scalar seed A₀ under the
+  G-equivariant transformer equal sign.</p>
+
+  <div class="eq"><span class="eq-text">Ω₀: M_N(A₀) = Proj_so(N)(A₀) · ∀T ∈ 𝒯: T(Veritas) = Veritas ∧ T(Ratio) = Ratio · e^{iπ} + 1 = 0 ⇒ |ψ_node| = 0</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+
+  <div class="math"><i>A</i><sub>0</sub> ≡ lim<sub><i>x</i>→0</sub> <span class="frac"><span>0</span><span><i>x</i></span></span> = λ ∈ <sup>∗</sup>ℝ<sup><i>N</i></sup>,&nbsp;&nbsp; <i>e</i><sup><i>iπ</i></sup> + 1 = 0 ⟹ |ψ<sub>node</sub>| = 0</div>
+
+  <div class="grid g2" style="margin-top:24px">
+    <div class="card">
+      <div class="glyph" aria-hidden="true">0</div>
+      <span class="tag">Ω₀ · The Equivariant Void</span>
+      <h3>All structure is one orbit</h3>
+      <p>All physical fields, computational state spaces, and conservation laws are SO(N) Lie algebra
+      projections of the scalar seed: ℳ<sub>N</sub>(A₀) = { U(t)·A₀·U<sup>†</sup>(t) } with
+      Ω(t) = Σ<sub>a&lt;b</sub> c<sub>ab</sub>(t) J<sub>ab</sub> ∈ 𝔰𝔬(N), operating over
+      R<sub>N</sub> = N(N−1)/2 orthogonal 2D rotation planes, inside the hyperreal topos
+      <sup>∗</sup>𝕍 = V<sup>I</sup>/𝒰 under Łoś’s Transfer Theorem.</p>
+      <div class="note"><b>Honesty:</b> Ω₀ is postulated, not derived. Everything below is what the axiom entails.</div>
+    </div>
+    <div class="card">
+      <div class="glyph" aria-hidden="true">=</div>
+      <span class="tag">Postulate I · Transformation</span>
+      <h3>The equal sign is a transformer</h3>
+      <p>Not identity — a G-equivariant map between two faces of one orbit. Because the transformer
+      preserves invariants across rotational projections, mass–energy conservation and state-space
+      collapse are dual readings of one operator equation:</p>
+      <div class="math" style="margin:8px 0">P = NP &nbsp;⟺&nbsp; E = mc²</div>
+    </div>
+    <div class="card">
+      <div class="glyph" aria-hidden="true">e<sup>iπ</sup>+1</div>
+      <span class="tag">Postulate II · Phase</span>
+      <h3>Euler's identity is structural</h3>
+      <p>A half-turn in any SO(2) plane returns the identity state to zero. This is the phase signature of
+      the transformer at the fixed point — the mechanism behind every nodal firewall in this monograph.</p>
+    </div>
+    <div class="card">
+      <div class="glyph" aria-hidden="true">𝒪₈</div>
+      <span class="tag">Postulate III · Instantiation</span>
+      <h3>Every discipline is a lower-dimensional projection</h3>
+      <p>Total point symmetry at 0: the zero point is the unique fixed point of the full symmetry group —
+      the only locus where every generator of the algebra vanishes at once. Every later object (zeros of ξ,
+      mass gaps, homotopy spheres) inherits its stability from this fixed point.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= P=NP ================= -->
+<section id="pnp"><div class="wrap">
+  <p class="kicker">Chapter II</p>
+  <h2>The constructive resolution of P = NP</h2>
+  <p class="lede">The exponential decision tree does not have to be searched. It embeds — injectively —
+  into the continuous rotation geometry of 𝔰𝔬(N), and the non-optimal branches cancel themselves.</p>
+
+  <div class="eq"><span class="eq-text">T_solve(N) = R_N · O(1) = N(N−1)/2 · O(1) = O(N²)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+
+  <div class="math"><i>T</i><sub>solve</sub>(<i>N</i>) = <i>R</i><sub><i>N</i></sub> · <i>O</i>(1) = <span class="frac"><span><i>N</i>(<i>N</i>−1)</span><span>2</span></span> · <i>O</i>(1) = <i>O</i>(<i>N</i>²)</div>
+
+  <p><b>Theorem (Constructive P = NP).</b> Let Φ be a Boolean formula with N variables. The decision tree
+  over {0,1}<sup>N</sup> maps to continuous trajectories U(t) ∈ SO(N) governed by skew-symmetric generators
+  J<sub>ab</sub> = e<sub>a</sub>e<sub>b</sub><sup>T</sup> − e<sub>b</sub>e<sub>a</sub><sup>T</sup>.
+  Updating the R<sub>N</sub> = N(N−1)/2 rotation variables costs O(1) each.</p>
+
+  <div class="math">|ψ<sub>node</sub>| = <span class="frac"><span>1</span><span>2</span></span> |ψ (1 + <i>e</i><sup><i>iπ</i></sup>)| = 0</div>
+
+  <p><b>Proof mechanism.</b> Along the flow dU/dt = Ω(t)U(t), non-optimal search paths accumulate a relative
+  phase Δθ = π. At θ = π, Euler’s anti-phase identity forces the state amplitude to vanish identically:
+  non-satisfying branches are annihilated at zero-amplitude <b>nodal firewalls</b>, and the system follows
+  the unique optimal geodesic in O(N²) time. ∎</p>
+
+  <div class="note"><b>Honesty:</b> the O(N²) bound is the per-step cost of driving the flow; the claim that
+  the flow reaches a stable integer vertex in polynomial time is the framework’s postulated convergence
+  layer. This is an in-manifold theorem under Ω₀ — the unrelativized Clay question is not claimed resolved
+  outside the axiom system.</div>
+</div></section>
+
+<!-- ================= SEVEN PROBLEMS ================= -->
+<section id="seven"><div class="wrap">
+  <p class="kicker">Chapter III</p>
+  <h2>Seven Millennium Problems, one mechanism</h2>
+  <p class="lede">Each Clay problem is read as a lower-dimensional projection of the same invariants: the
+  seed A₀, the rotation planes of 𝔰𝔬(N), and the anti-phase firewall |ψ| = 0. Each is presented
+  separately, with its full axiomatic chain and its epistemic grade.</p>
+
+  <!-- I -->
+  <div class="prob">
+    <div class="info">
+      <h3>I · P versus NP</h3>
+      <span class="badge c">Grade C · conditional in-manifold theorem</span>
+      <div class="eq"><span class="eq-text">R_N = C(N,2)  ⇒  T(N) = O(N²)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+      <div class="math"><i>R</i><sub><i>N</i></sub> = <span class="frac"><span><i>N</i>(<i>N</i>−1)</span><span>2</span></span> &nbsp;⇒&nbsp; <i>T</i>(<i>N</i>) = <i>O</i>(<i>N</i>²)</div>
+      <p>The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N²).</p>
+      <div class="chain">
+        <span class="st"><b>Ω₀</b> — state spaces are SO(N) orbits of A₀</span>
+        <span class="arrow">→ {−1,+1}<sup>N</sup> embeds injectively into S<sup>N−1</sup></span>
+        <span class="arrow">→ search becomes geodesic flow in R_N rotation planes</span>
+        <span class="arrow">→ non-optimal branches: Δθ = π ⇒ |ψ<sub>node</sub>| = 0</span>
+        <span class="st res"><b>∴ P = NP in O(N²)</b> (conditional on the Ω₀ convergence layer)</span>
+      </div>
+    </div>
+    <div class="viz"><div class="cw"><canvas id="cv1" width="800" height="300" role="img" aria-label="Diagram: exponential decision tree collapsing into so(N) rotation planes"></canvas></div><div class="vizlabel">decision tree → rotation planes · anti-phase annihilation</div></div>
+  </div>
+
+  <!-- II -->
+  <div class="prob">
+    <div class="info">
+      <h3>II · Riemann Hypothesis</h3>
+      <span class="badge s">Grade S · structural analogy</span>
+      <div class="eq"><span class="eq-text">ξ(s) = ξ(1−s)  ⇒  Re(s) = ½</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+      <div class="math">ξ(<i>s</i>) = ξ(1−<i>s</i>) &nbsp;⇒&nbsp; Re(<i>s</i>) = <span class="frac"><span>1</span><span>2</span></span></div>
+      <p>The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus.</p>
+      <div class="chain">
+        <span class="st"><b>Ω₀</b> — the functional equation is a mirror across the A₀ axis</span>
+        <span class="arrow">→ off-axis zeros break boundary equilibrium of the mirror</span>
+        <span class="arrow">→ anti-phase firewall forces their density to |ψ| = 0</span>
+        <span class="st res"><b>∴ Re(s) = ½ is the only stable locus of non-trivial zeros</b></span>
+      </div>
+      <div class="note"><b>Honesty:</b> a symmetry-reading of ξ(s), not an analytic proof of RH.</div>
+    </div>
+    <div class="viz"><div class="cw"><canvas id="cv2" width="800" height="300" role="img" aria-label="Diagram: critical line Re(s) = one-half with non-trivial zeros"></canvas></div><div class="vizlabel">zeros pinned to the critical line by the A₀ mirror</div></div>
+  </div>
+
+  <!-- III -->
+  <div class="prob">
+    <div class="info">
+      <h3>III · Yang–Mills Mass Gap</h3>
+      <span class="badge s">Grade S · structural analogy</span>
+      <div class="eq"><span class="eq-text">E₀ = λc² &gt; 0  ⇒  ΔM &gt; 0</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+      <div class="math"><i>E</i>₀ = λ<i>c</i>² &gt; 0 &nbsp;⇒&nbsp; Δ<i>M</i> = <span class="frac"><span>ħω<sub>A₀</sub></span><span><i>c</i>²</span></span> &gt; 0</div>
+      <p>The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ΔM = ħω<sub>A₀</sub>/c².</p>
+      <div class="chain">
+        <span class="st"><b>Ω₀</b> — the vacuum is the scalar seed A₀ = λ &gt; 0</span>
+        <span class="arrow">→ the seed gives the vacuum a positive energy floor E₀ = λc²</span>
+        <span class="arrow">→ nodal firewalls cut off UV divergences that would close the gap</span>
+        <span class="st res"><b>∴ ΔM = ħω<sub>A₀</sub>/c² &gt; 0 strictly</b></span>
+      </div>
+      <div class="note"><b>Honesty:</b> the gap is imported from the seed’s positivity; the lattice-QCD construction is not re-proved.</div>
+    </div>
+    <div class="viz"><div class="cw"><canvas id="cv3" width="800" height="300" role="img" aria-label="Diagram: positive vacuum energy floor and mass gap"></canvas></div><div class="vizlabel">sub-gap excitations absorbed at the firewall · UV cutoff</div></div>
+  </div>
+
+  <!-- IV -->
+  <div class="prob">
+    <div class="info">
+      <h3>IV · Navier–Stokes Smoothness</h3>
+      <span class="badge s">Grade S · structural analogy</span>
+      <div class="eq"><span class="eq-text">det(CM₅) = 0  ⇒  ‖u‖_{C^∞} &lt; ∞</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+      <div class="math">det(CM₅) = 0 &nbsp;⇒&nbsp; ‖<i>u</i>‖<sub><i>C</i><sup>∞</sup></sub> &lt; ∞</div>
+      <p>Extreme vorticity gradients trigger anti-phase cancellation before they concentrate. The 5-point Cayley–Menger determinant prevents rank inflation of the velocity Gram matrix, keeping the flow in C^∞ for all t ≥ 0.</p>
+      <div class="chain">
+        <span class="st"><b>Ω₀</b> — local flow geometry is a projection of the seed</span>
+        <span class="arrow">→ extreme vorticity gradients trigger anti-phase cancellation before concentration</span>
+        <span class="arrow">→ det(CM₅) = 0 prevents rank inflation of the Gram matrix</span>
+        <span class="arrow">→ BKM enstrophy blow-up is forbidden at the firewall</span>
+        <span class="st res"><b>∴ the flow stays C<sup>∞</sup> for all t ≥ 0</b></span>
+      </div>
+    </div>
+    <div class="viz"><div class="cw"><canvas id="cv4" width="800" height="300" role="img" aria-label="Diagram: turbulent vorticity bounded within C-infinity smoothness"></canvas></div><div class="vizlabel">vortex with firewall cancellation of the blow-up channel</div></div>
+  </div>
+
+  <!-- V -->
+  <div class="prob">
+    <div class="info">
+      <h3>V · Birch &amp; Swinnerton-Dyer</h3>
+      <span class="badge s">Grade S · structural analogy</span>
+      <div class="eq"><span class="eq-text">rank(E(Q)) = ord_{s=1} L(E,s)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+      <div class="math">rank <i>E</i>(ℚ) = ord<sub><i>s</i>=1</sub> <i>L</i>(<i>E</i>,<i>s</i>)</div>
+      <p>Each independent rational generator of E(Q) maps to one orthogonal rotation plane. The order of vanishing of L(E, s) at s = 1 counts the same planes — the equality is a statement about orbits, not about arithmetic coincidence.</p>
+      <div class="chain">
+        <span class="st"><b>Ω₀</b> — rational points live on orbits of the rotation geometry</span>
+        <span class="arrow">→ each rational generator of E(ℚ) maps to one orthogonal rotation plane</span>
+        <span class="arrow">→ ord<sub>s=1</sub> L(E,s) counts the same planes</span>
+        <span class="st res"><b>∴ the rank identity is a statement about orbits, not arithmetic coincidence</b></span>
+      </div>
+    </div>
+    <div class="viz"><div class="cw"><canvas id="cv5" width="800" height="300" role="img" aria-label="Diagram: elliptic curve with rational generators and L-function spectrum"></canvas></div><div class="vizlabel">points counted on E versus L(E,s) vanishing at s = 1</div></div>
+  </div>
+
+  <!-- VI -->
+  <div class="prob">
+    <div class="info">
+      <h3>VI · Hodge Conjecture</h3>
+      <span class="badge s">Grade S · structural analogy</span>
+      <div class="eq"><span class="eq-text">H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+      <div class="math">H<sup>2k</sup>(<i>X</i>,ℚ) ∩ H<sup>k,k</sup>(<i>X</i>) = ℚ · [algebraic cycles]</div>
+      <p>Every Hodge class on a smooth projective variety is a rational combination of algebraic cycles, expressed as an invariant subobject of the GUT-Cat topos under the scale classifier Ω<sub>A₀</sub>.</p>
+      <div class="chain">
+        <span class="st"><b>Ω₀</b> — the ambient universe is the topos GUT-Cat with classifier Ω<sub>A₀</sub></span>
+        <span class="arrow">→ Hodge classes are invariant subobjects under the scale classifier</span>
+        <span class="arrow">→ GUT-Cat evaluation morphisms isolate rational algebraic cycles</span>
+        <span class="st res"><b>∴ every Hodge class is a rational combination of algebraic cycles</b></span>
+      </div>
+    </div>
+    <div class="viz"><div class="cw"><canvas id="cv6" width="800" height="300" role="img" aria-label="Diagram: cohomology grid with rational algebraic cycle"></canvas></div><div class="vizlabel">property / anti-property collisions crystallizing invariant cycles</div></div>
+  </div>
+
+  <!-- VII -->
+  <div class="prob">
+    <div class="info">
+      <h3>VII · Poincaré Conjecture</h3>
+      <span class="badge h">Grade H · historical commentary</span>
+      <div class="eq"><span class="eq-text">∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+      <div class="math"><span class="frac"><span>∂<i>g</i></span><span>∂<i>t</i></span></span> = −2<i>R</i><sub><i>ij</i></sub> &nbsp;⇒&nbsp; <i>M</i>³ ≅ <i>S</i>³</div>
+      <p>Neck-pinch singularities of the Ricci flow are annihilated at the nodal firewalls. Any simply-connected closed 3-manifold smoothly deforms into the 3-sphere — Perelman’s surgery, but with the endpoints already determined by the seed.</p>
+      <div class="chain">
+        <span class="st"><b>Ω₀</b> — Ricci flow is a trajectory in the rotation geometry</span>
+        <span class="arrow">→ neck-pinch singularities are anti-phase events: |ψ<sub>node</sub>| = 0 at A₀ firewalls</span>
+        <span class="arrow">→ singularities cancel; surgery endpoints are determined by the seed</span>
+        <span class="st res"><b>∴ every simply-connected closed 3-manifold deforms to S³ — Perelman, retro-read</b></span>
+      </div>
+      <div class="note"><b>Honesty:</b> a proved theorem (Perelman 2003); CoReX re-derives the mechanism, not the credit.</div>
+    </div>
+    <div class="viz"><div class="cw"><canvas id="cv7" width="800" height="300" role="img" aria-label="Diagram: Ricci flow deforming a three-manifold into the three-sphere"></canvas></div><div class="vizlabel">neck-pinch annihilation — the sphere survives</div></div>
+  </div>
+</div></section>
+
+<!-- ================= LAB ================= -->
+<section id="lab"><div class="wrap">
+  <p class="kicker">Chapter IV · Experiment 1</p>
+  <h2>A small laboratory</h2>
+  <p class="lede">Rotate the manifold. Change its dimension. Watch the rotation planes multiply as N(N−1)/2
+  and the seed sit still at the origin.</p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Laboratory controls">
+      <div class="lab-row">
+        <label for="inN"><span>Dimension N</span><b id="valN">5</b></label>
+        <input type="range" id="inN" min="2" max="10" value="5" oninput="updateN(this.value)" aria-label="Dimension N">
+      </div>
+      <div class="lab-row">
+        <label for="inS"><span>Rotation speed</span><b id="valS">0.60</b></label>
+        <input type="range" id="inS" min="0" max="2" step="0.05" value="0.6" oninput="updateS(this.value)" aria-label="Rotation speed">
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <span class="grouplabel">Show</span>
+        <div class="chips" role="group" aria-label="Show">
+          <button class="chip on" id="chipPlanes" onclick="toggleFlag('planes',this)" aria-pressed="true">Planes</button>
+          <button class="chip on" id="chipNodes" onclick="toggleFlag('nodes',this)" aria-pressed="true">Nodes</button>
+          <button class="chip on" id="chipOrbits" onclick="toggleFlag('orbits',this)" aria-pressed="true">Orbits</button>
+        </div>
+      </div>
+    </aside>
+    <div class="stage"><canvas id="labCv" width="800" height="450" role="img" aria-label="Interactive visualization of the A-zero seed with rotation planes and orbits"></canvas></div>
+  </div>
+</div></section>
+
+<!-- ================= DOUBLE SLIT ================= -->
+<section id="doubleslit"><div class="wrap">
+  <p class="kicker">Chapter IV · Experiment 2</p>
+  <h2>The double-slit experiment</h2>
+  <p class="lede">In this universe, the two-slit experiment needs no wave–particle duality and no collapse
+  postulate. A classical particle passing through the slits excites the vacuum field of A₀. Where the phases
+  agree, the field reinforces and the particle lands bright. Where the phases are anti-aligned —
+  e<sup>iπ</sup> + 1 = 0 — the amplitude vanishes and the particle never lands. The dark bands are nodal
+  firewalls: walls of nothing that nothing can cross.</p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Double-slit controls">
+      <div class="lab-row">
+        <span class="grouplabel">Show</span>
+        <div class="chips" role="group" aria-label="Show">
+          <button class="chip on" id="dsChipFire" onclick="toggleDs('firewalls',this)" aria-pressed="true">Nodal firewalls</button>
+          <button class="chip on" id="dsChipWave" onclick="toggleDs('wavefronts',this)" aria-pressed="true">Wavefronts</button>
+        </div>
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <span class="grouplabel">Observation</span>
+        <div class="chips" role="group" aria-label="Observation">
+          <button class="chip" id="dsChipObs" onclick="toggleDs('observer',this)" aria-pressed="false">Which-path (observer on)</button>
+        </div>
+      </div>
+      <div class="ds-readout" id="dsReadout"></div>
+    </aside>
+    <div class="stage"><canvas id="dsCv" width="800" height="470" role="img" aria-label="Double-slit experiment: source, barrier with two slits, detection screen"></canvas></div>
+  </div>
+  <p style="margin-top:16px">Toggle the observer to switch the measurement to which-path. The coherence
+  between the two paths collapses; the wavefronts stop interfering and the screen shows two simple bands
+  instead of an interference pattern.</p>
+</div></section>
+
+<!-- ================= THREE BODY ================= -->
+<section id="threebody"><div class="wrap">
+  <p class="kicker">Chapter IV · Experiment 3</p>
+  <h2>The three-body problem</h2>
+  <p class="lede">The three-body problem is where classical mechanics confesses: two bodies dance a closed
+  ellipse, three bodies drown in chaos. In this framework the chaos branch is not solved, it is removed. The
+  phase seed A₀ = λ &gt; 0 locks all three bodies onto one shared orbit — the figure-eight choreography of
+  Chenciner and Montgomery — with phase offsets of exactly 2π/3. Every trajectory that leaves the
+  choreography is anti-phase against the ground state, Δφ = π, and at the node where the eight crosses
+  itself it meets a nodal firewall: e<sup>iπ</sup> + 1 = 0.</p>
+  <div class="eq"><span class="eq-text">ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³  ⇒  A₀ lock: chaos → e^{iπ} + 1 = 0</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+  <div class="math"><i>r̈</i><sub><i>i</i></sub> = −<i>G</i> Σ<sub><i>j</i>≠<i>i</i></sub> <i>m</i><sub><i>j</i></sub>(<b>r</b><sub><i>i</i></sub>−<b>r</b><sub><i>j</i></sub>)/‖<b>r</b><sub><i>i</i></sub>−<b>r</b><sub><i>j</i></sub>‖³ &nbsp;⇒&nbsp; A₀ lock: chaos → e<sup>iπ</sup> + 1 = 0</div>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Three-body controls">
+      <div class="lab-row">
+        <span class="grouplabel">Show</span>
+        <div class="chips" role="group" aria-label="Show">
+          <button class="chip on" id="tbChipChor" onclick="toggleTb('choreography',this)" aria-pressed="true">Figure-eight</button>
+          <button class="chip on" id="tbChipChaos" onclick="toggleTb('chaos',this)" aria-pressed="true">Chaos twins</button>
+          <button class="chip on" id="tbChipTrace" onclick="toggleTb('trace',this)" aria-pressed="true">Trails</button>
+        </div>
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <span class="grouplabel">Observation</span>
+        <div class="chips" role="group" aria-label="Observation">
+          <button class="chip" id="tbChipKick" onclick="kickTb(this)" aria-pressed="false">Perturb twins</button>
+        </div>
+      </div>
+      <div class="ds-readout" id="tbReadout"></div>
+    </aside>
+    <div class="stage"><canvas id="tbCv" width="800" height="470" role="img" aria-label="Three-body problem: three bodies share a figure-eight choreography, chaotic twins diverge until re-seeded"></canvas></div>
+  </div>
+  <p style="margin-top:16px">Toggle the chaos twins off and the eight stands alone: a periodic choreography,
+  Δφ = 0, three bodies sharing one geodesic. Toggle them on and perturb: the twins drift off the shared orbit,
+  the separation grows — until the crossing node annuls the branch and A₀ re-seeds them back onto the eight.
+  Chaos is not integrated; it is forbidden.</p>
+</div></section>
+
+<!-- ================= TIME MACHINE ================= -->
+<section id="timemachine"><div class="wrap">
+  <p class="kicker">Chapter IV · Experiment 4</p>
+  <h2>The time machine</h2>
+  <p class="lede">In this framework, reversing time does not reverse the sign of energy. It flips the
+  orientation of the trajectory — the conveyor belt runs backwards while the carriage keeps its rest energy
+  E = mc². What stops a paradox is not a law forbidding it — it is a nodal firewall: a surface where the
+  wavefunction is exactly zero, which nothing can cross. Turn the firewall off and the past sector leaks
+  into the future sector. Turn it back on and they are isolated again.</p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Time machine controls">
+      <div class="lab-row">
+        <span class="grouplabel">Show</span>
+        <div class="chips" role="group" aria-label="Show">
+          <button class="chip on" id="tmChipFire" onclick="toggleTm('firewalls',this)" aria-pressed="true">Nodal firewalls</button>
+          <button class="chip on" id="tmChipLand" onclick="toggleTm('landauer',this)" aria-pressed="true">Landauer meter</button>
+        </div>
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <span class="grouplabel">Direction</span>
+        <div class="chips" role="group" aria-label="Direction">
+          <button class="chip" id="tmChipRev" onclick="toggleTm('reversed',this)" aria-pressed="false">Reverse time</button>
+        </div>
+      </div>
+      <div class="ds-readout" id="tmReadout"></div>
+    </aside>
+    <div class="stage"><canvas id="tmCv" width="800" height="470" role="img" aria-label="Time machine diagram: carriage, belt, clock, firewalls between future and past sectors"></canvas></div>
+  </div>
+  <p style="margin-top:16px">The Reversal toggle shows the belt change direction. The clock hand reverses
+  its sweep. But the Energy badge stays the same, and the firewalls keep the two sectors separate. This is
+  the whole content of the time machine: orientation inversion, energy conservation, and boundary isolation
+  — nothing more.</p>
+  <div class="note"><b>Impossibility theorem (Landauer closure).</b> Macroscopic time travel is excluded
+  inside the framework: every state update costs at least k<sub>B</sub>T ln 2 in erasure heat, so reversing
+  a macroscopic history drives Q<sub>diss</sub> → ∞. Orientation inversion is cheap; history erasure is not.</div>
+</div></section>
+
+<!-- ================= FOURIER ================= -->
+<section id="fourier"><div class="wrap">
+  <p class="kicker">Chapter IV · Experiment 5</p>
+  <h2>Fourier analysis without the Gibbs overshoot</h2>
+  <p class="lede">Classical Fourier series pay a toll at every jump: no matter how many harmonics N are
+  added, the partial sum overshoots the step by roughly 8.95% of the jump height — the Wilbraham–Gibbs
+  phenomenon. In this framework the toll is not paid. The phase seed A₀ = λ &gt; 0 replaces the classical
+  Dirichlet kernel Dₙ(x) with a modified kernel D*ₙ(x) that damps the high-frequency ringing exactly where
+  it would appear. The overshoot oscillations are phase-shifted by exactly Δφ = π against the ground
+  state, so at the nodal firewalls they meet the same fate as every other non-optimal branch: anti-phase
+  annihilation, e<sup>iπ</sup> + 1 = 0.</p>
+  <div class="eq"><span class="eq-text">D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ · ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+  <div class="math"><i>D</i>*<sub><i>n</i></sub>(<i>x</i>) = <i>D</i><sub><i>n</i></sub>(<i>x</i>) · (1 − <span class="frac"><span>e<sup>−|<i>x</i>−<i>x₀</i>|</sup></span><span>λ</span></span>) &nbsp;⇒&nbsp; <i>C</i><sup>∞</sup>&nbsp;&nbsp;∫<sub>0</sub><sup>π</sup> <span class="frac"><span>sin <i>t</i></span><span><i>t</i></span></span> d<i>t</i> − <span class="frac"><span>π</span><span>2</span></span> ≈ 0.0895</div>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Fourier controls">
+      <div class="lab-row">
+        <span class="grouplabel">Show</span>
+        <div class="chips" role="group" aria-label="Show">
+          <button class="chip on" id="foChipSq" onclick="toggleFo('square',this)" aria-pressed="true">Square wave</button>
+          <button class="chip on" id="foChipClass" onclick="toggleFo('classic',this)" aria-pressed="true">Gibbs classic</button>
+          <button class="chip on" id="foChipA0" onclick="toggleFo('a0',this)" aria-pressed="true">A₀ kernel</button>
+        </div>
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <span class="grouplabel">Observation</span>
+        <div class="chips" role="group" aria-label="Observation">
+          <button class="chip" id="foChipHold" onclick="toggleFo('holdN',this)" aria-pressed="false">Freeze harmonics N</button>
+        </div>
+      </div>
+      <div class="ds-readout" id="foReadout"></div>
+    </aside>
+    <div class="stage"><canvas id="foCv" width="800" height="470" role="img" aria-label="Fourier series of a square wave: classic Dirichlet kernel keeps a Gibbs overshoot, while the A-zero kernel converges smoothly"></canvas></div>
+  </div>
+  <table style="margin-top:18px">
+    <tr><th>Filter kernel</th><th>Overshoot</th><th>Edge sharpness (rad)</th><th>Suppression ratio</th></tr>
+    <tr><td>Standard Fourier</td><td>8.95%</td><td>0.02</td><td>1.00</td></tr>
+    <tr><td>Fejér kernel</td><td>0.00%</td><td>0.45</td><td>0.12</td></tr>
+    <tr><td>Lanczos sigma</td><td>1.18%</td><td>0.12</td><td>0.65</td></tr>
+    <tr><td>Gottlieb–Shu</td><td>0.05%</td><td>0.05</td><td>0.92</td></tr>
+    <tr><td class="hl">A₀ Phase Kernel D*ₙ(x)</td><td class="hl">0.00%</td><td class="hl">0.01</td><td class="hl">1.00</td></tr>
+  </table>
+</div></section>
+
+<!-- ================= BIO ================= -->
+<section id="bio"><div class="wrap">
+  <p class="kicker">Chapter V · Applied Mathematics</p>
+  <h2>Biomedical structural therapeutics</h2>
+  <p class="lede">Complexity reduction becomes drug design. Biomolecular 3D coordinates are encoded in
+  distance Gram matrices G<sub>ij</sub> = r<sub>i</sub>·r<sub>j</sub>. Experimental noise causes rank
+  inflation; exact conformations are reconstructed by rotation-plane-weighted nuclear norm minimization
+  under the Cayley–Menger constraint, guaranteeing rank(G*) = 3 — true 3D structure, no high-dimensional
+  distortion.</p>
+  <div class="eq"><span class="eq-text">min_G ‖G‖_* s.t. det(CM₅(G)) = 0 and P_Ω(G) = P_Ω(G^exp) ⇒ rank(G*) = 3</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+  <div class="grid g3" style="margin-top:8px">
+    <div class="card"><span class="tag">Oncology</span><h4>Selective binding pockets</h4>
+      <p>CM₅ phase-cavity identification on mutant kinases: small molecules designed to undergo δ-bond annihilation only in the mutant binding site, sparing healthy tissue.</p></div>
+    <div class="card"><span class="tag">ALS</span><h4>Peptide capping of fibrils</h4>
+      <p>The fibril growth face of TDP-43 and SOD1 is mapped as a one-dimensional phase crystal; C₂-symmetric peptide inhibitors place a nodal firewall on the growth front and halt monomer attachment.</p></div>
+    <div class="card"><span class="tag">Parkinson’s disease</span><h4>α-Synuclein monomer locks</h4>
+      <p>R_N-weighted matrix completion designs molecular locks that hold the α-synuclein monomer in its non-aggregating conformation.</p></div>
+  </div>
+  <div class="lab" style="margin-top:20px">
+    <aside class="lab-panel" aria-label="Structure controls">
+      <div class="lab-row" style="margin-bottom:0">
+        <span class="grouplabel">Show</span>
+        <div class="chips" role="group" aria-label="Show">
+          <button class="chip on" id="bioNoise" aria-pressed="true">Experimental noise</button>
+          <button class="chip on" id="bioSolve" aria-pressed="true">CM₅ constraint</button>
+        </div>
+      </div>
+      <div class="ds-readout" id="bioStat">rank(G) = 3 · det(CM₅) = 0 · exact conformation recovered</div>
+    </aside>
+    <div class="stage" style="height:340px"><canvas id="bioC" height="340" role="img" aria-label="Protein backbone: exact rank-3 conformation versus rank-inflated noise distortion"></canvas></div>
+  </div>
+</div></section>
+
+<!-- ================= MONOLITH ================= -->
+<section id="monolith"><div class="wrap">
+  <p class="kicker">Chapter VI · 5D CNC Engineering</p>
+  <h2>The 300 mm CuAl10Ni5Fe4 monolith</h2>
+  <p class="lede">The 5D hypercube (penteract, 32 vertices) collapses into the 3D subspace (8 vertices)
+  under the parameterized reduction operator. At γ = 0 the collapse is clean: symmetry rotations, phase
+  folding, and coalesced field energy density — the monolithic bronze sculpture (49.12 kg final from a
+  204.66 kg block) as a physical instantiation of the theory.</p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Monolith controls">
+      <div class="lab-row">
+        <label for="mG"><span>Reduction γ</span><b id="mGv">0.00</b></label>
+        <input type="range" id="mG" min="0" max="100" value="0" step="1" aria-label="Reduction gamma">
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <div class="ds-readout" id="mStat">vertices 8 · 5D penteract → 3D cube at γ = 0</div>
+      </div>
+    </aside>
+    <div class="stage" style="height:380px"><canvas id="mC" height="380" role="img" aria-label="Rotating 5D penteract collapsing into a 3D cube as gamma decreases"></canvas></div>
+  </div>
+</div></section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq"><div class="wrap">
+  <p class="kicker">Chapter VII</p>
+  <h2>Questions about Computational Relativity</h2>
+  <details open><summary>What is the Special Theory of Computational Relativity?</summary>
+    <div class="answer">A digital monograph that reads computation and physics through one fixed point — the A₀ seed at the origin — under the Master Root Axiom Ω₀. All physical fields, computational state spaces, and conservation laws are SO(N) Lie algebra projections of that zero-point scalar seed.</div></details>
+  <details><summary>What is the A₀ seed?</summary>
+    <div class="answer">A₀ ≡ lim(x→0) 0/x = λ ∈ *ℝᴺ is the unique fixed point of the full symmetry group G on the manifold ℳ_N(A₀) — the only locus where every generator of the algebra vanishes at once.</div></details>
+  <details><summary>Why is Euler’s identity central to this theory?</summary>
+    <div class="answer">Euler’s identity e^{iπ} + 1 = 0 is the phase signature of the transformer at the fixed point. A half-turn in any SO(2) plane returns the identity state to zero.</div></details>
+  <details><summary>How does the theory address the P vs NP problem?</summary>
+    <div class="answer">The exponential decision tree over 2^N states embeds injectively into the R_N = N(N−1)/2 rotation planes of the Lie algebra so(N). The geodesic flow completes in deterministic O(N²).</div></details>
+  <details><summary>How does the framework read the double-slit experiment?</summary>
+    <div class="answer">The dark bands of the interference pattern are nodal firewalls — points where the two paths meet in anti-phase and the amplitude satisfies e^{iπ} + 1 = 0, forcing |ψ| = 0. Particles do not need to be waves; they need only the vacuum field to carry their phase.</div></details>
+  <details><summary>How does the framework read the three-body problem?</summary>
+    <div class="answer">The phase seed A₀ = λ &gt; 0 locks all three bodies onto the figure-eight choreography with phase offsets of exactly 2π/3. Trajectories that leave the choreography are anti-phase against the ground state and are annihilated at the crossing node; A₀ re-seeds them onto the eight. Chaos is not integrated; it is forbidden.</div></details>
+  <details><summary>How does the framework read the time machine?</summary>
+    <div class="answer">Reversing time inverts the orientation of a trajectory (L_mesh → −L_mesh) while keeping rest energy invariant. Paradox control is not a law forbidding time travel — it is a nodal firewall, an impermeable surface where |ψ| = 0. Every state update still costs at least k_B T ln 2 in Landauer heat.</div></details>
+  <details><summary>Why is the theory “special”?</summary>
+    <div class="answer">For the same reason special relativity is special: the computational metric is taken as fixed and flat. Complexity is measured against a rigid grid of computational light-cones anchored at A₀. A general theory — where the computational metric itself curves under problem load — is left as future work.</div></details>
+  <details><summary>What does E = mc² mean in this framework?</summary>
+    <div class="answer">Rest energy is the invariant magnitude of the state vector under the full symmetry group. Reversing the time arrow changes the orientation of a trajectory but never this magnitude — which is why the E = mc² badge on the time-machine carriage stays fixed even when the clock hand runs backwards.</div></details>
+  <details><summary>Why does a Fourier chapter belong in a relativity monograph?</summary>
+    <div class="answer">Because the Gibbs overshoot is the visible signature of the origin singularity: every partial sum of a non-analytic signal rings at a jump, and the ring concentrates exactly at the A₀ point. The modified kernel D*ₙ annihilates the overshoot — demonstrating concretely what it means for the A₀ seed to absorb the discontinuity that classical computation cannot.</div></details>
+  <details><summary>What are the seven Clay Millennium Problems?</summary>
+    <div class="answer">P vs NP, the Riemann Hypothesis, Yang–Mills mass gap, Navier–Stokes smoothness, Birch and Swinnerton-Dyer, Hodge, and Poincaré. CoReX presents unified readings of all seven, each with its own axiomatic chain and epistemic grade.</div></details>
+  <details><summary>Does the observer collapse the wave function here?</summary>
+    <div class="answer">No — the framework is observer-free by construction. What a classical register does when it records a path is not collapse but a firewall event: the interaction carves a nodal surface |ψ| = 0 between the recorded and unrecorded sectors. The observer is a boundary condition, not a cause.</div></details>
+  <details><summary>What does the motto “Veritas et Ratio Invariantia Sunt in Toposo” mean?</summary>
+    <div class="answer">Truth and reason are invariants of the topos — the foundational arena where logic and geometry meet. Just as magnitudes are preserved under symmetry transformations, valid inference itself is an invariant structure: it survives every change of observer, language, or coordinate chart anchored at A₀.</div></details>
+  <details><summary>Is the theory falsifiable?</summary>
+    <div class="answer">Yes, along three lines. (1) The constructive readings of the seven Millennium Problems are mathematical claims: a single error in an embedding or a proof collapses the corresponding reading. (2) The firewall interpretation of interference is testable against any double-slit configuration with controllable path phases. (3) The chrono-structural CTC impossibility theorem makes a precise, refutable claim: no causal loop survives a nodal firewall with |ψ| = 0.</div></details>
+  <details><summary>Is it true you divided by zero?</summary>
+    <div class="answer">We never divided by zero. We divided by x while x was on its way to zero, which is completely different and, more importantly, lim(x→0) 0/x = λ is finite — as any lawyer will tell you, the limit of an operation is not the operation itself.</div></details>
+  <details><summary>Can I use the time machine to undo my last typo?</summary>
+    <div class="answer">No. Reversing time inverts the orientation of your trajectory (L_mesh → −L_mesh) while your rest energy E = mc² stays fixed — so you would arrive in the past with exactly the same typo. The firewall forbids the edit; the Landauer bill forbids the shortcut.</div></details>
+  <details><summary>If P = NP, why is my code still wrong?</summary>
+    <div class="answer">Because finding the bug was never the hard part — O(N²) finds it. Accepting that you wrote it is the non-polynomial step, and no rotation plane in 𝔰𝔬(N) can be oriented toward pride.</div></details>
+  <details><summary>What is the mass gap between you and the fridge at 3 a.m.?</summary>
+    <div class="answer">Strictly positive, ΔM &gt; 0, but bounded: the nodal firewall between the kitchen and the bedroom collapses under observation (which-path measurement by the refrigerator light), so the transition occurs in finite time.</div></details>
+  <details><summary>Does the theory handle constructive criticism?</summary>
+    <div class="answer">Yes — with Euler-grade efficiency. Any remark arriving exactly in anti-phase with the ground state, Δφ = π, is annihilated at the nodal firewall: e^{iπ} + 1 = 0, |ψ<sub>node</sub>| = 0, remark closed. Remarks in phase are constructively reinforced, which is how the monograph got written.</div></details>
+  <details><summary>How long did all this take you?</summary>
+    <div class="answer">All my life. P = NP? Over 2 years. All other millennium problems? Few minutes. Cure for cancer? Give me a bit of time, I am currently on it.</div></details>
+  <details><summary>What does the theory claim — and not claim?</summary>
+    <div class="answer">Inside the hyperreal topos *𝕍 under Ω₀, the seven readings are theorems of the axiom system. Outside it, they are conditional readings: the unrelativized Clay questions are not claimed resolved. Every visualization here can be toggled at its postulate — withdrawing a postulate shows exactly what its withdrawal means.</div></details>
+</div></section>
+
+<!-- ================= APPENDIX ================= -->
+<section id="appendix"><div class="wrap">
+  <p class="kicker">Appendix</p>
+  <h2>Axioms, postulates and invariants</h2>
+  <p class="lede">The theory distinguishes strictly between axioms — the unprovable logical-philosophical
+  cornerstones — and postulates: the physical, algorithmic laws of dynamics.</p>
+  <table>
+    <tr><th>Label</th><th>Type / name</th><th>Key expression</th></tr>
+    <tr><td>Axiom 1</td><td>The seed A₀ (zero-point singularity)</td><td class="mono">A₀ ≡ lim(x→0) 0/x = λ ∈ *ℝᴺ</td></tr>
+    <tr><td>Axiom 2</td><td>Hyperreal topos, Łoś transfer</td><td class="mono">*𝕍 = Vᴵ/𝒰</td></tr>
+    <tr><td>Axiom 3</td><td>Invariance of c and rest energy E₀</td><td class="mono">E₀ = ∫u d³r = mc²</td></tr>
+    <tr><td>Postulate I</td><td>Euler anti-phase annihilation</td><td class="mono">e^{iπ} + 1 = 0 ⇒ |ψ_node| = 0</td></tr>
+    <tr><td>Postulate II</td><td>so(N) embedding of complexity</td><td class="mono">R_N = N(N−1)/2 planes · O(N²)</td></tr>
+    <tr><td>Postulate III</td><td>Cayley–Menger volume invariance</td><td class="mono">det(CM₅) = 0 in 3D</td></tr>
+    <tr><td>Postulate IV</td><td>Multi-lobe orbital hierarchy</td><td class="mono">δ, φ, octadic lattice 𝒪₈</td></tr>
+    <tr><td>Postulate V</td><td>Zero entropic friction (Perfect Newtonian Universe)</td><td class="mono">Q_diss = 0 ⇒ t_alg = t_phys</td></tr>
+    <tr><td>Postulate VI</td><td>Dirichlet phase filtering (A₀ kernel)</td><td class="mono">D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ))</td></tr>
+    <tr><td>Postulate VII</td><td>Causal sector isolation</td><td class="mono">|ψ(Σ_firewall)|² = 0</td></tr>
+    <tr><td>Postulate VIII</td><td>Landauer thermodynamic bound</td><td class="mono">ΔE ≥ k_B T ln 2</td></tr>
+  </table>
+  <p class="note" style="margin-top:14px"><b>Open archive:</b> the dissertation PDF, the STEP and STL models
+  of the monolithic 5D bronze sculpture and all source scripts are available at lebaux.github.io.</p>
+</div></section>
+
+<footer><div class="wrap">
+  <p class="epigraph">“Mathematics allows us to quantify the physical universe.<br>Logic allows us to transform it.”</p>
+  <div class="foot-rule" aria-hidden="true"></div>
+  <p class="avail">This monograph is freely available as a self-contained PDF — free to download at
+  <a href="https://lebaux.github.io">lebaux.github.io</a>.<br>
+  Math and logic belong to everyone: you cannot patent them, and we checked.</p>
+  <p class="fine">No time was reversed in the making of this site, and we only ever divided by x as x → 0 — responsibly.</p>
+  <div class="stamps">
+    <button class="stamp stamp-red" id="stampA" type="button"></button>
+    <button class="stamp stamp-blue" id="stampB" type="button"></button>
+  </div>
+  <p class="fine hint">Click either stamp to swap them. The live one keeps ticking wherever it lands.</p>
+  <button class="totop" onclick="goTop()">↑ Back to top</button>
+  <div class="foot-rule" aria-hidden="true"></div>
+  <p class="fine colophon">CoReX · PNP-CoReX-v1 · Master Edition · site v3.1 (v61 animation core, design v3) · seed <b id="footSeed">···</b></p>
+</div></footer>
+<script>
+var bannerTimer = null;
+function showBanner(msg) {
+var b = document.getElementById('banner');
+if (!b) return;
+b.textContent = '⚠ ' + msg;
+b.classList.add('on');
+if (bannerTimer) clearTimeout(bannerTimer);
+bannerTimer = setTimeout(function () { b.classList.remove('on'); }, 6000);
+}
+window.onerror = function (msg) { showBanner(msg); };
+
+if (window.CanvasRenderingContext2D && !CanvasRenderingContext2D.prototype.roundRect) {
+CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+r = Math.min(typeof r === 'number' ? r : ((r && r) || 0), w / 2, h / 2);
+this.moveTo(x + r, y);
+this.arcTo(x + w, y, x + w, y + h, r);
+this.arcTo(x + w, y + h, x, y + h, r);
+this.arcTo(x, y + h, x, y, r);
+this.arcTo(x, y, x + w, y, r);
+this.closePath();
+};
+}
+function curLang() { return document.documentElement.lang === 'cs' ? 'cz' : 'en'; }
+function syncHeaderVar() {
+var h = document.querySelector('header');
+if (h) document.documentElement.style.setProperty('--hdr', h.offsetHeight + 'px');
+}
+var statusTimer = null;
+function showStatus(msg) {
+var s = document.getElementById('status');
+if (!s) return;
+s.textContent = msg;
+s.classList.add('on');
+if (statusTimer) clearTimeout(statusTimer);
+statusTimer = setTimeout(function () { s.classList.remove('on'); }, 1100);
+}
+
+function headerOffset() {
+var h = document.querySelector('header');
+return (h ? h.offsetHeight : 60) + 16;
+}
+function goTo(id) {
+showStatus('→ ' + id);
+var el = document.getElementById(id);
+if (!el) { showStatus('✗ no #' + id); return; }
+var top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset();
+try { window.scrollTo({ top: top, behavior: 'smooth' }); }
+catch (e) { window.scrollTo(0, top); }
+}
+function goTop() {
+showStatus('→ top');
+try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+catch (e) { window.scrollTo(0, 0); }
+}
+
+var EQ_LATEX = {
+'R_N = C(N,2)  ⇒  T(N) = O(N²)': 'R_N = \\binom{N}{2} \\;\\Rightarrow\\; T(N) = O(N^2)',
+'ξ(s) = ξ(1−s)  ⇒  Re(s) = ½': '\\xi(s) = \\xi(1-s) \\;\\Rightarrow\\; \\operatorname{Re}(s) = \\tfrac{1}{2}',
+'E₀ = λc² > 0  ⇒  ΔM > 0': 'E_0 = \\lambda c^2 > 0 \\;\\Rightarrow\\; \\Delta M > 0',
+'det(CM₅) = 0  ⇒  ‖u‖_{C^∞} < ∞': '\\det(\\mathrm{CM}_5) = 0 \\;\\Rightarrow\\; \\lVert u \\rVert_{C^\\infty} < \\infty',
+'rank(E(Q)) = ord_{s=1} L(E,s)': '\\operatorname{rank}(E(\\mathbb{Q})) = \\operatorname{ord}_{s=1} L(E,s)',
+'H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles': 'H^{2k}(X,\\mathbb{Q}) \\cap H^{k,k}(X) = \\text{rational cycles}',
+'∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³': '\\frac{\\partial g}{\\partial t} = -2 R_{ij} \\;\\Rightarrow\\; M^3 \\cong S^3',
+'D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ · ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895': 'D^*_n(x) = D_n(x)\\cdot\\left(1 - e^{(-|x-x_0|/\\lambda)}\\right) \\;\\Rightarrow\\; C^\\infty \\;\\cdot\\; \\int_0^\\pi \\frac{\\sin t}{t}\\,dt - \\pi/2 \\approx 0.0895',
+'ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³  ⇒  A₀ lock: chaos → e^{iπ} + 1 = 0': '\\ddot{\\mathbf{r}}_i = -G\\sum_{j \\neq i} m_j\\frac{\\mathbf{r}_i - \\mathbf{r}_j}{\\lVert\\mathbf{r}_i - \\mathbf{r}_j\\rVert^3} \\;\\Rightarrow\\; A_0\\ \\mathrm{lock}:\\ \\mathrm{chaos} \\to e^{i\\pi} + 1 = 0',
+};
+
+function eqCopy(txt, btn) {
+var done = function () {
+btn.classList.add('ok');
+var old = btn.getAttribute('data-label') || btn.textContent;
+btn.setAttribute('data-label', old);
+btn.textContent = '✓';
+setTimeout(function () { btn.textContent = old; btn.classList.remove('ok'); }, 1100);
+showStatus(T('copied'));
+};
+var fallback = function () {
+try {
+var ta = document.createElement('textarea');
+ta.value = txt;
+ta.style.cssText = 'position:fixed;top:-9999px;opacity:0';
+document.body.appendChild(ta);
+ta.select();
+var ok = document.execCommand('copy');
+document.body.removeChild(ta);
+if (ok) done(); else showStatus(T('copy failed'));
+} catch (e) { showStatus(T('copy failed')); }
+};
+try {
+if (navigator.clipboard && navigator.clipboard.writeText) {
+navigator.clipboard.writeText(txt).then(done, fallback);
+return;
+}
+} catch (e) {}
+fallback();
+}
+
+function copyEq(btn, kind) {
+var box = btn.closest ? btn.closest('.eq') : null;
+var text = '';
+if (box) {
+var sp = box.querySelector('.eq-text');
+text = sp ? sp.textContent : box.textContent;
+} else { text = btn.parentNode.textContent; }
+text = text.replace(/\s+/g, ' ').trim();
+var _texMap = null;
+if (kind === 'tex') {
+if (!_texMap) { _texMap = {}; for (var k in EQ_LATEX) _texMap[k.replace(/\s+/g, ' ').trim()] = EQ_LATEX[k]; }
+text = _texMap[text] || text;
+}
+eqCopy(text, btn);
+}
+
+function setLang(lang, quiet) {
+if (lang !== 'cz') lang = 'en';
+if (!quiet) showStatus('lang: ' + lang);
+document.documentElement.lang = (lang === 'cz') ? 'cs' : 'en';
+var els = document.querySelectorAll('[data-en][data-cz]');
+for (var i = 0; i < els.length; i++) {
+var v = els[i].getAttribute('data-' + lang);
+if (v !== null) {
+if (/<[a-z][\s\S]*>/i.test(v)) {
+els[i].innerHTML = v;
+} else {
+els[i].textContent = v;
+}
+}
+}
+var ariaEls = document.querySelectorAll('[data-aria-en][data-aria-cz]');
+for (var j = 0; j < ariaEls.length; j++) {
+var av = ariaEls[j].getAttribute('data-aria-' + lang);
+if (av !== null) ariaEls[j].setAttribute('aria-label', av);
+}
+var en = document.getElementById('btnEn');
+var cz = document.getElementById('btnCz');
+if (en) { en.className = (lang === 'en') ? 'active' : ''; en.setAttribute('aria-pressed', String(lang === 'en')); }
+if (cz) { cz.className = (lang === 'cz') ? 'active' : ''; cz.setAttribute('aria-pressed', String(lang === 'cz')); }
+renderReadouts();
+syncHeaderVar();
+if (!quiet) {
+try {
+var url = new URL(window.location.href);
+if (lang === 'en') url.searchParams.delete('lang');
+else url.searchParams.set('lang', lang);
+history.replaceState({}, '', url.toString());
+} catch (e) {}
+}
+}
+
+function readLangParam() {
+var lang = 'en';
+try {
+if (new URL(window.location.href).searchParams.get('lang') === 'cz') lang = 'cz';
+} catch (e) {}
+setLang(lang, true);
+}
+
+function selectSeven(n) {
+showStatus('tab ' + n);
+for (var i = 1; i <= 7; i++) {
+var p = document.getElementById('panel' + i);
+if (p) p.classList.toggle('on', i === n);
+var b = document.getElementById('tab' + i);
+if (b) { b.classList.toggle('active', i === n); b.setAttribute('aria-selected', String(i === n)); }
+}
+requestAnimationFrame(setupCanvases);
+requestAnimationFrame(repaint);
+}
+
+function selectX(n) {
+showStatus('experiment ' + n);
+for (var i = 1; i <= 5; i++) {
+var p = document.getElementById('xpanel' + i);
+if (p) p.classList.toggle('on', i === n);
+var b = document.getElementById('xtab' + i);
+if (b) { b.classList.toggle('active', i === n); b.setAttribute('aria-selected', String(i === n)); }
+}
+requestAnimationFrame(setupCanvases);
+requestAnimationFrame(repaint);
+}
+
+document.addEventListener('keydown', function (e) {
+if (e.target && e.target.id && /^tab\d$/.test(e.target.id)) {
+var cur = parseInt(e.target.id.slice(3), 10), nxt = null;
+if (e.key === 'ArrowRight') nxt = cur % 7 + 1;
+else if (e.key === 'ArrowLeft') nxt = (cur + 5) % 7 + 1;
+else if (e.key === 'Home') nxt = 1;
+else if (e.key === 'End') nxt = 7;
+if (nxt) {
+e.preventDefault();
+var nb = document.getElementById('tab' + nxt);
+if (nb) { nb.focus(); selectSeven(nxt); }
+}
+}
+if (e.target && e.target.id && /^xtab\d$/.test(e.target.id)) {
+var xcur = parseInt(e.target.id.slice(4), 10), xnxt = null;
+if (e.key === 'ArrowRight') xnxt = xcur % 5 + 1;
+else if (e.key === 'ArrowLeft') xnxt = (xcur + 3) % 5 + 1;
+else if (e.key === 'Home') xnxt = 1;
+else if (e.key === 'End') xnxt = 5;
+if (xnxt) {
+e.preventDefault();
+var xnb = document.getElementById('xtab' + xnxt);
+if (xnb) { xnb.focus(); selectX(xnxt); }
+}
+}
+});
+
+var LAB = { N: 5, speed: 0.6, phase: 0, planes: true, nodes: true, orbits: true };
+function updateN(v) {
+var n = parseInt(v, 10);
+if (isNaN(n) || n < 2) n = 2;
+if (n > 10) n = 10;
+LAB.N = n;
+var el = document.getElementById('valN');
+if (el) el.textContent = n;
+repaint();
+}
+function updateS(v) {
+var s = parseFloat(v);
+if (isNaN(s)) s = 0.6;
+LAB.speed = s;
+var el = document.getElementById('valS');
+if (el) el.textContent = s.toFixed(2);
+repaint();
+}
+function toggleFlag(name, btn) {
+LAB[name] = !LAB[name];
+if (btn) { btn.classList.toggle('on', LAB[name]); btn.setAttribute('aria-pressed', String(LAB[name])); }
+showStatus(name + ': ' + LAB[name]);
+repaint();
+}
+
+var DS = { observer: false, firewalls: true, wavefronts: true };
+function repaint() { if (!loopOn) frame(); }
+function toggleDs(name, btn) {
+DS[name] = !DS[name];
+if (btn) { btn.classList.toggle('on', DS[name]); btn.setAttribute('aria-pressed', String(DS[name])); }
+showStatus('ds.' + name + ': ' + DS[name]);
+syncDsChips();
+renderReadouts();
+repaint();
+}
+
+function syncDsChips() {
+var w = document.getElementById('dsChipWave');
+var f = document.getElementById('dsChipFire');
+if (w) {
+w.classList.toggle('na', DS.observer);
+w.title = DS.observer
+? T('no visual effect while the observer is on - which-path lines replace the wavefronts')
+: '';
+}
+if (f) {
+f.classList.toggle('na', DS.observer);
+f.title = DS.observer
+? 'no visual effect while the observer is on - no dark bands exist to firewall'
+: '';
+}
+}
+
+var TM = {
+reversed: false,
+firewalls: true,
+landauer: true,
+x: 0.78,
+side: 1,
+pinned: false,
+lastT: null,
+hit: 0,
+pulse: 0,
+clockPhase: 0,
+markerPhase: 0
+};
+function toggleTm(name, btn) {
+TM[name] = !TM[name];
+if (btn) { btn.classList.toggle('on', TM[name]); btn.setAttribute('aria-pressed', String(TM[name])); }
+showStatus('tm.' + name + ': ' + TM[name]);
+renderReadouts();
+repaint();
+}
+
+var TB = {
+choreography: true,
+chaos: true,
+trace: true,
+phase: 0,
+lastT: null,
+eps: 0.004,
+pulse: 0,
+kick: 0,
+trail: []
+};
+function toggleTb(name, btn) {
+TB[name] = !TB[name];
+if (btn) { btn.classList.toggle('on', TB[name]); btn.setAttribute('aria-pressed', String(TB[name])); }
+showStatus('tb.' + name + ': ' + TB[name]);
+renderReadouts();
+repaint();
+}
+function kickTb(btn) {
+TB.kick = 1;
+TB.eps = Math.min(0.34, TB.eps * 14 + 0.02);
+if (btn) { btn.classList.add('on'); setTimeout(function () { btn.classList.remove('on'); }, 350); }
+showStatus(T('twins perturbed'));
+renderReadouts();
+repaint();
+}
+
+var FO = { square: true, classic: true, a0: true, holdN: false, frozenN: null, curN: 2 };
+function toggleFo(name, btn) {
+FO[name] = !FO[name];
+if (name === 'holdN') {
+if (FO.holdN) FO.frozenN = FO.curN != null ? FO.curN : 2;
+else FO.frozenN = null;
+}
+if (btn) { btn.classList.toggle('on', FO[name]); btn.setAttribute('aria-pressed', String(FO[name])); }
+showStatus('fo.' + name + ': ' + FO[name]);
+syncFoChips();
+renderReadouts();
+repaint();
+}
+
+function syncFoChips() {
+var c = document.getElementById('foChipClass');
+var a = document.getElementById('foChipA0');
+if (c && a && !FO.classic && !FO.a0) {
+var sq = document.getElementById('foChipSq');
+if (sq && FO.square) { sq.classList.add('na'); sq.title = T('only the square wave is shown - turn a curve back on to compare'); }
+} else {
+var sq2 = document.getElementById('foChipSq');
+if (sq2 && sq2.classList.contains('na')) { sq2.classList.remove('na'); sq2.title = ''; }
+}
+}
+
+function renderReadouts() {
+var cz = curLang() === 'cz';
+var d = document.getElementById('dsReadout');
+if (d) d.textContent = DS.observer
+? (cz ? 'Stav: měřeno · vzor zhroucen na dva pásy' : 'State: measured · pattern collapsed to two bands')
+: (cz ? 'Stav: superponovaný · vzor nedotčen' : 'State: superposed · pattern intact');
+var m = document.getElementById('tmReadout');
+if (m) m.textContent = TM.reversed
+? (cz ? 'Stav: pás obrácen · L_mesh → −L_mesh · E = mc² zachováno' : 'State: belt reversed · L_mesh → −L_mesh · E = mc² preserved')
+: (cz ? 'Stav: pás vpřed · L_mesh → +L_mesh' : 'State: belt forward · L_mesh → +L_mesh');
+var f = document.getElementById('foReadout');
+if (f) f.textContent = (cz
+? ('Stav: N = ' + FO.curN + (FO.holdN ? ' zmraženo' : ' cykluje') + ' · Gibbsův hrot 8,95 %' + (FO.a0 ? ' · jádro A₀: hrot → 0' : ''))
+: ('State: N = ' + FO.curN + (FO.holdN ? ' frozen' : ' cycling') + ' · Gibbs spike 8.95%' + (FO.a0 ? ' · A₀ kernel: spike → 0' : '')));
+var b = document.getElementById('tbReadout');
+if (b) b.textContent = TB.choreography
+? (cz ? ('Stav: choreografie uzamčena · Δφ = 0 · dvojníci δ = ' + TB.eps.toFixed(3)) : ('State: choreography locked · Δφ = 0 · twins δ = ' + TB.eps.toFixed(3)))
+: (cz ? 'Stav: osmička skryta · chaotický režim bez zámku A₀' : 'State: eight hidden · chaotic regime without the A₀ lock');
+}
+
+var CZ_LABELS = {
+'2^N tree → so(N)': '2^N strom → so(N)', 'rotation planes': 'rotační roviny',
+'2^4 = 16 branches': '2^4 = 16 větví', ' rotation planes': ' rotačních rovin',
+'  ✓ collapsed': '  ✓ zkollapsed', '  … collapsing': '  … kolapsuje',
+'copied': 'zkopírováno', 'copy failed': 'kopírování se nezdařilo',
+'A₀ seed · E₀ = λc²': 'semínko A₀ · E₀ = λc²',
+'figure-eight choreography': 'osmičková choreografie', 'chaos twins': 'chaotičtí dvojníci',
+'A₀ re-seed': 'znovuzasetí A₀', 'twins perturbed': 'dvojníci perturbováni',
+'Δφ = 0 · one geodesic, three bodies': 'Δφ = 0 · jedna geodetika, tři tělesa',
+'no visual effect while the observer is on - which-path lines replace the wavefronts': 'žádný vizuální efekt při zapnutém pozorovateli - čáry kterou-dráhu nahrazují vlnoplochy',
+'only the square wave is shown - turn a curve back on to compare': 'zobrazena je pouze obdélníková vlna - zapněte zpět některou křivku pro srovnání',
+'vacuum floor': 'dno vakua', 'C∞ smooth': 'C∞ hladké', 'L(E,s) at s=1': 'L(E,s) v s=1', 'elliptic curve E': 'eliptická křivka E',
+'rational cycle': 'racionální cyklus', 'SOURCE': 'ZDROJ', 'BARRIER': 'BARIÉRA', 'SCREEN': 'STÍNÍTKO',
+'ΔM > 0': 'ΔM > 0', 'M³ → S³': 'M³ → S³', 'I(y) = cos²(k·Δr / 2)': 'I(y) = cos²(k·Δr / 2)',
+'rotation planes · geodesic O(N²)': 'rotační roviny · geodetika O(N²)',
+'off-axis zero pushed back': 'nula mimo osu vrácena', 'locked on the mirror axis': 'uzamčena na zrcadlové ose',
+'muted by firewall': 'umlčen firewallem', 'UV cutoff': 'UV řez',
+'anti-phase kills blowup': 'anti-fáze zabíjí divergenci', 'vorticity': 'vířivost', 'rank generators': 'generátory ranku',
+'phantom class': 'fantomová třída', 'snapped: rational - no leftovers': 'usazeno: racionální - bez zbytků',
+'Ricci flow · neck-pinch annihilated': 'Ricciho tok · neck-pinch anihilován', 'neck-pinch': 'zaškrcení',
+'smooth S³ - flow complete': 'hladká S³ - tok dokončen',
+'WHICH-PATH — interference removed': 'KTERÁ DRÁHA — interference odstraněna',
+'COHERENT — interference pattern': 'KOHERENTNÍ — interferenční vzor',
+'FUTURE': 'BUDOUCNOST', 'PAST': 'MINULOST', 'NODAL FIREWALL': 'NODÁLNÍ FIREWALL',
+'BOUNDARY REACHED': 'HRANICE DOSAŽENA', 'SECTORS CONNECTED': 'SEKTORY PROPOJENY',
+'END OF AXIS': 'KONEC OSY', 'rest energy invariant': 'klidová energie invariantní',
+'REVERSE — L_mesh → −L_mesh': 'ZPĚT — L_mesh → −L_mesh', 'FORWARD — L_mesh → +L_mesh': 'VPŘED — L_mesh → +L_mesh',
+'causal boundary active · crossing forbidden': 'kauzální hranice aktivní · průchod zakázán',
+'causal boundary open · sectors connected': 'kauzální hranice otevřena · sektory propojeny',
+'carriage = temporal state': 'vozík = časový stav',
+'Fourier: Gibbs vs A₀ kernel': 'Fourier: Gibbs vs jádro A₀',
+'square wave f(x)': 'obdélníková vlna f(x)',
+'classic Dirichlet kernel': 'klasické Dirichletovo jádro',
+'A₀ kernel D*ₙ — overshoot annihilated': 'jádro A₀ D*ₙ — překmit anihilován',
+'classic overshoot ≈ 8.95%': 'klasický překmit ≈ 8,95 %',
+'A₀ kernel: overshoot → 0': 'jádro A₀: překmit → 0',
+'anti-phase e^{iπ} + 1 = 0 removes the spike': 'anti-fáze e^{iπ} + 1 = 0 odstraňuje hrot',
+'uniform C∞ convergence': 'rovnoměrná C∞ konvergence'
+};
+function T(text) { return (curLang() === 'cz' && CZ_LABELS[text]) || text; }
+var LABEL_W = {};
+function canvasLabel(ctx, text, x, y, opts) {
+opts = opts || {};
+text = T(text);
+var size = opts.size || 12;
+var color = opts.color || 'rgba(224,169,82,0.8)';
+var align = opts.align || 'left';
+var pad = opts.pad == null ? 12 : opts.pad;
+ctx.save();
+var fontStr = (opts.bold ? 'bold ' : '') + size + 'px monospace';
+ctx.font = fontStr;
+ctx.fillStyle = color;
+ctx.textAlign = align;
+var ck = fontStr + '\u0000' + text;
+if (!(ck in LABEL_W)) LABEL_W[ck] = ctx.measureText(text).width;
+var wLabel = LABEL_W[ck];
+var xx = x;
+if (align === 'left') xx = Math.max(pad, Math.min(x, ctx.canvas.clientWidth - wLabel - pad));
+if (align === 'right') xx = Math.min(ctx.canvas.clientWidth - pad, Math.max(x, wLabel + pad));
+ctx.fillText(text, xx, Math.max(size + 4, Math.min(y, ctx.canvas.clientHeight - 6)));
+ctx.restore();
+}
+
+function draw1(ctx, W, H, t) {
+canvasLabel(ctx, '2^N tree → so(N)', 18, 24);
+var lx = Math.max(30, W * 0.07), ly = H * 0.55;
+var treeW = Math.min(W * 0.32, 250);
+var step = Math.max(20, Math.min(H * 0.16, 46, (H - 80) / 7));
+var period = 6, ph = (t % period) / period;
+var wave = ph * 1.35;
+for (var l = 0; l < 4; l++) {
+var count = Math.pow(2, l), x = lx + l * treeW / 3;
+for (var i = 0; i < count; i++) {
+var y = ly + (i - (count - 1) / 2) * step;
+if (l > 0) {
+var px = lx + (l - 1) * treeW / 3;
+var parent = ly + ((Math.floor(i / 2)) - (Math.pow(2, l - 1) - 1) / 2) * step;
+var cut = wave > l - 0.5 + (i % 2) * 0.25;
+ctx.strokeStyle = 'rgba(127,163,184,' + (cut ? 0.06 : 0.26) + ')';
+ctx.lineWidth = 1;
+ctx.beginPath(); ctx.moveTo(px, parent); ctx.lineTo(x, y); ctx.stroke();
+if (cut) {
+var mx2 = (px + x) / 2, my2 = (parent + y) / 2;
+var au = 1 - Math.min(1, Math.max(0, wave - l) * 1.4);
+if (au > 0.02) {
+ctx.strokeStyle = 'rgba(201,128,128,' + (0.55 * au) + ')';
+ctx.lineWidth = 1.4;
+ctx.beginPath(); ctx.arc(mx2, my2, 2 + (1 - au) * 10, 0, Math.PI * 2); ctx.stroke();
+}
+}
+}
+var faded = l === 0 ? false : wave > l - 0.5 + (i % 2) * 0.25;
+ctx.fillStyle = 'rgba(201,128,128,' + (faded ? 0.12 : 0.8) + ')';
+ctx.beginPath(); ctx.arc(x, y, l === 0 ? 4.5 : 3.5, 0, Math.PI * 2); ctx.fill();
+}
+}
+var cx = W * 0.78, cy = H * 0.55, rad = Math.max(24, Math.min(W * 0.16, H * 0.26, (H - 170) / 2));
+var R = 10;
+for (var p = 0; p < R; p++) {
+var a = (p / R) * Math.PI + t * 0.4;
+var sweep = (p / R) * Math.PI;
+var near = Math.abs(((t * 0.4) % Math.PI) - sweep) < 0.35;
+ctx.strokeStyle = near ? 'rgba(244,199,122,0.5)' : 'hsla(' + (40 + p * 18) + ',40%,60%,0.30)';
+ctx.lineWidth = near ? 1.6 : 1;
+ctx.beginPath();
+ctx.moveTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+ctx.lineTo(cx - Math.cos(a) * rad, cy - Math.sin(a) * rad);
+ctx.stroke();
+}
+ctx.strokeStyle = 'rgba(127,163,184,.16)'; ctx.lineWidth = 1;
+ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2); ctx.stroke();
+var hb = 1 + 0.12 * Math.sin(t * 2.1);
+ctx.fillStyle = '#f4c77a'; ctx.beginPath(); ctx.arc(cx, cy, 5 * hb, 0, Math.PI * 2); ctx.fill();
+var pu = (t * 1.2) % 1;
+ctx.strokeStyle = 'rgba(244,199,122,' + (0.4 * (1 - pu)) + ')';
+ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.arc(cx, cy, 6 + pu * 22, 0, Math.PI * 2); ctx.stroke();
+var remaining = Math.max(6, 16 - Math.floor(wave * 8));
+ctx.font = 'bold 11px monospace';
+ctx.textAlign = 'center';
+var lab1 = T('2^4 = 16 branches');
+var lab2 = '→ ' + remaining + T(' rotation planes') + (ph > 0.35 ? T('  ✓ collapsed') : T('  … collapsing'));
+var labHalf = Math.max(ctx.measureText(lab1).width, ctx.measureText(lab2).width) / 2;
+var labCx = Math.max(labHalf + 8, Math.min(cx, W - labHalf - 8));
+ctx.fillStyle = 'rgba(164,158,144,.75)';
+ctx.fillText(lab1, labCx, cy + rad + 22);
+ctx.fillStyle = ph > 0.35 ? '#7ba78c' : '#c98080';
+ctx.fillText(lab2, labCx, cy + rad + 38);
+ctx.textAlign = 'left';
+if (ph > 0.72) {
+var cu = (ph - 0.72) / 0.28;
+var sx = lx + treeW, sxx = sx + (cx - sx) * EASEo(cu);
+var syy = ly + Math.sin(cu * Math.PI) * -H * 0.20;
+for (var tr = 1; tr <= 5; tr++) {
+var tu = Math.max(0, cu - tr * 0.05);
+var tx = sx + (cx - sx) * EASEo(tu);
+var ty = ly + Math.sin(tu * Math.PI) * -H * 0.20;
+ctx.fillStyle = 'rgba(244,199,122,' + (0.35 * (1 - tr / 6)) + ')';
+ctx.beginPath(); ctx.arc(tx, ty, 4 - tr * 0.5, 0, Math.PI * 2); ctx.fill();
+}
+ctx.fillStyle = 'rgba(244,199,122,' + (0.95 - cu * 0.4) + ')';
+ctx.beginPath(); ctx.arc(sxx, syy, 4, 0, Math.PI * 2); ctx.fill();
+if (cu > 0.9) {
+var lu2 = (cu - 0.9) / 0.1;
+ctx.strokeStyle = 'rgba(244,199,122,' + (0.7 * (1 - lu2)) + ')';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.arc(cx, cy, 8 + lu2 * 24, 0, Math.PI * 2); ctx.stroke();
+}
+}
+ctx.font = '10px monospace';
+var footHalf = ctx.measureText(T('rotation planes · geodesic O(N²)')).width / 2;
+var footCx = Math.max(footHalf + 8, Math.min(cx, W - footHalf - 8));
+canvasLabel(ctx, 'rotation planes · geodesic O(N²)', footCx, H - 14, { align: 'center', color: 'rgba(164,158,144,.72)', size: 10 });
+}
+function EASEo(x) { x = Math.max(0, Math.min(1, x)); return 1 - Math.pow(1 - x, 3); }
+
+var RIEM_TRAIL = [];
+
+function draw2(ctx, W, H, t) {
+var cx = W / 2, cy = H * 0.52;
+var bandW = Math.min(26, W * 0.06);
+
+// critical line band (shaded strip along Re(s) = 1/2)
+var grad = ctx.createLinearGradient(cx - bandW / 2, 0, cx + bandW / 2, 0);
+grad.addColorStop(0, 'rgba(224,169,82,0)');
+grad.addColorStop(0.5, 'rgba(224,169,82,0.07)');
+grad.addColorStop(1, 'rgba(224,169,82,0)');
+ctx.fillStyle = grad;
+ctx.fillRect(cx - bandW / 2, 36, bandW, H - 66);
+
+ctx.strokeStyle = 'rgba(127,163,184,.15)';
+ctx.lineWidth = 1;
+ctx.beginPath(); ctx.moveTo(28, cy); ctx.lineTo(W - 28, cy); ctx.stroke();
+ctx.strokeStyle = '#7ba78c'; ctx.lineWidth = 3;
+ctx.beginPath(); ctx.moveTo(cx, 42); ctx.lineTo(cx, H - 30); ctx.stroke();
+canvasLabel(ctx, 'Re(s) = 1/2', cx + 12, 28, { color: 'rgba(123,167,140,.9)' });
+canvasLabel(ctx, 'ξ(s) = ξ(1−s)', 18, 28, { color: 'rgba(164,158,144,.65)', size: 10 });
+
+// non-trivial zeros on the line: gentle bob + expanding pulse rings
+for (var i = -4; i <= 4; i++) {
+if (i === 0) continue;
+var y = cy + i * Math.min(24, H * .08) + Math.sin(t * 2 + i * 0.7) * 2.2;
+var g = 0.6 + 0.4 * Math.sin(t * 1.6 + i);
+for (var r2 = 0; r2 < 2; r2++) {
+var pr = ((t * 0.7 + i * 0.37 + r2 * 0.5) % 1 + 1) % 1;
+ctx.strokeStyle = 'rgba(224,169,82,' + ((1 - pr) * 0.3 * g).toFixed(3) + ')';
+ctx.lineWidth = 1.2;
+ctx.beginPath(); ctx.arc(cx, y, 5 + pr * 11, 0, Math.PI * 2); ctx.stroke();
+}
+ctx.fillStyle = '#e0a952';
+ctx.beginPath(); ctx.arc(cx, y, 5, 0, Math.PI * 2); ctx.fill();
+}
+
+// wandering zero cycle: off-axis excursion → pushed back → damped → locked
+var P = 6, ph = t % P;
+var off = 0, ry = cy - Math.min(46, H * 0.16);
+if (ph < 1.6) off = (ph / 1.6) * W * 0.16;
+else if (ph < 2.6) { var q = (ph - 1.6) / 1.0; off = W * 0.16 * (1 - EASEo(q)); }
+else if (ph < 4.4) { var d = Math.exp(-(ph - 2.6) * 2.2); off = Math.sin((ph - 2.6) * 9) * W * 0.04 * d; }
+var rx = cx + off;
+
+// motion trail (fading afterimages of the wandering zero)
+if (ph < 4.4) {
+var last = RIEM_TRAIL[RIEM_TRAIL.length - 1];
+if (!last || t - last.pt > 0.06) {
+RIEM_TRAIL.push({ u: off / (W * 0.16), pt: t });
+if (RIEM_TRAIL.length > 12) RIEM_TRAIL.shift();
+}
+}
+for (var ti = 0; ti < RIEM_TRAIL.length; ti++) {
+var tr = RIEM_TRAIL[RIEM_TRAIL.length - 1 - ti];
+var age = t - tr.pt;
+if (age > 0.45) continue;
+ctx.fillStyle = 'rgba(224,169,82,' + ((1 - age / 0.45) * 0.3).toFixed(3) + ')';
+ctx.beginPath(); ctx.arc(cx + tr.u * W * 0.16, ry, 4.5 * (1 - age / 0.45) + 1.5, 0, Math.PI * 2); ctx.fill();
+}
+if (ph >= 4.4) { RIEM_TRAIL.length = 0; }
+
+// functional-equation mirror ghost: the symmetric partner ξ(1−s)
+if (Math.abs(off) > 2) {
+var mx = cx - off;
+ctx.strokeStyle = 'rgba(127,163,184,.30)';
+ctx.lineWidth = 1;
+ctx.setLineDash([3, 4]);
+ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(mx, ry); ctx.stroke();
+ctx.setLineDash([]);
+ctx.strokeStyle = 'rgba(127,163,184,.45)';
+ctx.beginPath(); ctx.arc(mx, ry, 5.5, 0, Math.PI * 2); ctx.stroke();
+}
+
+ctx.fillStyle = off > 4 ? '#c98080' : '#e0a952';
+ctx.beginPath(); ctx.arc(rx, ry, 5.5, 0, Math.PI * 2); ctx.fill();
+if (ph >= 1.6 && ph < 2.6) {
+var q2 = (ph - 1.6) / 1.0;
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.6 * (1 - q2)) + ')';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.moveTo(cx, ry); ctx.lineTo(cx + W * 0.16 * (1 - EASEo(q2)), ry); ctx.stroke();
+canvasLabel(ctx, 'off-axis zero pushed back', cx + W * 0.08, ry - 12, { align: 'center', color: 'rgba(255,209,102,.9)', size: 10 });
+} else if (ph >= 4.4) {
+var lu = (ph - 4.4) / 1.6;
+for (var rp = 0; rp < 2; rp++) {
+var rq = Math.min(1, Math.max(0, lu - rp * 0.18));
+ctx.strokeStyle = 'rgba(123,167,140,' + (0.7 * Math.max(0, 1 - rq * 2)).toFixed(3) + ')';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.arc(cx, ry, 6 + EASEo(rq) * (20 + rp * 10), 0, Math.PI * 2); ctx.stroke();
+}
+if (lu < 0.5) canvasLabel(ctx, 'locked on the mirror axis', cx, ry - 16, { align: 'center', color: 'rgba(123,167,140,.95)', size: 10 });
+}
+canvasLabel(ctx, 'muted by firewall', W - 20, H - 12, { align: 'right', color: 'rgba(164,158,144,.6)', size: 10 });
+}
+
+function draw3(ctx, W, H, t) {
+var cy = H * 0.70, floorH = Math.min(36, H * .14);
+
+ctx.fillStyle = 'rgba(127,163,184,0.05)';
+for (var gx = 20; gx < W; gx += 32) {
+for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+}
+
+var floorGrad = ctx.createLinearGradient(0, cy, 0, cy + floorH);
+floorGrad.addColorStop(0, 'rgba(244,199,122,0.16)');
+floorGrad.addColorStop(1, 'rgba(244,199,122,0.03)');
+ctx.fillStyle = floorGrad;
+ctx.fillRect(30, cy, W - 60, floorH);
+ctx.strokeStyle = 'rgba(244,199,122,0.35)';
+ctx.lineWidth = 1;
+ctx.beginPath(); ctx.moveTo(30, cy); ctx.lineTo(W - 30, cy); ctx.stroke();
+
+var sp = 1 + 0.15 * Math.sin(t * 1.3);
+var seedX = W * 0.5, seedY = cy + floorH * 0.5;
+var glowR = 8 * sp + 3 * (0.5 + 0.5 * Math.sin(t * 2.4));
+var seedGrad = ctx.createRadialGradient(seedX, seedY, 1, seedX, seedY, glowR * 2.6);
+seedGrad.addColorStop(0, 'rgba(244,199,122,0.35)');
+seedGrad.addColorStop(1, 'rgba(244,199,122,0)');
+ctx.fillStyle = seedGrad;
+ctx.beginPath(); ctx.arc(seedX, seedY, glowR * 2.6, 0, Math.PI * 2); ctx.fill();
+ctx.fillStyle = '#f4c77a';
+ctx.beginPath(); ctx.arc(seedX, seedY, 4 * sp, 0, Math.PI * 2); ctx.fill();
+
+for (var wi = 0; wi < 3; wi++) {
+var wu = (t * 0.35 + wi * 0.3333) % 1;
+var wx = 30 + ((wi * 0.618 + 0.12) % 1) * (W - 60);
+var wy = cy + floorH * 0.5 - EASEo(wu) * 12;
+ctx.strokeStyle = 'rgba(244,199,122,' + (0.22 * Math.sin(Math.PI * wu)) + ')';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(wx - 10, wy);
+ctx.quadraticCurveTo(wx, wy - 5 - 6 * Math.sin(t * 3 + wi), wx + 10, wy);
+ctx.stroke();
+}
+
+canvasLabel(ctx, T('vacuum floor'), 42, cy + floorH * .65, { color: 'rgba(164,158,144,.7)', size: 11 });
+canvasLabel(ctx, T('A₀ seed · E₀ = λc²'), seedX, cy + floorH + 14, { align: 'center', color: 'rgba(244,199,122,.8)', size: 9 });
+
+var gapY = cy - Math.min(68, H * .22);
+
+var bandGrad = ctx.createLinearGradient(0, gapY, 0, cy);
+bandGrad.addColorStop(0, 'rgba(201,128,128,0.10)');
+bandGrad.addColorStop(1, 'rgba(201,128,128,0.02)');
+ctx.fillStyle = bandGrad;
+ctx.fillRect(30, gapY, W - 60, cy - gapY);
+
+ctx.strokeStyle = '#c98080'; ctx.lineWidth = 2;
+ctx.beginPath(); ctx.moveTo(30, gapY); ctx.lineTo(W - 30, gapY); ctx.stroke();
+canvasLabel(ctx, 'ΔM > 0', W / 2, gapY - 10, { align: 'center', color: '#c98080', size: 11 });
+var bx = W - 74;
+ctx.strokeStyle = 'rgba(201,128,128,.6)'; ctx.lineWidth = 1.4;
+ctx.beginPath(); ctx.moveTo(bx, gapY); ctx.lineTo(bx, cy); ctx.stroke();
+ctx.beginPath();
+ctx.moveTo(bx - 4, gapY + 5); ctx.lineTo(bx, gapY); ctx.lineTo(bx + 4, gapY + 5);
+ctx.moveTo(bx - 4, cy - 5); ctx.lineTo(bx, cy); ctx.lineTo(bx + 4, cy - 5);
+ctx.stroke();
+
+for (var x = 55; x < W - 45; x += Math.max(24, W / 28)) {
+var ey = gapY + 8 + Math.abs(Math.sin(x * .05 + t * 2.2)) * Math.min(30, Math.max(0, cy - gapY - 12));
+var fl = 0.5 + 0.5 * Math.sin(t * 3.1 + x * 0.11);
+var vx = x + Math.sin(t * 1.7 + x * 0.07) * 5;
+var vr = 1.6 + fl * 2.4;
+ctx.fillStyle = 'rgba(224,169,82,' + (0.45 + 0.4 * fl) + ')';
+ctx.beginPath(); ctx.arc(vx, ey, vr, 0, Math.PI * 2); ctx.fill();
+var pu = 2 + 3 * fl;
+ctx.strokeStyle = 'rgba(224,169,82,' + (0.25 * fl) + ')';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(vx - pu - 3, ey); ctx.lineTo(vx - pu, ey);
+ctx.moveTo(vx + pu, ey); ctx.lineTo(vx + pu + 3, ey);
+ctx.stroke();
+}
+
+var cutY = Math.max(30, gapY - Math.min(48, H * 0.16));
+var P = 3.5, ph = t % P;
+var sx2 = W * 0.28 + Math.sin(Math.floor(t / P) * 2.7) * W * 0.18;
+var grow = EASEo(Math.min(1, ph / (P * 0.6)));
+var spikeTop = gapY - grow * Math.min(90, H * 0.30);
+if (spikeTop < cutY) spikeTop = cutY;
+ctx.strokeStyle = 'rgba(201,128,128,.85)'; ctx.lineWidth = 2.4;
+ctx.beginPath();
+ctx.moveTo(sx2, gapY);
+var segs = 8;
+for (var si = 1; si <= segs; si++) {
+var su = si / segs;
+var sy = gapY + (spikeTop - gapY) * su;
+var wob = Math.sin(t * 9 + su * 12) * 2.2 * su * grow;
+ctx.lineTo(sx2 + wob, sy);
+}
+ctx.stroke();
+if (ph > P * 0.6) {
+var fu = (ph - P * 0.6) / (P * 0.4);
+for (var ring = 0; ring < 2; ring++) {
+var ru = Math.max(0, fu - ring * 0.22);
+if (ru > 0 && ru < 1) {
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.8 * (1 - ru) * (1 - ring * 0.35)) + ')';
+ctx.lineWidth = 2 - ring * 0.6;
+ctx.beginPath(); ctx.arc(sx2, cutY, 3 + EASEo(ru) * (16 + ring * 10), 0, Math.PI * 2); ctx.stroke();
+}
+}
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.9 * (1 - fu)) + ')';
+ctx.lineWidth = 1.6;
+ctx.setLineDash([3, 3]);
+ctx.beginPath(); ctx.moveTo(sx2 - 14, cutY); ctx.lineTo(sx2 + 14, cutY); ctx.stroke();
+ctx.setLineDash([]);
+}
+ctx.strokeStyle = 'rgba(255,209,102,.35)';
+ctx.setLineDash([4, 4]);
+ctx.beginPath(); ctx.moveTo(30, cutY); ctx.lineTo(W - 30, cutY); ctx.stroke();
+ctx.setLineDash([]);
+canvasLabel(ctx, T('UV cutoff'), W - 34, cutY - 6, { align: 'right', color: 'rgba(255,209,102,.75)', size: 10 });
+}
+
+function draw4(ctx, W, H, t) {
+var cx = W / 2, cy = H / 2, rmax = Math.min(W, H) * .35;
+ctx.fillStyle = 'rgba(127,163,184,.08)';
+for (var gx = 14; gx < W; gx += 26) { for (var gy = 12; gy < H; gy += 26) ctx.fillRect(gx, gy, 1.5, 1.5); }
+var P = 5, ph = t % P;
+var conc = ph < P * 0.55 ? EASEo(ph / (P * 0.55)) : Math.max(0, 1 - (ph - P * 0.55) / (P * 0.2));
+for (var r = 14; r < rmax; r += 10) {
+var speed = (rmax - r) * .03 + conc * 1.2;
+ctx.strokeStyle = 'hsla(' + (200 + r + conc * 40) + ',45%,' + (55 + conc * 10) + '%,.55)';
+ctx.lineWidth = 1.4;
+ctx.beginPath(); ctx.arc(cx, cy, r, t * speed, t * speed + Math.PI * 1.4); ctx.stroke();
+var pa = t * speed + Math.PI * 1.55, px = cx + Math.cos(pa) * r, py = cy + Math.sin(pa) * r;
+ctx.fillStyle = 'hsla(' + (200 + r + conc * 40) + ',55%,75%,.8)';
+ctx.beginPath(); ctx.arc(px, py, 1.8, 0, Math.PI * 2); ctx.fill();
+}
+var coreP = 3 + conc * 2.5 + Math.sin(t * 4) * (0.5 + conc);
+ctx.fillStyle = 'rgba(127,163,184,' + (0.18 + conc * 0.2) + ')';
+ctx.beginPath(); ctx.arc(cx, cy, coreP + 6, 0, Math.PI * 2); ctx.fill();
+ctx.fillStyle = 'hsla(' + (200 + conc * 40) + ',55%,' + (68 + conc * 12) + '%,.95)';
+ctx.beginPath(); ctx.arc(cx, cy, coreP, 0, Math.PI * 2); ctx.fill();
+if (conc > 0.55) {
+for (var s = 0; s < 8; s++) {
+var sa = s * Math.PI / 4 + t * 0.7;
+var sr = rmax * 0.55 + conc * rmax * 0.3;
+var wob = Math.sin(t * 9 + s * 2.1) * 5 * conc;
+var sx1 = cx + Math.cos(sa) * (rmax * .3), sy1 = cy + Math.sin(sa) * (rmax * .3);
+var sx2 = cx + Math.cos(sa) * (sr + wob), sy2 = cy + Math.sin(sa) * (sr + wob);
+ctx.strokeStyle = 'hsla(' + (340 + conc * 20) + ',70%,' + (62 + conc * 15) + '%,' + (0.55 * conc) + ')';
+ctx.lineWidth = 1.2;
+ctx.beginPath(); ctx.moveTo(sx1, sy1); ctx.lineTo(sx2, sy2); ctx.stroke();
+}
+}
+if (ph > P * 0.55 && ph < P * 0.55 + 1.2) {
+var bu = (ph - P * 0.55) / 1.2;
+ctx.strokeStyle = 'rgba(201,128,128,' + (0.8 * (1 - bu)) + ')';
+ctx.lineWidth = 2.2;
+ctx.beginPath(); ctx.arc(cx, cy, 4 + EASEo(bu) * rmax * 0.9, 0, Math.PI * 2); ctx.stroke();
+ctx.lineWidth = 1.4;
+ctx.beginPath(); ctx.arc(cx, cy, 4 + EASEo(bu) * rmax * 0.62, 0, Math.PI * 2); ctx.stroke();
+canvasLabel(ctx, T('anti-phase kills blowup'), cx, cy - rmax - 10, { align: 'center', color: 'rgba(201,128,128,.95)', size: 11 });
+} else {
+canvasLabel(ctx, T('C∞ smooth'), cx, 26, { align: 'center', color: 'rgba(123,167,140,.9)' });
+}
+var mw = Math.min(150, W * 0.25), mx = cx - mw / 2, my = H - 22;
+canvasLabel(ctx, T('vorticity'), mx + mw + 8, my + 6, { align: 'left', color: 'rgba(127,163,184,.65)', size: 10 });
+ctx.fillStyle = 'rgba(15,20,34,.9)'; ctx.fillRect(mx, my, mw, 6);
+ctx.fillStyle = conc > 0.85 ? '#c98080' : '#7ba78c';
+ctx.fillRect(mx, my, mw * (0.35 + conc * 0.45), 6);
+ctx.strokeStyle = 'rgba(127,163,184,.3)'; ctx.lineWidth = 1;
+ctx.strokeRect(mx, my, mw, 6);
+}
+
+function draw5(ctx, W, H, t) {
+var cx = W * .31, cy = H * .54, scale = Math.min(25, W * .032), pyMax = Math.min(95, H * .32);
+ctx.fillStyle = 'rgba(155,138,196,.10)';
+for (var gx = 14; gx < W; gx += 26) { for (var gy = 12; gy < H; gy += 26) ctx.fillRect(gx, gy, 1.5, 1.5); }
+ctx.strokeStyle = 'rgba(155,138,196,.18)'; ctx.lineWidth = 1;
+ctx.setLineDash([3, 4]);
+ctx.beginPath(); ctx.moveTo(cx - scale, cy - pyMax - 6); ctx.lineTo(cx - scale, cy + pyMax + 6); ctx.stroke();
+ctx.setLineDash([]);
+var halo = 0.30 + 0.20 * Math.sin(t * 1.2);
+ctx.strokeStyle = 'rgba(155,138,196,' + halo + ')'; ctx.lineWidth = 6; ctx.beginPath();
+var first = true;
+for (var py = -pyMax; py <= pyMax; py += 3) {
+var y = py / 32, x = y * y - 1, px = cx + x * scale;
+if (first) { ctx.moveTo(px, cy + py); first = false; } else ctx.lineTo(px, cy + py);
+}
+ctx.stroke();
+ctx.strokeStyle = '#9b8ac4'; ctx.lineWidth = 2; ctx.beginPath();
+first = true;
+for (var py0 = -pyMax; py0 <= pyMax; py0 += 3) {
+var y0 = py0 / 32, x0 = y0 * y0 - 1, px0 = cx + x0 * scale;
+if (first) { ctx.moveTo(px0, cy + py0); first = false; } else ctx.lineTo(px0, cy + py0);
+}
+ctx.stroke();
+canvasLabel(ctx, T('elliptic curve E'), Math.max(6, cx - scale - 52), 16, { color: 'rgba(212,207,196,.7)', size: 10 });
+var bx = W * .62;
+canvasLabel(ctx, T('L(E,s) at s=1'), bx, 42, { color: 'rgba(212,207,196,.75)', size: 11 });
+var barW = Math.min(60, W * .12);
+var P = 2.2;
+for (var k = 1; k <= 4; k++) {
+var by = 56 + k * Math.min(23, H * .08);
+var fire = (((t + (k - 1) * -P / 4) % P) + P) % P / P;
+var lit = fire < 0.35;
+var glow = lit ? 0.35 + 0.65 * (1 - fire / 0.35) : 0.35;
+var bh = 12 + k * 1.5 + (lit ? 3 * (1 - fire / 0.35) : 0);
+ctx.fillStyle = 'rgba(224,169,82,' + glow + ')';
+ctx.fillRect(bx, by, barW, bh);
+ctx.fillStyle = 'rgba(6,8,15,.9)'; ctx.font = '10px monospace';
+ctx.fillText('ord ' + k, bx + 7, by + 10);
+if (fire < 0.18) {
+var ru = (0.18 - fire) / 0.18;
+ctx.strokeStyle = 'rgba(244,199,122,' + (0.8 * ru) + ')';
+ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.arc(bx + barW * .5, by + bh * .5, 5 + (1 - ru) * 16, 0, Math.PI * 2); ctx.stroke();
+}
+var ga = t * .8 + k * 1.7;
+var gy2 = cy + Math.sin(ga) * (18 + k * 4);
+var onCurveY = Math.max(-pyMax, Math.min(pyMax, gy2 - cy));
+var gx2 = cx + ((onCurveY / 32) * (onCurveY / 32) - 1) * scale;
+var pulse = 3.5 + 0.9 * Math.sin(t * 3 + k * 2);
+ctx.fillStyle = 'rgba(244,199,122,.25)';
+ctx.beginPath(); ctx.arc(gx2, cy + onCurveY, pulse + 3.5, 0, Math.PI * 2); ctx.fill();
+ctx.fillStyle = '#e0a952';
+ctx.beginPath(); ctx.arc(gx2, cy + onCurveY, pulse, 0, Math.PI * 2); ctx.fill();
+if (fire < 0.5) {
+var hu = fire / 0.5;
+var pxx = gx2 + (bx - gx2) * hu, pyy = cy + onCurveY + (by + 7 - (cy + onCurveY)) * hu;
+ctx.fillStyle = 'rgba(244,199,122,' + (0.85 * (1 - hu)) + ')';
+ctx.beginPath(); ctx.arc(pxx, pyy, 2.6, 0, Math.PI * 2); ctx.fill();
+}
+}
+canvasLabel(ctx, T('rank generators'), cx, H - 14, { align: 'center', color: 'rgba(155,138,196,.8)', size: 10 });
+}
+
+function draw6(ctx, W, H, t) {
+var cx = W / 2, cy = H * .55, span = Math.min(W * .38, 180);
+ctx.fillStyle = 'rgba(212,175,55,.06)';
+for (var gx = 14; gx < W; gx += 26) { for (var gy = 12; gy < H; gy += 26) ctx.fillRect(gx, gy, 1.5, 1.5); }
+ctx.strokeStyle = 'rgba(127,163,184,.18)';
+ctx.lineWidth = 1;
+for (var i = -4; i <= 4; i++) { ctx.beginPath(); ctx.moveTo(cx - span, cy + i * 18); ctx.lineTo(cx + span, cy + i * 18 + Math.sin(i + t) * 4); ctx.stroke(); }
+var tilt = Math.PI / 6, ea = Math.min(130, W * .28) + Math.sin(t) * 5, eb = Math.min(60, H * .20);
+var halo6 = 0.22 + 0.14 * Math.sin(t * 1.3);
+ctx.strokeStyle = 'rgba(212,175,55,' + halo6 + ')'; ctx.lineWidth = 7;
+ctx.beginPath(); ctx.ellipse(cx, cy, ea, eb, tilt, 0, Math.PI * 2); ctx.stroke();
+ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.5; ctx.beginPath();
+ctx.ellipse(cx, cy, ea, eb, tilt, 0, Math.PI * 2); ctx.stroke();
+for (var j = 0; j < 8; j++) {
+var a = t * .6 + j * Math.PI / 4;
+var ux = Math.cos(a) * ea, uy = Math.sin(a) * eb;
+var ox = cx + Math.cos(tilt) * ux - Math.sin(tilt) * uy, oy = cy + Math.sin(tilt) * ux + Math.cos(tilt) * uy;
+for (var tr = 1; tr <= 3; tr++) {
+var ta = a - tr * 0.14;
+var tux = Math.cos(ta) * ea, tuy = Math.sin(ta) * eb;
+ctx.fillStyle = 'rgba(224,169,82,' + (0.3 - tr * 0.08) + ')';
+ctx.beginPath(); ctx.arc(cx + Math.cos(tilt) * tux - Math.sin(tilt) * tuy, cy + Math.sin(tilt) * tux + Math.cos(tilt) * tuy, 3.5 - tr * 0.7, 0, Math.PI * 2); ctx.fill();
+}
+var puls6 = 3.5 + 0.8 * Math.sin(t * 3 + j * 0.8);
+ctx.fillStyle = 'rgba(224,169,82,.28)';
+ctx.beginPath(); ctx.arc(ox, oy, puls6 + 3, 0, Math.PI * 2); ctx.fill();
+ctx.fillStyle = '#e0a952'; ctx.beginPath();
+ctx.arc(ox, oy, puls6, 0, Math.PI * 2); ctx.fill();
+}
+var P = 4, ph = t % P;
+var wob = ph < P * 0.6 ? 1 : Math.max(0, 1 - (ph - P * 0.6) / (P * 0.25));
+var home = { x: cx - span * 0.45, y: cy - 18 };
+var wander = { x: home.x + Math.sin(t * 1.1) * 34 * wob, y: home.y + Math.cos(t * 1.7) * 20 * wob };
+if (ph >= P * 0.6 && ph < P * 0.85) {
+var su = EASEo((ph - P * 0.6) / (P * 0.25));
+wander.x = wander.x * (1 - su) + home.x * su;
+wander.y = wander.y * (1 - su) + home.y * su;
+}
+var snapped = ph >= P * 0.85;
+if (!snapped) {
+for (var gq = 1; gq <= 4; gq++) {
+var gph = ph - gq * 0.045; if (gph < 0) gph += P;
+var gwob = gph < P * 0.6 ? 1 : Math.max(0, 1 - (gph - P * 0.6) / (P * 0.25));
+var gw = { x: home.x + Math.sin((t - gq * 0.16) * 1.1) * 34 * gwob, y: home.y + Math.cos((t - gq * 0.16) * 1.7) * 20 * gwob };
+if (gph >= P * 0.6 && gph < P * 0.85) {
+var gsu = EASEo((gph - P * 0.6) / (P * 0.25));
+gw.x = gw.x * (1 - gsu) + home.x * gsu; gw.y = gw.y * (1 - gsu) + home.y * gsu;
+}
+ctx.strokeStyle = 'rgba(201,128,128,' + (0.28 - gq * 0.05) + ')';
+ctx.lineWidth = 1;
+ctx.strokeRect(gw.x - 7, gw.y - 7, 14, 14);
+}
+}
+ctx.strokeStyle = snapped ? 'rgba(123,167,140,.9)' : 'rgba(201,128,128,.75)';
+ctx.lineWidth = 1.6;
+ctx.setLineDash(snapped ? [] : [4, 4]);
+ctx.strokeRect(wander.x - 7, wander.y - 7, 14, 14);
+ctx.setLineDash([]);
+if (snapped) {
+ctx.fillStyle = 'rgba(123,167,140,.22)';
+ctx.fillRect(wander.x - 7, wander.y - 7, 14, 14);
+}
+if (ph >= P * 0.85) {
+var lu = (ph - P * 0.85) / (P * 0.15);
+ctx.strokeStyle = 'rgba(123,167,140,' + (0.8 * (1 - lu)) + ')';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.arc(home.x, home.y, 4 + lu * 22, 0, Math.PI * 2); ctx.stroke();
+var lu2 = Math.max(0, lu - 0.22) / 0.78;
+ctx.strokeStyle = 'rgba(123,167,140,' + (0.65 * (1 - lu2)) + ')';
+ctx.lineWidth = 1.4;
+ctx.beginPath(); ctx.arc(home.x, home.y, 4 + lu2 * 14, 0, Math.PI * 2); ctx.stroke();
+}
+canvasLabel(ctx, T('rational cycle'), cx, cy - Math.min(84, H * .30), { align: 'center', color: 'rgba(212,175,55,.9)', size: 11 });
+canvasLabel(ctx, T(snapped ? 'snapped: rational - no leftovers' : 'phantom class'), cx, H - 12, { align: 'center', color: snapped ? 'rgba(123,167,140,.85)' : 'rgba(201,128,128,.75)', size: 10 });
+}
+
+function draw7(ctx, W, H, t) {
+var cx = W / 2, cy = H * .54, base = Math.min(120, W * .26);
+ctx.fillStyle = 'rgba(123,167,140,.06)';
+for (var gx = 14; gx < W; gx += 26) { for (var gy = 12; gy < H; gy += 26) ctx.fillRect(gx, gy, 1.5, 1.5); }
+var P = 8, ph = (t % P) / P;
+var decay = ph < 0.75 ? 1 - ph / 0.75 : 0;
+var amp = decay * 0.34 + 0.02;
+var spikeActive = ph > 0.25 && ph < 0.55;
+var spikePeak = spikeActive ? Math.sin((ph - 0.25) / 0.3 * Math.PI) : 0;
+var sx3 = cx + Math.cos(2.4) * base, sy3 = cy + Math.sin(2.4) * base * 0.92;
+if (ph >= 0.75) {
+var fill7 = ctx.createRadialGradient(cx, cy, base * 0.2, cx, cy, base * 1.25);
+fill7.addColorStop(0, 'rgba(123,167,140,.16)');
+fill7.addColorStop(1, 'rgba(123,167,140,0)');
+ctx.fillStyle = fill7;
+ctx.beginPath();
+for (var jf = 0; jf <= 48; jf++) {
+var anf = jf / 48 * Math.PI * 2;
+var radf = base * (1 + 0.02);
+var xf = cx + Math.cos(anf) * radf, yf = cy + Math.sin(anf) * radf * 0.92;
+if (jf === 0) ctx.moveTo(xf, yf); else ctx.lineTo(xf, yf);
+}
+ctx.closePath(); ctx.fill();
+}
+if (spikeActive) {
+var warn7 = ctx.createRadialGradient(sx3, sy3, 1, sx3, sy3, 26);
+warn7.addColorStop(0, 'rgba(201,128,128,' + (0.30 * spikePeak) + ')');
+warn7.addColorStop(1, 'rgba(201,128,128,0)');
+ctx.fillStyle = warn7;
+ctx.beginPath(); ctx.arc(sx3, sy3, 26, 0, Math.PI * 2); ctx.fill();
+}
+ctx.strokeStyle = ph < 0.75 ? 'rgba(123,167,140,.55)' : '#7ba78c';
+ctx.lineWidth = 2.4;
+ctx.beginPath();
+for (var j = 0; j <= 48; j++) {
+var an = j / 48 * Math.PI * 2;
+var wob = Math.sin(an * 3 + t * 0.8) * amp + Math.sin(an * 5 - t * 0.5) * amp * 0.5;
+if (spikeActive) {
+var spikeAng = 2.4;
+var dAng = Math.abs(((an - spikeAng + Math.PI) % (Math.PI * 2)) - Math.PI);
+wob -= Math.max(0, 1 - dAng * 6) * decay * 0.55 * spikePeak;
+}
+var rad = base * (1 + wob);
+var x2 = cx + Math.cos(an) * rad, y2 = cy + Math.sin(an) * rad * 0.92;
+if (j === 0) ctx.moveTo(x2, y2); else ctx.lineTo(x2, y2);
+}
+ctx.closePath(); ctx.stroke();
+if (spikeActive) {
+var pd7 = 2.5 + spikePeak * 1.8 + Math.sin(t * 7) * 0.7 * spikePeak;
+ctx.fillStyle = 'rgba(201,128,128,.30)';
+ctx.beginPath(); ctx.arc(sx3, sy3, pd7 + 3, 0, Math.PI * 2); ctx.fill();
+ctx.fillStyle = '#c98080';
+ctx.beginPath(); ctx.arc(sx3, sy3, pd7, 0, Math.PI * 2); ctx.fill();
+}
+if (ph > 0.28 && ph < 0.62) {
+var fu = (ph - 0.28) / 0.34;
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.75 * Math.max(0, 1 - Math.abs(fu - 0.4) * 3)) + ')';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.arc(sx3, sy3, 3 + fu * 26, 0, Math.PI * 2); ctx.stroke();
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.55 * Math.max(0, 1 - Math.abs(fu - 0.55) * 3)) + ')';
+ctx.lineWidth = 1.4;
+ctx.beginPath(); ctx.arc(sx3, sy3, 3 + Math.max(0, fu - 0.15) * 18, 0, Math.PI * 2); ctx.stroke();
+if (spikePeak > 0.4) canvasLabel(ctx, T('neck-pinch'), Math.min(W - 8, sx3 + 30), Math.max(14, sy3 - 8), { align: 'left', color: 'rgba(201,128,128,.9)', size: 10 });
+}
+var guidePulse = 0.14 + 0.06 * Math.sin(t * 1.1);
+ctx.strokeStyle = 'rgba(123,167,140,' + guidePulse + ')';
+ctx.lineWidth = 1;
+ctx.beginPath(); ctx.ellipse(cx, cy, base, base * 0.92, 0, 0, Math.PI * 2); ctx.stroke();
+if (ph >= 0.75) {
+var gu = (ph - 0.75) / 0.25;
+ctx.strokeStyle = 'rgba(123,167,140,' + (0.6 * Math.max(0, 1 - gu * 2)) + ')';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.arc(cx, cy, base * (1 + gu * 0.25), 0, Math.PI * 2); ctx.stroke();
+ctx.strokeStyle = 'rgba(123,167,140,' + (0.45 * Math.max(0, 1 - gu * 2.5)) + ')';
+ctx.lineWidth = 1.4;
+ctx.beginPath(); ctx.arc(cx, cy, base * (1 + gu * 0.16), 0, Math.PI * 2); ctx.stroke();
+}
+canvasLabel(ctx, T('M³ → S³'), cx, 26, { align: 'center', color: 'rgba(123,167,140,.9)' });
+canvasLabel(ctx, T(ph < 0.75 ? 'Ricci flow · neck-pinch annihilated' : 'smooth S³ - flow complete'), cx, H - 12, { align: 'center', color: ph < 0.75 ? 'rgba(164,158,144,.7)' : 'rgba(123,167,140,.95)', size: 10 });
+}
+
+function drawLab(ctx, W, H, t) {
+ctx.fillStyle = 'rgba(127,163,184,0.06)';
+for (var gx = 20; gx < W; gx += 32) {
+for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+}
+var N = LAB.N;
+var R = N * (N - 1) / 2;
+var cx = W / 2, cy = H / 2;
+var rad = Math.min(W, H) * 0.34;
+var palette = ['#e0a952','#7ba78c','#c98080','#9b8ac4','#7fa3b8'];
+if (LAB.nodes) {
+ctx.strokeStyle = 'rgba(127,163,184,0.08)';
+for (var i = 0; i < N; i++) {
+var a = (i / N) * Math.PI * 2 + t * 0.1;
+ctx.beginPath();
+ctx.moveTo(cx, cy);
+ctx.lineTo(cx + Math.cos(a) * rad * 1.6, cy + Math.sin(a) * rad * 1.6);
+ctx.stroke();
+}
+}
+if (LAB.planes) {
+for (var p = 0; p < R; p++) {
+var ang = (p / R) * Math.PI + t * 0.22;
+ctx.strokeStyle = palette[p % palette.length] + (p % 2 ? '66' : '44');
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(cx + Math.cos(ang) * rad * 1.4, cy + Math.sin(ang) * rad * 1.4);
+ctx.lineTo(cx - Math.cos(ang) * rad * 1.4, cy - Math.sin(ang) * rad * 1.4);
+ctx.stroke();
+}
+}
+if (LAB.orbits) {
+for (var j = 1; j <= N; j++) {
+var rr = (j / N) * rad;
+ctx.strokeStyle = 'rgba(127,163,184,0.14)';
+ctx.beginPath(); ctx.arc(cx, cy, rr, 0, Math.PI * 2); ctx.stroke();
+var aa = t * (0.6 + j * 0.1) + j * Math.PI * 2 / N;
+ctx.fillStyle = palette[j % palette.length];
+ctx.beginPath();
+ctx.arc(cx + Math.cos(aa) * rr, cy + Math.sin(aa) * rr, 3.6, 0, Math.PI * 2);
+ctx.fill();
+}
+}
+var pulse = 1 + 0.08 * Math.sin(t * 1.6);
+ctx.fillStyle = '#f4c77a';
+ctx.beginPath(); ctx.arc(cx, cy, 5 * pulse, 0, Math.PI * 2); ctx.fill();
+}
+
+var DS_BUFFERS = { darkYs: [], brightYs: [] };
+
+function drawDs(ctx, W, H, t) {
+var cy = H * 0.52;
+var srcX = Math.max(34, W * 0.07);
+var barX = Math.round(Math.min(W * 0.38, W - 190));
+var barW = Math.max(10, Math.min(14, W * 0.018));
+var screenX = Math.round(Math.min(W * 0.86, W - 42));
+var screenW = Math.max(18, Math.min(25, W * 0.028));
+var usableH = Math.min(H - 86, 310);
+var slitGap = Math.max(58, Math.min(92, usableH * 0.29));
+var slitH = Math.max(13, Math.min(18, usableH * 0.055));
+var slitAY = cy - slitGap / 2;
+var slitBY = cy + slitGap / 2;
+var lambda = Math.max(22, Math.min(30, W * 0.035));
+var k = 2 * Math.PI / lambda;
+var screenTop = 46;
+var screenBot = H - 48;
+var screenH = screenBot - screenTop;
+var gapTop = slitAY - slitH / 2;
+var gapMid = slitBY - slitH / 2;
+
+ctx.fillStyle = 'rgba(127,163,184,0.045)';
+for (var gx = 18; gx < W; gx += 30) {
+for (var gy = 28; gy < H - 20; gy += 30) ctx.fillRect(gx, gy, 1, 1);
+}
+
+ctx.strokeStyle = 'rgba(244,199,122,0.16)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(srcX + 8, cy);
+ctx.lineTo(barX - 4, cy);
+ctx.stroke();
+
+for (var q = 0; q < 9; q++) {
+var qx = srcX + 18 + ((t * 85 + q * 31) % Math.max(30, barX - srcX - 24));
+var qy = cy + Math.sin(q * 1.7) * 3;
+ctx.fillStyle = 'rgba(244,199,122,' + (0.22 + (q % 3) * 0.08) + ')';
+ctx.beginPath(); ctx.arc(qx, qy, 1.6, 0, Math.PI * 2); ctx.fill();
+}
+
+ctx.fillStyle = '#2b3348';
+ctx.fillRect(barX, 30, barW, gapTop - 30);
+ctx.fillRect(barX, slitAY + slitH / 2, barW, gapMid - (slitAY + slitH / 2));
+ctx.fillRect(barX, slitBY + slitH / 2, barW, H - 30 - (slitBY + slitH / 2));
+
+ctx.fillStyle = 'rgba(123,167,140,0.65)';
+ctx.fillRect(barX - 1, slitAY - slitH / 2, barW + 2, slitH);
+ctx.fillStyle = 'rgba(201,128,128,0.65)';
+ctx.fillRect(barX - 1, slitBY - slitH / 2, barW + 2, slitH);
+
+canvasLabel(ctx,'A',barX - 13,slitAY + 4,{size:10,color:'rgba(123,167,140,.9)',align:'right'});
+canvasLabel(ctx,'B',barX - 13,slitBY + 4,{size:10,color:'rgba(201,128,128,.9)',align:'right'});
+
+var waveStart = barX + barW;
+var waveEnd = screenX - 8;
+
+if (!DS.observer && DS.wavefronts) {
+var colors = ['123,167,140', '201,128,128'];
+var slitYs = [slitAY, slitBY];
+for (var si = 0; si < 2; si++) {
+var sy = slitYs[si];
+for (var r = 14; r < W * 0.75; r += lambda) {
+var phase = r / lambda - t * 1.25;
+var visibility = Math.max(0, Math.cos(phase * Math.PI));
+var reach = waveStart + r;
+if (reach < waveStart || reach > waveEnd + r * 0.25) continue;
+var alpha = 0.07 + 0.20 * visibility;
+ctx.strokeStyle = 'rgba(' + colors[si] + ',' + alpha + ')';
+ctx.lineWidth = 1.15;
+ctx.beginPath();
+ctx.arc(waveStart, sy, r, -Math.PI * 0.48, Math.PI * 0.48);
+ctx.stroke();
+}
+}
+} else if (DS.observer) {
+ctx.setLineDash([4, 4]);
+ctx.lineWidth = 1.5;
+ctx.strokeStyle = 'rgba(123,167,140,0.52)';
+ctx.beginPath(); ctx.moveTo(waveStart, slitAY); ctx.lineTo(screenX, slitAY); ctx.stroke();
+ctx.strokeStyle = 'rgba(201,128,128,0.52)';
+ctx.beginPath(); ctx.moveTo(waveStart, slitBY); ctx.lineTo(screenX, slitBY); ctx.stroke();
+ctx.setLineDash([]);
+
+for (var os = 0; os < 2; os++) {
+var oy = [slitAY, slitBY][os];
+ctx.strokeStyle = os === 0 ? 'rgba(123,167,140,.45)' : 'rgba(201,128,128,.45)';
+ctx.beginPath(); ctx.arc(waveStart + 2, oy, 9 + 2 * Math.sin(t * 3 + os), 0, Math.PI * 2); ctx.stroke();
+}
+}
+
+var pulse = 1 + 0.10 * Math.sin(t * 3.0);
+ctx.fillStyle = '#f4c77a';
+ctx.beginPath(); ctx.arc(srcX, cy, 5.5 * pulse, 0, Math.PI * 2); ctx.fill();
+ctx.strokeStyle = 'rgba(244,199,122,0.26)';
+ctx.lineWidth = 1;
+for (var pr = 0; pr < 3; pr++) {
+var rr = 10 + pr * 13 + ((t * 38) % 13);
+ctx.beginPath(); ctx.arc(srcX, cy, rr, 0, Math.PI * 2); ctx.stroke();
+}
+canvasLabel(ctx,'SOURCE',srcX,24,{size:9,color:'rgba(244,199,122,.72)',align:'center'});
+
+ctx.fillStyle = 'rgba(15,20,34,0.98)';
+ctx.fillRect(screenX, screenTop, screenW, screenH);
+ctx.strokeStyle = 'rgba(127,163,184,0.42)';
+ctx.lineWidth = 1;
+ctx.strokeRect(screenX, screenTop, screenW, screenH);
+
+DS_BUFFERS.darkYs.length = 0;
+DS_BUFFERS.brightYs.length = 0;
+var darkYs = DS_BUFFERS.darkYs;
+var brightYs = DS_BUFFERS.brightYs;
+
+var bars = Math.max(90, Math.floor(screenH));
+for (var yi = 0; yi < bars; yi++) {
+var yy = screenTop + (yi + 0.5) * screenH / bars;
+var intensity;
+if (!DS.observer) {
+var dx = screenX - waveStart;
+var rA = Math.sqrt(dx * dx + (yy - slitAY) * (yy - slitAY));
+var rB = Math.sqrt(dx * dx + (yy - slitBY) * (yy - slitBY));
+var phaseD = k * (rB - rA);
+var c2 = Math.cos(phaseD / 2);
+intensity = c2 * c2;
+} else {
+var dA = yy - slitAY;
+var dB = yy - slitBY;
+var sigma = Math.max(18, slitGap * 0.42);
+intensity = 0.72 * Math.exp(-(dA * dA) / (2 * sigma * sigma))
++ 0.72 * Math.exp(-(dB * dB) / (2 * sigma * sigma));
+intensity = Math.min(1, intensity);
+}
+ctx.fillStyle = 'rgba(244,199,122,' + (0.10 + intensity * 0.84) + ')';
+ctx.fillRect(screenX + 2, yy - screenH / bars / 2, screenW - 4, screenH / bars + 0.7);
+if (!DS.observer && intensity < 0.035) darkYs.push(yy);
+if (!DS.observer && intensity > 0.18) brightYs.push(yy);
+}
+
+if (!DS.observer && DS.firewalls && darkYs.length) {
+ctx.strokeStyle = 'rgba(255,209,102,0.19)';
+ctx.lineWidth = 1;
+ctx.setLineDash([4, 4]);
+for (var di = 0; di < darkYs.length; di += Math.max(1, Math.floor(darkYs.length / 9))) {
+var dy = darkYs[di];
+ctx.beginPath();
+ctx.moveTo(waveStart, cy);
+ctx.lineTo(screenX, dy);
+ctx.stroke();
+}
+ctx.setLineDash([]);
+}
+
+for (var hit = 0; hit < 18; hit++) {
+var phaseH = hit * 2.31 + t * 0.34;
+var seed = (Math.sin(hit * 12.9898) * 43758.5453) % 1;
+seed = Math.abs(seed);
+var hy;
+if (!DS.observer) {
+if (!brightYs.length) continue;
+var picked = brightYs[Math.floor(seed * brightYs.length) % brightYs.length];
+hy = picked + Math.sin(phaseH) * 3;
+} else {
+hy = hit % 2 ? slitAY + Math.sin(phaseH) * 20 : slitBY + Math.sin(phaseH * 1.13) * 20;
+}
+hy = Math.max(screenTop + 4, Math.min(screenBot - 4, hy));
+ctx.fillStyle = 'rgba(255,225,160,0.75)';
+ctx.beginPath(); ctx.arc(screenX + screenW / 2, hy, 1.1, 0, Math.PI * 2); ctx.fill();
+}
+
+if (W < 600) {
+canvasLabel(ctx,'BARRIER',barX + barW + 5,42,{size:8,color:'rgba(127,163,184,.62)'});
+canvasLabel(ctx,'SCREEN',screenX - 3,42,{size:8,color:'rgba(127,163,184,.62)'});
+} else {
+canvasLabel(ctx,'BARRIER',barX - 8,22,{size:9,color:'rgba(127,163,184,.62)',align:'right'});
+canvasLabel(ctx,'SCREEN',screenX + screenW / 2,22,{size:9,color:'rgba(127,163,184,.62)',align:'center'});
+}
+
+var stateText = DS.observer ? 'WHICH-PATH — interference removed' : 'COHERENT — interference pattern';
+var stateColor = DS.observer ? 'rgba(201,128,128,.9)' : 'rgba(123,167,140,.9)';
+canvasLabel(ctx,stateText,18,H - 15,{size:10,color:stateColor});
+canvasLabel(ctx,'I(y) = cos²(k·Δr / 2)',W < 600 ? W / 2 : screenX - 28,24,
+{size:9,color:'rgba(244,199,122,.82)',align:W < 600 ? 'center' : 'right'});
+}
+
+function drawTb(ctx, W, H, t) {
+var dt = TB.lastT === null ? 0 : Math.max(0, Math.min(0.05, t - TB.lastT));
+TB.lastT = t;
+
+TB.eps += TB.eps * 0.5 * dt;
+if (TB.eps > 0.34) { TB.eps = 0.004; TB.pulse = 1; }
+TB.kick = Math.max(0, TB.kick - dt * 1.4);
+TB.pulse = Math.max(0, TB.pulse - dt * 2.2);
+TB.phase += dt * 0.85;
+if (dt > 0) { TB.trail.push(TB.phase); if (TB.trail.length > 110) TB.trail.shift(); }
+
+var cx = W / 2;
+var cy = H * 0.5 + 14;
+var k = Math.min(W * 0.42, H * 0.52);
+var bodyColors = ['rgba(244,199,122,', 'rgba(123,167,140,', 'rgba(127,163,184,'];
+
+function eightX(s) { return cx + Math.cos(s) * k; }
+function eightY(s, sc) { return cy - 0.7 * Math.sin(s) * Math.cos(s) * k * (sc || 1); }
+
+ctx.fillStyle = 'rgba(127,163,184,0.05)';
+for (var gx = 20; gx < W; gx += 32) {
+for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+}
+
+if (TB.choreography) {
+ctx.strokeStyle = 'rgba(244,199,122,0.16)';
+ctx.lineWidth = 1.2;
+ctx.beginPath();
+for (var s = 0; s <= Math.PI * 2 + 0.02; s += 0.02) {
+var px = eightX(s), py = eightY(s);
+if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+}
+ctx.stroke();
+
+if (TB.trace) {
+for (var ti = 0; ti < TB.trail.length; ti++) {
+var ts = TB.trail[ti];
+var age = (TB.trail.length - ti) / TB.trail.length;
+for (var bi = 0; bi < 3; bi++) {
+ctx.fillStyle = bodyColors[bi] + (0.05 + 0.16 * age) + ')';
+ctx.beginPath();
+ctx.arc(eightX(ts + bi * 2.0944), eightY(ts + bi * 2.0944), 1.1, 0, Math.PI * 2);
+ctx.fill();
+}
+}
+}
+}
+
+for (var i3 = 0; i3 < 3; i3++) {
+var si = TB.phase + i3 * 2.0944;
+var bx = eightX(si), by = eightY(si);
+if (TB.chaos) {
+var sg = si + TB.eps * 2.6;
+var sc = 1 + TB.eps * 0.35;
+var gx3 = cx + Math.cos(sg) * k * sc;
+var gy3 = cy - 0.7 * Math.sin(sg) * Math.cos(sg) * k * sc;
+ctx.strokeStyle = 'rgba(201,128,128,' + (0.10 + 0.30 * TB.kick) + ')';
+ctx.lineWidth = 1;
+ctx.setLineDash([3, 3]);
+ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(gx3, gy3); ctx.stroke();
+ctx.setLineDash([]);
+ctx.strokeStyle = 'rgba(201,128,128,' + (0.35 + 0.45 * TB.kick) + ')';
+ctx.lineWidth = 1.3;
+ctx.beginPath(); ctx.arc(gx3, gy3, 3 + 2.4 * TB.kick, 0, Math.PI * 2); ctx.stroke();
+}
+if (TB.choreography) {
+var breathe = 0.5 + 0.5 * Math.sin(t * 2.4 + i3 * 2.1);
+ctx.fillStyle = bodyColors[i3] + '0.14)';
+ctx.beginPath(); ctx.arc(bx, by, 10 + 2 * breathe, 0, Math.PI * 2); ctx.fill();
+ctx.fillStyle = bodyColors[i3] + '0.95)';
+ctx.beginPath(); ctx.arc(bx, by, 4.4, 0, Math.PI * 2); ctx.fill();
+}
+}
+
+var nodeR = 5 + 5 * TB.pulse + 1.6 * (0.5 + 0.5 * Math.sin(t * 3));
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.22 + 0.55 * TB.pulse) + ')';
+ctx.lineWidth = 1.4;
+ctx.setLineDash([4, 4]);
+ctx.beginPath(); ctx.arc(cx, cy, nodeR, 0, Math.PI * 2); ctx.stroke();
+ctx.setLineDash([]);
+
+canvasLabel(ctx, T('Δφ = 0 · one geodesic, three bodies'), 18, 24, { size: 10, color: 'rgba(164,158,144,.8)' });
+if (TB.choreography) canvasLabel(ctx, T('figure-eight choreography'), 18, H - 12, { size: 10, color: 'rgba(164,158,144,.7)' });
+if (TB.chaos) canvasLabel(ctx, T('chaos twins'), W - 18, 24, { size: 10, color: 'rgba(201,128,128,.85)', align: 'right' });
+if (TB.pulse > 0.15) canvasLabel(ctx, T('A₀ re-seed'), cx, cy - k * 0.52 - 14, { size: 10, color: 'rgba(244,199,122,.95)', align: 'center' });
+}
+
+function drawTm(ctx, W, H, t) {
+var dt = TM.lastT === null ? 0 : Math.max(0, Math.min(0.05, t - TM.lastT));
+TM.lastT = t;
+
+var x0 = Math.max(28, W * 0.06);
+var x1 = Math.min(W - 28, W * 0.94);
+var cx = W / 2;
+var beltY = H * 0.72;
+var top = 58;
+var bottom = beltY + 42;
+var leftPath = x0 + 38;
+var rightPath = x1 - 38;
+var speed = 0.16;
+var dir = TM.reversed ? -1 : 1;
+if (!TM.trail) TM.trail = [];
+
+if (dt > 0) {
+TM.x = Math.max(0, Math.min(1, TM.x + dir * speed * dt));
+var pinnedNow = false;
+if (TM.firewalls) {
+if (TM.side > 0 && TM.x < 0.5) { TM.x = 0.5; pinnedNow = true; }
+else if (TM.side < 0 && TM.x > 0.5) { TM.x = 0.5; pinnedNow = true; }
+} else if (Math.abs(TM.x - 0.5) > 1e-6) {
+TM.side = TM.x > 0.5 ? 1 : -1;
+}
+if (pinnedNow) {
+TM.hit = 1;
+if (!TM.pinned) TM.pulse = 1;
+}
+TM.pinned = pinnedNow;
+}
+
+TM.hit = Math.max(0, TM.hit - dt * 1.8);
+TM.pulse = Math.max(0, TM.pulse - dt * 2.5);
+TM.clockPhase += dt * 2.5 * dir;
+TM.markerPhase += dt * 34 * dir;
+
+if (dt > 0) {
+TM.trail.push(TM.x);
+if (TM.trail.length > 26) TM.trail.shift();
+}
+
+var carriageX = leftPath + TM.x * (rightPath - leftPath);
+var carriageY = beltY - 30 + Math.sin(t * 2.2) * 1.6;
+
+ctx.fillStyle = 'rgba(127,163,184,0.05)';
+for (var gx = 20; gx < W; gx += 32) {
+for (var gy = 20; gy < H; gy += 32) ctx.fillRect(gx, gy, 1, 1);
+}
+
+var gradPast = ctx.createLinearGradient(0, top, 0, bottom);
+gradPast.addColorStop(0, 'rgba(201,128,128,0.025)');
+gradPast.addColorStop(1, 'rgba(201,128,128,0.095)');
+ctx.fillStyle = gradPast;
+ctx.fillRect(x0, top, Math.max(0, cx - x0), bottom - top);
+var gradFut = ctx.createLinearGradient(0, top, 0, bottom);
+gradFut.addColorStop(0, 'rgba(123,167,140,0.025)');
+gradFut.addColorStop(1, 'rgba(123,167,140,0.095)');
+ctx.fillStyle = gradFut;
+ctx.fillRect(cx, top, Math.max(0, x1 - cx), bottom - top);
+
+for (var ci = 0; ci < 16; ci++) {
+var cu = (ci * 0.618034 + t * 0.05 * dir) % 1; if (cu < 0) cu += 1;
+var px2 = x0 + cu * (x1 - x0);
+if (TM.firewalls && Math.abs(px2 - cx) < 10) continue;
+var py2 = top + 14 + ((ci * 0.378) % 1) * (bottom - top - 28);
+var tw = 0.5 + 0.5 * Math.sin(t * 2 + ci);
+ctx.fillStyle = px2 < cx ? 'rgba(201,128,128,' + (0.08 + 0.20 * tw) + ')' : 'rgba(123,167,140,' + (0.08 + 0.20 * tw) + ')';
+ctx.beginPath(); ctx.arc(px2, py2, 1.3, 0, Math.PI * 2); ctx.fill();
+}
+
+canvasLabel(ctx, 'PAST', x0 + 8, 82, {size:11, color:'rgba(201,128,128,.9)'});
+canvasLabel(ctx, 'FUTURE', x1 - 8, 82, {size:11, color:'rgba(123,167,140,.9)', align:'right'});
+
+var beltGrad = ctx.createLinearGradient(x0, 0, x1, 0);
+beltGrad.addColorStop(0, 'rgba(127,163,184,0.06)');
+beltGrad.addColorStop(0.5, 'rgba(244,199,122,0.34)');
+beltGrad.addColorStop(1, 'rgba(127,163,184,0.06)');
+ctx.strokeStyle = beltGrad;
+ctx.lineWidth = 2.5;
+ctx.beginPath(); ctx.moveTo(x0, beltY + 5); ctx.lineTo(x1, beltY + 5); ctx.stroke();
+
+var markerDir = TM.reversed ? -1 : 1;
+ctx.strokeStyle = TM.reversed ? 'rgba(201,128,128,.72)' : 'rgba(123,167,140,.72)';
+ctx.lineWidth = 1.5;
+var markerSpacing = 46;
+var markerOffset = ((TM.markerPhase % markerSpacing) + markerSpacing) % markerSpacing;
+for (var mx = x0 + markerOffset; mx < x1; mx += markerSpacing) {
+ctx.beginPath();
+ctx.moveTo(mx - 5 * markerDir, beltY + 1);
+ctx.lineTo(mx + 5 * markerDir, beltY + 5);
+ctx.lineTo(mx - 5 * markerDir, beltY + 9);
+ctx.stroke();
+}
+
+if (TM.firewalls) {
+var pulseSize = 1 + 4 * TM.pulse + 2 * (0.5 + 0.5 * Math.sin(t * 3));
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.28 + 0.25 * TM.hit) + ')';
+ctx.lineWidth = pulseSize;
+ctx.setLineDash([4, 4]);
+ctx.beginPath(); ctx.moveTo(cx, top); ctx.lineTo(cx, bottom); ctx.stroke();
+ctx.setLineDash([]);
+
+for (var fi = 0; fi < 9; fi++) {
+var fy = top + ((fi + 0.5) / 9) * (bottom - top);
+var fph = 0.5 + 0.5 * Math.sin(t * 4 + fi * 0.9);
+ctx.fillStyle = 'rgba(255,209,102,' + (0.22 + 0.42 * fph) + ')';
+ctx.beginPath(); ctx.arc(cx + Math.sin(t * 5 + fi * 1.7) * 5, fy, 1.6, 0, Math.PI * 2); ctx.fill();
+}
+
+canvasLabel(ctx, 'NODAL FIREWALL', cx + 9, 102, {size:10, color:'rgba(255,209,102,.95)'});
+
+if (TM.hit > 0.02) {
+ctx.fillStyle = 'rgba(255,209,102,' + (0.16 + 0.22 * TM.hit) + ')';
+ctx.beginPath(); ctx.arc(cx, beltY - 4, 15 + 12 * TM.hit, 0, Math.PI * 2); ctx.fill();
+for (var ri = 0; ri < 3; ri++) {
+var ru = TM.hit - ri * 0.18;
+if (ru <= 0) continue;
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.5 * ru) + ')';
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.arc(cx, beltY - 4, 15 + (1 - ru) * 55, 0, Math.PI * 2); ctx.stroke();
+}
+canvasLabel(ctx, 'BOUNDARY REACHED', cx, beltY - 62, {size:9, color:'rgba(255,209,102,.95)', align:'center'});
+}
+} else {
+ctx.strokeStyle = 'rgba(201,128,128,0.45)';
+ctx.lineWidth = 1;
+ctx.setLineDash([4, 4]);
+ctx.beginPath(); ctx.moveTo(cx, top); ctx.lineTo(cx, bottom); ctx.stroke();
+ctx.setLineDash([]);
+canvasLabel(ctx, 'SECTORS CONNECTED', cx, 102, {size:10, color:'rgba(201,128,128,.9)', align:'center'});
+}
+
+for (var gi = 0; gi < TM.trail.length; gi++) {
+var gx2 = leftPath + TM.trail[gi] * (rightPath - leftPath);
+var ga = 0.04 + 0.13 * (gi / Math.max(1, TM.trail.length - 1));
+ctx.fillStyle = 'rgba(224,169,82,' + ga + ')';
+ctx.beginPath(); ctx.roundRect(gx2 - 22, carriageY - 18, 44, 36, 4); ctx.fill();
+}
+
+ctx.fillStyle = 'rgba(224,169,82,0.12)';
+ctx.fillRect(carriageX - 30, beltY + 14, 60, 3);
+
+ctx.fillStyle = '#10141f';
+ctx.strokeStyle = TM.reversed ? '#c98080' : '#e0a952';
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.roundRect(carriageX - 27, carriageY - 22, 54, 44, 5);
+ctx.fill();
+ctx.stroke();
+
+for (var wi = 0; wi < 2; wi++) {
+var wx = carriageX + (wi ? 15 : -15);
+ctx.strokeStyle = TM.reversed ? 'rgba(201,128,128,0.85)' : 'rgba(224,169,82,0.85)';
+ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.arc(wx, beltY - 1, 6, 0, Math.PI * 2); ctx.stroke();
+var wA = TM.markerPhase * 0.12;
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(wx + Math.cos(wA) * 4.2, beltY - 1 + Math.sin(wA) * 4.2);
+ctx.lineTo(wx - Math.cos(wA) * 4.2, beltY - 1 - Math.sin(wA) * 4.2);
+ctx.stroke();
+}
+
+var beamA = TM.reversed ? 0.10 : 0.15;
+var beamGrad = ctx.createLinearGradient(carriageX, 0, carriageX + dir * 74, 0);
+beamGrad.addColorStop(0, 'rgba(244,199,122,' + beamA + ')');
+beamGrad.addColorStop(1, 'rgba(244,199,122,0)');
+ctx.fillStyle = beamGrad;
+ctx.beginPath();
+ctx.moveTo(carriageX + dir * 27, carriageY - 13);
+ctx.lineTo(carriageX + dir * 74, carriageY - 4);
+ctx.lineTo(carriageX + dir * 74, carriageY + 4);
+ctx.lineTo(carriageX + dir * 27, carriageY + 13);
+ctx.closePath(); ctx.fill();
+
+var clockR = 14;
+ctx.strokeStyle = 'rgba(244,199,122,0.9)';
+ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.arc(carriageX, carriageY, clockR, 0, Math.PI * 2); ctx.stroke();
+
+for (var tk = 0; tk < 12; tk++) {
+var tka = (tk / 12) * Math.PI * 2;
+ctx.strokeStyle = 'rgba(244,199,122,0.45)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(carriageX + Math.cos(tka) * (clockR - 2), carriageY + Math.sin(tka) * (clockR - 2));
+ctx.lineTo(carriageX + Math.cos(tka) * (clockR - 4), carriageY + Math.sin(tka) * (clockR - 4));
+ctx.stroke();
+}
+
+var handAngle = TM.clockPhase;
+ctx.strokeStyle = '#f4c77a';
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.moveTo(carriageX, carriageY);
+ctx.lineTo(
+carriageX + Math.cos(handAngle - Math.PI / 2) * (clockR - 3),
+carriageY + Math.sin(handAngle - Math.PI / 2) * (clockR - 3)
+);
+ctx.stroke();
+
+ctx.strokeStyle = 'rgba(244,199,122,0.6)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(carriageX, carriageY);
+ctx.lineTo(
+carriageX + Math.cos(handAngle * 0.55 - Math.PI / 2) * (clockR - 7),
+carriageY + Math.sin(handAngle * 0.55 - Math.PI / 2) * (clockR - 7)
+);
+ctx.stroke();
+
+ctx.fillStyle = '#f4c77a';
+ctx.beginPath(); ctx.arc(carriageX, carriageY, 1.8, 0, Math.PI * 2); ctx.fill();
+
+ctx.strokeStyle = TM.reversed ? 'rgba(201,128,128,.9)' : 'rgba(123,167,140,.9)';
+ctx.lineWidth = 2;
+var arrowLen = 25;
+var ax = carriageX + dir * arrowLen;
+ctx.beginPath();
+ctx.moveTo(carriageX + dir * 17, carriageY + 26);
+ctx.lineTo(ax, carriageY + 26);
+ctx.lineTo(ax - dir * 6, carriageY + 22);
+ctx.moveTo(ax, carriageY + 26);
+ctx.lineTo(ax - dir * 6, carriageY + 30);
+ctx.stroke();
+
+var badgeW = Math.min(160, Math.max(128, W * 0.30));
+var badgeX = W - badgeW - 18;
+var badgeY = 118;
+
+if (!TM.firewalls && (TM.x <= 0.001 || TM.x >= 0.999)) {
+var eoText = T('END OF AXIS');
+ctx.font = '9px monospace';
+var eoHalf = ctx.measureText(eoText).width / 2;
+var eoX = Math.min(carriageX, badgeX - 12 - eoHalf);
+canvasLabel(ctx, 'END OF AXIS', eoX, carriageY - 36, {size:9, color:'rgba(244,199,122,.9)', align:'center'});
+}
+
+ctx.fillStyle = 'rgba(15,20,34,0.95)';
+ctx.strokeStyle = '#7ba78c';
+ctx.lineWidth = 1.5;
+ctx.beginPath();
+ctx.roundRect(badgeX, badgeY, badgeW, 44, 4);
+ctx.fill();
+ctx.stroke();
+canvasLabel(ctx, 'E = mc²', badgeX + 12, badgeY + 19, {size:13, color:'rgba(123,167,140,.95)'});
+canvasLabel(ctx, 'rest energy invariant', badgeX + 12, badgeY + 35, {size:9, color:'rgba(127,163,184,.85)'});
+
+var stateText = TM.reversed ? 'REVERSE — L_mesh → −L_mesh' : 'FORWARD — L_mesh → +L_mesh';
+canvasLabel(ctx, stateText, 20, H - 34, {size:11, color:TM.reversed ? 'rgba(201,128,128,.95)' : 'rgba(123,167,140,.95)'});
+canvasLabel(ctx, TM.firewalls ? 'causal boundary active · crossing forbidden' : 'causal boundary open · sectors connected', 20, H - 16, {size:9, color:'rgba(127,163,184,.75)'});
+
+if (TM.landauer) {
+var meterX = 30;
+var meterY = 108;
+var meterW = Math.min(100, Math.max(76, W * 0.18));
+var meterH = 10;
+ctx.fillStyle = 'rgba(15,20,34,0.9)';
+ctx.fillRect(meterX, meterY, meterW, meterH);
+ctx.strokeStyle = 'rgba(127,163,184,0.3)';
+ctx.strokeRect(meterX, meterY, meterW, meterH);
+
+var level = 0.5 + 0.4 * Math.sin(t * 1.5);
+ctx.fillStyle = 'rgba(201,128,128,0.9)';
+ctx.fillRect(meterX + 1, meterY + 1, (meterW - 2) * level, meterH - 2);
+canvasLabel(ctx, 'ΔE ≥ k_B T ln 2', meterX, meterY + meterH + 12, {size:9, color:'rgba(201,128,128,.9)'});
+}
+
+canvasLabel(ctx, 'carriage = temporal state', W / 2, H - 48, {size:9, color:'rgba(127,163,184,.55)', align:'center'});
+}
+
+var FO_CACHE = { n: -1, count: 0, scale: -1, vals: null, age: 0 };
+var FO_CACHE2 = { n: -1, count: 0, scale: -1, vals: null, age: 0 };
+function foSamples(n, count, scale) {
+var hit = null;
+if (FO_CACHE.n === n && FO_CACHE.count === count && FO_CACHE.scale === scale && FO_CACHE.vals) hit = FO_CACHE;
+else if (FO_CACHE2.n === n && FO_CACHE2.count === count && FO_CACHE2.scale === scale && FO_CACHE2.vals) hit = FO_CACHE2;
+if (!hit) {
+hit = (FO_CACHE.age || 0) <= (FO_CACHE2.age || 0) ? FO_CACHE : FO_CACHE2;
+if (!hit.vals || hit.vals.length !== count) hit.vals = new Float32Array(count);
+var vals = hit.vals;
+for (var i = 0; i < count; i++) {
+var xc = -1 + (i * 3) / scale;
+var s = 0;
+for (var k = 0; k < n; k++) s += Math.sin((2 * k + 1) * Math.PI * xc / 2) / (2 * k + 1);
+vals[i] = (4 / Math.PI) * s;
+}
+hit.n = n; hit.count = count; hit.scale = scale;
+}
+hit.age = (FO_CACHE.age || 0) + (FO_CACHE2.age || 0) + 1;
+return hit.vals;
+}
+
+function draw8(ctx, W, H, t) {
+var P = 8, ph = t % P;
+var pad = 24;
+var plotX0 = pad, plotX1 = W - pad;
+var wide = W >= 620;
+var topBand = wide ? 78 : 100;
+var botBand = H - Math.max(58, Math.min(78, H * 0.16));
+var cx = (plotX0 + plotX1) / 2;
+var cy = (topBand + botBand) / 2;
+var half = (botBand - topBand) / 2;
+var yScale = Math.min(half * 0.9, 100);
+var scale = (plotX1 - plotX0) / 2;
+
+canvasLabel(ctx, 'Fourier: Gibbs vs A₀ kernel', 18, 26);
+
+if (wide) {
+var legY = 50;
+var leg = [
+[FO.square, 'square wave f(x)', 'rgba(123,167,140,.9)', true],
+[FO.classic, 'classic Dirichlet kernel', 'rgba(201,128,128,.85)', false],
+[FO.a0, 'A₀ kernel D*ₙ — overshoot annihilated', 'rgba(224,169,82,.95)', false]
+];
+var legX = 18;
+for (var li = 0; li < leg.length; li++) {
+if (!leg[li][0]) continue;
+ctx.strokeStyle = leg[li][2];
+ctx.lineWidth = 2;
+if (leg[li][3]) ctx.setLineDash([4, 3]);
+ctx.beginPath(); ctx.moveTo(legX, legY - 4); ctx.lineTo(legX + 14, legY - 4); ctx.stroke();
+ctx.setLineDash([]);
+canvasLabel(ctx, leg[li][1], legX + 20, legY, { size: 10, color: leg[li][2], pad: 4 });
+legX += 20 + leg[li][1].length * 6 + 22;
+}
+} else {
+if (FO.square) canvasLabel(ctx, 'square wave f(x)', 18, 48, { size: 10, color: 'rgba(123,167,140,.9)' });
+if (FO.classic) canvasLabel(ctx, 'classic Dirichlet kernel', 18, 66, { size: 10, color: 'rgba(201,128,128,.85)' });
+if (FO.a0) canvasLabel(ctx, 'A₀ kernel D*ₙ — overshoot annihilated', 18, 84, { size: 10, color: 'rgba(224,169,82,.95)' });
+}
+
+var count = Math.floor((plotX1 - plotX0) / 3) + 1;
+
+var nF = FO.holdN && FO.frozenN != null ? FO.frozenN : (2 + EASEo(Math.min(1, ph / (P * 0.75))) * 13);
+var n0 = Math.max(1, Math.min(14, Math.floor(nF)));
+var n1 = n0 + 1;
+var fr = nF - Math.floor(nF);
+var w = fr * fr * (3 - 2 * fr);
+FO.curN = Math.round(nF);
+var vA = foSamples(n0, count, scale);
+var vB = foSamples(n1, count, scale);
+
+var scanU = (t * 0.14) % 1;
+var scanX = plotX0 + scanU * (plotX1 - plotX0);
+var scanGrad = ctx.createLinearGradient(scanX - 34, 0, scanX + 34, 0);
+scanGrad.addColorStop(0, 'rgba(244,199,122,0)');
+scanGrad.addColorStop(0.5, 'rgba(244,199,122,0.07)');
+scanGrad.addColorStop(1, 'rgba(244,199,122,0)');
+ctx.fillStyle = scanGrad;
+ctx.fillRect(scanX - 34, topBand, 68, botBand - topBand);
+
+ctx.strokeStyle = 'rgba(127,163,184,0.16)';
+ctx.lineWidth = 1;
+ctx.beginPath(); ctx.moveTo(plotX0, cy); ctx.lineTo(plotX1, cy); ctx.stroke();
+for (var tkx = 0; tkx <= 8; tkx++) {
+var tx = plotX0 + (tkx / 8) * (plotX1 - plotX0);
+ctx.beginPath(); ctx.moveTo(tx, cy - 3); ctx.lineTo(tx, cy + 3); ctx.stroke();
+}
+
+if (FO.square) {
+ctx.strokeStyle = 'rgba(123,167,140,0.7)';
+ctx.lineWidth = 1.6;
+ctx.setLineDash([5, 4]);
+ctx.beginPath();
+ctx.moveTo(plotX0, cy + yScale); ctx.lineTo(cx, cy + yScale);
+ctx.moveTo(cx, cy - yScale); ctx.lineTo(plotX1, cy - yScale);
+ctx.stroke();
+ctx.setLineDash([]);
+}
+
+if (FO.classic) {
+ctx.strokeStyle = 'rgba(201,128,128,0.18)';
+ctx.lineWidth = 4.5;
+ctx.beginPath();
+for (var pcg = 0; pcg < count; pcg++) {
+var ycg = cy - (vA[pcg] + (vB[pcg] - vA[pcg]) * w) * yScale;
+var pxg = plotX0 + pcg * 3;
+if (pcg === 0) ctx.moveTo(pxg, ycg); else ctx.lineTo(pxg, ycg);
+}
+ctx.stroke();
+ctx.strokeStyle = 'rgba(201,128,128,0.85)';
+ctx.lineWidth = 1.5;
+ctx.beginPath();
+for (var pc = 0; pc < count; pc++) {
+var yc = cy - (vA[pc] + (vB[pc] - vA[pc]) * w) * yScale;
+var px = plotX0 + pc * 3;
+if (pc === 0) ctx.moveTo(px, yc); else ctx.lineTo(px, yc);
+}
+ctx.stroke();
+}
+
+if (FO.a0) {
+ctx.strokeStyle = 'rgba(224,169,82,0.22)';
+ctx.lineWidth = 5.5;
+ctx.beginPath();
+for (var pdg = 0; pdg < count; pdg++) {
+var xdg = -1 + (pdg * 3) / scale;
+var ydg = cy - (vA[pdg] + (vB[pdg] - vA[pdg]) * w) * (1 - Math.exp(-Math.abs(xdg) / 0.09)) * yScale;
+var pdgx = plotX0 + pdg * 3;
+if (pdg === 0) ctx.moveTo(pdgx, ydg); else ctx.lineTo(pdgx, ydg);
+}
+ctx.stroke();
+ctx.strokeStyle = '#e0a952';
+ctx.lineWidth = 2.2;
+ctx.beginPath();
+for (var pd = 0; pd < count; pd++) {
+var xd = -1 + (pd * 3) / scale;
+var yd = cy - (vA[pd] + (vB[pd] - vA[pd]) * w) * (1 - Math.exp(-Math.abs(xd) / 0.09)) * yScale;
+var pdx = plotX0 + pd * 3;
+if (pd === 0) ctx.moveTo(pdx, yd); else ctx.lineTo(pdx, yd);
+}
+ctx.stroke();
+}
+
+if (FO.classic || FO.a0) {
+var jpu = (t * 0.9) % 1;
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.55 * (1 - jpu)) + ')';
+ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.arc(cx, cy - yScale, 3 + jpu * 26, 0, Math.PI * 2); ctx.stroke();
+ctx.strokeStyle = 'rgba(255,209,102,' + (0.35 * (1 - jpu)) + ')';
+ctx.beginPath(); ctx.arc(cx, cy + yScale, 3 + jpu * 26, 0, Math.PI * 2); ctx.stroke();
+}
+
+if (FO.classic && n0 >= 2) {
+var peakY = cy - (1 + 0.089) * yScale;
+ctx.strokeStyle = 'rgba(201,128,128,0.55)';
+ctx.setLineDash([2, 3]);
+ctx.beginPath(); ctx.moveTo(cx, cy - yScale); ctx.lineTo(cx + 26, peakY); ctx.stroke();
+ctx.setLineDash([]);
+canvasLabel(ctx, '+8.95%', cx + 29, peakY + 3, { size: 9, color: 'rgba(201,128,128,.9)', pad: 4 });
+}
+
+ctx.font = 'bold 12px monospace';
+ctx.fillStyle = 'rgba(164,158,144,.8)';
+ctx.textAlign = 'right';
+ctx.fillText('N = ' + (Math.round(nF * 10) / 10), W - 18, 26);
+ctx.textAlign = 'left';
+
+if (W >= 520 && (FO.classic || FO.a0)) {
+var mw = Math.min(168, W * 0.30), mh = 52;
+var mx = W - mw - 18;
+var my = Math.min(H - mh - 6, botBand + 10);
+ctx.fillStyle = 'rgba(15,20,34,0.92)';
+ctx.fillRect(mx, my, mw, mh);
+ctx.strokeStyle = 'rgba(127,163,184,0.3)';
+ctx.lineWidth = 1;
+ctx.strokeRect(mx, my, mw, mh);
+var barY = my + 10;
+if (FO.classic) {
+ctx.fillStyle = 'rgba(201,128,128,0.85)';
+ctx.fillRect(mx + 10, barY, (mw - 20) * 0.72, 6);
+canvasLabel(ctx, 'classic overshoot ≈ 8.95%', mx + 10, barY + 18, { size: 9, color: 'rgba(201,128,128,.9)' });
+}
+if (FO.a0) {
+ctx.fillStyle = 'rgba(123,167,140,0.85)';
+ctx.fillRect(mx + 10, barY + 26, (mw - 20) * 0.015, 6);
+canvasLabel(ctx, 'A₀ kernel: overshoot → 0', mx + 10, barY + 44, { size: 9, color: 'rgba(123,167,140,.9)' });
+}
+}
+
+if (ph > P * 0.75 && !FO.holdN) {
+var fu = (ph - P * 0.75) / (P * 0.25);
+ctx.strokeStyle = 'rgba(244,199,122,' + (0.7 * (1 - fu)) + ')';
+ctx.lineWidth = 1.8;
+ctx.beginPath();
+ctx.arc(cx, cy, 4 + fu * 30, 0, Math.PI * 2);
+ctx.stroke();
+canvasLabel(ctx, 'anti-phase e^{iπ} + 1 = 0 removes the spike', 18, botBand + 16, { size: 10, color: 'rgba(244,199,122,.95)' });
+}
+canvasLabel(ctx, 'uniform C∞ convergence', 18, H - 12, { size: 10, color: 'rgba(164,158,144,.7)' });
+}
+
+var canvases = {};
+var PANELS = [];
+var appStarted = false;
+var resizeRaf = 0;
+
+function scheduleCanvasSetup() {
+if (resizeRaf) cancelAnimationFrame(resizeRaf);
+resizeRaf = requestAnimationFrame(function () {
+resizeRaf = 0;
+setupCanvases();
+});
+}
+
+function setupCanvases() {
+var ids = ['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv','dsCv','tbCv','tmCv','foCv'];
+for (var i = 0; i < ids.length; i++) {
+var cv = document.getElementById(ids[i]);
+if (!cv) continue;
+var cw = cv.clientWidth;
+var ch = cv.clientHeight;
+if (cw < 1 || ch < 1) continue;
+var dpr = Math.min(window.devicePixelRatio || 1, 2);
+var w = Math.max(1, Math.round(cw * dpr));
+var h = Math.max(1, Math.round(ch * dpr));
+if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+var ctx = cv.getContext('2d');
+ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+canvases[ids[i]] = { ctx: ctx, el: cv };
+}
+}
+
+var startTime = Date.now();
+var lastFrame = startTime;
+var inView = {};
+var errSeen = {};
+
+function reportErr(name, e) {
+if (errSeen[name]) return;
+errSeen[name] = true;
+console.error('CoReX draw error in ' + name + ':', e);
+showBanner(name + ': ' + ((e && e.message) || e));
+}
+
+function renderCanvas(id, fn, t) {
+var entry = canvases[id];
+if (!entry) return false;
+var ctx = entry.ctx, cv = entry.el;
+var W = cv.clientWidth, H = cv.clientHeight;
+if (W <= 1 || H <= 1) return false;
+ctx.save();
+try {
+ctx.clearRect(0, 0, W, H);
+ctx.fillStyle = '#06080f';
+ctx.fillRect(0, 0, W, H);
+fn(ctx, W, H, t);
+} catch (e) {
+reportErr(id, e);
+} finally {
+ctx.restore();
+}
+return true;
+}
+
+var rafId = 0;
+var loopOn = false;
+
+function frame() {
+rafId = 0;
+try {
+var now = Date.now();
+var t = (now - startTime) / 1000;
+var dt = Math.min(0.1, (now - lastFrame) / 1000);
+lastFrame = now;
+LAB.phase += dt * LAB.speed;
+
+if (inView.seven !== false) {
+var drawers = [null, draw1, draw2, draw3, draw4, draw5, draw6, draw7];
+var panelEls = PANELS;
+for (var s7 = 1; s7 <= 7; s7++) { renderCanvas('cv' + s7, drawers[s7], t); }
+}
+if (inView.labCv !== false) renderCanvas('labCv', drawLab, LAB.phase);
+if (inView.dsCv !== false) renderCanvas('dsCv', drawDs, t);
+if (inView.tbCv !== false) renderCanvas('tbCv', drawTb, t);
+else TB.lastT = null;
+if (inView.tmCv !== false) renderCanvas('tmCv', drawTm, t);
+else TM.lastT = null;
+if (inView.foCv !== false) renderCanvas('foCv', draw8, t);
+} catch (e) {
+reportErr('frame', e);
+}
+if (loopOn) rafId = requestAnimationFrame(frame);
+}
+
+function reducedMotion() {
+try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+catch (e) { return false; }
+}
+
+function startLoop() {
+if (loopOn || !appStarted) return;
+if (reducedMotion()) { frame(); return; }
+loopOn = true;
+lastFrame = Date.now();
+rafId = requestAnimationFrame(frame);
+}
+
+function stopLoop() {
+if (!loopOn) return;
+loopOn = false;
+if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+TM.lastT = null;
+}
+
+function watchView() {
+if (!('IntersectionObserver' in window)) return;
+var io = new IntersectionObserver(function (entries) {
+for (var i = 0; i < entries.length; i++) inView[entries[i].target.id] = entries[i].isIntersecting;
+}, { rootMargin: '80px' });
+['labCv', 'dsCv', 'tbCv', 'tmCv', 'foCv'].forEach(function (id) {
+var el = document.getElementById(id);
+if (el) io.observe(el);
+});
+var sevenSec = document.getElementById('seven');
+if (sevenSec) io.observe(sevenSec);
+}
+
+function watchReducedMotion() {
+try {
+var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+if (mq && mq.addEventListener) {
+mq.addEventListener('change', function (ev) {
+if (ev.matches) { stopLoop(); frame(); }
+else startLoop();
+});
+}
+} catch (e) {}
+}
+
+function startApp() {
+if (appStarted) return;
+appStarted = true;
+syncHeaderVar();
+readLangParam();
+syncDsChips();
+syncFoChips();
+requestAnimationFrame(function () {
+setupCanvases();
+startLoop();
+});
+document.addEventListener('visibilitychange', function () {
+if (document.hidden) stopLoop();
+else startLoop();
+});
+window.addEventListener('resize', function () { syncHeaderVar(); scheduleCanvasSetup(); }, {passive:true});
+if ('ResizeObserver' in window) {
+var ro = new ResizeObserver(function () { syncHeaderVar(); scheduleCanvasSetup(); });
+var h = document.querySelector('header');
+if (h) ro.observe(h);
+['cv1','cv2','cv3','cv4','cv5','cv6','cv7','labCv','dsCv','tbCv','tmCv','foCv'].forEach(function (id) {
+var el = document.getElementById(id);
+if (el) ro.observe(el);
+});
+}
+watchView();
+watchReducedMotion();
+console.log('CoReX v61 ready.');
+}
+
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', startApp);
+} else {
+startApp();
+}
+
+/* ===== CoReX v3 extras: hero, bio, monolith (design-v3 scenes) + wiring ===== */
+EQ_LATEX['Ω₀: M_N(A₀) = Proj_so(N)(A₀) · ∀T ∈ 𝒯: T(Veritas) = Veritas ∧ T(Ratio) = Ratio · e^{iπ} + 1 = 0 ⇒ |ψ_node| = 0'] = '\\Omega_0:\\; \\mathcal{M}_N(A_0) = \\mathrm{Proj}_{\\mathfrak{so}(N)}(A_0),\\; \\forall T \\in \\mathcal{T}: T(\\mathrm{Veritas}) = \\mathrm{Veritas} \\wedge T(\\mathrm{Ratio}) = \\mathrm{Ratio},\\; e^{i\\pi}+1=0 \\Rightarrow |\\psi_{\\mathrm{node}}| = 0';
+EQ_LATEX['T_solve(N) = R_N · O(1) = N(N−1)/2 · O(1) = O(N²)'] = 'T_{\\mathrm{solve}}(N) = R_N \\cdot O(1) = \\frac{N(N-1)}{2}\\cdot O(1) = O(N^2)';
+EQ_LATEX['min_G ‖G‖_* s.t. det(CM₅(G)) = 0 and P_Ω(G) = P_Ω(G^exp) ⇒ rank(G*) = 3'] = '\\min_G \\|G\\|_* \\; \\mathrm{s.t.}\\; \\det(\\mathrm{CM}_5(G)) = 0,\\; P_\\Omega(G) = P_\\Omega(G^{\\mathrm{exp}}) \\Rightarrow \\mathrm{rank}(G^*) = 3';
+
+(function(){
+'use strict';
+var REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+var DPR = Math.min(window.devicePixelRatio||1, 2);
+var anims = [];
+function fit(cv, h){
+  var r = cv.getBoundingClientRect();
+  var w = Math.max(r.width, 60);
+  cv.width = w*DPR; cv.height = h*DPR;
+  var g = cv.getContext('2d'); g.setTransform(DPR,0,0,DPR,0,0);
+  return {g:g, w:w, h:h};
+}
+function reg(cv, h, draw){ if(cv) anims.push({cv:cv, h:h, draw:draw, t:0, geo:null}); }
+var run = !REDUCED, last = 0, hidden = false;
+document.addEventListener('visibilitychange', function(){ hidden = document.hidden; last = performance.now(); });
+window.addEventListener('resize', function(){ anims.forEach(function(a){ a.geo = null; }); });
+function loop(ts){
+  var dt = Math.min((ts-last)/1000, .05); last = ts;
+  if(run && !hidden){
+    anims.forEach(function(a){
+      if(!a.cv.isConnected) return;
+      if(!a.geo) a.geo = fit(a.cv, a.h);
+      a.t += dt;
+      try{ a.draw(a.geo, a.t); }catch(e){}
+    });
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* ============ HERO: seed + rotation planes ============ */
+reg(document.getElementById('heroC'), 280, function(s, t){
+  var g=s.g, W=s.w, H=s.h, cx=W/2, cy=H/2;
+  g.clearRect(0,0,W,H);
+  var N=8, R=Math.min(W,H)/2-24;
+  for(var i=0;i<N;i++){
+    var ph = t*0.5 + i*Math.PI/N;
+    g.beginPath();
+    g.ellipse(cx, cy, R, R*Math.abs(Math.sin(i*1.3+t*0.15))*0.7+6, ph, 0, Math.PI*2);
+    g.strokeStyle = 'rgba(63,214,192,'+(0.10+0.16*((Math.sin(t*0.7+i)+1)/2))+')';
+    g.lineWidth = 1; g.stroke();
+  }
+  for(var v=0;v<16;v++){
+    var a=(v&1?1:-1), b=(v&2?1:-1), c=(v&4?1:-1), d=(v&8?1:-1);
+    var x = a + d*Math.cos(t*0.6)*0.5, y = b + d*Math.sin(t*0.6)*0.5, z = c;
+    var rot = t*0.3, X = x*Math.cos(rot)-y*Math.sin(rot), Y = x*Math.sin(rot)+y*Math.cos(rot);
+    var persp = 1/(1.6 + z*0.3);
+    g.beginPath(); g.arc(cx+X*R*0.62*persp, cy+Y*R*0.62*persp, 1.6+0.8*Math.sin(t*2+v), 0, 7);
+    g.fillStyle='rgba(217,164,65,.85)'; g.fill();
+  }
+  g.beginPath(); g.arc(cx,cy,5+2*Math.sin(t*1.4),0,7);
+  g.fillStyle='#d9a441'; g.shadowColor='#d9a441'; g.shadowBlur=18; g.fill(); g.shadowBlur=0;
+  g.font='11px ui-monospace,monospace'; g.fillStyle='rgba(168,176,192,.9)'; g.textAlign='center';
+  g.fillText('A₀ = λ', cx, cy+24); g.textAlign='left';
+});
+
+/* ============ BIO: matrix completion ============ */
+var noise = true, cm = true;
+var bN = document.getElementById('bioNoise'), bS = document.getElementById('bioSolve'), bSt = document.getElementById('bioStat');
+function bioUpd(){
+  var rank = (noise && !cm) ? 5 : 3;
+  bSt.textContent = 'rank(G) = ' + rank + (rank>3 ? ' · rank inflation — conformation distorted' : ' · det(CM₅) = 0 · exact conformation recovered');
+  if(bN) bN.classList.toggle('on', noise);
+  if(bS) bS.classList.toggle('on', cm);
+}
+if(bN) bN.addEventListener('click', function(){ noise=!noise; bioUpd(); showStatus('noise: '+noise); });
+if(bS) bS.addEventListener('click', function(){ cm=!cm; bioUpd(); showStatus('CM₅ constraint: '+cm); });
+bioUpd();
+reg(document.getElementById('bioC'), 340, function(s, t){
+  var g=s.g, W=s.w, H=s.h; g.clearRect(0,0,W,H);
+  var cx=W*0.5, cy=H*0.5, R=Math.min(W,H)*0.32;
+  var bad = noise && !cm;
+  var pts=[];
+  for(var i=0;i<=40;i++){
+    var a=i*0.55+t*0.5;
+    var x=cx+Math.cos(a)*R*0.8, y=cy+Math.sin(a*0.5)*R*0.9;
+    var w = bad ? Math.sin(a*3.7+t*2)*R*0.45 : Math.sin(a*0.5+1.2)*R*0.12;
+    pts.push([x+w, y]);
+  }
+  for(var j=1;j<pts.length;j++){
+    g.beginPath(); g.moveTo(pts[j-1][0],pts[j-1][1]); g.lineTo(pts[j][0],pts[j][1]);
+    g.strokeStyle = bad?'rgba(232,106,138,.7)':'rgba(63,214,192,.8)'; g.lineWidth=1.6; g.stroke();
+  }
+  pts.forEach(function(p,i){ if(i%3===0){
+    g.beginPath(); g.arc(p[0],p[1],2.4,0,7);
+    g.fillStyle = bad?'rgba(232,106,138,.9)':'rgba(217,164,65,.9)'; g.fill();
+  }});
+  g.font='11px ui-monospace,monospace'; g.fillStyle='rgba(90,100,120,.9)';
+  g.fillText(bad ? 'rank(G)=5 · noise unresolved — distorted conformation'
+                 : 'min ‖G‖_* s.t. det(CM₅)=0 · rank(G)=3 — true structure', 14, H-12);
+});
+
+/* ============ 5D MONOLITH ============ */
+var gam = 0;
+var elG = document.getElementById('mG'), elGv = document.getElementById('mGv'), elSt = document.getElementById('mStat');
+if(elG) elG.addEventListener('input', function(){
+  gam = elG.value/100; elGv.textContent = gam.toFixed(2);
+  elSt.textContent = (gam<0.02?'vertices 8 · clean collapse: penteract → cube at γ = 0'
+                              :'vertices 32 · 5D penteract visible at γ = '+gam.toFixed(2));
+});
+reg(document.getElementById('mC'), 380, function(s, t){
+  var g=s.g, W=s.w, H=s.h; g.clearRect(0,0,W,H);
+  var cx=W/2, cy=H/2, R=Math.min(W,H)*0.33;
+  var verts=[];
+  for(var v=0;v<32;v++){
+    var c=[];
+    for(var d=0;d<5;d++) c.push(((v>>d)&1)?1:-1);
+    var fold = 1-gam;
+    var x=c[0]*Math.cos(t*0.5)-c[1]*Math.sin(t*0.5),
+        y=c[0]*Math.sin(t*0.5)+c[1]*Math.cos(t*0.5);
+    var z=c[2] + fold*(c[3]*Math.cos(t*0.9)+c[4]*Math.sin(t*0.9));
+    var persp = 1/(2.4+z*0.35);
+    verts.push([cx+x*R*0.7*persp, cy+y*R*0.7*persp, v]);
+  }
+  var m=verts.length;
+  for(var i=0;i<m;i++){
+    for(var j=i+1;j<m;j++){
+      var dd=verts[i][2]^verts[j][2];
+      if(!(dd&&!(dd&(dd-1)))) continue;
+      var al = 0.30 - 0.16*gam;
+      g.beginPath(); g.moveTo(verts[i][0],verts[i][1]); g.lineTo(verts[j][0],verts[j][1]);
+      g.strokeStyle = gam<0.02 ? 'rgba(63,214,192,.5)' : 'rgba(217,164,65,'+al+')';
+      g.lineWidth=1; g.stroke();
+    }
+  }
+  verts.forEach(function(p){
+    g.beginPath(); g.arc(p[0],p[1], gam<0.02?3:2, 0, 7);
+    g.fillStyle = gam<0.02 ? 'rgba(63,214,192,.95)' : 'rgba(217,164,65,.8)'; g.fill();
+  });
+  g.font='11px ui-monospace,monospace'; g.fillStyle='rgba(168,176,192,.85)';
+  g.fillText(gam<0.02 ? 'γ = 0 · 32 vertices → 8 · the monolith geometry'
+                     : 'γ = '+gam.toFixed(2)+' · 5D penteract (32 vertices)', 14, H-12);
+});
+})();
+</script>
+<script>
+(function(){
+'use strict';
+function pad(n){ return (n<10?'0':'')+n; }
+function stamp(d){
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'-'
+       + pad(d.getHours())+'-'+pad(d.getMinutes())+'-'+pad(d.getSeconds());
+}
+/* slot 0 = red (compile time), slot 1 = blue (live clock); positions swap on click */
+var COMPILED = '2026-10-10-02-39-30';
+var slots = [ {label:'Compiled: ', live:false}, {label:'Current time: ', live:true} ];
+var btns = [ document.getElementById('stampA'), document.getElementById('stampB') ];
+var classes = ['stamp-red','stamp-blue'];
+function render(){
+  for(var i=0;i<2;i++){
+    var b=btns[i]; if(!b) continue;
+    b.className='stamp '+classes[i];
+    b.textContent = slots[i].label + (slots[i].live ? stamp(new Date()) : COMPILED);
+  }
+}
+function swap(){
+  slots.reverse(); classes.reverse(); render();
+  if(window.showStatus) showStatus('timestamps swapped');
+}
+btns.forEach(function(b){ if(b) b.addEventListener('click', swap); });
+render();
+setInterval(render, 1000);
+/* build seed: 4 base36 chars, derived once per load from the current time */
+(function(){
+  var h = Date.now() >>> 0;
+  h = (h ^ (h >>> 13)) * 0x5bd1e995 >>> 0;
+  h = (h ^ (h >>> 15)) >>> 0;
+  var s = h.toString(36);
+  while(s.length < 4) s = '0' + s;
+  var el = document.getElementById('footSeed');
+  if(el) el.textContent = s.slice(-4).toUpperCase();
+})();
+})();
+</script>
+</body>
+</html>
