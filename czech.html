@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speciální teorie výpočetní relativity (CoReX): Výklad a kritické hodnocení</title>
+
+<!-- SEO meta tagy -->
+<meta name="description" content="Kritické hodnocení monografie CoReX: Speciální teorie výpočetní relativity. Rekonstrukce teorie, rozbor P vs NP, sedmi problémů tisíciletí, Fourierovy analýzy a fyzikálních experimentů.">
+<meta name="keywords" content="CoReX, výpočetní relativita, P versus NP, Clayovy problémy tisíciletí, so(N), Eulerova identita, Gibbsův jev, nodální firewall, Landauerova mez, Pierre LeBaux, kritické hodnocení">
+<meta name="author" content="BumBaBaran">
+<meta name="robots" content="index, follow">
+<meta name="language" content="cs">
+<meta name="date" content="2026-10-10">
+<link rel="canonical" href="https://example.com/corex-hodnoceni">
+
+<!-- Open Graph pro sociální sítě -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Speciální teorie výpočetní relativity (CoReX): Výklad a kritické hodnocení">
+<meta property="og:description" content="Kritické hodnocení monografie CoReX: rekonstrukce teorie, rozbor P vs NP, sedmi problémů tisíciletí a fyzikálních experimentů.">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/7/79/Fibonacci_spiral.svg">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="BumBaBaran">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Speciální teorie výpočetní relativity (CoReX): Výklad a kritické hodnocení">
+<meta name="twitter:description" content="Kritické hodnocení monografie CoReX: rekonstrukce teorie, rozbor P vs NP, sedmi problémů tisíciletí a fyzikálních experimentů.">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/7/79/Fibonacci_spiral.svg">
+
+<!-- Strukturovaná data schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Speciální teorie výpočetní relativity (CoReX): Výklad a kritické hodnocení",
+  "description": "Kritické hodnocení monografie CoReX: Speciální teorie výpočetní relativity. Rekonstrukce teorie, rozbor P vs NP, sedmi problémů tisíciletí, Fourierovy analýzy a fyzikálních experimentů.",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/7/79/Fibonacci_spiral.svg",
+  "author": {
+    "@type": "Person",
+    "name": "BumBaBaran"
+  },
+  "datePublished": "2026-10-10",
+  "dateModified": "2026-10-10",
+  "inLanguage": "cs",
+  "keywords": "CoReX, výpočetní relativita, P versus NP, Clayovy problémy tisíciletí, so(N), Eulerova identita, Gibbsův jev, nodální firewall, Landauerova mez",
+  "about": {
+    "@type": "Thing",
+    "name": "Speciální teorie výpočetní relativity"
+  }
+}
+</script>
+
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.3rem; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: .2rem; }
+  h3 { font-size: 1.1rem; margin-top: 1.5rem; }
+  .math { font-family: "Cambria Math", "Latin Modern Math", serif; font-style: italic; }
+  code, .formula { font-family: Consolas, "Courier New", monospace; background: #f4f4f4; padding: .1rem .3rem; border-radius: 3px; font-size: .95em; }
+  .formula-block { display: block; background: #f4f4f4; padding: .6rem .8rem; margin: .6rem 0; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: .95em; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95em; }
+  th, td { border: 1px solid #bbb; padding: .4rem .6rem; text-align: left; vertical-align: top; }
+  th { background: #eee; }
+  ul, ol { margin: .5rem 0 .5rem 1.2rem; }
+  .meta { color: #666; font-size: .9em; }
+  .hero-img { display: block; max-width: 100%; height: auto; margin: 1.5rem auto; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<article>
+
+<h1>Speciální teorie výpočetní relativity (CoReX): Výklad a kritické hodnocení</h1>
+<p class="meta">10. října 2026 · @BumBaBaran</p>
+
+<!-- Obrázek: Fibonacciho spirála – tajně relevantní k symetrii, nule a Fibonacciho posloupnosti (F_0 = 0) -->
+<figure>
+  <img class="hero-img"
+       src="https://upload.wikimedia.org/wikipedia/commons/7/79/Fibonacci_spiral.svg"
+       alt="Fibonacciho spirála – aproximace zlaté spirály vytvořená spojováním protilehlých rohů čtverců ve Fibonacciho dlaždění. Symbol symetrie, rotace a posloupnosti začínající nulou (F₀ = 0)."
+       width="915" height="580" loading="lazy">
+  <figcaption class="meta">Fibonacciho spirála. Posloupnost začíná nulou (F₀ = 0), spirála vzniká rotací — obojí ústřední motivy teorie CoReX. Zdroj: <a href="https://commons.wikimedia.org/wiki/File:Fibonacci_spiral.svg" rel="noopener">Wikimedia Commons</a>.</figcaption>
+</figure>
+
+<h2>Abstrakt</h2>
+<p>Monografie CoReX navrhuje, že výpočet a fyzika jsou dvě čtení jednoho geometrického objektu, skalárního semene nulového bodu <span class="math">A<sub>0</sub></span> působeného rotační algebrou so(N), a že tento jediný mechanismus řeší P versus NP, problém dvojštěrbiny, problém tří těles a všech sedm Clayových problémů tisíciletí. Tato disertace rekonstruuje tuto teorii pouze pomocí vlastního textu monografie, rovnic a interaktivních demonstrací, a hodnotí ji vůči standardní matematice a fyzice.</p>
+
+<p>Teorie spočívá na jednom postulovaném kořenovém axiomu <span class="math">Ω<sub>0</sub></span> a jednom opakujícím se prostředku, „nodálním firewallu“: povrchu, kde se dvě cesty setkávají v protifázi, takže <span class="math">e<sup>iπ</sup> + 1 = 0</span> nutí amplitudu k nule. Monografie sama poctivě klasifikuje své nároky: jeden je podmíněný varietní teorém (<span class="math">P = NP</span>), pět jsou strukturální analogie a jeden je historický komentář (Poincaré).</p>
+
+<p>Hodnocení shledává rámec vnitřně koherentním jako systém axiomů, ale nikoli jako most k zavedeným výsledkům. Jeho centrální objekt, <span class="math">lim<sub>x→0</sub> 0/x = λ &gt; 0</span>, se v reálných číslech rovná 0; transferový princip, který se dovolává, tento fakt zachovává. Několik odvozených tvrzení (Fourierovo „A jádro“, hladkost Navierových–Stokesových rovnic z <span class="math">det(CM<sub>s</sub>) = 0</span>, polynomiální hledání pomocí spojitého vnoření) selhává při elementárních kontrolách. Co přežívá, je konzistentní vizuální a notační jazyk plus jasná prohlášení o falzifikovatelnosti, která autor poskytuje.</p>
+
+<p><strong>Klíčová slova:</strong> výpočetní relativita, Eulerova identita, so(N), P versus NP, Gibbsův jev, nodální firewall, Landauerova mez.</p>
+
+<h2>1. Úvod</h2>
+<p>Tato disertace studuje jeden objekt: interaktivní monografii <em>The Special Theory of Computational Relativity</em> (CoReX v3.1, Pierre LeBaux), publikovanou jako jednu webovou stránku. Má sedm kapitol, patnáct animovaných pláten a krátký dodatek. Vše níže je</p>
+
+<h3>1.1 Tvrzení v jednom odstavci</h3>
+<p>Motto monografie, <em>Veritas et Ratio Invarianta Sunt in Toposo *V</em>, říká, že pravda a rozum jsou invariantní v hyperreálném toposu. Jejím pracovním tvrzením je, že každé fyzikální pole, stavový prostor a zákon zachování je projekcí skalárního semene nulového bodu <span class="math">A<sub>0</sub></span> pod so(N), Lieovou algebrou rotací. Rovnítko je reinterpretováno jako G-ekvivariantní „transformátor“ mezi dvěma tvářemi jednoho orbitu, což je důvod, proč stránka může psát <span class="math">P = NP ⇔ E = mc<sup>2</sup></span> jako jediné operátorové tvrzení.</p>
+
+<h3>1.2 Metoda a rozsah</h3>
+<ul>
+  <li><strong>Disciplína zdroje.</strong> Každá definice, číslo a diagram jsou převzaty ze stránky. Kde stránka mlčí, tento text to říká.</li>
+  <li><strong>Nejprve rekonstrukce, poté hodnocení.</strong> Kapitoly 2–7 vykládají teorii tak, jak ji autor podává. Kapitola 8 ji testuje.</li>
+  <li><strong>Epistemické stupně.</strong> Stránka označuje každé čtení tisíciletí: stupeň C (podmíněný varietní teorém), stupeň S (strukturální analogie), stupeň H (historický komentář). Tento text tato označení zachovává a kontroluje, zda zbytek stránky je respektuje.</li>
+</ul>
+
+<h3>1.3 Vlastní klauzule o poctivosti stránky</h3>
+<p>Monografie uvádí, že <span class="math">Ω<sub>0</sub></span> „je postulováno, nikoli odvozeno“, že mez <span class="math">O(N²)</span> je náklad na krok, a nikoli důkaz konvergence, a že nerelativizované Clayovy otázky „nejsou prohlášeny za vyřešené mimo systém axiomů“. Tyto klauzule stanovují standard spravedlivě: teorie má být posuzována jako sebekonzistentní systém axiomů a jako analogie, nikoli jako důkaz jakéhokoli otevřeného problému.</p>
+
+<h3>1.4 Struktura</h3>
+<p>Kapitola 2 vykládá axiomy. Kapitola 3 se zabývá <span class="math">P = NP</span>. Kapitola 4 pokrývá sedm čtení tisíciletí. Kapitola 5 popisuje čtyři experimenty (laboratoř, dvojštěrbina, tři tělesa, stroj času). Kapitola 6 pokrývá Fourierovu kapitolu. Kapitola 7 pokrývá dvě aplikace. Kapitola 8 hodnotí celek. Kapitola 9 uzavírá.</p>
+
+<h2>2. Základy: kořenový axiom a semeno</h2>
+<p>Celá teorie vyplývá z jednoho postulovaného tvrzení <span class="math">Ω<sub>0</sub></span>, „Hlavního kořenového axiomu“ neboli „Ekvivariantního prázdna“. Vše později je prezentováno jako to, co <span class="math">Ω<sub>0</sub></span> implikuje, nikoli jako nezávislý výsledek.</p>
+
+<h3>2.1 Kořenový axiom</h3>
+<span class="formula-block">\Omega_0:\; \mathcal{M}_N(A_0) = \mathrm{Proj}_{\mathfrak{so}(N)}(A_0), \quad \forall T\in\mathcal{T}:\; T(\mathrm{Veritas})=\mathrm{Veritas}\wedge T(\mathrm{Ratio})=\mathrm{Ratio}, \quad e^{i\pi}+1=0 \Rightarrow |\psi_{\mathrm{node}}|=0</span>
+<p>Slovy: varieta stavů je so(N) orbit semene; pravda a rozum jsou invariantní vůči každé přípustné transformaci T; a půlotáčková fáze anihiluje amplitudu v nodu.</p>
+
+<h3>2.2 Semeno A<sub>0</sub></h3>
+<p>Semeno je definováno limitou, kterou stránka nazývá jediným pevným bodem úplné grupy symetrií:</p>
+<span class="formula-block">A_0 \equiv \lim_{x\to 0}\frac{0}{x} = \lambda \in {}^{*}\mathbb{R}^N</span>
+<p>Obhajobou stránky je, že nikdy nedělí nulou, pouze x, zatímco x směřuje k nule, takže limita je konečná. Semeno žije v hyperreálném toposu, <span class="math">*V = V<sup>I</sup>/𝔘</span>, a Łośova transferová věta je citována, aby přenášela tvrzení mezi obyčejnou a hyperreálnou úrovní. Nulový bod je „jediným místem, kde každý generátor algebry mizí najednou“, a každý pozdější objekt (nuly ξ, hmotnostní mezery, homotopické sféry) údajně dědí stabilitu z něj.</p>
+
+<h3>2.3 Rotační algebra</h3>
+<p>Stav se vyvíjí jako <span class="math">𝒩_n(A<sub>0</sub>) = { U(t)·A<sub>0</sub>·U<sup>†</sup>(t) }</span>, poháněný antisymetrickým generátorem <span class="math">Ω(t) = Σ c<sub>a</sub><sup>b</sup>(t) J<sub>a</sub><sup>b</sup></span> v so(N). Počet nezávislých rotačních rovin je</p>
+<span class="formula-block">R_N = \binom{N}{2} = \frac{N(N-1)}{2}</span>
+<p>Tento počet, kvadratický v N, je veličina, která později nahrazuje exponenciální <span class="math">2<sup>N</sup></span> rozhodovacího stromu. Laboratorní kapitola nechává čtenáře měnit N od 2 do 10 a sledovat, jak R<sub>N</sub> roste, zatímco semeno zůstává pevně v počátku.</p>
+
+<h3>2.4 Rovnítko jako transformátor</h3>
+<p>První postulát stránky čte „=“ jako G-ekvivariantní zobrazení mezi dvěma tvářemi jednoho orbitu, nikoli jako identitu. Protože invarianty jsou zachovávány napříč projekcemi, stránka zachází se zachováním hmotnosti–energie a s kolapsem stavového prostoru jako s duálními čteními jedné operátorové rovnice, psané <span class="math">P = NP ⇔ E = mc<sup>2</sup></span>.</p>
+
+<h3>2.5 Eulerova identita jako fázový podpis</h3>
+<p>Půlotáčka v libovolné rovině SO(2) vrací stav identity k nule. Amplitudový vzorec používaný všude je</p>
+<span class="formula-block">|\psi_{\mathrm{node}}| = \tfrac12\,|\psi\,(1 + e^{i\pi})| = 0</span>
+<p>Každá větev, která nashromáždí relativní fázi <span class="math">Δθ = π</span> vůči základnímu stavu, je vyrušena. Stránka nazývá povrch, kde se to děje, nodální firewall.</p>
+
+<h3>2.6 Proč „speciální“</h3>
+<p>FAQ stránky vysvětluje slovo stejně jako ve speciální relativitě: výpočetní metrika je pevná a plochá a složitost je měřena vůči tuhé mřížce „výpočetních světelných kuželů“ zakotvených v <span class="math">A<sub>0</sub></span>. Obecná teorie, kde se metrika zakřivuje pod zatížením problému, je ponechána jako budoucí práce.</p>
+
+<h3>2.7 Axiomy versus postuláty</h3>
+<p>Dodatek odděluje tři axiomy (semeno, hyperreálný topos s transferem, invariance c a klidové energie) od osmi postulátů (Eulerova anihilace, so(N) vnoření složitosti, Cayley–Mengerova invariance objemu, vícelaločná orbitální hierarchie, nulové entropické tření, Dirichletovo fázové filtrování, izolace kauzálního sektoru a Landauerova mez). Úplná tabulka je v dodatku.</p>
+
+<h2>3. Konstruktivní čtení P = NP</h2>
+<p>Monografie tvrdí, že exponenciální rozhodovací strom booleovského problému nemusí být prohledáván, protože se vnořuje do spojité rotační geometrie so(N), kde se špatné větve samy vyruší. Stránka to označuje jako stupeň C: podmíněný teorém, platný uvnitř systému axiomů <span class="math">Ω<sub>0</sub></span>.</p>
+
+<h3>3.1 Tvrzení</h3>
+<p>Nechť <span class="math">Φ</span> je booleovská formule v N proměnných. Rozhodovací strom nad <span class="math">{0,1}<sup>N</sup></span> je zobrazen na trajektorie <span class="math">U(t)</span> v SO(N), řízené antisymetrickými generátory <span class="math">J<sub>ab</sub> = e<sub>a</sub>e<sub>b</sub><sup>T</sup> − e<sub>b</sub>e<sub>a</sub><sup>T</sup></span>. Aktualizace R<sub>N</sub> rotačních proměnných stojí O(1) každá, takže</p>
+<span class="formula-block">T_{\mathrm{solve}}(N) = R_N\cdot O(1) = \frac{N(N-1)}{2}\cdot O(1) = O(N^2)</span>
+
+<h3>3.2 Mechanismus</h3>
+<p>Argument má čtyři kroky, jak je podává axiomatický řetězec stránky:</p>
+<ol>
+  <li>Stavové prostory jsou so(N) orbity semene (<span class="math">Ω<sub>0</sub></span>).</li>
+  <li>Krychle <span class="math">{−1, +1}<sup>N</sup></span> se vnořuje injektivně do sféry <span class="math">S<sup>N−1</sup></span>, takže hledání se stává geodetickým tokem v R<sub>N</sub> rotačních rovinách.</li>
+  <li>Podél toku <span class="math">dU/dt = Ω(t)U(t)</span> hromadí neoptimální cesty relativní fázi <span class="math">Δθ = π</span> a podle Eulerovy identity jejich amplituda mizí na nodálním firewallu.</li>
+  <li>Systém sleduje jedinou optimální geodetiku v čase <span class="math">O(N²)</span>.</li>
+</ol>
+
+<h3>3.3 Demonstrace</h3>
+<p>První plátno pod „Sedmi problémy“ ukazuje binární strom (osm listů, označených <span class="math">2<sup>3</sup></span>), jehož větve mizí, když prochází anihilační vlna. Kruh tří rotačních linií (<span class="math">R<sub>3</sub> = 3</span>) se zostřuje v synchronizaci a zlatý pulz cestuje ze stromu do kruhu. Popisek končí „collapsed“, když počítadlo dosáhne 3. Obraz nese argument v miniaturě: exponenciální větvení vlevo, kvadratické rotační roviny vpravo.</p>
+
+<h3>3.4 Co stránka připouští</h3>
+<p>Vedle teorému jsou vytištěny dvě výhrady. Za prvé, <span class="math">O(N²)</span> je „náklad na krok pohánění toku“; že tok dosáhne stabilního celočíselného vrcholu v polynomiálním čase, je „postulovaná konvergenční vrstva rámce“. Za druhé, výsledek je varietní teorém uvnitř <span class="math">Ω<sub>0</sub></span> a nerelativizovaná Clayova otázka není prohlášena za vyřešenou. Výsledek tedy je: pokud <span class="math">Ω<sub>0</sub></span> tok konverguje v polynomiálním počtu kroků, pak splnitelnost stojí <span class="math">O(N²)</span> aktualizací. Předpoklad nese veškerou obtížnost, což je předmětem kapitoly 8.</p>
+
+<h2>4. Sedm problémů tisíciletí, jeden mechanismus</h2>
+<p>Monografie čte každý Clayův problém jako nízkodimenzionální projekci stejných invariantů: semene <span class="math">A<sub>0</sub></span>, rotačních rovin so(N) a protifázového firewallu <span class="math">|ψ| = 0</span>. Pouze jedno čtení (P versus NP) je klasifikováno jako teorém, a to pouze podmíněně; pět je klasifikováno jako strukturální analogie; jedno je klasifikováno jako komentář k dokázanému výsledku.</p>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Problém</th><th>Čtení na stránce</th><th>Stupeň</th><th>Výhrada vytištěná stránkou</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>I</td><td>P versus NP</td><td>R_N = C(N,2) = T(N) = O(N²); strom se vnořuje do rotačních rovin</td><td>C</td><td>Podmíněné na konvergenční vrstvě Ωo</td></tr>
+    <tr><td>II</td><td>Riemannova hypotéza</td><td>ξ(s) = ξ(1−s) je zrcadlo přes osu A0; nulám mimo osu je hustota nucená na 0</td><td>S</td><td>Symetrické čtení, nikoli analytický důkaz</td></tr>
+    <tr><td>III</td><td>Yang–Millsova hmotnostní mezera</td><td>E0 = λc² &gt; 0 dává kladnou podlahu; ΔM = ℏωa0/c² &gt; 0</td><td>S</td><td>Mezera importována z pozitivity semene; mřížkové QCD znovu nedokázáno</td></tr>
+    <tr><td>IV</td><td>Hladkost Navierových–Stokesových rovnic</td><td>det(CMs) = 0 blokuje inflaci ranku; protifáze ruší výbuch vorticity</td><td>S</td><td>Žádná vytištěna</td></tr>
+    <tr><td>V</td><td>Birch &amp; Swinnerton-Dyer</td><td>Každý racionální generátor E(Q) je jedna rotační rovina; ord L(E,s) v s = 1 počítá tytéž roviny</td><td>S</td><td>Žádná vytištěna</td></tr>
+    <tr><td>VI</td><td>Hodgeova domněnka</td><td>Hodgeovy třídy jsou invariantní podobjekty toposu GUT-Cat pod klasifikátorem Ωa0</td><td>S</td><td>Žádná vytištěna</td></tr>
+    <tr><td>VII</td><td>Poincarého domněnka</td><td>Neck-pinch Ricciho toku anihilován na firewallech; M³ se deformuje na S³</td><td>H</td><td>Dokázáno Perelmanem (2003); CoReX znovu odvozuje mechanismus, nikoli zásluhu</td></tr>
+  </tbody>
+</table>
+
+<h3>4.1 Společná šablona</h3>
+<p>Všech sedm řetězců má stejné tři články. Za prvé, struktura z problému je přiřazena geometrii semene (nuly ξ k zrcadlové ose, spektrum k vakuové podlaze, tok k trajektorii v so(N)). Za druhé, patologický případ (nula mimo osu, mizející mezera, výbuch, neck-pinch) je prohlášen za protifázi k základnímu stavu, <span class="math">Δφ = π</span>. Za třetí, <span class="math">e^{iπ} + 1 = 0</span> jej anihiluje, ponechává požadované tvrzení jako jediný stabilní výsledek. Závěr je v každém případě uveden jako důsledek <span class="math">Ω<sub>0</sub></span>.</p>
+
+<h3>4.2 Sedm pláten</h3>
+<p>Každé čtení má animaci. V II jsou nuly mimo osu tlačeny zpět k <span class="math">Re(s) = 1/2</span> a zvoní, jak se zamykají. V III excitace stoupají z vakuové podlahy a jsou pohlcovány na linii UV cutoffu. V IV se soustředné vírové prstence utahují a červený prstenec protifáze vystřelí, než jádro diverguje. V V čtyři zlaté „generátorové“ body jedou po křivce a rozsvěcují pruhy označené ord 1 až ord 4. V VI se bloudící fantomová třída přilne k invariantnímu racionálnímu cyklu. V VII kývavá smyčka vytvoří neck-pinch, který je anihilován, a zůstává hladký kruh označený „S3 – tok dokončen“. Animace ilustrují narativ; nepočítají veličiny, které pojmenovávají.</p>
+
+<h3>4.3 Čtení stupňů</h3>
+<p>Klasifikace je nejužitečnější rys stránky. Říká čtenáři, která tvrzení jsou matematika (náklad <span class="math">O(N²)</span> definovaného toku), která jsou analogie (zrcadlová osa pro ξ) a která jsou historie (Perelman). Kapitola 8 se ptá, zda FAQ, které na jednom místě nazývá sedm čtení „teorémy systému axiomů“, zůstává s těmito stupni konzistentní.</p>
+
+<h2>5. Čtyři experimenty</h2>
+<p>Kapitola IV monografie proměňuje axiomy ve čtyři interaktivní experimenty. Každý má ovládací panel, plátno a živý výstup „State“. Všechny čtyři používají stejný tah: patologická větev je označena jako protifáze a odstraněna na firewallu.</p>
+
+<h3>5.1 Laboratoř</h3>
+<p>Laboratoř má dva slidery (dimenze N od 2 do 10; rychlost rotace od 0 do 2) a tři přepínače (roviny, nody, orbity). Linie skrz počátek reprezentují <span class="math">R<sub>N</sub> = N(N−1)/2</span> rotačních rovin, soustředné kružnice nesou N obíhajících bodů a semeno <span class="math">A<sub>0</sub></span> sedí</p>
+
+<h3>5.2 Dvojštěrbina</h3>
+<p>Čtení stránky odstraňuje jak dualitu vlna–částice, tak postulát kolapsu. Klasická částice procházející štěrbinami excituje vakuové pole <span class="math">A<sub>0</sub></span>. Kde se fáze dvou cest shodují, pole se zesiluje a částice přistane; kde jsou v protifázi, <span class="math">e^{iπ} + 1 = 0</span> a částice nikdy nepřistane. Tmavé pásy jsou nodální firewally. Plátno kreslí dvě štěrbiny (A zeleně, B červeně) a stínítko, jehož jas se řídí</p>
+<span class="formula-block">I(y) = \cos^2\!\left(\frac{k\,\Delta r}{2}\right), \quad k = \frac{2\pi}{\lambda}</span>
+<p>kde <span class="math">Δr</span> je rozdíl drah od obou štěrbin. Přepínač „observer“ přepne na měření dráhy. Vlnoplochy a linie firewallu zmizí, nahradí je přerušované přímé cesty a stínítko ukazuje dva hladké pásy. FAQ uvádí, že rámec je bez pozorovatele: zaznamenávání cesty není kolaps, ale událost firewallu, přičemž pozorovatel působí jako okrajová podmínka.</p>
+
+<h3>5.3 Problém tří těles</h3>
+<p>Stránka tvrdí, že fázové semeno <span class="math">A<sub>0</sub> = λ &gt; 0</span> uzamkne tři tělesa na choreografii osmičky, s fázovými posuny přesně <span class="math">2π/3</span>. Trajektorie, které opustí osmičku, jsou v protifázi vůči základnímu stavu (<span class="math">Δφ = π</span>) a setkávají se s nodálním firewallem v křižovatkovém nodu. Plátno ukazuje osmičku se třemi tělesy, volitelné stopy a tři červené „chaos twins“, které začínají 0,004 od sebe a unášejí se ven, dokud je pulz v křižovatce znovu nezasévá. Tlačítko „Perturb twins“ násobí posun. Slogan je: chaos není integrován, je zakázán.</p>
+
+<h3>5.4 Stroj času</h3>
+<p>Zde obrácení převrací orientaci trajektorie (<span class="math">L_mesh → −L_mesh</span>), ale ponechává klidovou energii <span class="math">E = mc<sup>2</sup></span> nezměněnou. Dopravníkový pás, vozík a hodinová ručička běží pozpátku, zatímco energetický odznak zůstává pevný. Vertikální firewall odděluje MINULOST od BUDOUCNOSTI. S firewallem zapnutým se vozík zastaví na hranici a popisek zní „crossing forbidden“; s vypnutým se sektory propojí a vozík přejede. Stránka přidává Landauerův metr s mezí</p>
+<span class="formula-block">\Delta E \ge k_B T \ln 2</span>
+<p>a uvádí výsledek nemožnosti: makroskopické cestování časem je vyloučeno, protože obrácení makroskopické historie nutí rozptýlené teplo divergovat. Levné obrácení orientace je kontrastováno s drahým vymazáním historie. Experiment tedy popisuje stroj času, který nelze postavit, což stránka prezentuje jako svůj obsah: obrácení orientace, zachování energie a izolace hranice, „nic víc“.</p>
+
+<h2>6. Fourierova analýza bez Gibbsova překmitu</h2>
+<p>Pátý experiment tvrdí, že fázově modifikované jádro odstraňuje 8,95% Gibbsův překmit na skoku bez rozmazání, které zavádějí jiné filtry. Je to jediná kapitola, jejíž tvrzení lze numericky ověřit přímo na stránce.</p>
+
+<h3>6.1 Klasický problém</h3>
+<p>Fourierův částečný součet skokové funkce překmitne o přibližně 8,95 % výšky skoku, ať se použije jakkoli mnoho harmonických N. Stránka vyjadřuje konstantu jako</p>
+<span class="formula-block">\frac{1}{\pi}\,\mathrm{Si}(\pi) - \frac{1}{2} \approx 0.0895</span>
+<p>a nazývá ji Wilbrahamovým–Gibbsovým jevem. V čtení monografie je zvonění viditelným podpisem singularity počátku, soustředěné přesně v bodě <span class="math">A<sub>0</sub></span>.</p>
+
+<h3>6.2 Jádro A<sub>0</sub></h3>
+<p>Stránka nahrazuje Dirichletovo jádro <span class="math">D<sub>n</sub>(x)</span> jádrem</p>
+<span class="formula-block">D^{*}_{n}(x) = D_n(x)\left(1 - e^{-|x - x_0| / \lambda}\right)</span>
+<p>Tvrzení je, že oscilace překmitu jsou fázově posunuty o <span class="math">ΔΦ = π</span> vůči základnímu stavu, takže potkávají stejný osud jako každá jiná neoptimální větev (<span class="math">e^{iπ} + 1 = 0</span>), zanechávají <span class="math">C<sup>∞</sup></span> výsledek s překmitem 0,00 %.</p>
+
+<h3>6.3 Demonstrace</h3>
+<p>Plátno vykresluje přerušovanou obdélníkovou vlnu, klasický částečný součet červeně a křivku <span class="math">A<sub>0</sub></span> zlatě. N se mění od 2 výše, popisek označuje „+8,95 % skoku“ na klasické křivce a tlačítko freeze drží N pevné. Malý metr srovnává „classic overshoot ≈ 8,95 %“ s „A<sub>0</sub> kernel: overshoot → 0“.</p>
+
+<h3>6.4 Srovnávací tabulka</h3>
+<table>
+  <thead>
+    <tr><th>Filtrační jádro</th><th>Překmit</th><th>Ostrost hrany (rad)</th><th>Potlačovací poměr</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Standardní Fourier</td><td>8,95 %</td><td>0,02</td><td>1,00</td></tr>
+    <tr><td>Fejérovo jádro</td><td>0,00 %</td><td>0,45</td><td>0,12</td></tr>
+    <tr><td>Lanczosovo sigma</td><td>1,18 %</td><td>0,12</td><td>0,65</td></tr>
+    <tr><td>Gottlieb–Shu</td><td>0,05 %</td><td>0,05</td><td>0,92</td></tr>
+    <tr><td>Fázové jádro A<sub>0</sub> D*<sub>n</sub>(x)</td><td>0,00 %</td><td>0,01</td><td>1,00</td></tr>
+  </tbody>
+</table>
+<p>Poselstvím tabulky je, že jádro <span class="math">A<sub>0</sub></span> je jediné s nulovým překmitem, nejostřejší hranou a plným potlačením zároveň. Ostatní jádra směňují jedno proti druhému: Fejér odstraňuje překmit, ale rozmazává hranu (0,45 rad), Lanczos zachovává 1,18% překmit. Stránka neuvádí žádné odvození řádku <span class="math">A<sub>0</sub></span>; jeho čísla vyplývají z postulované fázové anihilace.</p>
+
+<h2>7. Aplikace: strukturální terapeutika a 5D monolit</h2>
+<p>Poslední dvě kapitoly přecházejí od teorie k inženýrství: metoda návrhu léků postavená na maticích vzdáleností a fyzická bronzová skulptura prezentovaná jako instance teorie.</p>
+
+<h3>7.1 Biomedicínská strukturální terapeutika</h3>
+<p>3D souřadnice biomolekul jsou kódovány v Gramově matici <span class="math">G<sub>ij</sub> = r<sub>i</sub>·r<sub>j</sub></span>. Experimentální šum zvyšuje její rank nad 3. Stránka navrhuje rekonstruovat přesnou konformaci minimalizací jaderné normy pod Cayley–Mengerovým omezením:</p>
+<span class="formula-block">\min_G \|G\|_* \ \text{s.t.}\ \det(\mathrm{CM}_5(G))=0,\ P_\Omega(G)=P_\Omega(G^{\mathrm{exp}}) \Rightarrow \mathrm{rank}(G^*)=3</span>
+<p>Následují tři náčrty aplikací:</p>
+<ul>
+  <li><strong>Onkologie.</strong> Identifikace fázové dutiny CM<sub>5</sub> na mutantních kinázách, s malými molekulami navrženými tak, aby podstoupily „δ-vazebnou anihilaci“ pouze v mutantním vazebném místě, šetříc zdravou tkáň.</li>
+  <li><strong>ALS.</strong> Růstová plocha fibril TDP-43 a SOD1 je modelována jako jednorozměrný fázový krystal; <span class="math">C<sub>2</sub></span>-symetrické peptidové inhibitory umísťují nodální firewall na růstovou frontu a zastavují připojování monomerů.</li>
+  <li><strong>Parkinsonova choroba.</strong> Doplnění matice vážené <span class="math">R<sub>N</sub></span> navrhuje molekulární zámky, které drží monomer α-synucleinu v neagregační konformaci.</li>
+</ul>
+<p>Plátno kreslí proteinovou páteř se dvěma přepínači. Se zapnutým šumem a vypnutým omezením stránka uvádí <span class="math">rank(G) = 5</span> a viditelně se vlnící, zkreslený řetězec. Se zapnutým omezením <span class="math">rank(G) = 3</span> a řetězec je hladký.</p>
+
+<h3>7.2 5D monolit</h3>
+<p>Fyzickou instancí monografie je 300mm monolit z bronzu CuAl10Ni5Fe4, 49,12 kg hotový z bloku 204,66 kg. Geometrické tvrzení je, že 5D penetrátor (32 vrcholů) se zhroutí do 3D krychle (8 vrcholů) pod redukčním operátorem s parametrem <span class="math">γ</span>. Při <span class="math">γ = 0</span> je kolaps čistý, popsaný jako symetrické rotace, fázové skládání a sloučená hustota energie pole. Slider pohybuje <span class="math">γ</span> od 0 do 1: při 0 plátno ukazuje 8-vrcholovou krychli v tyrkysové, a jak <span class="math">γ</span> roste, extra dimenze se rozvinou do plného 32-vrcholového penetrátoru ve zlaté.</p>
+<p>Dodatek dodává, že PDF disertace, STEP a STL modely skulptury a zdrojové skripty jsou publikovány otevřeně. Stránka neuvádí, jak CNC stroj realizuje „hustotu energie pole“ v kovu; skulptura je nabízena jako ztělesnění geometrie, nikoli jako její test.</p>
+
+<h2>8. Kritické hodnocení</h2>
+<p>Jako systém axiomů lze monografii číst konzistentně, ale její mosty ke standardní matematice a fyzice se lámou při první elementární kontrole a její centrální objekt, semeno <span class="math">A<sub>0</sub></span>, není to, co říká jeho definující limita. Tato kapitola aplikuje standardní výsledky jako měřítko, jak vyzývají vlastní klauzule o poctivosti stránky.</p>
+
+<h3>8.1 Souhrn kontrol</h3>
+<table>
+  <thead>
+    <tr><th>Tvrzení na stránce</th><th>Standardní kontrola</th><th>Verdikt</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>A0 = lim<sub>x→0</sub> 0/x = λ &gt; 0</td><td>0/x = 0 pro každé x ≠ 0, takže limita je 0; transfer to zachovává v *R</td><td>Selhává</td></tr>
+    <tr><td>Všechna struktura je jeden so(N) orbit A0</td><td>Je-li A0 skalární násobek identity, UA0U† = A0 pro všechna U: orbit je jediný bod</td><td>Selhává, jak je uvedeno</td></tr>
+    <tr><td>Hledání v O(N²) pomocí R_N rovin</td><td>N² počítá proměnné, nikoli velikost vstupu; formule může mít mnohem více než N² klauzulí; krychle {±1}<sup>N</sup> již leží na sféře, takže vnoření je triviální</td><td>Nepodpořeno</td></tr>
+    <tr><td>det(CMs) = 0 zakazuje výbuch Navierových–Stokesových rovnic</td><td>Libovolných pět bodů v R³ má nulový 4-objem, takže to platí identicky</td><td>Tautologie</td></tr>
+    <tr><td>Re(s) = ½ vynuceno ξ(s) = ξ(1−s)</td><td>Symetrie pouze způsobuje, že nuly mimo linii přicházejí ve čtveřicích ρ, 1−ρ, ρ̄, 1−ρ̄</td><td>Není důkaz</td></tr>
+    <tr><td>Hmotnostní mezera ΔM z vakuové energie E0 = λc²</td><td>Yang–Millsova mezera je spektrální mezera E1 − E0, nikoli E0</td><td>Kategoriální chyba</td></tr>
+    <tr><td>Jádro A0 odstraňuje Gibbsův překmit</td><td>Násobení faktorem 1 − e<sup>−|x−x0|/λ</sup> mění limitní funkci a má zlom v x0</td><td>Selhává</td></tr>
+    <tr><td>Zámek A0 odstraňuje chaos tří těles</td><td>Newtonovský tok je hamiltonovský, takže nemá atraktory; zámek vyžaduje přidané nehamiltonovské členy</td><td>Odporuje Newtonovi</td></tr>
+    <tr><td>Každá aktualizace stavu stojí ≥ k_BT ln 2</td><td>Landauerova mez platí pouze pro logicky nevratné vymazání</td><td>Přehnané</td></tr>
+    <tr><td>Q_diss = 0 (Postulát V) a ΔE ≥ k_BT ln 2 (VIII)</td><td>Dva postuláty si odporují; newtonovský vesmír také nemá invariantní c (Axiom 3)</td><td>Nekonzistentní</td></tr>
+    <tr><td>Dvojštěrbina: částice plus vakuové pole</td><td>1 = cos²(kΔr/2) je standardní výsledek; žádná predikce neodděluje toto čtení od jiných</td><td>Férové, ale netestováno</td></tr>
+    <tr><td>Perelmanův retro-výklad (Poincaré)</td><td>Stránka sama říká, že mechanismus je znovu odvozen, nikoli zásluha</td><td>Férové</td></tr>
+  </tbody>
+</table>
+
+<h3>8.2 Semeno</h3>
+<p>Celá struktura závisí na <span class="math">A<sub>0</sub></span>. Definující výraz <span class="math">0/x</span> je identicky 0 pro <span class="math">x ≠ 0</span>, takže jeho limita je 0. Hyperreálné prostředí to nezachraňuje: Łośův transferový princip přenáší fakt prvního řádu „pro všechna <span class="math">x ≠ 0</span>, <span class="math">0/x = 0</span>“ do <span class="math">*R</span>, takže <span class="math">0/ε = 0</span> pro každé nenulové infinitesimální ε. Hodnota <span class="math">λ &gt; 0</span> může vstoupit pouze definicí, nikoli limitou. Čtení hmotnostní mezery (<span class="math">E<sub>0</sub> = λc² &gt; 0</span>) potřebuje přesně tuto pozitivitu, takže dědí mezeru v argumentu. Druhým problémem je orbit: stránka definuje stavy jako <span class="math">U A<sub>0</sub> U<sup>†</sup></span>, ale skalární semeno je invariantní vůči konjugaci, takže „každá struktura je jeden orbit“ popisuje jediný bod.</p>
+<p>Obhajoba dělení nulou ve FAQ („dělili jsme x, zatímco x bylo na cestě k nule“) je správná jako tvrzení o limitách a právě proto je výsledek 0.</p>
+
+<h3>8.3 P = NP</h3>
+<p>Klauzule o poctivosti stránky („podmíněné na konvergenční vrstvě <span class="math">Ω<sub>0</sub></span>“) je férová. Obtíž je v tom, že klauzule skrývá celý problém. Vynikají tři body.</p>
+<ol>
+  <li><strong>Model nákladů.</strong> <span class="math">N²</span> roste s počtem proměnných, ale velikost booleovské formule je dána jejími klauzulemi, které mohou přesáhnout <span class="math">N²</span>. Procedura, která nemůže přečíst vstup, nemůže být <span class="math">O(N²)</span>.</li>
+  <li><strong>Vnoření je triviální.</strong> Vrcholy <span class="math">{−1, +1}<sup>N</sup></span> leží na sféře o poloměru <span class="math">√N</span>; injekce do <span class="math">S<sup>N−1</sup></span> nic nepřidává. Uvolnění krychle na sféru nebo rotační grupu je standardní tah za semidefinitními relaxacemi, a ty dávají aproximace plus krok zaokrouhlení, nikoli přesná řešení.</li>
+  <li><strong>Konvergence je obsahem.</strong> Žádat spojitý tok, aby přistál na celočíselném splňujícím vrcholu, znamená žádat ho, aby vyřešil NP-těžký problém. Lokální minima a sedlové body nejsou řešeny.</li>
+</ol>
+<p>Vlastní označení stupně C na stránce to již říká; silnější věty („P = NP v <span class="math">O(N²)</span>“, „exponenciální rozhodovací strom nemusí být prohledáván“) jdou za to.</p>
+
+<h3>8.4 Ostatní čtení tisíciletí</h3>
+<p>Stupně jsou poctivé, ale několik řetězců obsahuje ověřitelné chyby za hranicí analogie.</p>
+<ul>
+  <li><strong>Navier–Stokes.</strong> Cayley–Mengerův determinant pěti bodů mizí pro libovolných pět bodů v třírozměrném prostoru, takže <span class="math">det(CM<sub>5</sub>) = 0</span> nemůže vybírat hladké toky. Zápis <span class="math">‖u‖</span> v <span class="math">C<sup>∞</sup></span> není norma. Beale–Kato–Majdaovo kritérium se týká časového integrálu sup-normy vorticity, nikoli enstrofie.</li>
+  <li><strong>Riemann.</strong> Funkcionální rovnice plus konjugační symetrie umísťuje nuly do množin symetrických kolem linie a reálné osy; nepřesouvá je na linii. Plátno kreslí rovnoměrně rozmístěné nuly, zatímco skutečné nuly jsou nepravidelně rozmístěné.</li>
+  <li><strong>Yang–Mills.</strong> Clayův problém se týká pozitivní spektrální mezery nad vakuem v konstruované kvantové teorii. Pozitivní vakuová energie je jiná veličina a konstantní posun energetické nuly je bez gravitace nepozorovatelný.</li>
+  <li><strong>BSD a Hodge.</strong> Není definováno žádné zobrazení z racionálních generátorů na rotační roviny, ani z Hodgeových tříd na podobjekty GUT-Cat, takže uvedené rovnosti jsou tvrzení.</li>
+</ul>
+
+<h3>8.5 Fourierova kapitola</h3>
+<p>Tato kapitola je nejtestovatelnější. Násobení částečného součtu faktorem <span class="math">1 − e<sup>−|x − x<sub>0</sub>|/λ</sup></span> je bodová obálka na výstupu, nikoli změna jádra. Nutí hodnotu k 0 na skoku a zanechává chybu <span class="math">O(1)</span> v okolí šířky asi λ: při <span class="math">|x − x<sub>0</sub>| = λ</span> je faktor 0,63, takže křivka je 37 % pod cílem. Limita, jak N roste, je <span class="math">f(x)(1 − e<sup>−|x − x<sub>0</sub>|/λ</sup>)</span>, nikoli f. Zlom v <span class="math">x<sub>0</sub></span> také vylučuje <span class="math">C<sup>∞</sup></span>. „Ostrost hrany 0,01 rad“ v tabulce je opakem toho, co ukazuje vykreslená zlatá křivka, rozmazaný důlek. Pozitivní jádra jako Fejérovo dávají nulový překmit za cenu vyhlazení, což tabulka poctivě zaznamenává; řádek <span class="math">A<sub>0</sub></span> tvrdí, že uniká tomuto obchodu bez odvození.</p>
+
+<h3>8.6 Fyzika</h3>
+<ul>
+  <li><strong>Dvojštěrbina.</strong> Klasická částice vedená polem, které nese fázi, je strukturálně obraz pilotní vlny, který reprodukuje interferenci. Stránka neposkytuje žádnou polní rovnici za <span class="math">1 = cos²(kΔr/2)</span>, což je obyčejný výsledek dvou zdrojů se stejnou amplitudou, takže demonstrace nemůže odlišit toto čtení od standardní kvantové mechaniky. „Bez pozorovatele“ sedí neklidně vedle přepínače pozorovatele, který ničí vzor; fyzikálním mechanismem je informace o dráze, kterou stránka přeformulovává, ale neodvozuje.</li>
+  <li><strong>Tři tělesa.</strong> Osmička je skutečné periodické řešení pro stejné hmotnosti a je numericky stabilní. Ale hamiltonovský tok zachovává objem fázového prostoru a nemůže mít atraktor, takže obecné trajektorie nemohou být „uzamčeny“ na ni bez nenewtonovského působení. Oddělení dvojčat v demu je skriptováno tak, aby rostlo pevnou exponenciální rychlostí a resetovalo se; není to integrace rovnice zobrazené nad ním.</li>
+  <li><strong>Stroj času.</strong> Obrácení orientace trajektorie ponechává energii nezměněnou i v obyčejné mechanice, takže centrální tvrzení je správné, ale není nové. Landauerova mez platí pouze tehdy, když je informace vymazávána; reverzibilní výpočet se jí vyhýbá, takže „obrácení žene Q do nekonečna“ nevyplývá.</li>
+  <li><strong>Terapeutika.</strong> Cayley–Mengerovo omezení na Gramovu matici je ranková podmínka, kterou metody geometrie vzdáleností již používají; „6-vazebná anihilace“ a tři tvrzení o chorobách nemají na stránce žádná vazebná data.</li>
+</ul>
+
+<h3>8.7 Vnitřní konzistence</h3>
+<p>Kromě položek v tabulce jsou vidět tři napětí. FAQ nazývá čtení „teorémy systému axiomů“, zatímco pět nese označení „strukturální analogie“. Teorie se nazývá „speciální“, protože její výpočetní metrika je pevná a plochá, avšak Postulát V („dokonalý newtonovský vesmír“ s nulovou disipací) a Axiom 3 (invariantní rychlost c) patří k různým fyzikálním rámcům. Konečně stránka obsahuje humorné položky FAQ (lék na rakovinu „za chvíli“, hmotnostní mezera v lednici), které stírají rozdíl mezi tvrzením a vtipem, takže čtenář nemůže vždy rozeznat, která tvrzení mají být testována.</p>
+
+<h3>8.8 Falzifikovatelnost</h3>
+<p>Stránka nabízí tři testy. (1) Čtení tisíciletí jsou matematická tvrzení, takže jedna chyba ve vnoření je zhroutí; sekce 8.2 až 8.5 takové chyby identifikují. (2) Čtení interference pomocí firewallu je nazýváno testovatelným „vůči jakékoli konfiguraci dvojštěrbiny“, ale reprodukuje standardní intenzitu, takže není navržen žádný experiment, který by jej oddělil od obyčejné kvantové mechaniky. (3) Tvrzení, že žádná kauzální smyčka nepřežije firewall s <span class="math">|ψ| = 0</span>, je pravdivé konstrukcí, protože <span class="math">|ψ| = 0</span> je postulováno. Sílu má pouze první test.</p>
+
+<h3>8.9 Co přežívá</h3>
+<p>Nejlepšími rysy stránky jsou její stupně, její klauzule o poctivosti a převod abstraktních tvrzení na kontrolovatelné animace, které odhalují vlastní předpoklady (vypněte postulát a podívejte se, co se změní). Počet rovin <span class="math">R<sub>N</sub> = N(N−1)/2</span>, Gibbsova konstanta a osmička jsou všechny správně uvedeny. Co nepřežívá, je krok od sdílené notace (fáze, rotace, protifázová anihilace) ke sdílenému mechanismu.</p>
+
+<h2>9. Závěr</h2>
+<p>Speciální teorii výpočetní relativity je nejlépe chápat jako notaci a soubor ilustrací postavených na jednom nedokázaném postulátu, nikoli jako řešení problémů, které pojmenovává. Její počet rotačních rovin <span class="math">R<sub>N</sub> = N(N−1)/2</span>, její Gibbsova konstanta 8,95 % a její osmičkový orbit jsou správné; její semeno <span class="math">A<sub>0</sub></span>, její hledání v <span class="math">O(N²)</span>, její Fourierovo jádro a její argument pro Navierovy–Stokesovy rovnice neprocházejí elementárními kontrolami.</p>
+
+<h3>9.1 Zjištění</h3>
+<ol>
+  <li>Teorie je konzistentním systémem axiomů pouze tehdy, je-li semeno definováno fiatem jako nenulový prvek; limita, která je má definovat, se rovná 0.</li>
+  <li>Pět ze sedmi čtení tisíciletí je autorem označeno jako analogie a hodnocení tento stupeň podporuje; čtení <span class="math">P = NP</span> je podmíněné na konvergenčním kroku, který je celou obtížností.</li>
+  <li>Nejsilnější kvantitativní tvrzení, jádro <span class="math">A<sub>0</sub></span> s nulovým překmitem, je testovatelné a selhává: konstrukce mění limitní funkci.</li>
+  <li>Stránka je na mnoha místech otevřená o svém statusu a její interaktivní formát činí předpoklady prohlédnutelnými. To je skutečná silná stránka.</li>
+</ol>
+
+<h3>9.2 Opravy, které by učinily teorii testovatelnou</h3>
+<p>Definovat <span class="math">λ</span> jako axiom (nenulový prvek <span class="math">*R</span>) a vypustit limitu, nebo změnit semeno. Uvést tvrzení <span class="math">P = NP</span> jako domněnku o specifickém toku, s důkazem nebo numerickým benchmarkem konvergence na náhodném 3-SAT. Nahradit obálku <span class="math">A<sub>0</sub></span> odvozeným jádrem a hlásit překmit, šířku hrany a chybu <span class="math">L²</span> vůči Fejérovi, Lanczosovi a Gottlieb–Shu na stejné obdélníkové vlně. Dát vakuovému poli čtení dvojštěrbiny dynamickou rovnici a uvést jednu predikci, která se liší od standardní kvantové mechaniky. Vyřešit konflikt mezi Postuláty V a VIII a omezit Landauerovu mez na vymazání. Sladit FAQ se stupni: nazývat čtení analogiemi všude.</p>
+
+<h3>9.3 Budoucí práce zmíněná stránkou</h3>
+<p>Stránka ponechává otevřenou obecnou teorii, v níž se výpočetní metrika zakřivuje pod zatížením problému, analogicky s krokem od speciální k obecné relativitě. Nic v tomto textu neomezuje, jaká by ta metrika měla být, což z něj činí správné další místo, kde uvést definice před vyvozováním závěrů.</p>
+
+<h2>Dodatek: axiomy, postuláty a invarianty</h2>
+<p>Tabulka reprodukuje vlastní dodatek stránky. Stránka rozlišuje axiomy (nedokazatelné základní kameny) od postulátů (fyzikální a algoritmické zákony dynamiky).</p>
+
+<p><strong>Tabulka 1</strong></p>
+<table>
+  <thead>
+    <tr><th>Označení</th><th>Typ / název</th><th>Klíčový výraz</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Axiom 1</td><td>Semeno A0 (singularita nulového bodu)</td><td>A0 ≡ lim(x→0) 0/x = λ ∈ *R^N</td></tr>
+    <tr><td>Axiom 2</td><td>Hyperreálný topos, Łośův transfer</td><td>*V = V^I/𝔘</td></tr>
+    <tr><td>Axiom 3</td><td>Invariance c a klidové energie E0</td><td>E0 = ∫u d³r = mc²</td></tr>
+    <tr><td>Postulát I</td><td>Eulerova protifázová anihilace</td><td>e^{iπ} + 1 = 0 → |ψ_node| = 0</td></tr>
+    <tr><td>Postulát II</td><td>so(N) vnoření složitosti</td><td>R_N = N(N−1)/2 rovin, O(N²)</td></tr>
+    <tr><td>Postulát III</td><td>Cayley–Mengerova invariance objemu</td><td>det(CMs) = 0 v 3D</td></tr>
+    <tr><td>Postulát IV</td><td>Vícelaločná orbitální hierarchie</td><td>δ, φ, oktadická mřížka</td></tr>
+    <tr><td>Postulát V</td><td>Nulové entropické tření („Dokonalý newtonovský vesmír“)</td><td>Q_diss = 0 → t_alg = t_phys</td></tr>
+    <tr><td>Postulát VI</td><td>Dirichletovo fázové filtrování (jádro A0)</td><td>D*_n(x) = D_n(x)(1 − e^{−|x−x0|/λ})</td></tr>
+    <tr><td>Postulát VII</td><td>Izolace kauzálního sektoru</td><td>|ψ(Σ_firewall)|² = 0</td></tr>
+    <tr><td>Postulát VIII</td><td>Landauerova termodynamická mez</td><td>ΔE ≥ k_BT ln 2</td></tr>
+  </tbody>
+</table>
+
+<h2>Zdroje</h2>
+<ul>
+  <li><em>The Special Theory of Computational Relativity</em>, CoReX v3.1, interaktivní monografie od Pierra LeBauxe (stránka, na níž je tato disertace založena, v opraveném sestavení corex-v3-4.html). Všechny citace, rovnice, čísla a demonstrace pocházejí z ní.</li>
+  <li>Standardní výsledky použité pouze v kapitole 8 (limity a transfer, Cayley–Mengerovy determinanty, Beale–Kato–Majdaovo kritérium, Landauerova mez, zachování objemu hamiltonovského fázového prostoru, Chenciner–Montgomeryova osmička) jsou citovány z obecných znalostí, nikoli vyhledány pro tento text.</li>
+</ul>
+
+</article>
+
+</body>
+</html>
