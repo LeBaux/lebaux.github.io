@@ -1,5 +1,7 @@
 # lebaux.github.io
-Yes, Time Machine is impossible to build. Ever.
+✅🌥️🕊️🏳️⚪🤍✅
+
+Lucky for you the Time Machine is impossible to build. Truth me, I checked.
+P=NP under special conditions outlined in this repo.
 No, I wont answer any questions at the time.
-Sorry, Staying True Neutral and all that.
 Logic, science, reason and lots of love.
