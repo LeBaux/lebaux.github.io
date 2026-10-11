@@ -225,7 +225,7 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="kicker">A digital monograph · CoReX v3.5</p>
+    <p class="kicker">A digital monograph · CoReX v3.6</p>
     <h1>The Special Theory of<br><em>Computational Relativity</em></h1>
     <p class="motto" lang="la">Veritas et Ratio Invariantia Sunt in Toposo&#8202;<sup>*</sup>&#120141;</p>
     <p class="motto-gloss">Truth and reason are invariant in the topos *𝕍 — the motto and credo of this monograph.</p>
@@ -769,7 +769,7 @@
   <p class="avail">This monograph is freely available as a self-contained PDF — free to download at
   <a href="https://lebaux.github.io">lebaux.github.io</a>.<br>
   Math and logic belong to everyone: you cannot patent them, and we checked.</p>
-  <p class="fine">No time was reversed in the making of this site, and we only ever divided by x as x → 0 — responsibly.</p>
+  <p class="fine">No time was reversed in the making of this site.<br>We only ever divided by x as x → 0 — responsibly.</p>
   <div class="stamps">
     <button class="stamp stamp-red" id="stampA" type="button"></button>
     <button class="stamp stamp-blue" id="stampB" type="button"></button>
@@ -777,7 +777,7 @@
   <p class="fine hint">Click either stamp to swap them. The live one keeps ticking wherever it lands.</p>
   <button class="totop" onclick="goTop()">↑ Back to top</button>
   <div class="foot-rule" aria-hidden="true"></div>
-  <p class="fine colophon">CoReX · PNP-CoReX-v1 · Master Edition · site v3.5 (v61 animation core, design v3) · seed <b id="footSeed">···</b></p>
+  <p class="fine colophon">CoReX · PNP-CoReX-v1 · Master Edition · site v3.6 (v61 animation core, design v3) · seed <b id="footSeed">···</b></p>
 </div></footer>
 <script>
 var bannerTimer = null;
@@ -2579,6 +2579,7 @@ if (resizeRaf) cancelAnimationFrame(resizeRaf);
 resizeRaf = requestAnimationFrame(function () {
 resizeRaf = 0;
 setupCanvases();
+if (appStarted && !loopOn) frame(); /* loop stopped (reduced motion): repaint the static frame */
 });
 }
 
@@ -2770,14 +2771,15 @@ function fit(cv, h){
   return {g:g, w:w, h:h};
 }
 function reg(cv, h, draw){ if(cv) anims.push({cv:cv, h:h, draw:draw, t:0, geo:null}); }
-var run = !REDUCED, last = 0, hidden = false;
-document.addEventListener('visibilitychange', function(){ hidden = document.hidden; last = performance.now(); });
+var run = !REDUCED, last = -1, hidden = false;
+document.addEventListener('visibilitychange', function(){ hidden = document.hidden; last = -1; });
 window.addEventListener('resize', function(){ anims.forEach(function(a){ a.geo = null; }); });
 function loop(ts){
+  if(last < 0) last = ts; /* first frame after (re)start: dt = 0, no time jump */
   var dt = Math.min((ts-last)/1000, .05); last = ts;
   if(run && !hidden){
     anims.forEach(function(a){
-      if(!a.cv.isConnected) return;
+      if(!a.cv.isConnected || a.vis === false) return; /* off-screen: skipped, own t frozen */
       if(!a.geo) a.geo = fit(a.cv, a.h);
       a.t += dt;
       try{ a.draw(a.geo, a.t); }catch(e){}
@@ -2785,13 +2787,29 @@ function loop(ts){
   }
   requestAnimationFrame(loop);
 }
-requestAnimationFrame(loop);
+/* off-screen culling for the three design-v3 scenes (same pattern as the v61 core) */
+if('IntersectionObserver' in window && anims.length){
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      for(var i=0;i<anims.length;i++) if(anims[i].cv === en.target) anims[i].vis = en.isIntersecting;
+    });
+  }, { rootMargin: '80px' });
+  anims.forEach(function(a){ io.observe(a.cv); });
+}
+/* reduced motion: paint one calm static frame per scene instead of animating */
+if(REDUCED){ requestAnimationFrame(function(){
+  anims.forEach(function(a){ a.geo = fit(a.cv, a.h); try{ a.draw(a.geo, 0); }catch(e){} });
+}); }
+else requestAnimationFrame(loop);
 
 /* ============ HERO: seed + rotation planes ============ */
 reg(document.getElementById('heroC'), 280, function(s, t){
   var g=s.g, W=s.w, H=s.h, cx=W/2, cy=H/2;
   g.clearRect(0,0,W,H);
   var N=8, R=Math.min(W,H)/2-24;
+  /* faint dashed guide ring marking the orbit boundary */
+  g.beginPath(); g.arc(cx,cy,R,0,Math.PI*2);
+  g.strokeStyle='rgba(63,214,192,.07)'; g.setLineDash([2,7]); g.lineWidth=1; g.stroke(); g.setLineDash([]);
   for(var i=0;i<N;i++){
     var ph = t*0.5 + i*Math.PI/N;
     g.beginPath();
@@ -2804,12 +2822,20 @@ reg(document.getElementById('heroC'), 280, function(s, t){
     var x = a + d*Math.cos(t*0.6)*0.5, y = b + d*Math.sin(t*0.6)*0.5, z = c;
     var rot = t*0.3, X = x*Math.cos(rot)-y*Math.sin(rot), Y = x*Math.sin(rot)+y*Math.cos(rot);
     var persp = 1/(1.6 + z*0.3);
-    g.beginPath(); g.arc(cx+X*R*0.62*persp, cy+Y*R*0.62*persp, 1.6+0.8*Math.sin(t*2+v), 0, 7);
-    g.fillStyle='rgba(217,164,65,.85)'; g.fill();
+    var px = cx+X*R*0.62*persp, py = cy+Y*R*0.62*persp;
+    /* depth cue: nearer nodes brighter, larger, with a short trailing arc */
+    var depth = Math.max(0, Math.min(1, (persp-1/1.9)/(1/1.3-1/1.9)));
+    var al = .35 + .5*depth;
+    var rr = Math.hypot(px-cx, py-cy), th = Math.atan2(py-cy, px-cx);
+    g.beginPath(); g.arc(cx, cy, rr, th-.5, th-.12);
+    g.strokeStyle='rgba(217,164,65,'+(al*.35).toFixed(3)+')'; g.lineWidth=1; g.stroke();
+    g.beginPath(); g.arc(px, py, (1.6+0.8*Math.sin(t*2+v))*(.7+.5*depth), 0, 7);
+    g.fillStyle='rgba(217,164,65,'+al.toFixed(3)+')'; g.fill();
   }
   g.beginPath(); g.arc(cx,cy,5+2*Math.sin(t*1.4),0,7);
   g.fillStyle='#d9a441'; g.shadowColor='#d9a441'; g.shadowBlur=18; g.fill(); g.shadowBlur=0;
-  g.font='11px ui-monospace,monospace'; g.fillStyle='rgba(168,176,192,.9)'; g.textAlign='center';
+  g.font='11px ui-monospace,monospace'; g.textAlign='center';
+  g.fillStyle='rgba(168,176,192,'+(.6+.3*Math.sin(t*1.4)).toFixed(3)+')';
   g.fillText('A₀ = λ', cx, cy+24); g.textAlign='left';
 });
 
@@ -2829,6 +2855,10 @@ reg(document.getElementById('bioC'), 340, function(s, t){
   var g=s.g, W=s.w, H=s.h; g.clearRect(0,0,W,H);
   var cx=W*0.5, cy=H*0.5, R=Math.min(W,H)*0.32;
   var bad = noise && !cm;
+  /* faint dot grid: the sampling lattice under the graph */
+  for(var gx=14; gx<W-8; gx+=22){ for(var gy=12; gy<H-24; gy+=22){
+    g.fillStyle='rgba(120,130,150,.07)'; g.fillRect(gx,gy,1,1);
+  }}
   var pts=[];
   for(var i=0;i<=40;i++){
     var a=i*0.55+t*0.5;
@@ -2844,6 +2874,17 @@ reg(document.getElementById('bioC'), 340, function(s, t){
     g.beginPath(); g.arc(p[0],p[1],2.4,0,7);
     g.fillStyle = bad?'rgba(232,106,138,.9)':'rgba(217,164,65,.9)'; g.fill();
   }});
+  /* unresolved noise: stray measurements drifting around the structure */
+  if(noise){ for(var k=0;k<10;k++){
+    var na=t*0.7+k*0.63;
+    g.beginPath(); g.arc(cx+Math.cos(na)*R*(1.05+0.25*Math.sin(t+k*2)),
+                         cy+Math.sin(na*1.7)*R*0.95, 1.1, 0, 7);
+    g.fillStyle='rgba(232,106,138,.45)'; g.fill();
+  }}
+  /* marker traveling along the recovered structure */
+  var mp=pts[Math.floor((t*6)%pts.length)];
+  g.beginPath(); g.arc(mp[0],mp[1],4,0,7);
+  g.strokeStyle=bad?'rgba(232,106,138,.95)':'rgba(63,214,192,.95)'; g.lineWidth=1.4; g.stroke();
   g.font='11px ui-monospace,monospace'; g.fillStyle='rgba(90,100,120,.9)';
   g.fillText(bad ? 'rank(G)=5 · noise unresolved — distorted conformation'
                  : 'min ‖G‖_* s.t. det(CM₅)=0 · rank(G)=3 — true structure', 14, H-12);
@@ -2869,22 +2910,31 @@ reg(document.getElementById('mC'), 380, function(s, t){
         y=c[0]*Math.sin(t*0.5)+c[1]*Math.cos(t*0.5);
     var z=c[2] + fold*(c[3]*Math.cos(t*0.9)+c[4]*Math.sin(t*0.9));
     var persp = 1/(2.4+z*0.35);
-    verts.push([cx+x*R*0.7*persp, cy+y*R*0.7*persp, v]);
+    verts.push([cx+x*R*0.7*persp, cy+y*R*0.7*persp, v, z, persp]);
   }
-  var m=verts.length;
+  var m=verts.length, edges=[];
   for(var i=0;i<m;i++){
     for(var j=i+1;j<m;j++){
       var dd=verts[i][2]^verts[j][2];
       if(!(dd&&!(dd&(dd-1)))) continue;
-      var al = 0.30 - 0.16*gam;
-      g.beginPath(); g.moveTo(verts[i][0],verts[i][1]); g.lineTo(verts[j][0],verts[j][1]);
-      g.strokeStyle = gam<0.02 ? 'rgba(63,214,192,.5)' : 'rgba(217,164,65,'+al+')';
-      g.lineWidth=1; g.stroke();
+      edges.push([verts[i], verts[j], (verts[i][3]+verts[j][3])/2]);
     }
   }
+  /* painter's algorithm: far edges first, depth-scaled alpha */
+  edges.sort(function(p,q){ return p[2]-q[2]; });
+  var base = 0.30 - 0.16*gam;
+  edges.forEach(function(e){
+    var pf = Math.min(1, Math.max(.45, 2.2/(2.4+e[2]*.35)));
+    g.beginPath(); g.moveTo(e[0][0],e[0][1]); g.lineTo(e[1][0],e[1][1]);
+    g.strokeStyle = gam<0.02 ? 'rgba(63,214,192,'+(0.15+0.45*pf).toFixed(3)+')'
+                             : 'rgba(217,164,65,'+(base*pf).toFixed(3)+')';
+    g.lineWidth=1; g.stroke();
+  });
   verts.forEach(function(p){
-    g.beginPath(); g.arc(p[0],p[1], gam<0.02?3:2, 0, 7);
-    g.fillStyle = gam<0.02 ? 'rgba(63,214,192,.95)' : 'rgba(217,164,65,.8)'; g.fill();
+    var pf = Math.min(1, Math.max(.45, 2.2/(2.4+p[3]*.35)));
+    g.beginPath(); g.arc(p[0],p[1], (gam<0.02?3:2)*(.7+.5*pf), 0, 7);
+    g.fillStyle = gam<0.02 ? 'rgba(63,214,192,'+(0.45+0.5*pf).toFixed(3)+')'
+                           : 'rgba(217,164,65,'+(0.35+0.5*pf).toFixed(3)+')'; g.fill();
   });
   g.font='11px ui-monospace,monospace'; g.fillStyle='rgba(168,176,192,.85)';
   g.fillText(gam<0.02 ? 'γ = 0 · 32 vertices → 8 · the monolith geometry'
