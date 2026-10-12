@@ -154,6 +154,15 @@
     height:420px;width:100%;min-width:0;box-shadow:0 0 22px rgba(59,47,113,.18)}
   .stage canvas{display:block;width:100%;height:100%;max-width:100%}
   @media(max-width:680px){.stage{height:340px}}
+  /* ---------- mobile: animations ---------- */
+  canvas{touch-action:pan-y}              /* scrolling over canvases stays smooth on touch */
+  @media(max-width:680px){
+    .hero{padding:48px 16px 40px}
+    .hero canvas{height:200px}
+    .cw{height:220px}
+    .stage{height:320px}
+    section{padding:44px 0}
+  }
   .ds-readout{margin-top:14px;padding:10px 14px;background:var(--bg);border:1px solid var(--line);
     border-radius:8px;font:12px var(--mono);color:var(--dim)}
   .ds-readout b{color:var(--gold2)}
@@ -225,7 +234,7 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="kicker">A digital monograph · CoReX v3.6</p>
+    <p class="kicker">A digital monograph · CoReX v3.9</p>
     <h1>The Special Theory of<br><em>Computational Relativity</em></h1>
     <p class="motto" lang="la">Veritas et Ratio Invariantia Sunt in Toposo&#8202;<sup>*</sup>&#120141;</p>
     <p class="motto-gloss">Truth and reason are invariant in the topos *𝕍 — the motto and credo of this monograph.</p>
@@ -777,7 +786,7 @@
   <p class="fine hint">Click either stamp to swap them. The live one keeps ticking wherever it lands.</p>
   <button class="totop" onclick="goTop()">↑ Back to top</button>
   <div class="foot-rule" aria-hidden="true"></div>
-  <p class="fine colophon">CoReX · PNP-CoReX-v1 · Master Edition · site v3.6 (v61 animation core, design v3) · seed <b id="footSeed">···</b></p>
+  <p class="fine colophon">CoReX · PNP-CoReX-v1 · Master Edition · site v3.9 (v61 animation core, design v3) · seed <b id="footSeed">···</b></p>
 </div></footer>
 <script>
 var bannerTimer = null;
@@ -1305,13 +1314,36 @@ grad.addColorStop(1, 'rgba(224,169,82,0)');
 ctx.fillStyle = grad;
 ctx.fillRect(cx - bandW / 2, 36, bandW, H - 66);
 
+// critical strip edges: Re(s) = 0 and Re(s) = 1, dashed, faint
+var strip = W * 0.16;
+ctx.strokeStyle = 'rgba(127,163,184,.12)';
+ctx.lineWidth = 1;
+ctx.setLineDash([2, 6]);
+ctx.beginPath(); ctx.moveTo(cx - strip, 36); ctx.lineTo(cx - strip, H - 30); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(cx + strip, 36); ctx.lineTo(cx + strip, H - 30); ctx.stroke();
+ctx.setLineDash([]);
+canvasLabel(ctx, 'Re(s) = 0', cx - strip - 6, 46, { align: 'center', color: 'rgba(127,163,184,.45)', size: 9 });
+canvasLabel(ctx, 'Re(s) = 1', cx + strip + 6, 46, { align: 'center', color: 'rgba(127,163,184,.45)', size: 9 });
+
 ctx.strokeStyle = 'rgba(127,163,184,.15)';
 ctx.lineWidth = 1;
 ctx.beginPath(); ctx.moveTo(28, cy); ctx.lineTo(W - 28, cy); ctx.stroke();
 ctx.strokeStyle = '#7ba78c'; ctx.lineWidth = 3;
 ctx.beginPath(); ctx.moveTo(cx, 42); ctx.lineTo(cx, H - 30); ctx.stroke();
-canvasLabel(ctx, 'Re(s) = 1/2', cx + 12, 28, { color: 'rgba(123,167,140,.9)' });
-canvasLabel(ctx, 'ξ(s) = ξ(1−s)', 18, 28, { color: 'rgba(164,158,144,.65)', size: 10 });
+canvasLabel(ctx, 'Re(s) = 1/2', cx, 18, { align: 'center', color: 'rgba(123,167,140,.9)' });
+canvasLabel(ctx, 'ξ(s) = ξ(1−s) · ρ₁ = ½ + 14.13i', 18, 28, { color: 'rgba(164,158,144,.65)', size: 10 });
+
+// faint |ξ(½+it)| trace: crosses zero exactly at each ρ on the line
+var zsp = Math.min(24, H * .08);
+ctx.strokeStyle = 'rgba(123,167,140,.16)';
+ctx.lineWidth = 1;
+ctx.beginPath();
+var first = true;
+for (var yy = cy - 4.6 * zsp; yy <= cy + 4.6 * zsp; yy += 2) {
+var xx = cx + Math.sin((yy - cy) / zsp * Math.PI) * Math.min(11, W * 0.028) * Math.exp(-Math.abs(yy - cy) / (H * 1.1));
+if (first) { ctx.moveTo(xx, yy); first = false; } else { ctx.lineTo(xx, yy); }
+}
+ctx.stroke();
 
 // non-trivial zeros on the line: gentle bob + expanding pulse rings
 for (var i = -4; i <= 4; i++) {
@@ -1372,7 +1404,7 @@ var q2 = (ph - 1.6) / 1.0;
 ctx.strokeStyle = 'rgba(255,209,102,' + (0.6 * (1 - q2)) + ')';
 ctx.lineWidth = 2;
 ctx.beginPath(); ctx.moveTo(cx, ry); ctx.lineTo(cx + W * 0.16 * (1 - EASEo(q2)), ry); ctx.stroke();
-canvasLabel(ctx, 'off-axis zero pushed back', cx + W * 0.08, ry - 12, { align: 'center', color: 'rgba(255,209,102,.9)', size: 10 });
+canvasLabel(ctx, 'off-axis zero pushed back', cx, H - 28, { align: 'center', color: 'rgba(255,209,102,.9)', size: 10 });
 } else if (ph >= 4.4) {
 var lu = (ph - 4.4) / 1.6;
 for (var rp = 0; rp < 2; rp++) {
@@ -1381,7 +1413,7 @@ ctx.strokeStyle = 'rgba(123,167,140,' + (0.7 * Math.max(0, 1 - rq * 2)).toFixed(
 ctx.lineWidth = 2;
 ctx.beginPath(); ctx.arc(cx, ry, 6 + EASEo(rq) * (20 + rp * 10), 0, Math.PI * 2); ctx.stroke();
 }
-if (lu < 0.5) canvasLabel(ctx, 'locked on the mirror axis', cx, ry - 16, { align: 'center', color: 'rgba(123,167,140,.95)', size: 10 });
+if (lu < 0.5) canvasLabel(ctx, 'locked on the mirror axis', cx, H - 28, { align: 'center', color: 'rgba(123,167,140,.95)', size: 10 });
 }
 canvasLabel(ctx, 'muted by firewall', W - 20, H - 12, { align: 'right', color: 'rgba(164,158,144,.6)', size: 10 });
 }
@@ -2591,7 +2623,7 @@ if (!cv) continue;
 var cw = cv.clientWidth;
 var ch = cv.clientHeight;
 if (cw < 1 || ch < 1) continue;
-var dpr = Math.min(window.devicePixelRatio || 1, 2);
+var dpr = Math.min(window.devicePixelRatio || 1, (window.innerWidth < 700 ? 1.5 : 2));
 var w = Math.max(1, Math.round(cw * dpr));
 var h = Math.max(1, Math.round(ch * dpr));
 if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
@@ -2761,11 +2793,14 @@ EQ_LATEX['min_G ‖G‖_* s.t. det(CM₅(G)) = 0 and P_Ω(G) = P_Ω(G^exp) ⇒ r
 (function(){
 'use strict';
 var REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-var DPR = Math.min(window.devicePixelRatio||1, 2);
+var DPR = Math.min(window.devicePixelRatio||1, (window.innerWidth < 700 ? 1.5 : 2));
 var anims = [];
 function fit(cv, h){
   var r = cv.getBoundingClientRect();
   var w = Math.max(r.width, 60);
+  /* CSS may cap the height on small screens (mobile media query) — respect it */
+  var ch = cv.clientHeight || 0;
+  if(ch > 40) h = ch;
   cv.width = w*DPR; cv.height = h*DPR;
   var g = cv.getContext('2d'); g.setTransform(DPR,0,0,DPR,0,0);
   return {g:g, w:w, h:h};
