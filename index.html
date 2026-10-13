@@ -117,6 +117,8 @@
   .chain .st b{color:var(--teal);font-weight:600}
   .chain .st.res b{color:var(--gold)}
   .chain .arrow{color:var(--faint)}
+  .chain.iline .st{display:inline}
+  .chain.iline .arrow{display:inline;padding:0 2px}
   /* ---------- problems ---------- */
   .prob{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
     border-radius:16px;overflow:hidden;display:grid;grid-template-columns:minmax(300px,1fr) minmax(300px,1fr);
@@ -224,8 +226,8 @@
   <a class="nl" href="#lab">Laboratory</a>
   <a class="nl" href="#doubleslit">Double-Slit</a>
   <a class="nl" href="#threebody">Three-Body</a>
-  <a class="nl" href="#timemachine">Time Machine</a>
   <a class="nl" href="#fourier">Fourier</a>
+  <a class="nl" href="#timemachine">Time Machine</a>
   <a class="nl" href="#bio">Therapeutics</a>
   <a class="nl" href="#monolith">5D Monolith</a>
   <a class="nl" href="#faq">FAQ</a>
@@ -234,7 +236,7 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="kicker">A digital monograph · CoReX v3.9</p>
+    <p class="kicker">A digital monograph · CoReX v4.0.4</p>
     <h1>The Special Theory of<br><em>Computational Relativity</em></h1>
     <p class="motto" lang="la">Veritas et Ratio Invariantia Sunt in Toposo&#8202;<sup>*</sup>&#120141;</p>
     <p class="motto-gloss">Truth and reason are invariant in the topos *𝕍 — the motto and credo of this monograph.</p>
@@ -303,7 +305,7 @@
   <p class="lede">The exponential decision tree does not have to be searched. It embeds — injectively —
   into the continuous rotation geometry of 𝔰𝔬(N), and the non-optimal branches cancel themselves.</p>
 
-  <div class="eq"><span class="eq-text">T_solve(N) = R_N · O(1) = N(N−1)/2 · O(1) = O(N²)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+  <div class="eq"><span class="eq-text">T_solve(N) = R_N · O(1) · K ≤ O(N²) · O(log N) = O(N² log N)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
 
   <div class="math"><i>T</i><sub>solve</sub>(<i>N</i>) = <i>R</i><sub><i>N</i></sub> · <i>O</i>(1) = <span class="frac"><span><i>N</i>(<i>N</i>−1)</span><span>2</span></span> · <i>O</i>(1) = <i>O</i>(<i>N</i>²)</div>
 
@@ -317,9 +319,10 @@
   <p><b>Proof mechanism.</b> Along the flow dU/dt = Ω(t)U(t), non-optimal search paths accumulate a relative
   phase Δθ = π. At θ = π, Euler’s anti-phase identity forces the state amplitude to vanish identically:
   non-satisfying branches are annihilated at zero-amplitude <b>nodal firewalls</b>, and the system follows
-  the unique optimal geodesic in O(N²) time. ∎</p>
+  the unique optimal geodesic in O(N² log N) time. ∎</p>
 
-  <div class="note"><b>Honesty:</b> the O(N²) bound is the per-step cost of driving the flow; the claim that
+  <div class="note"><b>Honesty:</b> the O(N²) is the per-step cost of driving the flow and K ≤ O(log N) the
+  Polyak–Łojasiewicz step count; the claim that
   the flow reaches a stable integer vertex in polynomial time is the framework’s postulated convergence
   layer. This is an in-manifold theorem under Ω₀ — the unrelativized Clay question is not claimed resolved
   outside the axiom system.</div>
@@ -338,15 +341,15 @@
     <div class="info">
       <h3>I · P versus NP</h3>
       <span class="badge c">Grade C · conditional in-manifold theorem</span>
-      <div class="eq"><span class="eq-text">R_N = C(N,2)  ⇒  T(N) = O(N²)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
-      <div class="math"><i>R</i><sub><i>N</i></sub> = <span class="frac"><span><i>N</i>(<i>N</i>−1)</span><span>2</span></span> &nbsp;⇒&nbsp; <i>T</i>(<i>N</i>) = <i>O</i>(<i>N</i>²)</div>
-      <p>The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N²).</p>
+      <div class="eq"><span class="eq-text">R_N = C(N,2) ⇒ T(N) = O(N² log N)</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+      <div class="math"><i>R</i><sub><i>N</i></sub> = <span class="frac"><span><i>N</i>(<i>N</i>−1)</span><span>2</span></span> &nbsp;⇒&nbsp; <i>T</i>(<i>N</i>) = <i>O</i>(<i>N</i>² log <i>N</i>)</div>
+      <p>The exponential decision tree over 2ᴺ states embeds injectively into the R_N rotation planes of the Lie algebra so(N). Non-optimal branches undergo Euler anti-phase cancellation at the nodal firewalls, and the geodesic flow completes in deterministic O(N² log N) — O(N²) per gradient step across the R_N angles, converging within K ≤ O(log N) steps under Polyak–Łojasiewicz gradient dominance. The Lie-algebraic route also steps around the three classical barriers: no oracles (relativization), no circuit look-up tables (natural proofs), and the transcendental exponential map ∑θ·J (algebrization).</p>
       <div class="chain">
         <span class="st"><b>Ω₀</b> — state spaces are SO(N) orbits of A₀</span>
         <span class="arrow">→ {−1,+1}<sup>N</sup> embeds injectively into S<sup>N−1</sup></span>
         <span class="arrow">→ search becomes geodesic flow in R_N rotation planes</span>
         <span class="arrow">→ non-optimal branches: Δθ = π ⇒ |ψ<sub>node</sub>| = 0</span>
-        <span class="st res"><b>∴ P = NP in O(N²)</b> (conditional on the Ω₀ convergence layer)</span>
+        <span class="st res"><b>∴ P = NP in O(N² log N)</b> (conditional on the Ω₀ convergence layer)</span>
       </div>
     </div>
     <div class="viz"><div class="cw"><canvas id="cv1" width="800" height="300" role="img" aria-label="Diagram: exponential decision tree collapsing into so(N) rotation planes"></canvas></div><div class="vizlabel">decision tree → rotation planes · anti-phase annihilation</div></div>
@@ -359,7 +362,7 @@
       <span class="badge s">Grade S · structural analogy</span>
       <div class="eq"><span class="eq-text">ξ(s) = ξ(1−s)  ⇒  Re(s) = ½</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
       <div class="math">ξ(<i>s</i>) = ξ(1−<i>s</i>) &nbsp;⇒&nbsp; Re(<i>s</i>) = <span class="frac"><span>1</span><span>2</span></span></div>
-      <p>The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus.</p>
+      <p>The functional equation is read as a mirror across the A₀ axis. Off-axis zeros break boundary equilibrium; the anti-phase firewall forces their probability density to zero, leaving Re(s) = ½ as the only stable locus. The v165 dissertation sharpens this: the non-trivial zeros ρₙ = βₙ + iγₙ are eigenvalues of the self-adjoint A₀ phase operator H<sub>A₀</sub> — Hermiticity enforces real eigenvalues γₙ ∈ ℝ, hence βₙ = ½ strictly.</p>
       <div class="chain">
         <span class="st"><b>Ω₀</b> — the functional equation is a mirror across the A₀ axis</span>
         <span class="arrow">→ off-axis zeros break boundary equilibrium of the mirror</span>
@@ -378,7 +381,7 @@
       <span class="badge s">Grade S · structural analogy</span>
       <div class="eq"><span class="eq-text">E₀ = λc² &gt; 0  ⇒  ΔM &gt; 0</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
       <div class="math"><i>E</i>₀ = λ<i>c</i>² &gt; 0 &nbsp;⇒&nbsp; Δ<i>M</i> = <span class="frac"><span>ħω<sub>A₀</sub></span><span><i>c</i>²</span></span> &gt; 0</div>
-      <p>The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ΔM = ħω<sub>A₀</sub>/c².</p>
+      <p>The scalar seed A₀ = λ gives the vacuum a strictly positive floor. Nodal firewalls cut off the high-energy divergences that would otherwise close the gap, yielding a strictly positive mass gap ΔM = ħω<sub>A₀</sub>/c² — equivalently, in the v165 formulation, ΔM = ħ/(λc) &gt; 0, with the seed λ acting as a non-zero UV cutoff on the lowest physical excitation.</p>
       <div class="chain">
         <span class="st"><b>Ω₀</b> — the vacuum is the scalar seed A₀ = λ &gt; 0</span>
         <span class="arrow">→ the seed gives the vacuum a positive energy floor E₀ = λc²</span>
@@ -565,46 +568,9 @@
   Chaos is not integrated; it is forbidden.</p>
 </div></section>
 
-<!-- ================= TIME MACHINE ================= -->
-<section id="timemachine"><div class="wrap">
-  <p class="kicker">Chapter IV · Experiment 4</p>
-  <h2>The time machine</h2>
-  <p class="lede">In this framework, reversing time does not reverse the sign of energy. It flips the
-  orientation of the trajectory — the conveyor belt runs backwards while the carriage keeps its rest energy
-  E = mc². What stops a paradox is not a law forbidding it — it is a nodal firewall: a surface where the
-  wavefunction is exactly zero, which nothing can cross. Turn the firewall off and the past sector leaks
-  into the future sector. Turn it back on and they are isolated again.</p>
-  <div class="lab">
-    <aside class="lab-panel" aria-label="Time machine controls">
-      <div class="lab-row">
-        <span class="grouplabel">Show</span>
-        <div class="chips" role="group" aria-label="Show">
-          <button class="chip on" id="tmChipFire" onclick="toggleTm('firewalls',this)" aria-pressed="true">Nodal firewalls</button>
-          <button class="chip on" id="tmChipLand" onclick="toggleTm('landauer',this)" aria-pressed="true">Landauer meter</button>
-        </div>
-      </div>
-      <div class="lab-row" style="margin-bottom:0">
-        <span class="grouplabel">Direction</span>
-        <div class="chips" role="group" aria-label="Direction">
-          <button class="chip" id="tmChipRev" onclick="toggleTm('reversed',this)" aria-pressed="false">Reverse time</button>
-        </div>
-      </div>
-      <div class="ds-readout" id="tmReadout"></div>
-    </aside>
-    <div class="stage"><canvas id="tmCv" width="800" height="470" role="img" aria-label="Time machine diagram: carriage, belt, clock, firewalls between future and past sectors"></canvas></div>
-  </div>
-  <p style="margin-top:16px">The Reversal toggle shows the belt change direction. The clock hand reverses
-  its sweep. But the Energy badge stays the same, and the firewalls keep the two sectors separate. This is
-  the whole content of the time machine: orientation inversion, energy conservation, and boundary isolation
-  — nothing more.</p>
-  <div class="note"><b>Impossibility theorem (Landauer closure).</b> Macroscopic time travel is excluded
-  inside the framework: every state update costs at least k<sub>B</sub>T ln 2 in erasure heat, so reversing
-  a macroscopic history drives Q<sub>diss</sub> → ∞. Orientation inversion is cheap; history erasure is not.</div>
-</div></section>
-
 <!-- ================= FOURIER ================= -->
 <section id="fourier"><div class="wrap">
-  <p class="kicker">Chapter IV · Experiment 5</p>
+  <p class="kicker">Chapter IV · Experiment 4</p>
   <h2>Fourier analysis without the Gibbs overshoot</h2>
   <p class="lede">Classical Fourier series pay a toll at every jump: no matter how many harmonics N are
   added, the partial sum overshoots the step by roughly 8.95% of the jump height — the Wilbraham–Gibbs
@@ -643,6 +609,49 @@
     <tr><td>Gottlieb–Shu</td><td>0.05%</td><td>0.05</td><td>0.92</td></tr>
     <tr><td class="hl">A₀ Phase Kernel D*ₙ(x)</td><td class="hl">0.00%</td><td class="hl">0.01</td><td class="hl">1.00</td></tr>
   </table>
+</div></section>
+
+<!-- ================= TIME MACHINE ================= -->
+<section id="timemachine"><div class="wrap">
+  <p class="kicker">Chapter IV · Experiment 5</p>
+  <h2>The time machine</h2>
+  <p class="lede">In this framework, reversing time does not reverse the sign of energy. It flips the
+  orientation of the trajectory — the conveyor belt runs backwards while the carriage keeps its rest energy
+  E = mc². What stops a paradox is not a law forbidding it — it is a nodal firewall: a surface where the
+  wavefunction is exactly zero, which nothing can cross. Turn the firewall off and the past sector leaks
+  into the future sector. Turn it back on and they are isolated again.</p>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Time machine controls">
+      <div class="lab-row">
+        <span class="grouplabel">Show</span>
+        <div class="chips" role="group" aria-label="Show">
+          <button class="chip on" id="tmChipFire" onclick="toggleTm('firewalls',this)" aria-pressed="true">Nodal firewalls</button>
+          <button class="chip on" id="tmChipLand" onclick="toggleTm('landauer',this)" aria-pressed="true">Landauer meter</button>
+        </div>
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <span class="grouplabel">Direction</span>
+        <div class="chips" role="group" aria-label="Direction">
+          <button class="chip" id="tmChipRev" onclick="toggleTm('reversed',this)" aria-pressed="false">Reverse time</button>
+        </div>
+      </div>
+      <div class="ds-readout" id="tmReadout"></div>
+    </aside>
+    <div class="stage"><canvas id="tmCv" width="800" height="470" role="img" aria-label="Time machine diagram: carriage, belt, clock, firewalls between future and past sectors"></canvas></div>
+  </div>
+  <p style="margin-top:16px">The Reversal toggle shows the belt change direction. The clock hand reverses
+  its sweep. But the Energy badge stays the same, and the firewalls keep the two sectors separate. This is
+  the whole content of the time machine: orientation inversion, energy conservation, and boundary isolation
+  — nothing more.</p>
+  <div class="note"><b>Impossibility theorem (Landauer closure).</b> Macroscopic time travel is excluded
+  inside the framework: every state update costs at least k<sub>B</sub>T ln 2 in erasure heat, so reversing
+  a macroscopic history drives Q<sub>diss</sub> → ∞. Orientation inversion is cheap; history erasure is not.</div>
+  <div class="chain iline" style="margin-top:16px">
+    <span class="st"><b>A₀</b> Seed</span><span class="arrow">→</span><span class="st"><b>A₁</b> Rot</span><span class="arrow">→</span><span class="st"><b>A₂</b> Geom</span><span class="arrow">→</span><span class="st"><b>A₃</b> Energy</span><span class="arrow">→</span><span class="st"><b>A₄</b> Mesh</span><span class="arrow">→</span><span class="st"><b>A₅</b> Shear</span><span class="arrow">→</span><span class="st"><b>A₆</b> Firewall</span><span class="arrow">→</span><span class="st"><b>A₇</b> Heat</span><span class="arrow">→</span><span class="st"><b>A₈</b> Res</span>
+  </div>
+  <p style="margin-top:12px">The 8-stage operational chain above is the full chrono-structural pipeline of the
+  dissertation. The A₂₀ planar-rotation axiom selects the SO(2) ⊂ SO(5) planes, flipping trajectory orientation
+  (z′<sub>ab</sub> = −z<sub>ab</sub>, L<sub>mesh</sub> → −L<sub>mesh</sub>) while rest energy E₀ = mc² stays untouched.</p>
 </div></section>
 
 <!-- ================= BIO ================= -->
@@ -698,6 +707,9 @@
     </aside>
     <div class="stage" style="height:380px"><canvas id="mC" height="380" role="img" aria-label="Rotating 5D penteract collapsing into a 3D cube as gamma decreases"></canvas></div>
   </div>
+  <p style="margin-top:16px">Machining specification (v165, Table 10.1): 5-axis CNC, 18,000 RPM spindle ·
+  dimensional tolerance ±0.005 mm (±5 μm) · surface finish Ra 0.4 μm mirror polish · 76.0% chip removal —
+  the axiom Ω₀ materialized to half a hair's width.</p>
 </div></section>
 
 <!-- ================= FAQ ================= -->
@@ -711,7 +723,7 @@
   <details><summary>Why is Euler’s identity central to this theory?</summary>
     <div class="answer">Euler’s identity e^{iπ} + 1 = 0 is the phase signature of the transformer at the fixed point. A half-turn in any SO(2) plane returns the identity state to zero.</div></details>
   <details><summary>How does the theory address the P vs NP problem?</summary>
-    <div class="answer">The exponential decision tree over 2^N states embeds injectively into the R_N = N(N−1)/2 rotation planes of the Lie algebra so(N). The geodesic flow completes in deterministic O(N²).</div></details>
+    <div class="answer">The exponential decision tree over 2^N states embeds injectively into the R_N = N(N−1)/2 rotation planes of the Lie algebra so(N). The geodesic flow completes in deterministic O(N² log N).</div></details>
   <details><summary>How does the framework read the double-slit experiment?</summary>
     <div class="answer">The dark bands of the interference pattern are nodal firewalls — points where the two paths meet in anti-phase and the amplitude satisfies e^{iπ} + 1 = 0, forcing |ψ| = 0. Particles do not need to be waves; they need only the vacuum field to carry their phase.</div></details>
   <details><summary>How does the framework read the three-body problem?</summary>
@@ -760,7 +772,7 @@
     <tr><td>Axiom 2</td><td>Hyperreal topos, Łoś transfer</td><td class="mono">*𝕍 = Vᴵ/𝒰</td></tr>
     <tr><td>Axiom 3</td><td>Invariance of c and rest energy E₀</td><td class="mono">E₀ = ∫u d³r = mc²</td></tr>
     <tr><td>Postulate I</td><td>Euler anti-phase annihilation</td><td class="mono">e^{iπ} + 1 = 0 ⇒ |ψ_node| = 0</td></tr>
-    <tr><td>Postulate II</td><td>so(N) embedding of complexity</td><td class="mono">R_N = N(N−1)/2 planes · O(N²)</td></tr>
+    <tr><td>Postulate II</td><td>so(N) embedding of complexity</td><td class="mono">R_N = N(N−1)/2 planes · O(N² log N)</td></tr>
     <tr><td>Postulate III</td><td>Cayley–Menger volume invariance</td><td class="mono">det(CM₅) = 0 in 3D</td></tr>
     <tr><td>Postulate IV</td><td>Multi-lobe orbital hierarchy</td><td class="mono">δ, φ, octadic lattice 𝒪₈</td></tr>
     <tr><td>Postulate V</td><td>Zero entropic friction (Perfect Newtonian Universe)</td><td class="mono">Q_diss = 0 ⇒ t_alg = t_phys</td></tr>
@@ -786,7 +798,7 @@
   <p class="fine hint">Click either stamp to swap them. The live one keeps ticking wherever it lands.</p>
   <button class="totop" onclick="goTop()">↑ Back to top</button>
   <div class="foot-rule" aria-hidden="true"></div>
-  <p class="fine colophon">CoReX · PNP-CoReX-v1 · Master Edition · site v3.9 (v61 animation core, design v3) · seed <b id="footSeed">···</b></p>
+  <p class="fine colophon">CoReX · PNP-CoReX-v1 · Master Edition · site v4.0.4 (v61 animation core, design v3) · seed <b id="footSeed">···</b></p>
 </div></footer>
 <script>
 var bannerTimer = null;
@@ -845,7 +857,6 @@ catch (e) { window.scrollTo(0, 0); }
 }
 
 var EQ_LATEX = {
-'R_N = C(N,2)  ⇒  T(N) = O(N²)': 'R_N = \\binom{N}{2} \\;\\Rightarrow\\; T(N) = O(N^2)',
 'ξ(s) = ξ(1−s)  ⇒  Re(s) = ½': '\\xi(s) = \\xi(1-s) \\;\\Rightarrow\\; \\operatorname{Re}(s) = \\tfrac{1}{2}',
 'E₀ = λc² > 0  ⇒  ΔM > 0': 'E_0 = \\lambda c^2 > 0 \\;\\Rightarrow\\; \\Delta M > 0',
 'det(CM₅) = 0  ⇒  ‖u‖_{C^∞} < ∞': '\\det(\\mathrm{CM}_5) = 0 \\;\\Rightarrow\\; \\lVert u \\rVert_{C^\\infty} < \\infty',
@@ -1158,7 +1169,7 @@ var CZ_LABELS = {
 'vacuum floor': 'dno vakua', 'C∞ smooth': 'C∞ hladké', 'L(E,s) at s=1': 'L(E,s) v s=1', 'elliptic curve E': 'eliptická křivka E',
 'rational cycle': 'racionální cyklus', 'SOURCE': 'ZDROJ', 'BARRIER': 'BARIÉRA', 'SCREEN': 'STÍNÍTKO',
 'ΔM > 0': 'ΔM > 0', 'M³ → S³': 'M³ → S³', 'I(y) = cos²(k·Δr / 2)': 'I(y) = cos²(k·Δr / 2)',
-'rotation planes · geodesic O(N²)': 'rotační roviny · geodetika O(N²)',
+'rotation planes · geodesic O(N² log N)': 'rotační roviny · geodetika O(N² log N)',
 'off-axis zero pushed back': 'nula mimo osu vrácena', 'locked on the mirror axis': 'uzamčena na zrcadlové ose',
 'muted by firewall': 'umlčen firewallem', 'UV cutoff': 'UV řez',
 'anti-phase kills blowup': 'anti-fáze zabíjí divergenci', 'vorticity': 'vířivost', 'rank generators': 'generátory ranku',
@@ -1294,9 +1305,9 @@ ctx.beginPath(); ctx.arc(cx, cy, 8 + lu2 * 24, 0, Math.PI * 2); ctx.stroke();
 }
 }
 ctx.font = '10px monospace';
-var footHalf = ctx.measureText(T('rotation planes · geodesic O(N²)')).width / 2;
+var footHalf = ctx.measureText(T('rotation planes · geodesic O(N² log N)')).width / 2;
 var footCx = Math.max(footHalf + 8, Math.min(cx, W - footHalf - 8));
-canvasLabel(ctx, 'rotation planes · geodesic O(N²)', footCx, H - 14, { align: 'center', color: 'rgba(164,158,144,.72)', size: 10 });
+canvasLabel(ctx, 'rotation planes · geodesic O(N² log N)', footCx, H - 14, { align: 'center', color: 'rgba(164,158,144,.72)', size: 10 });
 }
 function EASEo(x) { x = Math.max(0, Math.min(1, x)); return 1 - Math.pow(1 - x, 3); }
 
@@ -2778,7 +2789,7 @@ startApp();
 
 /* ===== CoReX v3 extras: hero, bio, monolith (design-v3 scenes) + wiring ===== */
 EQ_LATEX['Ω₀: M_N(A₀) = Proj_so(N)(A₀) · ∀T ∈ 𝒯: T(Veritas) = Veritas ∧ T(Ratio) = Ratio · e^{iπ} + 1 = 0 ⇒ |ψ_node| = 0'] = '\\Omega_0:\\; \\mathcal{M}_N(A_0) = \\mathrm{Proj}_{\\mathfrak{so}(N)}(A_0),\\; \\forall T \\in \\mathcal{T}: T(\\mathrm{Veritas}) = \\mathrm{Veritas} \\wedge T(\\mathrm{Ratio}) = \\mathrm{Ratio},\\; e^{i\\pi}+1=0 \\Rightarrow |\\psi_{\\mathrm{node}}| = 0';
-EQ_LATEX['R_N = C(N,2) ⇒ T(N) = O(N²)'] = 'R_N = \\\\binom{N}{2} \\\\;\\\\Rightarrow\\\\; T(N) = O(N^2)';
+EQ_LATEX['R_N = C(N,2) ⇒ T(N) = O(N² log N)'] = 'R_N = \\\\binom{N}{2} \\\\;\\\\Rightarrow\\\\; T(N) = O(N^2 \\\\log N)';
 EQ_LATEX['ξ(s) = ξ(1−s) ⇒ Re(s) = ½'] = '\\\\xi(s) = \\\\xi(1-s) \\\\;\\\\Rightarrow\\\\; \\\\operatorname{Re}(s) = \\\\tfrac{1}{2}';
 EQ_LATEX['E₀ = λc² > 0 ⇒ ΔM > 0'] = 'E_0 = \\\\lambda c^2 > 0 \\\\;\\\\Rightarrow\\\\; \\\\Delta M > 0';
 EQ_LATEX['det(CM₅) = 0 ⇒ ‖u‖_{C^∞} < ∞'] = '\\\\det(\\\\mathrm{CM}_5) = 0 \\\\;\\\\Rightarrow\\\\; \\\\lVert u \\\\rVert_{C^\\\\infty} < \\\\infty';
@@ -2787,7 +2798,7 @@ EQ_LATEX['H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles'] = 'H^{2k}(X,\\\\mathbb{
 EQ_LATEX['∂g/∂t = −2 R_ij ⇒ M³ ≅ S³'] = '\\\\frac{\\\\partial g}{\\\\partial t} = -2 R_{ij} \\\\;\\\\Rightarrow\\\\; M^3 \\\\cong S^3';
 EQ_LATEX['ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³ ⇒ A₀ lock: chaos → e^{iπ} + 1 = 0'] = '\\\\ddot{\\\\mathbf{r}}_i = -G\\\\sum_{j \\\\neq i} m_j\\\\frac{\\\\mathbf{r}_i - \\\\mathbf{r}_j}{\\\\lVert\\\\mathbf{r}_i - \\\\mathbf{r}_j\\\\rVert^3} \\\\;\\\\Rightarrow\\\\; A_0\\\\ \\\\mathrm{lock}:\\\\ \\\\mathrm{chaos} \\\\to e^{i\\\\pi} + 1 = 0';
 EQ_LATEX['D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ · ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895'] = 'D^*_n(x) = D_n(x)\\\\cdot\\\\left(1 - e^{(-|x-x_0|/\\\\lambda)}\\\\right) \\\\;\\\\Rightarrow\\\\; C^\\\\infty \\\\;\\\\cdot\\\\; \\\\int_0^\\\\pi \\\\frac{\\\\sin t}{t}\\\\,dt - \\\\pi/2 \\\\approx 0.0895';
-EQ_LATEX['T_solve(N) = R_N · O(1) = N(N−1)/2 · O(1) = O(N²)'] = 'T_{\\mathrm{solve}}(N) = R_N \\cdot O(1) = \\frac{N(N-1)}{2}\\cdot O(1) = O(N^2)';
+EQ_LATEX['T_solve(N) = R_N · O(1) · K ≤ O(N²) · O(log N) = O(N² log N)'] = 'T_{\mathrm{solve}}(N) = R_N \cdot O(1) \cdot K \leq O(N^2) \cdot O(\log N) = O(N^2 \log N)';
 EQ_LATEX['min_G ‖G‖_* s.t. det(CM₅(G)) = 0 and P_Ω(G) = P_Ω(G^exp) ⇒ rank(G*) = 3'] = '\\min_G \\|G\\|_* \\; \\mathrm{s.t.}\\; \\det(\\mathrm{CM}_5(G)) = 0,\\; P_\\Omega(G) = P_\\Omega(G^{\\mathrm{exp}}) \\Rightarrow \\mathrm{rank}(G^*) = 3';
 
 (function(){
