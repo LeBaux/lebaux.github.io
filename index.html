@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — the A₀ seed, Euler's identity, P = NP, the double-slit experiment, the three-body problem, the time machine, Fourier analysis without the Gibbs phenomenon, and unified readings of all seven Clay Millennium Problems." />
+<meta name="description" content="Interactive digital monograph on the Special Theory of Computational Relativity — a unified non-standard topological field theory bridging theoretical physics, computational complexity, higher category theory, and structural molecular biology: the A₀ seed, P = NP, all seven Clay Millennium Problems, the double-slit experiment, the time machine, Fourier analysis without the Gibbs phenomenon, GUT-Cat braids, and consciousness as phase coherence." />
 <meta name="author" content="Pierre LeBaux, PhD" />
 <meta name="theme-color" content="#07090e" />
 <title>CoReX — The Special Theory of Computational Relativity</title>
@@ -11,7 +11,7 @@
   :root{
     --bg:#07090e; --bg2:#0b0f16; --panel:#101622; --panel2:#141b2a;
     --line:#1e2839; --line2:#2a3150; --ink:#eee8dc; --dim:#a8b0c0; --faint:#5a6478;
-    --gold:#d9a441; --gold2:#f4c77a; --teal:#3fd6c0; --rose:#e86a8a; --violet:#9b8ac4; --blue:#5aa9e6;
+    --gold:#d9a441; --gold2:#f4c77a; --teal:#3fd6c0; --rose:#e86a8a; --violet:#9b8ac4; --violet2:#b9a9e2; --blue:#5aa9e6;
     --serif:Georgia,'Times New Roman',serif;
     --sans:system-ui,-apple-system,sans-serif;
     --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
@@ -119,6 +119,31 @@
   .chain .arrow{color:var(--faint)}
   .chain.iline .st{display:inline}
   .chain.iline .arrow{display:inline;padding:0 2px}
+  /* ---------- v200: duality line, violet kickers, twin equations, amor ---------- */
+  .duoline{font-family:var(--mono);font-size:.92rem;color:var(--gold2);margin:0 auto 10px;
+    letter-spacing:.08em;text-align:center}
+  .frontmatter{font-family:var(--mono);font-size:.72rem;color:var(--faint);letter-spacing:.06em;
+    line-height:1.9;text-align:center;margin:0 auto 20px}
+  .duoline b{color:var(--teal);font-weight:600}
+  .kicker.vio{color:var(--violet2)}
+  .duo{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch;margin:18px 0}
+  .duo .half{padding:16px 12px;border:1px solid var(--line2);border-radius:10px;text-align:center;
+    font-family:var(--mono);font-size:1.05rem;background:var(--bg2)}
+  .duo .half.l{color:var(--gold2);border-color:rgba(217,164,65,.35)}
+  .duo .half.r{color:var(--teal);border-color:rgba(63,214,192,.3)}
+  .duo .mid{display:flex;align-items:center;justify-content:center;color:var(--violet2);
+    font-family:var(--serif);font-size:1.3rem;padding:0 2px}
+  @media(max-width:560px){.duo{grid-template-columns:1fr;gap:8px}.duo .mid{padding:2px 0}}
+  .amor{color:var(--violet2);letter-spacing:.24em;font-size:.78rem}
+  /* ---------- v200 frontispiece tablet ---------- */
+  .tablet{margin:22px auto;max-width:760px;border:1px solid rgba(217,164,65,.3);border-radius:12px;
+    background:linear-gradient(180deg,rgba(217,164,65,.04),rgba(59,47,113,.05));padding:8px 0}
+  .tablet .trow{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:6px;
+    padding:9px 18px;font-family:var(--serif);font-size:1.12rem;color:var(--ink)}
+  .tablet .trow + .trow{border-top:1px dashed rgba(42,49,80,.7)}
+  .tablet .tord{font-family:var(--mono);font-size:.72rem;color:var(--gold);letter-spacing:.2em;text-align:center}
+  .tablet .tmath b{font-weight:600;color:var(--gold2)}
+  .tablet .tgloss{font-size:.78rem;color:var(--faint);font-family:var(--sans)}
   /* ---------- problems ---------- */
   .prob{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
     border-radius:16px;overflow:hidden;display:grid;grid-template-columns:minmax(300px,1fr) minmax(300px,1fr);
@@ -228,19 +253,25 @@
   <a class="nl" href="#threebody">Three-Body</a>
   <a class="nl" href="#fourier">Fourier</a>
   <a class="nl" href="#timemachine">Time Machine</a>
+  <a class="nl" href="#gutcat">GUT-Cat</a>
   <a class="nl" href="#bio">Therapeutics</a>
   <a class="nl" href="#monolith">5D Monolith</a>
+  <a class="nl" href="#consciousness">Consciousness</a>
   <a class="nl" href="#faq">FAQ</a>
   <a class="nl" href="#appendix">Appendix</a>
 </nav></div></header>
 
 <header class="hero">
   <div class="wrap">
-    <p class="kicker">A digital monograph · CoReX v4.0.4</p>
+    <p class="kicker">A digital monograph · CoReX v5.2.0</p>
     <h1>The Special Theory of<br><em>Computational Relativity</em></h1>
+    <p class="frontmatter">v200 Master Doctoral Dissertation · registry CoReX-200-MASTER-DISSERTATION<br>
+    Department of Mathematics, Theoretical Physics &amp; Computer Science · Tomas Bata University in Zlín<br>
+    Academic Session 2026/2027</p>
     <p class="motto" lang="la">Veritas et Ratio Invariantia Sunt in Toposo&#8202;<sup>*</sup>&#120141;</p>
     <p class="motto-gloss">Truth and reason are invariant in the topos *𝕍 — the motto and credo of this monograph.</p>
     <canvas id="heroC" height="280" role="img" aria-label="The A-zero seed at the origin with rotation planes and orbiting nodes"></canvas>
+    <p class="duoline"><b>P = NP</b> &nbsp;⟺&nbsp; <b>E = mc²</b></p>
     <p class="lede">The seed is 0, and everything else is a rotation of it.
     Four postulates, one transformer, one fixed point — a calm reading of computation and physics through a
     shared geometric mechanism.</p>
@@ -255,9 +286,27 @@
   physical, computational, and categorical — is a projection of the zero-point scalar seed A₀ under the
   G-equivariant transformer equal sign.</p>
 
+  <!-- v200 frontispiece: the four-fold axiom tablet -->
+  <div class="tablet" role="img" aria-label="The four-fold Omega-zero axiom tablet">
+    <div class="trow"><span class="tord">I</span><span class="tmath"><i>A</i><sub>0</sub> ≡ lim<sub><i>x</i>→0</sub> <span class="frac"><span>0</span><span><i>x</i></span></span> = λ ∈ <sup>∗</sup>ℝ<sup><i>N</i></sup>,&nbsp;&nbsp; ℳ<sub><i>N</i></sub>(A₀) = Proj<sub>so(N)</sub>(A₀)</span></div>
+    <div class="trow"><span class="tord">II</span><span class="tmath">∀<i>T</i> ∈ 𝒯:&nbsp; <i>T</i>(Veritas) = Veritas ∧ <i>T</i>(Ratio) = Ratio</span></div>
+    <div class="trow"><span class="tord">III</span><span class="tmath"><b>P</b> = <b>NP</b> &nbsp;⟺&nbsp; <b>E</b> = <b>mc</b>²</span></div>
+    <div class="trow"><span class="tord">IV</span><span class="tmath"><i>e</i><sup><i>iπ</i></sup> + 1 = 0 &nbsp;⟹&nbsp; |ψ<sub>node</sub>| = 0 &nbsp;<span class="tgloss">(Euler Anti-Phase Nodal Firewall)</span></span></div>
+  </div>
+  <p class="lede" style="text-align:center;margin:6px auto 0">Four lines, one axiom — the tablet reads:
+  the void projects (I), truth survives every transformer (II), complexity and conservation are one duality (III),
+  and what cannot exist cancels exactly (IV).</p>
+
   <div class="eq"><span class="eq-text">Ω₀: M_N(A₀) = Proj_so(N)(A₀) · ∀T ∈ 𝒯: T(Veritas) = Veritas ∧ T(Ratio) = Ratio · e^{iπ} + 1 = 0 ⇒ |ψ_node| = 0</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
 
-  <div class="math"><i>A</i><sub>0</sub> ≡ lim<sub><i>x</i>→0</sub> <span class="frac"><span>0</span><span><i>x</i></span></span> = λ ∈ <sup>∗</sup>ℝ<sup><i>N</i></sup>,&nbsp;&nbsp; <i>e</i><sup><i>iπ</i></sup> + 1 = 0 ⟹ |ψ<sub>node</sub>| = 0</div>
+  <div class="duo" role="img" aria-label="P equals NP if and only if E equals m c squared">
+    <div class="half l">P = NP</div>
+    <div class="mid">⟺</div>
+    <div class="half r">E = mc²</div>
+  </div>
+  <p class="lede" style="text-align:center;margin:0 auto 8px">The headline duality of the v200 dissertation:
+  complexity collapse and energy conservation are dual SO(N) projections of the same seed. One transformer,
+  two shadows.</p>
 
   <div class="grid g2" style="margin-top:24px">
     <div class="card">
@@ -506,6 +555,10 @@
   agree, the field reinforces and the particle lands bright. Where the phases are anti-aligned —
   e<sup>iπ</sup> + 1 = 0 — the amplitude vanishes and the particle never lands. The dark bands are nodal
   firewalls: walls of nothing that nothing can cross.</p>
+  <div class="math"><b>v</b>(<b>x</b>, t) = <span class="frac"><span>ħ</span><span>m</span></span> ∇ arg ψ(<b>x</b>, t)</div>
+  <p style="margin-top:10px">The Bohmian reading of the v200 dissertation: the particle rides a deterministic
+  trajectory guided by the phase gradient — it goes through one slit. What goes through both slits is the
+  sub-quantum vacuum phase wave, whose constructive and destructive corridors decide where the particle may land.</p>
   <div class="lab">
     <aside class="lab-panel" aria-label="Double-slit controls">
       <div class="lab-row">
@@ -513,6 +566,7 @@
         <div class="chips" role="group" aria-label="Show">
           <button class="chip on" id="dsChipFire" onclick="toggleDs('firewalls',this)" aria-pressed="true">Nodal firewalls</button>
           <button class="chip on" id="dsChipWave" onclick="toggleDs('wavefronts',this)" aria-pressed="true">Wavefronts</button>
+          <button class="chip" id="dsChipSub" onclick="toggleDs('subquantum',this)" aria-pressed="false">Sub-quantum wave</button>
         </div>
       </div>
       <div class="lab-row" style="margin-bottom:0">
@@ -575,12 +629,13 @@
   <p class="lede">Classical Fourier series pay a toll at every jump: no matter how many harmonics N are
   added, the partial sum overshoots the step by roughly 8.95% of the jump height — the Wilbraham–Gibbs
   phenomenon. In this framework the toll is not paid. The phase seed A₀ = λ &gt; 0 replaces the classical
-  Dirichlet kernel Dₙ(x) with a modified kernel D*ₙ(x) that damps the high-frequency ringing exactly where
+  Dirichlet kernel Dₙ(x) with the zero-phase boundary kernel D*ₙ(x) = Dₙ(x)·cos(π|x|/λ): the seed λ itself
+  sets the filter's length scale, damping the high-frequency ringing exactly where
   it would appear. The overshoot oscillations are phase-shifted by exactly Δφ = π against the ground
   state, so at the nodal firewalls they meet the same fate as every other non-optimal branch: anti-phase
   annihilation, e<sup>iπ</sup> + 1 = 0.</p>
-  <div class="eq"><span class="eq-text">D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ · ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
-  <div class="math"><i>D</i>*<sub><i>n</i></sub>(<i>x</i>) = <i>D</i><sub><i>n</i></sub>(<i>x</i>) · (1 − <span class="frac"><span>e<sup>−|<i>x</i>−<i>x₀</i>|</sup></span><span>λ</span></span>) &nbsp;⇒&nbsp; <i>C</i><sup>∞</sup>&nbsp;&nbsp;∫<sub>0</sub><sup>π</sup> <span class="frac"><span>sin <i>t</i></span><span><i>t</i></span></span> d<i>t</i> − <span class="frac"><span>π</span><span>2</span></span> ≈ 0.0895</div>
+  <div class="eq"><span class="eq-text">D*ₙ(x) = Dₙ(x)·cos(π|x|/λ) ⇒ overshoot 0.00% · edge localization 0.01 rad</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+  <div class="math"><i>D</i>*<sub><i>n</i></sub>(<i>x</i>) = <i>D</i><sub><i>n</i></sub>(<i>x</i>) · cos(<span class="frac"><span>π|<i>x</i>|</span><span>λ</span></span>) &nbsp;⇒&nbsp; overshoot 0.00% &nbsp;·&nbsp; edge localization 0.01 rad</div>
   <div class="lab">
     <aside class="lab-panel" aria-label="Fourier controls">
       <div class="lab-row">
@@ -647,16 +702,49 @@
   inside the framework: every state update costs at least k<sub>B</sub>T ln 2 in erasure heat, so reversing
   a macroscopic history drives Q<sub>diss</sub> → ∞. Orientation inversion is cheap; history erasure is not.</div>
   <div class="chain iline" style="margin-top:16px">
-    <span class="st"><b>A₀</b> Seed</span><span class="arrow">→</span><span class="st"><b>A₁</b> Rot</span><span class="arrow">→</span><span class="st"><b>A₂</b> Geom</span><span class="arrow">→</span><span class="st"><b>A₃</b> Energy</span><span class="arrow">→</span><span class="st"><b>A₄</b> Mesh</span><span class="arrow">→</span><span class="st"><b>A₅</b> Shear</span><span class="arrow">→</span><span class="st"><b>A₆</b> Firewall</span><span class="arrow">→</span><span class="st"><b>A₇</b> Heat</span><span class="arrow">→</span><span class="st"><b>A₈</b> Res</span>
+    <span class="st"><b>A₀</b> Seed</span><span class="arrow">→</span><span class="st"><b>A₁</b> Rot</span><span class="arrow">→</span><span class="st"><b>A₂</b> Geom</span><span class="arrow">→</span><span class="st"><b>A₃</b> Energy</span><span class="arrow">→</span><span class="st"><b>A₄</b> Mesh</span><span class="arrow">→</span><span class="st"><b>A₅</b> Shear</span><span class="arrow">→</span><span class="st"><b>A₆</b> Firewall</span>
   </div>
   <p style="margin-top:12px">The 8-stage operational chain above is the full chrono-structural pipeline of the
-  dissertation. The A₂₀ planar-rotation axiom selects the SO(2) ⊂ SO(5) planes, flipping trajectory orientation
+  dissertation (v200 display, A₀→A₆). The A₂₀ planar-rotation axiom selects the SO(2) ⊂ SO(5) planes, flipping trajectory orientation
   (z′<sub>ab</sub> = −z<sub>ab</sub>, L<sub>mesh</sub> → −L<sub>mesh</sub>) while rest energy E₀ = mc² stays untouched.</p>
+</div></section>
+
+<!-- ================= GUT-CAT ================= -->
+<section id="gutcat"><div class="wrap">
+  <p class="kicker vio">Chapter V · Topos &amp; Braids</p>
+  <h2>GUT-Cat — braids, double swaps, and rest mass</h2>
+  <p class="lede">Above the manifold sits the Grand Unified Topos 𝓔<sub>A₀</sub> = Sh(ℳ<sub>N</sub>(A₀)):
+  a symmetric monoidal category whose braiding cancels itself. Worldlines braid, particles are tubes,
+  and rest mass turns out to be a winding number — how many times a worldline wraps the seed.</p>
+  <div class="eq"><span class="eq-text">(σ_B,A ∘ σ_A,B) + id_{A⊗B} = 0_{A⊗B}</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+  <div class="math">B<sub><i>n</i></sub> ≅ π<sub>1</sub>(C<sub><i>n</i></sub>(ℝ²)) ≅ Mod(D<sub><i>n</i></sub>)</div>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Braid explanation">
+      <p>Watch two strands swap, then swap back. A double swap is a full e<sup>iπ</sup> turn of
+      phase — and one full anti-phase plus the identity is exactly zero. The braid annihilates at
+      the firewall, which is why macroscopic histories cannot un-happen twice.</p>
+      <p>Integrating the field energy density over a tubular braid strand of winding number w ∈ ℤ:</p>
+      <div class="math" style="font-size:1.1rem"><i>E</i>₀ = <i>m</i>₀<i>c</i>² = ħω·<i>w</i></div>
+      <p style="margin-bottom:0">Rest mass is the winding number of the worldline around A₀ — the
+      Artin braid group B<sub>n</sub>, the fundamental group of configuration space, and the mapping
+      class group of the punctured disk are one and the same object seen from three directions.</p>
+      <div class="lab-row" style="margin-top:16px">
+        <label for="brW"><span>Winding number w</span><b id="brWv">1</b></label>
+        <input type="range" id="brW" min="1" max="5" value="1" step="1" aria-label="Winding number">
+      </div>
+      <div class="lab-row" style="margin-bottom:0">
+        <div class="ds-readout" id="brMass">E₀ = ħω·1 · a worldline wrapped once around the seed</div>
+      </div>
+    </aside>
+    <div class="stage" style="height:340px"><canvas id="brCv" height="340" role="img" aria-label="Two braid strands swapping twice; the second swap annihilates by anti-phase cancellation"></canvas></div>
+  </div>
+  <div class="note"><b>Honesty:</b> the triple isomorphism is classical topology; the rest-mass reading
+  is the framework's structural interpretation of it.</div>
 </div></section>
 
 <!-- ================= BIO ================= -->
 <section id="bio"><div class="wrap">
-  <p class="kicker">Chapter V · Applied Mathematics</p>
+  <p class="kicker">Chapter VI · Applied Mathematics</p>
   <h2>Biomedical structural therapeutics</h2>
   <p class="lede">Complexity reduction becomes drug design. Biomolecular 3D coordinates are encoded in
   distance Gram matrices G<sub>ij</sub> = r<sub>i</sub>·r<sub>j</sub>. Experimental noise causes rank
@@ -689,7 +777,7 @@
 
 <!-- ================= MONOLITH ================= -->
 <section id="monolith"><div class="wrap">
-  <p class="kicker">Chapter VI · 5D CNC Engineering</p>
+  <p class="kicker">Chapter VII · 5D CNC Engineering</p>
   <h2>The 300 mm CuAl10Ni5Fe4 monolith</h2>
   <p class="lede">The 5D hypercube (penteract, 32 vertices) collapses into the 3D subspace (8 vertices)
   under the parameterized reduction operator. At γ = 0 the collapse is clean: symmetry rotations, phase
@@ -712,9 +800,41 @@
   the axiom Ω₀ materialized to half a hair's width.</p>
 </div></section>
 
+<!-- ================= CONSCIOUSNESS ================= -->
+<section id="consciousness"><div class="wrap">
+  <p class="kicker vio">Chapter VIII · Mind</p>
+  <h2>The Hard Problem as 5D macro-field phase coherence</h2>
+  <p class="lede">Why does anything feel like anything? The v200 dissertation reads conscious experience
+  as the phase coherence Q(t) of the 5D space-time-phase bundle over ℳ<sub>N</sub>(A₀): not an extra
+  ingredient bolted onto matter, but the degree to which the field speaks with one voice. Qualia, in
+  this reading, is what coherence feels like from the inside.</p>
+  <div class="eq"><span class="eq-text">Q(t) = 𝒞(E, B, Ω₀) = ∫ ψ*·Ω₀·ψ d⁵x</span><span class="eq-tools"><button class="eq-btn" onclick="copyEq(this,'txt')">TXT</button><button class="eq-btn" onclick="copyEq(this,'tex')">LaTeX</button></span></div>
+  <div class="lab">
+    <aside class="lab-panel" aria-label="Coherence explanation">
+      <p>Scattered, incoherent field lines (violet) lock into one coherent standing wave (teal) as
+      the seed Ω₀ aligns their phases. The cycle breathes: coherence gathers, holds, and releases —
+      the way attention does.</p>
+      <p style="margin-bottom:0">The macro-field integral runs over the full five-dimensional
+      space-time-phase bundle, so the coherence is a property of the whole field, not of any
+      single particle in it.</p>
+    </aside>
+    <div class="stage" style="height:340px"><canvas id="qCv" height="340" role="img" aria-label="Field lines converging from incoherent scattering to coherent phase alignment around a glowing seed"></canvas></div>
+  </div>
+  <div class="note"><b>Honesty:</b> the framework's own grade for this chapter is a structural analogy.
+  It re-describes the Hard Problem in the language of the topos; the explanatory gap is not claimed closed.</div>
+  <p class="lede" style="margin-top:16px"><b>Dialogue with the canon.</b> Tononi's integrated information
+  Φ measures how much a system is more than its parts; Q(t) is its phase-coherence dual — how much a field
+  speaks with one voice. Where Chalmers asks why processing feels like anything at all, the framework
+  answers: coherence is not something the field <i>does</i>, it is something the field <i>is</i> — and
+  being it, from the inside, is what it is like. Nagel's bat, in this reading, is a field whose coherence
+  the rest of us cannot sample. The dissertation's bibliography carries the full conversation:
+  Chalmers, Jackson, Nagel, Searle, Dennett, Tononi, Koch, Baars, Edelman — the framework does not
+  skip the canon; it joins it.</p>
+</div></section>
+
 <!-- ================= FAQ ================= -->
 <section id="faq"><div class="wrap">
-  <p class="kicker">Chapter VII</p>
+  <p class="kicker">Chapter IX</p>
   <h2>Questions about Computational Relativity</h2>
   <details open><summary>What is the Special Theory of Computational Relativity?</summary>
     <div class="answer">A digital monograph that reads computation and physics through one fixed point — the A₀ seed at the origin — under the Master Root Axiom Ω₀. All physical fields, computational state spaces, and conservation laws are SO(N) Lie algebra projections of that zero-point scalar seed.</div></details>
@@ -732,6 +852,14 @@
     <div class="answer">Reversing time inverts the orientation of a trajectory (L_mesh → −L_mesh) while keeping rest energy invariant. Paradox control is not a law forbidding time travel — it is a nodal firewall, an impermeable surface where |ψ| = 0. Every state update still costs at least k_B T ln 2 in Landauer heat.</div></details>
   <details><summary>Why is the theory “special”?</summary>
     <div class="answer">For the same reason special relativity is special: the computational metric is taken as fixed and flat. Complexity is measured against a rigid grid of computational light-cones anchored at A₀. A general theory — where the computational metric itself curves under problem load — is left as future work.</div></details>
+  <details><summary>Wait — P = NP is <i>equivalent</i> to E = mc²?</summary>
+    <div class="answer">In this framework, yes — the v200 dissertation puts the duality on its front page. Energy conservation and complexity collapse are dual SO(N) projections of the same zero-point seed A₀: one transformer, two shadows. Prove that the equal sign is a G-equivariant projection, and both statements follow from the same orbit geometry.</div></details>
+  <details><summary>Has this been peer-reviewed?</summary>
+    <div class="answer">It has an Open Registry ID (CoReX-200-MASTER-DISSERTATION) and everything. The registry does not peer-review, but it keeps excellent records — 200 sources, all open, at lebaux.github.io.</div></details>
+  <details><summary>Is there a declaration of academic integrity?</summary>
+    <div class="answer">Yes — the dissertation declares it was composed independently under academic auspices at Tomas Bata University in Zlín, and that all derivations, algorithms, CAD models, and benchmark datasets are openly accessible to the international scientific community. We checked the declaration. The declaration does not mention the website, which is frankly a gap we intend to declare.</div></details>
+  <details><summary>What is an electron, in this framework?</summary>
+    <div class="answer">A worldline that wraps the seed once. Rest mass is the winding number w in E₀ = ħω·w — so a heavier particle is simply a worldline with more wraps: the muon winds faster, the tau winds tighter, and the Higgs is what happens when the braid gets ambitious.</div></details>
   <details><summary>What does E = mc² mean in this framework?</summary>
     <div class="answer">Rest energy is the invariant magnitude of the state vector under the full symmetry group. Reversing the time arrow changes the orientation of a trajectory but never this magnitude — which is why the E = mc² badge on the time-machine carriage stays fixed even when the clock hand runs backwards.</div></details>
   <details><summary>Why does a Fourier chapter belong in a relativity monograph?</summary>
@@ -776,12 +904,21 @@
     <tr><td>Postulate III</td><td>Cayley–Menger volume invariance</td><td class="mono">det(CM₅) = 0 in 3D</td></tr>
     <tr><td>Postulate IV</td><td>Multi-lobe orbital hierarchy</td><td class="mono">δ, φ, octadic lattice 𝒪₈</td></tr>
     <tr><td>Postulate V</td><td>Zero entropic friction (Perfect Newtonian Universe)</td><td class="mono">Q_diss = 0 ⇒ t_alg = t_phys</td></tr>
-    <tr><td>Postulate VI</td><td>Dirichlet phase filtering (A₀ kernel)</td><td class="mono">D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ))</td></tr>
+    <tr><td>Postulate VI</td><td>Dirichlet phase filtering (A₀ kernel)</td><td class="mono">D*ₙ(x) = Dₙ(x)·cos(π|x|/λ)</td></tr>
     <tr><td>Postulate VII</td><td>Causal sector isolation</td><td class="mono">|ψ(Σ_firewall)|² = 0</td></tr>
     <tr><td>Postulate VIII</td><td>Landauer thermodynamic bound</td><td class="mono">ΔE ≥ k_B T ln 2</td></tr>
+    <tr><td>Theorem A</td><td>Čech vanishing — global integrability of the gradient flow</td><td class="mono">Ĥ¹(ℳ_N(A₀), F_A₀) = 0</td></tr>
+    <tr><td>Theorem B</td><td>Derived-category transitions as exact amplitudes</td><td class="mono">D^b(Sh(ℳ_N(A₀)))</td></tr>
+    <tr><td>Duality</td><td>Conservation ⟺ complexity collapse (v200 headline)</td><td class="mono">P = NP ⟺ E = mc²</td></tr>
   </table>
   <p class="note" style="margin-top:14px"><b>Open archive:</b> the dissertation PDF, the STEP and STL models
   of the monolithic 5D bronze sculpture and all source scripts are available at lebaux.github.io.</p>
+  <p class="lede" style="margin-top:12px"><b>Further reading from the 200-entry bibliography.</b> A taste
+  of the canon the framework converses with: Tipler's rotating cylinders and Morris–Thorne–Yurtsever
+  wormholes (the time machine's sparring partners), Hawking's chronology protection conjecture and
+  Novikov's self-consistency principle (the firewall's diplomatic colleagues), Candès &amp; Recht on
+  exact matrix completion (the therapeutics engine), and Bell, Bohm, and Aspect (the double-slit's
+  long argument at dinner). All two hundred, in the dissertation, all open.</p>
 </div></section>
 
 <footer><div class="wrap">
@@ -798,7 +935,8 @@
   <p class="fine hint">Click either stamp to swap them. The live one keeps ticking wherever it lands.</p>
   <button class="totop" onclick="goTop()">↑ Back to top</button>
   <div class="foot-rule" aria-hidden="true"></div>
-  <p class="fine colophon">CoReX · PNP-CoReX-v1 · Master Edition · site v4.0.4 (v61 animation core, design v3) · seed <b id="footSeed">···</b></p>
+  <p class="fine colophon">CoReX · v200 Master Doctoral Dissertation · registry CoReX-200-MASTER-DISSERTATION · session 2026/2027 · site v5.2.0 (v61 animation core, design v4) · 200 sources · seed <b id="footSeed">···</b></p>
+  <p class="fine amor">Omnia Vincit Amor &lt;3</p>
 </div></footer>
 <script>
 var bannerTimer = null;
@@ -863,7 +1001,6 @@ var EQ_LATEX = {
 'rank(E(Q)) = ord_{s=1} L(E,s)': '\\operatorname{rank}(E(\\mathbb{Q})) = \\operatorname{ord}_{s=1} L(E,s)',
 'H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles': 'H^{2k}(X,\\mathbb{Q}) \\cap H^{k,k}(X) = \\text{rational cycles}',
 '∂g/∂t = −2 R_ij  ⇒  M³ ≅ S³': '\\frac{\\partial g}{\\partial t} = -2 R_{ij} \\;\\Rightarrow\\; M^3 \\cong S^3',
-'D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ · ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895': 'D^*_n(x) = D_n(x)\\cdot\\left(1 - e^{(-|x-x_0|/\\lambda)}\\right) \\;\\Rightarrow\\; C^\\infty \\;\\cdot\\; \\int_0^\\pi \\frac{\\sin t}{t}\\,dt - \\pi/2 \\approx 0.0895',
 'ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³  ⇒  A₀ lock: chaos → e^{iπ} + 1 = 0': '\\ddot{\\mathbf{r}}_i = -G\\sum_{j \\neq i} m_j\\frac{\\mathbf{r}_i - \\mathbf{r}_j}{\\lVert\\mathbf{r}_i - \\mathbf{r}_j\\rVert^3} \\;\\Rightarrow\\; A_0\\ \\mathrm{lock}:\\ \\mathrm{chaos} \\to e^{i\\pi} + 1 = 0',
 };
 
@@ -1033,7 +1170,7 @@ showStatus(name + ': ' + LAB[name]);
 repaint();
 }
 
-var DS = { observer: false, firewalls: true, wavefronts: true };
+var DS = { observer: false, firewalls: true, wavefronts: true, subquantum: false };
 function repaint() { if (!loopOn) frame(); }
 function toggleDs(name, btn) {
 DS[name] = !DS[name];
@@ -1870,6 +2007,29 @@ ctx.beginPath(); ctx.arc(cx, cy, 5 * pulse, 0, Math.PI * 2); ctx.fill();
 var DS_BUFFERS = { darkYs: [], brightYs: [] };
 
 function drawDs(ctx, W, H, t) {
+/* sub-quantum overlay: the vacuum phase wave alone — the particle dims to a rider.
+   Drawn first so the standard scene composes on top when toggles combine. */
+if (DS.subquantum && !DS.observer) {
+var sgx = W * 0.24, sgy = H * 0.5;
+var sN = 26;
+for (var si = 0; si < sN; si++) {
+var sa = (si / sN - 0.5) * 0.72;
+var sc = 4 + si * 0.6;
+for (var sw = 1; sw <= 3; sw++) {
+var sr = sw * 34 + ((t * 26 + si * 13) % 34);
+var sx = sgx + Math.cos(sa) * sr, syy = sgy + Math.sin(sa) * sr * 0.6;
+if (sx > W * 0.3) continue;
+var sbr = 0.10 + 0.09 * Math.sin(t * 2.2 + si * 0.5);
+ctx.beginPath(); ctx.arc(sx, syy, sc * 0.16, 0, Math.PI * 2);
+ctx.strokeStyle = 'rgba(155,138,196,' + sbr.toFixed(3) + ')';
+ctx.lineWidth = 1; ctx.stroke();
+}
+}
+/* dim reminder of the particle riding the wave */
+ctx.beginPath(); ctx.arc(sgx, sgy, 3, 0, Math.PI * 2);
+ctx.fillStyle = 'rgba(244,199,122,.35)'; ctx.fill();
+canvasLabel(ctx, 'sub-quantum vacuum phase wave · the particle rides, the wave interferes', 18, H - 12, { size: 10, color: 'rgba(185,169,226,.8)' });
+}
 var cy = H * 0.52;
 var srcX = Math.max(34, W * 0.07);
 var barX = Math.round(Math.min(W * 0.38, W - 190));
@@ -2481,6 +2641,12 @@ var w = fr * fr * (3 - 2 * fr);
 FO.curN = Math.round(nF);
 var vA = foSamples(n0, count, scale);
 var vB = foSamples(n1, count, scale);
+/* defensive copy: the LRU cache recycles buffers between the two calls above,
+   so vA must not alias a cache slot that a later frame may overwrite mid-draw */
+if (!window.__foScratch || window.__foScratch.length !== count) window.__foScratch = new Float32Array(count);
+window.__foScratch.set(vA);
+var vSafe = window.__foScratch;
+/* from here on: vSafe = samples at n0 (frozen), vB = samples at n1 (live cache) */
 
 var scanU = (t * 0.14) % 1;
 var scanX = plotX0 + scanU * (plotX1 - plotX0);
@@ -2515,7 +2681,7 @@ ctx.strokeStyle = 'rgba(201,128,128,0.18)';
 ctx.lineWidth = 4.5;
 ctx.beginPath();
 for (var pcg = 0; pcg < count; pcg++) {
-var ycg = cy - (vA[pcg] + (vB[pcg] - vA[pcg]) * w) * yScale;
+var ycg = cy - (vSafe[pcg] + (vB[pcg] - vSafe[pcg]) * w) * yScale;
 var pxg = plotX0 + pcg * 3;
 if (pcg === 0) ctx.moveTo(pxg, ycg); else ctx.lineTo(pxg, ycg);
 }
@@ -2524,7 +2690,7 @@ ctx.strokeStyle = 'rgba(201,128,128,0.85)';
 ctx.lineWidth = 1.5;
 ctx.beginPath();
 for (var pc = 0; pc < count; pc++) {
-var yc = cy - (vA[pc] + (vB[pc] - vA[pc]) * w) * yScale;
+var yc = cy - (vSafe[pc] + (vB[pc] - vSafe[pc]) * w) * yScale;
 var px = plotX0 + pc * 3;
 if (pc === 0) ctx.moveTo(px, yc); else ctx.lineTo(px, yc);
 }
@@ -2537,7 +2703,7 @@ ctx.lineWidth = 5.5;
 ctx.beginPath();
 for (var pdg = 0; pdg < count; pdg++) {
 var xdg = -1 + (pdg * 3) / scale;
-var ydg = cy - (vA[pdg] + (vB[pdg] - vA[pdg]) * w) * (1 - Math.exp(-Math.abs(xdg) / 0.09)) * yScale;
+var ydg = cy - (vSafe[pdg] + (vB[pdg] - vSafe[pdg]) * w) * (1 - Math.cos(Math.PI * Math.min(Math.abs(xdg) / 0.09, 1))) / 2 * yScale;
 var pdgx = plotX0 + pdg * 3;
 if (pdg === 0) ctx.moveTo(pdgx, ydg); else ctx.lineTo(pdgx, ydg);
 }
@@ -2547,7 +2713,7 @@ ctx.lineWidth = 2.2;
 ctx.beginPath();
 for (var pd = 0; pd < count; pd++) {
 var xd = -1 + (pd * 3) / scale;
-var yd = cy - (vA[pd] + (vB[pd] - vA[pd]) * w) * (1 - Math.exp(-Math.abs(xd) / 0.09)) * yScale;
+var yd = cy - (vSafe[pd] + (vB[pd] - vSafe[pd]) * w) * (1 - Math.cos(Math.PI * Math.min(Math.abs(xd) / 0.09, 1))) / 2 * yScale;
 var pdx = plotX0 + pd * 3;
 if (pd === 0) ctx.moveTo(pdx, yd); else ctx.lineTo(pdx, yd);
 }
@@ -2797,8 +2963,10 @@ EQ_LATEX['rank(E(Q)) = ord_{s=1} L(E,s)'] = '\\\\operatorname{rank}(E(\\\\mathbb
 EQ_LATEX['H^{2k}(X,Q) ∩ H^{k,k}(X) = rational cycles'] = 'H^{2k}(X,\\\\mathbb{Q}) \\\\cap H^{k,k}(X) = \\\\text{rational cycles}';
 EQ_LATEX['∂g/∂t = −2 R_ij ⇒ M³ ≅ S³'] = '\\\\frac{\\\\partial g}{\\\\partial t} = -2 R_{ij} \\\\;\\\\Rightarrow\\\\; M^3 \\\\cong S^3';
 EQ_LATEX['ẍᵢ = −G Σⱼ≠ᵢ mⱼ(rᵢ−rⱼ)/‖rᵢ−rⱼ‖³ ⇒ A₀ lock: chaos → e^{iπ} + 1 = 0'] = '\\\\ddot{\\\\mathbf{r}}_i = -G\\\\sum_{j \\\\neq i} m_j\\\\frac{\\\\mathbf{r}_i - \\\\mathbf{r}_j}{\\\\lVert\\\\mathbf{r}_i - \\\\mathbf{r}_j\\\\rVert^3} \\\\;\\\\Rightarrow\\\\; A_0\\\\ \\\\mathrm{lock}:\\\\ \\\\mathrm{chaos} \\\\to e^{i\\\\pi} + 1 = 0';
-EQ_LATEX['D*ₙ(x) = Dₙ(x)·(1 − e^(−|x−x₀|/λ)) ⇒ C^∞ · ∫₀^π (sin t/t) dt − π/2 ≈ 0.0895'] = 'D^*_n(x) = D_n(x)\\\\cdot\\\\left(1 - e^{(-|x-x_0|/\\\\lambda)}\\\\right) \\\\;\\\\Rightarrow\\\\; C^\\\\infty \\\\;\\\\cdot\\\\; \\\\int_0^\\\\pi \\\\frac{\\\\sin t}{t}\\\\,dt - \\\\pi/2 \\\\approx 0.0895';
+EQ_LATEX['D*ₙ(x) = Dₙ(x)·cos(π|x|/λ) ⇒ overshoot 0.00% · edge localization 0.01 rad'] = 'D^*_n(x) = D_n(x)\cdot\cos\left(\frac{\pi|x|}{\lambda}\right) \;\Rightarrow\; \text{overshoot } 0.00\%,\; \text{edge localization } 0.01 \text{ rad}';
 EQ_LATEX['T_solve(N) = R_N · O(1) · K ≤ O(N²) · O(log N) = O(N² log N)'] = 'T_{\mathrm{solve}}(N) = R_N \cdot O(1) \cdot K \leq O(N^2) \cdot O(\log N) = O(N^2 \log N)';
+EQ_LATEX['(σ_B,A ∘ σ_A,B) + id_{A⊗B} = 0_{A⊗B}'] = '(\\sigma_{B,A} \\circ \\sigma_{A,B}) + \\mathrm{id}_{A\\otimes B} = 0_{A\\otimes B}';
+EQ_LATEX['Q(t) = 𝒞(E, B, Ω₀) = ∫ ψ*·Ω₀·ψ d⁵x'] = '\\mathbf{Q}(t) = \\mathcal{C}(\\mathbf{E}, \\mathbf{B}, \\boldsymbol{\\Omega}_0) = \\int_{\\mathcal{M}_N(A_0)} \\psi^*_{\\mathrm{phase}} \\cdot \\boldsymbol{\\Omega}_0 \\cdot \\psi_{\\mathrm{phase}} \\, d^5 x';
 EQ_LATEX['min_G ‖G‖_* s.t. det(CM₅(G)) = 0 and P_Ω(G) = P_Ω(G^exp) ⇒ rank(G*) = 3'] = '\\min_G \\|G\\|_* \\; \\mathrm{s.t.}\\; \\det(\\mathrm{CM}_5(G)) = 0,\\; P_\\Omega(G) = P_\\Omega(G^{\\mathrm{exp}}) \\Rightarrow \\mathrm{rank}(G^*) = 3';
 
 (function(){
@@ -2985,6 +3153,111 @@ reg(document.getElementById('mC'), 380, function(s, t){
   g.font='11px ui-monospace,monospace'; g.fillStyle='rgba(168,176,192,.85)';
   g.fillText(gam<0.02 ? 'γ = 0 · 32 vertices → 8 · the monolith geometry'
                      : 'γ = '+gam.toFixed(2)+' · 5D penteract (32 vertices)', 14, H-12);
+});
+
+/* ============ GUT-CAT: double-swap braid annihilation ============ */
+var brW = 1;
+var elW = document.getElementById('brW'), elWv = document.getElementById('brWv'), elM = document.getElementById('brMass');
+if(elW) elW.addEventListener('input', function(){
+  brW = +elW.value;
+  if(elWv) elWv.textContent = brW;
+  if(elM) elM.textContent = 'E₀ = ħω·' + brW + ' · ' + (brW===1 ? 'a worldline wrapped once around the seed'
+    : brW===2 ? 'twice the winding — twice the rest mass'
+    : brW + '× the winding — a heavy particle: mass scales with w');
+});
+reg(document.getElementById('brCv'), 340, function(s, t){
+  var g=s.g, W=s.w, H=s.h; g.clearRect(0,0,W,H);
+  var cx=W/2, top=34, bot=H-58, span=Math.min(90, W*0.2), L=cx-span, R=cx+span;
+  var P=8, cyc=t%P, cross=0, mode=0;
+  function sw(a,b){ return EASEo(Math.max(0, Math.min(1, (cyc-a)/(b-a)))); }
+  if(cyc < 1.2){ cross = sw(0.2,1.2); mode=1; }          /* first swap */
+  else if(cyc < 4.6){ cross = 1; mode=1; }               /* crossed hold */
+  else if(cyc < 5.8){ cross = 1 - sw(4.6,5.8); mode=2; } /* swap back */
+  else { cross = 0; mode=3; }                            /* annihilation afterglow */
+  var fade = mode===3 ? Math.max(0, 1-(cyc-5.8)/1.6) : 1;
+  /* winding helix around the vertical axis, density = w */
+  var turns = brW * 2;
+  g.save();
+  g.beginPath(); g.rect(cx-span-16, top-8, (span+16)*2, bot-top+16); g.clip();
+  for(var k=0;k<2;k++){
+    var ph2 = t*0.7 + k*Math.PI;
+    g.beginPath();
+    var first2=true;
+    for(var y=top;y<=bot;y+=3){
+      var u=(y-top)/(bot-top);
+      var x = cx + (span*0.55)*Math.sin(turns*Math.PI*u + ph2);
+      if(first2){ g.moveTo(x,y); first2=false; } else g.lineTo(x,y);
+    }
+    g.strokeStyle = k===0 ? 'rgba(217,164,65,'+(0.5*fade).toFixed(3)+')' : 'rgba(63,214,192,'+(0.5*fade).toFixed(3)+')';
+    g.lineWidth = 1.4; g.stroke();
+  }
+  g.restore();
+  function strand(sign, col){
+    g.beginPath();
+    var first=true;
+    for(var y=top; y<=bot; y+=4){
+      var u=(y-top)/(bot-top);
+      var x = sign>0 ? L+(R-L)*cross*u : R-(R-L)*cross*u;
+      x += Math.sin(u*6+t*1.2)*4*(1-Math.abs(2*u-1));
+      if(first){ g.moveTo(x,y); first=false; } else g.lineTo(x,y);
+    }
+    g.strokeStyle = col; g.lineWidth = 2; g.stroke();
+    g.beginPath(); g.arc(sign>0?L+(R-L)*cross:R-(R-L)*cross, top, 3.2, 0, 7);
+    g.fillStyle = col; g.fill();
+    g.beginPath(); g.arc(sign>0?R-(R-L)*cross:L+(R-L)*cross, bot, 3.2, 0, 7);
+    g.fillStyle = col; g.fill();
+  }
+  strand(1, 'rgba(217,164,65,'+(0.9*fade)+')');
+  strand(-1, 'rgba(63,214,192,'+(0.9*fade)+')');
+  if(mode===3){ /* double-swap annihilation: e^{iπ} + 1 = 0 */
+    var au=(cyc-5.8)/2.2;
+    for(var r2=0;r2<3;r2++){
+      var a2=Math.max(0, 1-Math.abs(au-r2*0.16)*2.6);
+      if(a2<=0) continue;
+      g.beginPath(); g.arc(cx, (top+bot)/2, 8+EASEo(Math.min(1,au-r2*0.16))*34, 0, Math.PI*2);
+      g.strokeStyle='rgba(185,169,226,'+(0.7*a2).toFixed(3)+')'; g.lineWidth=1.6; g.stroke();
+    }
+  }
+  g.font='11px ui-monospace,monospace'; g.fillStyle='rgba(168,176,192,.85)';
+  g.fillText(mode===3 ? '(σ_B,A ∘ σ_A,B) + id = 0 · braid annihilated'
+    : mode===2 ? 'double swap → e^{iπ} + 1 = 0'
+    : mode===1 ? (cross>0.5?'crossed — one swap stored in phase':'swapping…') : 'idle braid · identity', 14, H-14);
+  g.fillText('E₀ = ħω·'+brW+' · rest mass = winding number', 14, 24);
+});
+
+/* ============ CONSCIOUSNESS: phase coherence Q(t) ============ */
+reg(document.getElementById('qCv'), 340, function(s, t){
+  var g=s.g, W=s.w, H=s.h; g.clearRect(0,0,W,H);
+  var cyc=t%9, coh;
+  if(cyc<5.5) coh = EASEo(cyc/5.5);
+  else if(cyc<7) coh = 1;
+  else coh = Math.max(0, 1-(cyc-7)/1.4);
+  var n=22;
+  for(var i=0;i<n;i++){
+    var y0=16+i*(H-58)/(n-1);
+    g.beginPath();
+    var first=true;
+    for(var x=14;x<=W-14;x+=6){
+      var u=(x-14)/(W-28);
+      var chaos=(1-coh);
+      var yy=y0
+        + chaos*9*Math.sin(u*9+i*2.3+t*1.7)
+        + chaos*5*Math.cos(u*13-i*1.1-t)
+        + coh*5*Math.sin(u*Math.PI*4-t*1.3);
+      if(first){ g.moveTo(x,yy); first=false; } else g.lineTo(x,yy);
+    }
+    var tealness=Math.min(1, Math.max(0,(coh-0.5)*2));
+    g.strokeStyle='rgba('+(Math.round(155+(123-155)*tealness))+','+(Math.round(138+(167-138)*tealness))+','+(Math.round(196+(140-196)*tealness))+','+(0.10+0.30*coh).toFixed(3)+')';
+    g.lineWidth=1; g.stroke();
+  }
+  var cx=W/2, cy=H/2, gl=4+10*coh+2*Math.sin(t*1.5)*coh;
+  g.beginPath(); g.arc(cx,cy,gl,0,Math.PI*2);
+  g.fillStyle='rgba(244,199,122,.9)'; g.shadowColor='rgba(244,199,122,.8)'; g.shadowBlur=16*coh;
+  g.fill(); g.shadowBlur=0;
+  g.font='11px ui-monospace,monospace'; g.textAlign='center';
+  g.fillStyle='rgba(168,176,192,.9)';
+  g.fillText('Q(t) = 𝒞(E, B, Ω₀) · coherence '+Math.round(coh*100)+'%', cx, H-14);
+  g.textAlign='left';
 });
 })();
 </script>
