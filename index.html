@@ -263,7 +263,7 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="kicker">A digital monograph · CoReX v5.2.0</p>
+    <p class="kicker">A digital monograph · CoReX v5.2.2</p>
     <h1>The Special Theory of<br><em>Computational Relativity</em></h1>
     <p class="frontmatter">v200 Master Doctoral Dissertation · registry CoReX-200-MASTER-DISSERTATION<br>
     Department of Mathematics, Theoretical Physics &amp; Computer Science · Tomas Bata University in Zlín<br>
@@ -935,7 +935,7 @@
   <p class="fine hint">Click either stamp to swap them. The live one keeps ticking wherever it lands.</p>
   <button class="totop" onclick="goTop()">↑ Back to top</button>
   <div class="foot-rule" aria-hidden="true"></div>
-  <p class="fine colophon">CoReX · v200 Master Doctoral Dissertation · registry CoReX-200-MASTER-DISSERTATION · session 2026/2027 · site v5.2.0 (v61 animation core, design v4) · 200 sources · seed <b id="footSeed">···</b></p>
+  <p class="fine colophon">CoReX · v200 Master Doctoral Dissertation · registry CoReX-200-MASTER-DISSERTATION · session 2026/2027 · site v5.2.2 (v61 animation core, design v4) · 200 sources · seed <b id="footSeed">···</b></p>
   <p class="fine amor">Omnia Vincit Amor &lt;3</p>
 </div></footer>
 <script>
@@ -1184,6 +1184,7 @@ repaint();
 function syncDsChips() {
 var w = document.getElementById('dsChipWave');
 var f = document.getElementById('dsChipFire');
+var sub = document.getElementById('dsChipSub');
 if (w) {
 w.classList.toggle('na', DS.observer);
 w.title = DS.observer
@@ -1194,6 +1195,12 @@ if (f) {
 f.classList.toggle('na', DS.observer);
 f.title = DS.observer
 ? 'no visual effect while the observer is on - no dark bands exist to firewall'
+: '';
+}
+if (sub) {
+sub.classList.toggle('na', DS.observer);
+sub.title = DS.observer
+? 'no visual effect while the observer is on - the vacuum wave is collapsed to a which-path line'
 : '';
 }
 }
@@ -1296,6 +1303,9 @@ var CZ_LABELS = {
 '2^N tree → so(N)': '2^N strom → so(N)', 'rotation planes': 'rotační roviny',
 '2^4 = 16 branches': '2^4 = 16 větví', ' rotation planes': ' rotačních rovin',
 '  ✓ collapsed': '  ✓ zkollapsed', '  … collapsing': '  … kolapsuje',
+'Sub-quantum wave': 'Subkvantová vlna',
+'sub-quantum vacuum phase wave · the particle rides, the wave interferes': 'subkvantová fázová vlna vakua · částice se sveze, vlna interferuje',
+'no visual effect while the observer is on - the vacuum wave is collapsed to a which-path line': 'bez vizuálního efektu při zapnutém pozorovateli - vlna vakua kolabuje na linii which-path',
 'copied': 'zkopírováno', 'copy failed': 'kopírování se nezdařilo',
 'A₀ seed · E₀ = λc²': 'semínko A₀ · E₀ = λc²',
 'figure-eight choreography': 'osmičková choreografie', 'chaos twins': 'chaotičtí dvojníci',
