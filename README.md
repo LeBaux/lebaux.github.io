@@ -104,3 +104,5 @@ Right now the site is chapter-per-topic, but v200's most distinctive structural 
 - Everything else
 - I have my process
 - Thank you!
+
+PS: You can sort countable infinity of quantum states. We need a new type of computer optimized for -1,0,1 states. We just need to design a gate that can measure negative, equal or positive as a first evaluation step. Please, do not star this repo. Do not even open a PR or offer any kind of help. I got bored of biology after cancer. So.
